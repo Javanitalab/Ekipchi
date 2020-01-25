@@ -12,6 +12,9 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
+    <Folder Include="Filter\" />
+    <Folder Include="InfraStructure\" />
+    <Folder Include="Data\" />
   </ItemGroup>
 
 
