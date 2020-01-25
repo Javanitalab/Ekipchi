@@ -9,6 +9,7 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
         public Category()
         {
             Categories = new List<Category>();
+            HostCategories = new List<HostCategories>();
         }
 
         [Key]
@@ -19,5 +20,7 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
         public string Name { get; set; }
 
         public virtual List<Category> Categories { get; }
+
+        public virtual List<HostCategories> HostCategories { get; }
     }
 }
