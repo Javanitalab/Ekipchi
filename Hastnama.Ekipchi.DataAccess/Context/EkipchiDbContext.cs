@@ -19,6 +19,14 @@ namespace Hastnama.Ekipchi.DataAccess.Context
 
         public virtual DbSet<UserToken> UserTokens { get; set; }
 
+        public virtual DbSet<City> Cities { get; set; }
 
+        public virtual DbSet<County> Counties { get; set; }
+
+        public virtual DbSet<Province> Provinces { get; set; }
+
+        public virtual DbSet<Region> Regions { get; set; }
+
+        public virtual DbSet<Event> Events { get; set; }
     }
 }

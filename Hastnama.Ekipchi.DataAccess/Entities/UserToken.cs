@@ -8,6 +8,7 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column("UserTokenId")]
         public Guid Id { get; set; }
 
         public Guid UserId { get; set; }

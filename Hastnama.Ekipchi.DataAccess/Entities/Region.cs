@@ -7,6 +7,7 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column("RegionId")]
         public int Id { get; set; }
 
         public string Name { get; set; }

@@ -16,6 +16,7 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column("UserId")]
         public Guid Id { get; set; }
 
         public string Mobile { get; set; }
