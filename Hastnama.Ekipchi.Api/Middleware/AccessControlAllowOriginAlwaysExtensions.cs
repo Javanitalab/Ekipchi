@@ -30,9 +30,10 @@ namespace Hastnama.Ekipchi.Api.Middleware
                 {
                     context.Response.Headers.Add(AccessControlAllowOrigin, "*");
                 }
+
                 return Task.CompletedTask;
             });
-           
+
             return _next(context);
         }
     }

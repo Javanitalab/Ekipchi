@@ -11,6 +11,7 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
         public Event()
         {
             EventSchedule = new EventSchedule();
+            EventGallery = new EventGallery();
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -23,9 +24,16 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
 
         public string Name { get; set; }
 
+        public Guid? HostId { get; set; }
+
+        [ForeignKey(nameof(HostId))]
+        public virtual Host Host { get; set; }
+
         public string Description { get; set; }
 
         public EventType EventType { get; set; }
+
+        public string Slug { get; set; }
 
 
         public EventAccessibility EventAccessibility { get; set; }
@@ -44,6 +52,22 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
 
         public string Tags { get; set; }
 
+        public DateTime CreateDate { get; set; }
+
+        public bool IsDeleted { get; set; }
+
+        public int TotalView { get; set; }
+
+        public int UniqueView { get; set; }
+
+        public double Income { get; set; }
+
+        public int PinedTimes { get; set; }
+
+        public int TotalAttendees { get; set; }
+
         public virtual EventSchedule EventSchedule { get; }
+
+        public virtual EventGallery EventGallery { get; }
     }
 }

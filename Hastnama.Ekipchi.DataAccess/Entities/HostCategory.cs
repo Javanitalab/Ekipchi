@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hastnama.Ekipchi.DataAccess.Entities
 {
-    public class HostCategories
+    public class HostCategory
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

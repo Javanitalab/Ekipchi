@@ -11,7 +11,8 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
         public Host()
         {
             HostGalleries = new List<HostGallery>();
-            HostCategories = new List<HostCategories>();
+            HostCategories = new List<HostCategory>();
+            Events = new List<Event>();
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -44,9 +45,17 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
 
         public string TermsAndCondition { get; set; }
 
+        public bool IsDeleted { get; set; }
+
+        public DateTime CreateDateTime { get; set; }
+
+        public int EventCount { get; set; }
+
         public virtual List<HostGallery> HostGalleries { get; }
 
-        public virtual List<HostCategories> HostCategories { get; }
+        public virtual List<HostCategory> HostCategories { get; }
+
+        public virtual List<Event> Events { get; }
 
     }
 }

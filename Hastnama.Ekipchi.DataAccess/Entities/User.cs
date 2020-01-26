@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Hastnama.Ekipchi.Common.Enum;
+using Hastnama.GuitarIranShop.DataAccess.Entities;
 
 namespace Hastnama.Ekipchi.DataAccess.Entities
 {
@@ -12,6 +13,18 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
         public User()
         {
             UserTokens = new List<UserToken>();
+
+            UserInGroups = new List<UserInGroup>();
+
+            Blogs = new List<Blog>();
+
+            EventGalleries = new List<EventGallery>();
+
+            Comments = new List<Comment>();
+
+            ReceiverMessages = new List<UserMessage>();
+
+            SenderMessage = new List<UserMessage>();
         }
 
         [Key]
@@ -49,6 +62,20 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
 
         public DateTime ExpiredVerificationCode { get; set; }
 
+        public bool Gender { get; set; }
+
         public virtual List<UserToken> UserTokens { get; }
+
+        public virtual List<UserInGroup> UserInGroups { get; }
+
+        public virtual List<Blog> Blogs { get; }
+
+        public virtual List<EventGallery> EventGalleries { get; }
+
+        public virtual List<Comment> Comments { get; }
+
+        public virtual List<UserMessage> ReceiverMessages { get; }
+
+        public virtual List<UserMessage> SenderMessage { get; }
     }
 }
