@@ -23,5 +23,7 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
         public bool IsAdmin { get; set; }
 
         public DateTime JoinDate { get; set; }
+
+        public bool IsExpired { get; set; }
     }
 }

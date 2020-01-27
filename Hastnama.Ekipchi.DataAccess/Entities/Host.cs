@@ -13,6 +13,7 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
             HostGalleries = new List<HostGallery>();
             HostCategories = new List<HostCategory>();
             Events = new List<Event>();
+            HostAvailableDates = new List<HostAvailableDate>();
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -56,6 +57,8 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
         public virtual List<HostCategory> HostCategories { get; }
 
         public virtual List<Event> Events { get; }
+
+        public virtual List<HostAvailableDate> HostAvailableDates { get; }
 
     }
 }

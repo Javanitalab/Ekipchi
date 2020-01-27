@@ -19,5 +19,7 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
 
         [ForeignKey(nameof(GroupId))]
         public virtual Group Groups { get; set; }
+
+        public DateTime JoinGroupDate { get; set; }
     }
 }
