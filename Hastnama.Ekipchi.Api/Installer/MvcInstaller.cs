@@ -1,8 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using AutoMapper;
+using FluentValidation.AspNetCore;
 using Hastnama.Ekipchi.Api.Core.Environment;
 using Hastnama.Ekipchi.Api.InfraStructure;
 using Hastnama.Ekipchi.Data.Auth;
@@ -10,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Hastnama.Ekipchi.Api.Installer
@@ -26,6 +29,25 @@ namespace Hastnama.Ekipchi.Api.Installer
             });
 
             services.AddControllers();
+
+            services.AddMvc()
+                .AddFluentValidation(mvcConfiguration =>
+                    mvcConfiguration.RegisterValidatorsFromAssemblyContaining<Startup>());
+
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                //options.SuppressModelStateInvalidFilter = true;
+                options.InvalidModelStateResponseFactory = actionContext =>
+                {
+                    var errors = new
+                    {
+                        message = (string.Join(" | ",
+                            actionContext.ModelState.Values.SelectMany(v => v.Errors)
+                                .Select(e => e.ErrorMessage.ToString())))
+                    };
+                    return new BadRequestObjectResult(errors);
+                };
+            });
 
             #region AuthToken
 

@@ -4,9 +4,9 @@ using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Hastnama.Ekipchi.Api.Core.ApiResponse
+namespace Hastnama.Ekipchi.Api.Core.ApiContent
 {
-    public class ApiResponse
+    public static class Response
     {
         public static object ErrorMessage(string message)
         {
@@ -17,7 +17,7 @@ namespace Hastnama.Ekipchi.Api.Core.ApiResponse
                 return new {message};
         }
 
-        private static string GetMessageTemplate(string message)
+        public static string GetMessageTemplate(string message)
         {
             const string resources = "Resources";
             const string fileName = "Hastnama.Ekipchi.ApiResponse.fa-IR.json";
