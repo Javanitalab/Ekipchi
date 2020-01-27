@@ -7,7 +7,7 @@ namespace Hastnama.Ekipchi.Api.Installer
     {
         public void InstallServices(IConfiguration configuration, IServiceCollection services)
         {
-            throw new System.NotImplementedException();
+            // throw new System.NotImplementedException();
         }
     }
 }

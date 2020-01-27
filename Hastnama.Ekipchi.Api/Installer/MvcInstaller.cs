@@ -1,11 +1,16 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using AutoMapper;
+using Hastnama.Ekipchi.Api.Core.Environment;
 using Hastnama.Ekipchi.Api.InfraStructure;
+using Hastnama.Ekipchi.Data.Auth;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Hastnama.Ekipchi.Api.Installer
 {
@@ -13,21 +18,53 @@ namespace Hastnama.Ekipchi.Api.Installer
     {
         public void InstallServices(IConfiguration configuration, IServiceCollection services)
         {
-            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            services.AddScoped<IApplicationBootstrapper, ApplicationBootstrapper>();
+            services.AddCors(options =>
             {
-                builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
-            }));
+                options.AddPolicy("MyPolicy",
+                    builder => { builder.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod(); });
+            });
 
             services.AddControllers();
 
-            #region  Automapper
+            #region AuthToken
 
-            var mappingConfig = new MapperConfiguration(mc =>
+            services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
+
+            var jwtSetting = new JwtSettings();
+            configuration.Bind(nameof(JwtSettings), jwtSetting);
+            services.AddSingleton(jwtSetting);
+
+            var tokenValidationParameter = new TokenValidationParameters
             {
-                mc.AddProfile(new MappingProfile());
-            });
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSetting.Secret)),
+                ValidateIssuer = false,
+                ValidIssuer = jwtSetting.ValidIssuer,
+                ValidateAudience = false,
+                ValidAudience = jwtSetting.ValidAudience,
+                ValidateLifetime = true,
+                RequireExpirationTime = false
+            };
+            services.AddSingleton(tokenValidationParameter);
+
+            services.AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(x =>
+                {
+                    x.SaveToken = true;
+                    x.TokenValidationParameters = tokenValidationParameter;
+                });
+
+            #endregion
+
+            #region Automapper
+
+            var mappingConfig = new MapperConfiguration(mc => { mc.AddProfile(new MappingProfile()); });
 
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
@@ -57,7 +94,8 @@ namespace Hastnama.Ekipchi.Api.Installer
                     Name = "Authorization",
                     Description = "Please enter into field the word 'Bearer' following by space and JWT",
                 });
-                options.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
                     {
                         new OpenApiSecurityScheme
                         {
@@ -73,7 +111,6 @@ namespace Hastnama.Ekipchi.Api.Installer
             });
 
             #endregion
-
         }
     }
 }

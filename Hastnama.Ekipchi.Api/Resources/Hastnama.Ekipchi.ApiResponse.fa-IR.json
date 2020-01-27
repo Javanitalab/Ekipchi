@@ -1,0 +1,11 @@
+﻿{
+  "LanguageCode": "fa-IR",
+  "Encoding": "UTF-8",
+  "Version": "1.0",
+  "Data": [
+    {
+      "Key": "Test",
+      "Template": "فرستنده و دریافت کننده پیام یک نفر هستند"
+    }
+    ]
+}
