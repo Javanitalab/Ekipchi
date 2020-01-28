@@ -1,5 +1,5 @@
+using Hastnama.Ekipchi.Api.Core.Extensions;
 using Hastnama.Ekipchi.Api.Installer;
-using Hastnama.Ekipchi.Api.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -31,24 +31,20 @@ namespace Hastnama.Ekipchi.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors("MyPolicy");
-            app.UseAccessControlAllowOriginAlways();
-
-            app.UseHttpsRedirection();
-
+            
             app.UseRouting();
 
+            app.UseCors("MyPolicy");
+
+            app.UseHttpsRedirection();
+            
             app.UseAuthorization();
-
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
             app.UseSwagger();
             app.UseSwaggerUI(options => { options.SwaggerEndpoint("/swagger/v1/swagger.json", "Ekipchi  API V1"); });
-
+            
         }
     }
 }

@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hastnama.Ekipchi.Common", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hastnama.Ekipchi.Business", "Hastnama.Ekipchi.Business\Hastnama.Ekipchi.Business.csproj", "{A4126DFC-93C4-4082-9601-32C1B02DBA72}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hastnama.Ekipchi.UnitTest", "Hastnama.Ekipchi.UnitTest\Hastnama.Ekipchi.UnitTest.csproj", "{6CC93675-181B-4CCD-B93E-ABE098EEB84A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{A4126DFC-93C4-4082-9601-32C1B02DBA72}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4126DFC-93C4-4082-9601-32C1B02DBA72}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4126DFC-93C4-4082-9601-32C1B02DBA72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CC93675-181B-4CCD-B93E-ABE098EEB84A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CC93675-181B-4CCD-B93E-ABE098EEB84A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CC93675-181B-4CCD-B93E-ABE098EEB84A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CC93675-181B-4CCD-B93E-ABE098EEB84A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

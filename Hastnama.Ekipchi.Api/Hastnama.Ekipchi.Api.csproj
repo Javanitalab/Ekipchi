@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -21,7 +21,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <Folder Include="Controllers\Auth\" />
+    <Folder Include="Core\AutoMapper\" />
+    <Folder Include="Core\Environment\" />
+    <Folder Include="Core\Extensions\" />
+    <Folder Include="Core\Token\" />
+    <Folder Include="Core\Validator\Auth\" />
     <Folder Include="Filter\" />
     <Folder Include="Data\" />
   </ItemGroup>

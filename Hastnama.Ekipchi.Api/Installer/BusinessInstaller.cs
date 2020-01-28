@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Hastnama.Ekipchi.Api.Core.Token;
+using Hastnama.Ekipchi.Data;
+using Hastnama.Ekipchi.Data.Auth;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Hastnama.Ekipchi.Api.Installer
@@ -7,7 +10,8 @@ namespace Hastnama.Ekipchi.Api.Installer
     {
         public void InstallServices(IConfiguration configuration, IServiceCollection services)
         {
-            throw new System.NotImplementedException();
+            services.AddTransient<ITokenGenerator, TokenGenerator>();
+
         }
     }
 }
