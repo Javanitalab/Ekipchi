@@ -7,7 +7,7 @@ namespace Hastnama.Ekipchi.Api.Core.Environment
     {
         private readonly IWebHostEnvironment _environment;
 
-        public ApplicationBootstrapper(IWebHostEnvironment environment)
+        public ApplicationBootstrapper(IWebHostEnvironment environment)    
         {
             _environment = environment;
         }

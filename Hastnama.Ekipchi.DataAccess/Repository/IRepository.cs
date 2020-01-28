@@ -10,6 +10,8 @@ namespace Hastnama.Ekipchi.DataAccess.Repository
 {
     public interface IRepository<TEntity> where TEntity : class
     {
+        Task<TEntity> FirstOrDefaultAsyncAsNoTracking(Expression<Func<TEntity, bool>> predicate);
+        Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
         IQueryable<TEntity> GetAll();
 
         IQueryable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate);
@@ -27,5 +29,6 @@ namespace Hastnama.Ekipchi.DataAccess.Repository
         void Edit(TEntity entity);
 
         Task<PagedList<TEntity>> GetPagedAsync(int pageNumber, int pageSize, IQueryable<TEntity> query);
+        
     }
 }

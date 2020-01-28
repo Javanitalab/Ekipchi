@@ -5,8 +5,9 @@ using System.Reflection;
 using System.Text;
 using AutoMapper;
 using FluentValidation.AspNetCore;
+using Hastnama.Ekipchi.Api.Core.AutoMapper;
 using Hastnama.Ekipchi.Api.Core.Environment;
-using Hastnama.Ekipchi.Api.InfraStructure;
+using Hastnama.Ekipchi.Api.Middleware;
 using Hastnama.Ekipchi.Data.Auth;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,7 +31,7 @@ namespace Hastnama.Ekipchi.Api.Installer
 
             services.AddControllers();
 
-            services.AddMvc()
+            services.AddMvc(opt => { opt.Filters.Add<OnExceptionMiddleware>(); })
                 .AddFluentValidation(mvcConfiguration =>
                     mvcConfiguration.RegisterValidatorsFromAssemblyContaining<Startup>());
 

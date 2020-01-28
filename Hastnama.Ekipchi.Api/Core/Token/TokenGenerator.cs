@@ -32,12 +32,12 @@ namespace Hastnama.Ekipchi.Api.Core.Token
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    // new Claim(JwtRegisteredClaimNames.Sub,user.UserStatus.ToString()),
+                    new Claim(JwtRegisteredClaimNames.Sub,user.Status.ToString()),
                     new Claim(JwtRegisteredClaimNames.Email, user.Email),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim("Id", user.Id.ToString())
                 }),
-                Expires = DateTime.Now.AddDays(11),
+                Expires = DateTime.Now.AddDays(1),
                 SigningCredentials =
                     new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
                 Audience = _jwtSettings.ValidAudience,
@@ -45,16 +45,7 @@ namespace Hastnama.Ekipchi.Api.Core.Token
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
-
-            var refreshToken = new UserToken
-            {
-                Token = tokenHandler.WriteToken(token),
-                // JwtId = token.Id,
-                UserId = user.Id,
-                // CreateDate = DateTime.UtcNow,
-                // ExpireDate = DateTime.UtcNow.AddDays(11),
-            };
-
+            
 
             return new AuthenticateResult
             {

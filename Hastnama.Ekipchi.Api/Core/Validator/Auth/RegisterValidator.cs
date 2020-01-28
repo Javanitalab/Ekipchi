@@ -6,10 +6,15 @@ using Hastnama.Ekipchi.Data.Auth;
 
 namespace Hastnama.Ekipchi.Api.Core.Validator.Auth
 {
-    public class LoginValidator : AbstractValidator<LoginDto>
+    public class RegisterValidator : AbstractValidator<RegisterDto>
     {
-        public LoginValidator()
+        public RegisterValidator()
         {
+            RuleFor(dto => dto.Password)
+                .Cascade(CascadeMode.StopOnFirstFailure)
+                .NotEmpty().WithMessage(PersianErrorMessage.InvalidUserCredential)
+                .Must(dto => dto.Length >= 4).WithMessage(PersianErrorMessage.InvalidUserCredential);
+            
             RuleFor(dto => dto)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .Must(dto => (!string.IsNullOrEmpty(dto.Username) && dto.Username.Length < 16)
@@ -17,11 +22,7 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Auth
                              || (!string.IsNullOrEmpty(dto.Mobile) && dto.Mobile.Length <= 11 &&
                                  Regex.IsMatch(dto.Mobile, "^[0-9 ]+$")))
                 .WithMessage(PersianErrorMessage.InvalidUserCredential);
-
-            RuleFor(dto => dto.Password)
-                .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage(PersianErrorMessage.InvalidUserCredential)
-                .MaximumLength(16).WithMessage(PersianErrorMessage.InvalidUserCredential);
+            
         }
     }
 }

@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Hastnama.Ekipchi.Common\Hastnama.Ekipchi.Common.csproj" />
-    <ProjectReference Include="..\Hastnama.Ekipchi.DataAccess\Hastnama.Ekipchi.DataAccess.csproj" />
-    <ProjectReference Include="..\Hastnama.Ekipchi.Data\Hastnama.Ekipchi.Data.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Hastnama.Ekipchi.Common\Hastnama.Ekipchi.Common.csproj" />
+        <ProjectReference Include="..\Hastnama.Ekipchi.DataAccess\Hastnama.Ekipchi.DataAccess.csproj" />
+        <ProjectReference Include="..\Hastnama.Ekipchi.Data\Hastnama.Ekipchi.Data.csproj" />
+    </ItemGroup>
 
 </Project>

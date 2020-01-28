@@ -1,6 +1,6 @@
 ﻿using Hastnama.Ekipchi.Api.Core.Token;
-using Hastnama.Ekipchi.Data;
-using Hastnama.Ekipchi.Data.Auth;
+using Hastnama.Ekipchi.Business.Service.Class;
+using Hastnama.Ekipchi.Business.Service.Interface;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,6 +11,8 @@ namespace Hastnama.Ekipchi.Api.Installer
         public void InstallServices(IConfiguration configuration, IServiceCollection services)
         {
             services.AddTransient<ITokenGenerator, TokenGenerator>();
+
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
         }
     }

@@ -58,6 +58,16 @@ namespace Hastnama.Ekipchi.DataAccess.Repository
             return Context.Set<TEntity>().Where(predicate);
         }
 
+        public Task<TEntity> FirstOrDefaultAsyncAsNoTracking(Expression<Func<TEntity, bool>> predicate)
+        {
+            return Context.Set<TEntity>().FirstOrDefaultAsync(predicate);
+        }
+
+        public Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return Context.Set<TEntity>().FirstOrDefaultAsync(predicate);
+        }
+
         public IQueryable<TEntity> GetAll()
         {
             return Context.Set<TEntity>();
@@ -89,6 +99,7 @@ namespace Hastnama.Ekipchi.DataAccess.Repository
 
             return PagedList<TEntity>.CreateAsync(query, pageNumber, pageSize, rowsCount);
         }
+
         public void Dispose()
         {
             Context.Dispose();
