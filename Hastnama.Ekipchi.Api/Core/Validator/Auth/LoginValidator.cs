@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using Hastnama.Ekipchi.Api.Core.ApiContent;
+using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Data.Auth;
 
 namespace Hastnama.Ekipchi.Api.Core.Validator.Auth
@@ -12,11 +12,11 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Auth
 
             RuleFor(dto => dto.Password)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage(Response.GetMessageTemplate("PasswordIsInvalid"));
+                .NotEmpty().WithMessage(PersianErrorMessage.PasswordIsInvalid);
             RuleFor(dto => dto.Username)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty()
-                .WithMessage(Response.GetMessageTemplate("UsernameIsInvalid"));
+                .WithMessage(PersianErrorMessage.UsernameIsInvalid);
         }
 
 

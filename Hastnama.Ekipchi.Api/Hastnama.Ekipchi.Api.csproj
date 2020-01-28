@@ -34,5 +34,9 @@
     <ProjectReference Include="..\Hastnama.Ekipchi.Common\Hastnama.Ekipchi.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Resources\Hastnama.Ekipchi.ApiResponse.fa-IR.json" />
+  </ItemGroup>
+
 
 </Project>
