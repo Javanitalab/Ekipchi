@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Hastnama.Ekipchi.Common.Enum;
-using Hastnama.GuitarIranShop.DataAccess.Entities;
 
 namespace Hastnama.Ekipchi.DataAccess.Entities
 {

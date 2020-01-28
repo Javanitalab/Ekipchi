@@ -1,5 +1,4 @@
 ﻿using Hastnama.Ekipchi.DataAccess.Entities;
-using Hastnama.GuitarIranShop.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hastnama.Ekipchi.DataAccess.Context
@@ -14,6 +13,14 @@ namespace Hastnama.Ekipchi.DataAccess.Context
         public EkipchiDbContext(DbContextOptions<EkipchiDbContext> options) : base(options)
         {
 
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer(@"Server=185.88.154.132;Initial Catalog =EkipchiDb;MultipleActiveResultSets=true;User ID=sa;Password=123qwe!@#QWE");
+            }
         }
 
         public virtual DbSet<User> Users { get; set; }
@@ -69,6 +76,9 @@ namespace Hastnama.Ekipchi.DataAccess.Context
             modelBuilder.Entity<UserMessage>()
                 .HasOne(u => u.ReceiverUser).WithMany(u => u.ReceiverMessages).IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<UserInGroup>().HasOne(u => u.User)
+                .WithMany(u => u.UserInGroups).IsRequired().OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

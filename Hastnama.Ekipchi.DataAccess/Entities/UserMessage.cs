@@ -1,9 +1,8 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Hastnama.Ekipchi.DataAccess.Entities;
+using  System;
 
-namespace Hastnama.GuitarIranShop.DataAccess.Entities
+namespace Hastnama.Ekipchi.DataAccess.Entities
 {
     public class UserMessage
     {
@@ -11,9 +10,9 @@ namespace Hastnama.GuitarIranShop.DataAccess.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        public int? SenderUserId { get; set; }
+        public Guid? SenderUserId { get; set; }
 
-        public int ReceiverUserId { get; set; }
+        public Guid ReceiverUserId { get; set; }
 
         public DateTime SendDate { get; set; }
 

@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Hastnama.Ekipchi.DataAccess.Context;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Hastnama.Ekipchi.Api.Installer
@@ -7,7 +9,9 @@ namespace Hastnama.Ekipchi.Api.Installer
     {
         public void InstallServices(IConfiguration configuration, IServiceCollection services)
         {
-            throw new System.NotImplementedException();
+            var connection = configuration.GetConnectionString("EkipchiDbConnection");
+            services.AddDbContext<EkipchiDbContext>(options =>
+                options.UseSqlServer(connection));
         }
     }
 }

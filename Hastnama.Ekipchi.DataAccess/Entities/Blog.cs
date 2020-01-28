@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Net.Mime;
 using Hastnama.Ekipchi.Common.Enum;
+using ContentType = Hastnama.Ekipchi.Common.Enum.ContentType;
 
 namespace Hastnama.Ekipchi.DataAccess.Entities
 {
@@ -13,7 +14,7 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
         [Column("BlogId")]
         public int Id { get; set; }
 
-        public int UseId { get; set; }
+        public Guid UseId { get; set; }
 
         [ForeignKey(nameof(UseId))]
         public virtual User User { get; set; }
