@@ -6,7 +6,10 @@
 
   <ItemGroup>
     <Folder Include="Auth\" />
-    <Folder Include="Options\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Hastnama.Ekipchi.Common\Hastnama.Ekipchi.Common.csproj" />
   </ItemGroup>
 
 </Project>

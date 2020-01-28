@@ -1,16 +1,12 @@
-﻿using System;
-using System.Threading.Tasks;
-using Hastnama.Ekipchi.Api.Core.Extensions;
+﻿using System.Threading.Tasks;
 using Hastnama.Ekipchi.Api.Core.Token;
 using Hastnama.Ekipchi.Business.Service.Interface;
-using Hastnama.Ekipchi.Common.Message;
-using Hastnama.Ekipchi.Data;
 using Hastnama.Ekipchi.Data.Auth;
 using Hastnama.Ekipchi.DataAccess.Entities;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Hastnama.Ekipchi.Api.Controllers.Auth
+namespace Hastnama.Ekipchi.Api.Areas.Admin
 {
     [Area("Admin")]
     [Route("[Area]/[Controller]")]

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Helper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -58,14 +59,33 @@ namespace Hastnama.Ekipchi.DataAccess.Repository
             return Context.Set<TEntity>().Where(predicate);
         }
 
-        public Task<TEntity> FirstOrDefaultAsyncAsNoTracking(Expression<Func<TEntity, bool>> predicate)
+        public Task<TEntity> FirstOrDefaultAsyncAsNoTracking(Expression<Func<TEntity, bool>> predicate,
+            Expression<Func<TEntity, bool>> include = null)
         {
-            return Context.Set<TEntity>().FirstOrDefaultAsync(predicate);
+            return Context.Set<TEntity>().AsNoTracking().Include(include).FirstOrDefaultAsync(predicate);
         }
 
         public Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return Context.Set<TEntity>().FirstOrDefaultAsync(predicate);
+        }
+
+        public Task<List<TEntity>> WhereAsyncAsNoTracking(Expression<Func<TEntity, bool>> predicate,
+            PagingOptions pagingOptions,
+            Expression<Func<TEntity, bool>> include = null
+        )
+        {
+            return Context.Set<TEntity>().AsNoTracking().Include(include).Where(predicate)
+                .Skip(pagingOptions.Page * pagingOptions.Limit).Take(pagingOptions.Limit).ToListAsync();
+        }
+
+        public Task<List<TEntity>> WhereAsync(Expression<Func<TEntity, bool>> predicate,
+            PagingOptions pagingOptions,
+            Expression<Func<TEntity, bool>> include = null)
+        {
+            return Context.Set<TEntity>().Include(include).Where(predicate)
+                .Skip(pagingOptions.Page * pagingOptions.Limit).Take(pagingOptions.Limit).ToListAsync();
+            ;
         }
 
         public IQueryable<TEntity> GetAll()

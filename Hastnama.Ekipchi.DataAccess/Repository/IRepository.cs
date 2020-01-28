@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Helper;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
@@ -10,8 +11,18 @@ namespace Hastnama.Ekipchi.DataAccess.Repository
 {
     public interface IRepository<TEntity> where TEntity : class
     {
-        Task<TEntity> FirstOrDefaultAsyncAsNoTracking(Expression<Func<TEntity, bool>> predicate);
+        Task<TEntity> FirstOrDefaultAsyncAsNoTracking(Expression<Func<TEntity, bool>> predicate,
+            Expression<Func<TEntity, bool>> include= null);
+
         Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
+
+        Task<List<TEntity>> WhereAsyncAsNoTracking(Expression<Func<TEntity, bool>> predicate,
+            PagingOptions pagingOptions,
+            Expression<Func<TEntity, bool>> include = null);
+
+        Task<List<TEntity>> WhereAsync(Expression<Func<TEntity, bool>> predicate,
+            PagingOptions pagingOptions,
+            Expression<Func<TEntity, bool>> include = null);
         IQueryable<TEntity> GetAll();
 
         IQueryable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate);
@@ -29,6 +40,5 @@ namespace Hastnama.Ekipchi.DataAccess.Repository
         void Edit(TEntity entity);
 
         Task<PagedList<TEntity>> GetPagedAsync(int pageNumber, int pageSize, IQueryable<TEntity> query);
-        
     }
 }
