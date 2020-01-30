@@ -1,4 +1,5 @@
-﻿using Hastnama.Ekipchi.Common.Enum;
+﻿using System;
+using Hastnama.Ekipchi.Common.Enum;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hastnama.Ekipchi.Common.Result
@@ -8,17 +9,35 @@ namespace Hastnama.Ekipchi.Common.Result
         public T Data { get; set; }
         public string Message { get; set; }
 
-        public IActionResult Error { get; set; }
+        public ObjectResult ApiResult { get; set; }
         public bool Success { get; set; }
 
         public static Result<T> SuccessFull(T data)
         {
-            return new Result<T> {Data = data, Message = null, Success = true};
+            return new Result<T> {ApiResult = new OkObjectResult(data), Data = data, Message = null, Success = true};
         }
-        
-        public static Result<T> Failed(IActionResult error)
+
+        public static Result<T> Failed(ObjectResult error)
         {
-            return new Result<T> {Error = error, Success = false};
+            return new Result<T> {ApiResult = error, Success = false, Message = error.Value?.ToString()};
+        }
+    }
+
+    public class Result
+    {
+        public string Message { get; set; }
+
+        public ObjectResult ApiResult { get; set; }
+        public bool Success { get; set; }
+
+        public static Result SuccessFull()
+        {
+            return new Result {Message = null, Success = true};
+        }
+
+        public static Result Failed(ObjectResult error)
+        {
+            return new Result {ApiResult = error, Success = false, Message = error.Value?.ToString()};
         }
     }
 }

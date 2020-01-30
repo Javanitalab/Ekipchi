@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Hastnama.Ekipchi.Common.Result;
 using Hastnama.Ekipchi.Data;
 using Hastnama.Ekipchi.Data.Auth;
 using Hastnama.Ekipchi.DataAccess.Entities;
@@ -7,6 +8,6 @@ namespace Hastnama.Ekipchi.Api.Core.Token
 {
     public interface ITokenGenerator
     {
-        Task<AuthenticateResult> Generate(User user);
+        Task<Result<AuthenticateResult>> Generate(User user);
     }
 }

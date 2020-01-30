@@ -14,7 +14,7 @@ namespace Hastnama.Ekipchi.DataAccess.Repository
         Task<TEntity> FirstOrDefaultAsyncAsNoTracking(Expression<Func<TEntity, bool>> predicate,
             Expression<Func<TEntity, bool>> include= null);
 
-        Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate,Expression<Func<TEntity, bool>> include = null);
 
         Task<List<TEntity>> WhereAsyncAsNoTracking(Expression<Func<TEntity, bool>> predicate,
             PagingOptions pagingOptions,

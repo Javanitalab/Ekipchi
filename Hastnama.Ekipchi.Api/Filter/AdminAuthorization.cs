@@ -44,7 +44,7 @@ namespace Hastnama.Ekipchi.Api.Filter
 
             if (!user.Success)
             {
-                context.Result = user.Error;
+                context.Result = user.ApiResult;
                 return;
             }
 

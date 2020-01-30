@@ -20,13 +20,43 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
                 .ForMember(x => x.Email, opt => opt.MapFrom(des => des.Email))
                 .ForMember(x => x.Mobile, opt => opt.MapFrom(des => des.Mobile));
           
-            CreateMap<User, UserProfileDto>()
+            CreateMap<User, UserDto>()
                 .ForMember(x => x.Status, opt => opt.MapFrom(des => UserStatus.Active))
                 .ForMember(x => x.Username, opt => opt.MapFrom(des => des.Username))
                 .ForMember(x => x.Email, opt => opt.MapFrom(des => des.Email))
                 .ForMember(x => x.Gender, opt => opt.MapFrom(des => des.Gender))
                 .ForMember(x => x.Avatar, opt => opt.MapFrom(des => des.Avatar))
                 .ForMember(x => x.Id, opt => opt.MapFrom(des => des.Id))
+                .ForMember(x => x.Role, opt => opt.MapFrom(des => des.Role))
+                .ForMember(x => x.Mobile, opt => opt.MapFrom(des => des.Mobile));
+        
+            CreateMap<UserDto, User>()
+                .ForMember(x => x.Status, opt => opt.MapFrom(des => des.Status))
+                .ForMember(x => x.Username, opt => opt.MapFrom(des => des.Username))
+                .ForMember(x => x.Email, opt => opt.MapFrom(des => des.Email))
+                .ForMember(x => x.Gender, opt => opt.MapFrom(des => des.Gender))
+                .ForMember(x => x.Avatar, opt => opt.MapFrom(des => des.Avatar))
+                .ForMember(x => x.Id, opt => opt.MapFrom(des => des.Id))
+                .ForMember(x => x.Role, opt => opt.MapFrom(des => des.Role))
+                .ForMember(x => x.Mobile, opt => opt.MapFrom(des => des.Mobile));
+          
+            CreateMap<UpdateUserDto, User>()
+                .ForMember(x => x.Status, opt => opt.MapFrom(des => des.Status))
+                .ForMember(x => x.Username, opt => opt.MapFrom(des => des.Username))
+                .ForMember(x => x.Email, opt => opt.MapFrom(des => des.Email))
+                .ForMember(x => x.Gender, opt => opt.MapFrom(des => des.Gender))
+                .ForMember(x => x.Avatar, opt => opt.MapFrom(des => des.Avatar))
+                .ForMember(x => x.Id, opt => opt.MapFrom(des => des.Id))
+                .ForMember(x => x.Role, opt => opt.MapFrom(des => des.Role))
+                .ForMember(x => x.Mobile, opt => opt.MapFrom(des => des.Mobile));
+          
+            CreateMap<CreateUserDto, User>()
+                .ForMember(x => x.Status, opt => opt.MapFrom(des => des.Status))
+                .ForMember(x => x.Username, opt => opt.MapFrom(des => des.Username))
+                .ForMember(x => x.Email, opt => opt.MapFrom(des => des.Email))
+                .ForMember(x => x.Gender, opt => opt.MapFrom(des => des.Gender))
+                .ForMember(x => x.Avatar, opt => opt.MapFrom(des => des.Avatar))
+                .ForMember(x => x.Id, opt => Guid.NewGuid())
                 .ForMember(x => x.Role, opt => opt.MapFrom(des => des.Role))
                 .ForMember(x => x.Mobile, opt => opt.MapFrom(des => des.Mobile));
         }

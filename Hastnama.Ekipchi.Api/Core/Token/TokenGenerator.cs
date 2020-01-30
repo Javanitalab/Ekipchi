@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Hastnama.Ekipchi.Common.Result;
 using Hastnama.Ekipchi.Data;
 using Hastnama.Ekipchi.Data.Auth;
 using Hastnama.Ekipchi.DataAccess.Entities;
@@ -23,7 +24,7 @@ namespace Hastnama.Ekipchi.Api.Core.Token
             _jwtSettings = jwtSettings.Value;
         }
 
-        public async Task<AuthenticateResult> Generate(User user)
+        public async Task<Result<AuthenticateResult>> Generate(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_jwtSettings.Secret);
@@ -32,7 +33,7 @@ namespace Hastnama.Ekipchi.Api.Core.Token
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim(JwtRegisteredClaimNames.Sub,user.Status.ToString()),
+                    new Claim(JwtRegisteredClaimNames.Sub, user.Status.ToString()),
                     new Claim(JwtRegisteredClaimNames.Email, user.Email),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim("Id", user.Id.ToString())
@@ -45,14 +46,14 @@ namespace Hastnama.Ekipchi.Api.Core.Token
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            
 
-            return new AuthenticateResult
+
+            return Result<AuthenticateResult>.SuccessFull(new AuthenticateResult
             {
                 IsSuccess = true,
                 AccessToken = tokenHandler.WriteToken(token),
                 RefreshToken = token.Id
-            };
+            });
         }
     }
 }

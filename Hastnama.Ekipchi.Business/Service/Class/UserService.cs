@@ -75,12 +75,13 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             return Result<User>.SuccessFull(user);
         }
 
-        public async Task<Result<List<UserProfileDto>>> List(PagingOptions pagingOptions,
+        public async Task<Result<List<UserDto>>> List(PagingOptions pagingOptions,
             UserFilterQueryDto filterQueryDto)
         {
             var users = await WhereAsyncAsNoTracking(u =>
                     (
-                        u.Name.ToLower().Contains(filterQueryDto.Keyword)
+                        filterQueryDto.Keyword == null
+                        || u.Name.ToLower().Contains(filterQueryDto.Keyword)
                         || u.Family.ToLower().Contains(filterQueryDto.Keyword)
                         || u.Username.ToLower().Contains(filterQueryDto.Keyword)
                         || u.Mobile.ToLower().Contains(filterQueryDto.Keyword)
@@ -90,11 +91,69 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 , pagingOptions
             );
             if (users == null)
-                return Result<List<UserProfileDto>>.Failed(new NotFoundObjectResult(new ApiMessage
+                return Result<List<UserDto>>.Failed(new NotFoundObjectResult(new ApiMessage
                     {Message = PersianErrorMessage.BadRequestQuery}));
 
-            var dtos = users.Select(user => _mapper.Map<UserProfileDto>(user)).ToList();
-            return Result<List<UserProfileDto>>.SuccessFull(dtos);
+            var dtos = users.Select(user => _mapper.Map<UserDto>(user)).ToList();
+            return Result<List<UserDto>>.SuccessFull(dtos);
+        }
+
+        public async Task<Result> UpdateProfile(UpdateUserDto updateUserDto)
+        {
+            var user = await FirstOrDefaultAsync(u => u.Id == updateUserDto.Id);
+            if (user == null)
+                return Result.Failed(new NotFoundObjectResult(new ApiMessage
+                    {Message = PersianErrorMessage.UserNotFound}));
+            _mapper.Map(updateUserDto, user);
+            await Context.SaveChangesAsync();
+            return Result.SuccessFull();
+        }
+
+        public async Task<Result> Create(CreateUserDto dto)
+        {
+            var user = _mapper.Map<User>(dto);
+            if (user.Email != null)
+            {
+                var duplicateUser = (await FirstOrDefaultAsyncAsNoTracking(u => u.Email == user.Email));
+                if (duplicateUser != null)
+                    return Result.Failed(new BadRequestObjectResult(new ApiMessage
+                        {Message = PersianErrorMessage.EmailAddressAlreadyExist}));
+            }
+
+            if (user.Mobile != null)
+            {
+                var duplicateUser = (await FirstOrDefaultAsyncAsNoTracking(u => u.Mobile == user.Mobile));
+                if (duplicateUser != null)
+                    return Result.Failed(new BadRequestObjectResult(new ApiMessage
+                        {Message = PersianErrorMessage.MobileAlreadyExist}));
+            }
+
+            if (user.Username != null)
+            {
+                var duplicateUser = (await FirstOrDefaultAsyncAsNoTracking(u => u.Username == user.Username));
+                if (duplicateUser != null)
+                    return Result.Failed(new BadRequestObjectResult(new ApiMessage
+                        {Message = PersianErrorMessage.UsernameAlreadyExist}));
+            }
+
+            await AddAsync(user);
+            await Context.SaveChangesAsync();
+            return Result.SuccessFull();
+        }
+
+        public async Task<Result<UserDto>> Get(Guid id)
+        {
+            if (id == Guid.Empty)
+                return Result<UserDto>.Failed(new BadRequestObjectResult(new ApiMessage
+                    {Message = PersianErrorMessage.InvalidUserId}));
+
+            var user = await FirstOrDefaultAsyncAsNoTracking(u => u.Id == id);
+            if (user == null)
+                return Result<UserDto>.Failed(new NotFoundObjectResult(new ApiMessage
+                    {Message = PersianErrorMessage.UserNotFound}));
+
+            var dto = _mapper.Map<UserDto>(user);
+            return Result<UserDto>.SuccessFull(dto);
         }
     }
 }
