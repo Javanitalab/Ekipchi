@@ -13,4 +13,11 @@
         <PackageReference Include="coverlet.collector" Version="1.0.1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Hastnama.Ekipchi.Api\Hastnama.Ekipchi.Api.csproj" />
+      <ProjectReference Include="..\Hastnama.Ekipchi.Business\Hastnama.Ekipchi.Business.csproj" />
+      <ProjectReference Include="..\Hastnama.Ekipchi.Common\Hastnama.Ekipchi.Common.csproj" />
+      <ProjectReference Include="..\Hastnama.Ekipchi.Data\Hastnama.Ekipchi.Data.csproj" />
+    </ItemGroup>
+
 </Project>

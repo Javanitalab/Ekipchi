@@ -21,8 +21,8 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.User
 
             RuleFor(dto => dto.Mobile)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage(PersianErrorMessage.InvalidUserCredential)
-                .MaximumLength(16).WithMessage(PersianErrorMessage.InvalidUserCredential);
+                .NotEmpty().WithMessage(PersianErrorMessage.InvalidMobile)
+                .MaximumLength(16).WithMessage(PersianErrorMessage.InvalidMobile);
             
             RuleFor(dto => dto.Id)
                 .Cascade(CascadeMode.StopOnFirstFailure)

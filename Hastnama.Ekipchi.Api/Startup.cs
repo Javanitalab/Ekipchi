@@ -1,5 +1,7 @@
+using Hastnama.Ekipchi.Api.Core.Environment;
 using Hastnama.Ekipchi.Api.Core.Extensions;
 using Hastnama.Ekipchi.Api.Installer;
+using Hastnama.Ekipchi.Api.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -24,21 +26,23 @@ namespace Hastnama.Ekipchi.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,IApplicationBootstrapper applicationBootstrapper)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
-            
+            applicationBootstrapper.Initial();
+
             app.UseRouting();
 
             app.UseCors("MyPolicy");
 
             app.UseHttpsRedirection();
-            
-            app.UseAuthorization();
+            app.UseMiddleware<ApplicationMetaMiddleware>();
+            app.UseMiddleware<MembershipMiddleware>();
+            app.UseAuthentication();
             
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 

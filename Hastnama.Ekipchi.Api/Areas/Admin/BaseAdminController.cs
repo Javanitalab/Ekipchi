@@ -10,8 +10,8 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
     [Route("[Area]/[Controller]")]
     [EnableCors("MyPolicy")]
     [ApiController]
-    // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    // [ServiceFilter(typeof(AdminAuthorization))]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [ServiceFilter(typeof(AdminAuthorization))]
     public class BaseAdminController : Controller
     {
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Hastnama.Ekipchi.Business.Service.Interface;
+using Hastnama.Ekipchi.Common.Enum;
 using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Data.Auth;
@@ -73,6 +74,26 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         public async Task<IActionResult> Update([FromQuery] UpdateUserDto updateUserDto)
         {
             var result = await _unitOfWork.UserService.UpdateProfile(updateUserDto);
+            if (!result.Success)
+                return result.ApiResult;
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Delete User 
+        /// </summary>
+        /// <param name="updateUserDto"></param>
+        /// <returns>NoContent</returns>
+        /// <response code="200">if login successfully </response>
+        /// <response code="400">If validation failure.</response>
+        /// <response code="500">If an unexpected error happen</response>
+        [ProducesResponseType(typeof(ApiMessage), 400)]
+        [ProducesResponseType(typeof(ApiMessage), 404)]
+        [ProducesResponseType(typeof(ApiMessage), 500)]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var result = await _unitOfWork.UserService.UpdateStatus(id, UserStatus.Delete);
             if (!result.Success)
                 return result.ApiResult;
             return NoContent();

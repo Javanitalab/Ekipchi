@@ -1,4 +1,5 @@
-﻿using Hastnama.Ekipchi.Api.Core.Token;
+﻿using Hastnama.Ekipchi.Api.Core.Environment;
+using Hastnama.Ekipchi.Api.Core.Token;
 using Hastnama.Ekipchi.Business.Service.Class;
 using Hastnama.Ekipchi.Business.Service.Interface;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +14,9 @@ namespace Hastnama.Ekipchi.Api.Installer
             services.AddTransient<ITokenGenerator, TokenGenerator>();
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+            
+            services.AddSingleton<IRequestMeta, RequestMeta>();
+
 
         }
     }

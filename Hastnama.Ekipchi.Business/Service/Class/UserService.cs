@@ -29,16 +29,18 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result<User>> Login(LoginDto loginDto)
         {
-            var hashPassword = StringUtil.HashPass(loginDto.Password);
             var user = await FirstOrDefaultAsyncAsNoTracking(u =>
-                (string.IsNullOrEmpty(u.Username) || u.Username == loginDto.Username)
-                && (string.IsNullOrEmpty(u.Email) || u.Email == loginDto.Email)
-                && (string.IsNullOrEmpty(u.Mobile) || u.Mobile == loginDto.Mobile)
-                && u.Password == hashPassword);
+                (string.IsNullOrEmpty(loginDto.Username) || u.Username == loginDto.Username)
+                && (string.IsNullOrEmpty(loginDto.Email) || u.Email == loginDto.Email)
+                && (string.IsNullOrEmpty(loginDto.Mobile) || u.Mobile == loginDto.Mobile));
 
             if (user == null)
                 return Result<User>.Failed(new NotFoundObjectResult(new ApiMessage
                     {Message = PersianErrorMessage.UserNotFound}));
+
+            if (!StringUtil.CheckPassword(loginDto.Password, user.Password))
+                return Result<User>.Failed(new BadRequestObjectResult(new ApiMessage
+                    {Message = PersianErrorMessage.InvalidUserCredential}));
 
             if (user.Status != UserStatus.Active)
                 return Result<User>.Failed(new BadRequestObjectResult(new ApiMessage
@@ -79,7 +81,8 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             UserFilterQueryDto filterQueryDto)
         {
             var users = await WhereAsyncAsNoTracking(u =>
-                    (
+                    u.Status != UserStatus.Delete
+                    && (
                         filterQueryDto.Keyword == null
                         || u.Name.ToLower().Contains(filterQueryDto.Keyword)
                         || u.Family.ToLower().Contains(filterQueryDto.Keyword)
@@ -104,7 +107,11 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             if (user == null)
                 return Result.Failed(new NotFoundObjectResult(new ApiMessage
                     {Message = PersianErrorMessage.UserNotFound}));
+
             _mapper.Map(updateUserDto, user);
+            if (!string.IsNullOrEmpty(updateUserDto.Password))
+                user.Password = StringUtil.HashPass(updateUserDto.Password);
+
             await Context.SaveChangesAsync();
             return Result.SuccessFull();
         }
@@ -154,6 +161,22 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
             var dto = _mapper.Map<UserDto>(user);
             return Result<UserDto>.SuccessFull(dto);
+        }
+
+        public async Task<Result> UpdateStatus(Guid id, UserStatus userStatus)
+        {
+            if (id == Guid.Empty)
+                return Result.Failed(new BadRequestObjectResult(new ApiMessage
+                    {Message = PersianErrorMessage.InvalidUserId}));
+
+            var user = await FirstOrDefaultAsync(u => u.Id == id);
+            if (user == null)
+                return Result.Failed(new NotFoundObjectResult(new ApiMessage
+                    {Message = PersianErrorMessage.UserNotFound}));
+            user.Status = userStatus;
+
+            await Context.SaveChangesAsync();
+            return Result.SuccessFull();
         }
     }
 }

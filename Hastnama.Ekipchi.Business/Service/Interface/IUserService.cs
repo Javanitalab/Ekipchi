@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Hastnama.Ekipchi.Common.Enum;
 using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Result;
 using Hastnama.Ekipchi.Data.Auth;
@@ -19,5 +20,6 @@ namespace Hastnama.Ekipchi.Business.Service.Interface
         Task<Result> UpdateProfile(UpdateUserDto updateUserDto);
         Task<Result> Create(CreateUserDto dto);
         Task<Result<UserDto>> Get(Guid id);
+        Task<Result> UpdateStatus(Guid id, UserStatus userStatus);
     }
 }

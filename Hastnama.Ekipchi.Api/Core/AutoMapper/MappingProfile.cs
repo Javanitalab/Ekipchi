@@ -53,6 +53,7 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
             CreateMap<CreateUserDto, User>()
                 .ForMember(x => x.Status, opt => opt.MapFrom(des => des.Status))
                 .ForMember(x => x.Username, opt => opt.MapFrom(des => des.Username))
+                .ForMember(x => x.Password, opt => opt.MapFrom(des => StringUtil.HashPass(des.Password)))
                 .ForMember(x => x.Email, opt => opt.MapFrom(des => des.Email))
                 .ForMember(x => x.Gender, opt => opt.MapFrom(des => des.Gender))
                 .ForMember(x => x.Avatar, opt => opt.MapFrom(des => des.Avatar))

@@ -3,8 +3,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Hastnama.Ekipchi.Data.Auth;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -14,40 +16,36 @@ namespace Hastnama.Ekipchi.UnitTest.ControllerTest.Base
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class BaseControllerTest
     {
-        protected const string _baseUrl = " http://localhost:5000";
+        protected const string _baseUrl = "http://localhost:5000";
 
-  
-        protected string GetMessageInfo(string message, string languageCode)
+        
+        protected async Task<string> GetAdminAccessToken()
         {
-            var path =
-                Directory.GetCurrentDirectory().Split("\\").Reverse().Skip(4).Reverse()
-                    .Aggregate((a, b) => a + "/" + b) + "/Hastnama.GuitarIranShop.Api/Resources/" +
-                $"{MessageInfoPathForSpecificLanguage(languageCode)}";
-
-
-            if (!File.Exists(path)) return null;
-
-            var jsonData = File.ReadAllText(path);
-            var localization = JsonConvert.DeserializeObject<JObject>(jsonData);
-
-            var messageInfo = (localization["Data"] as JArray)?.FirstOrDefault(d => d["Key"].ToString() == message);
-            return messageInfo?["Template"].ToString();
+            return await Login("mohammad.javan.t@gmail.com", "Mohammad12!@");
         }
 
-        private string MessageInfoPathForSpecificLanguage(string languageCode)
+        protected async Task<string> GetNormalUserAccessToken()
         {
-            if (languageCode == "fa-IR")
-                return "Techravity.Shop.fa-IR.json";
-            return "Techravity.Shop.en-US.json";
+            return await Login("kamranpr972@gmail.com", "Mohammad12!@");
         }
 
-        protected string DetectLanguage(string message)
+        private async Task<string> Login(string email, string password)
         {
-            if (Regex.IsMatch(message, @"\p{IsArabic}"))
-                return "fa-IR";
-            return "en-US";
-        }
+            var httpClient = new HttpClient();
 
+            var body = JsonConvert.SerializeObject(new LoginDto
+                {Email = email, Password = password});
+            var content = new StringContent(body, Encoding.UTF8, "application/json");
+
+            var login = await httpClient.PostAsync($"{_baseUrl}/Admin/Auth/Login", content);
+
+            var responseString = await login.Content.ReadAsStringAsync();
+
+            var token = JsonConvert.DeserializeObject<TokenDto>(responseString);
+
+            return token.AccessToken;
+        }
+        
         protected static async Task<string> ExtractMessage(HttpResponseMessage response)
         {
             var responseBody = await response.Content.ReadAsStringAsync();
