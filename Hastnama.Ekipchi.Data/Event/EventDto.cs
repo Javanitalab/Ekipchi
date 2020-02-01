@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using Hastnama.Ekipchi.Common.Enum;
-using Hastnama.Ekipchi.Data.Country;
-using Hastnama.Ekipchi.Data.Region;
-using Microsoft.Extensions.Hosting;
+using Hastnama.Ekipchi.Data.Category;
+using Hastnama.Ekipchi.Data.Event.Gallery;
+using Hastnama.Ekipchi.Data.Event.Schedule;
+using Hastnama.Ekipchi.Data.Host;
 
-namespace Hastnama.Ekipchi.Data.City
+namespace Hastnama.Ekipchi.Data.Event
 {
     public class EventDto
     {

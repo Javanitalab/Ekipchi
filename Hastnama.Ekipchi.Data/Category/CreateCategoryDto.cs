@@ -1,6 +1,4 @@
-﻿using Hastnama.Ekipchi.Data.Country;
-
-namespace Hastnama.Ekipchi.Data.City
+﻿namespace Hastnama.Ekipchi.Data.Category
 {
     public class CreateCategoryDto
     {

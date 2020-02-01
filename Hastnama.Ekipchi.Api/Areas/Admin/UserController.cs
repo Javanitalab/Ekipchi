@@ -5,7 +5,6 @@ using Hastnama.Ekipchi.Business.Service.Interface;
 using Hastnama.Ekipchi.Common.Enum;
 using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Message;
-using Hastnama.Ekipchi.Data.Auth;
 using Hastnama.Ekipchi.Data.User;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,6 +37,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             [FromQuery] UserFilterQueryDto filterQueryDto)
         {
             var result = await _unitOfWork.UserService.List(pagingOptions, filterQueryDto);
+          
             return result.ApiResult;
         }
 
@@ -56,6 +56,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         public async Task<IActionResult> Get(Guid id)
         {
             var result = await _unitOfWork.UserService.Get(id);
+          
             return result.ApiResult;
         }
 

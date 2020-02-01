@@ -16,13 +16,10 @@ namespace Hastnama.Ekipchi.DataAccess.Repository
 
         Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate,Expression<Func<TEntity, bool>> include = null);
 
-        Task<List<TEntity>> WhereAsyncAsNoTracking(Expression<Func<TEntity, bool>> predicate,
-            PagingOptions pagingOptions,
-            Expression<Func<TEntity, bool>> include = null);
+        Task<List<TEntity>> WhereAsyncAsNoTracking(Expression<Func<TEntity, bool>> predicate, PagingOptions pagingOptions, Expression<Func<TEntity, bool>> include = null);
 
-        Task<List<TEntity>> WhereAsync(Expression<Func<TEntity, bool>> predicate,
-            PagingOptions pagingOptions,
-            Expression<Func<TEntity, bool>> include = null);
+        Task<List<TEntity>> WhereAsync(Expression<Func<TEntity, bool>> predicate, PagingOptions pagingOptions, Expression<Func<TEntity, bool>> include = null);
+    
         IQueryable<TEntity> GetAll();
 
         IQueryable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate);

@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using Hastnama.Ekipchi.Data.Country;
-using Hastnama.Ekipchi.Data.Region;
 using Hastnama.Ekipchi.Data.User;
 
-namespace Hastnama.Ekipchi.Data.City
+namespace Hastnama.Ekipchi.Data.Event.Gallery
 {
     public class EventGalleryDto
     {

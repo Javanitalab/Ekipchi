@@ -59,14 +59,14 @@ namespace Hastnama.Ekipchi.DataAccess.Repository
             return Context.Set<TEntity>().Where(predicate);
         }
 
-        public async Task<TEntity> FirstOrDefaultAsyncAsNoTracking(Expression<Func<TEntity, bool>> predicate,
-            Expression<Func<TEntity, bool>> include = null)
+        public async Task<TEntity> FirstOrDefaultAsyncAsNoTracking(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, bool>> include = null)
         {
             var context = Context.Set<TEntity>().AsNoTracking();
+
             if (include != null)
                 context = context.Include(include);
-            return await context.Where(predicate)
-                .FirstOrDefaultAsync(predicate);
+
+            return await context.Where(predicate).FirstOrDefaultAsync(predicate);
         }
 
         public Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate,
@@ -74,19 +74,18 @@ namespace Hastnama.Ekipchi.DataAccess.Repository
         {
             if (include != null)
                 return Context.Set<TEntity>().Include(include).FirstOrDefaultAsync(predicate);
+
             return Context.Set<TEntity>().FirstOrDefaultAsync(predicate);
         }
 
-        public async Task<List<TEntity>> WhereAsyncAsNoTracking(Expression<Func<TEntity, bool>> predicate,
-            PagingOptions pagingOptions,
-            Expression<Func<TEntity, bool>> include = null
-        )
+        public async Task<List<TEntity>> WhereAsyncAsNoTracking(Expression<Func<TEntity, bool>> predicate, PagingOptions pagingOptions, Expression<Func<TEntity, bool>> include = null)
         {
             var context = Context.Set<TEntity>().AsNoTracking();
+
             if (include != null)
                 context = context.Include(include);
-            return await context.Where(predicate)
-                .Skip(pagingOptions.Page * pagingOptions.Limit).Take(pagingOptions.Limit).ToListAsync();
+
+            return await context.Where(predicate).Skip(pagingOptions.Page * pagingOptions.Limit).Take(pagingOptions.Limit).ToListAsync();
         }
 
         public async Task<List<TEntity>> WhereAsync(Expression<Func<TEntity, bool>> predicate,

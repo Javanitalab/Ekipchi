@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using Hastnama.Ekipchi.Data.Country;
-using Hastnama.Ekipchi.Data.Region;
 
-namespace Hastnama.Ekipchi.Data.City
+namespace Hastnama.Ekipchi.Data.Event.Schedule
 {
     public class EventScheduleDto
     {

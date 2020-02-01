@@ -1,4 +1,4 @@
-﻿namespace Hastnama.Ekipchi.Data.City
+﻿namespace Hastnama.Ekipchi.Data.Event
 {
     public class FilterEventQueryDto
     {

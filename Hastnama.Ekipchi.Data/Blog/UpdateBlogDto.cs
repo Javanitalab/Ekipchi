@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using Hastnama.Ekipchi.Common.Enum;
-using Hastnama.Ekipchi.Data.Country;
-using Hastnama.Ekipchi.Data.Region;
+using Hastnama.Ekipchi.Data.BlogCategory;
 
-namespace Hastnama.Ekipchi.Data.City
+namespace Hastnama.Ekipchi.Data.Blog
 {
     public class UpdateBlogDto
     {

@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
-using Hastnama.Ekipchi.Common.Enum;
-using Hastnama.Ekipchi.Data.Country;
-using Hastnama.Ekipchi.Data.Region;
+﻿using Hastnama.Ekipchi.Common.Enum;
+using Hastnama.Ekipchi.Data.Category;
+using Hastnama.Ekipchi.Data.Event.Gallery;
+using Hastnama.Ekipchi.Data.Event.Schedule;
+using Hastnama.Ekipchi.Data.Host;
 
-namespace Hastnama.Ekipchi.Data.City
+namespace Hastnama.Ekipchi.Data.Event
 {
     public class UpdateEventDto
     {

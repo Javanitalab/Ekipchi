@@ -1,8 +1,4 @@
-﻿using System;
-using Hastnama.Ekipchi.Common.Enum;
-using Hastnama.Ekipchi.Data.Country;
-
-namespace Hastnama.Ekipchi.Data.City
+﻿namespace Hastnama.Ekipchi.Data.BlogCategory
 {
     public class CreateBlogCategoryDto
     {

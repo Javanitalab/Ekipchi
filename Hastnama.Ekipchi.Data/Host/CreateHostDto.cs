@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Hastnama.Ekipchi.Common.Enum;
-using Hastnama.Ekipchi.Data.Country;
+using Hastnama.Ekipchi.Data.Category;
+using Hastnama.Ekipchi.Data.Event;
+using Hastnama.Ekipchi.Data.Host.AvailableDate;
 
-namespace Hastnama.Ekipchi.Data.City
+namespace Hastnama.Ekipchi.Data.Host
 {
     public class CreateHostDto
     {
