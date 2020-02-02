@@ -14,6 +14,10 @@
     <DocumentationFile>bin\Release\Hastnama.Ekipchi.Api.xml</DocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;1591</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
@@ -37,6 +41,7 @@
     <Folder Include="Core\Token\" />
     <Folder Include="Core\Validator\Auth\" />
     <Folder Include="Filter\" />
+    <Folder Include="Data\" />
   </ItemGroup>
 
   <ItemGroup>

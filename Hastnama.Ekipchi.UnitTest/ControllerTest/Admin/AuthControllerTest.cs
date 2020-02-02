@@ -1,12 +1,6 @@
-﻿using System.Net;
-using System.Net.Http;
-using System.Text;
-using Hastnama.Ekipchi.UnitTest.ControllerTest.Base;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Xunit;
+﻿using Hastnama.Ekipchi.UnitTest.ControllerTest.Base;
 
-namespace Hastnama.Ekipchi.UnitTest.ControllerTest.AuthControllerTest
+namespace Hastnama.Ekipchi.UnitTest.ControllerTest.Admin
 {
     public class AuthControllerTest : BaseControllerTest
     {
