@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using Hastnama.Ekipchi.Common.Enum;
-using Hastnama.Ekipchi.Data.Country;
-using Hastnama.Ekipchi.Data.Region;
 
-namespace Hastnama.Ekipchi.Data.City
+namespace Hastnama.Ekipchi.Data.Host.AvailableDate
 {
     public class HostAvailableDateDto
     {

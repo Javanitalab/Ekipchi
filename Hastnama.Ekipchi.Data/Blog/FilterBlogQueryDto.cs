@@ -1,4 +1,4 @@
-﻿namespace Hastnama.Ekipchi.Data.City
+﻿namespace Hastnama.Ekipchi.Data.Blog
 {
     public class FilterBlogQueryDto
     {

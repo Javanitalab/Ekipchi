@@ -6,7 +6,7 @@
 
         public string Name { get; set; }
         
-        public virtual ProvinceDto Province { get; set; }
+        public ProvinceDto Province { get; set; }
         
     }
 }

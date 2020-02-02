@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using Hastnama.Ekipchi.Data.Country;
-using Hastnama.Ekipchi.Data.Region;
-
-namespace Hastnama.Ekipchi.Data.City
+﻿namespace Hastnama.Ekipchi.Data.Category
 {
     public class UpdateCategoryDto
     {

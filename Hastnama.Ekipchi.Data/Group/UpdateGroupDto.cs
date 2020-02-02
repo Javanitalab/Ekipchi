@@ -5,9 +5,9 @@ using Hastnama.Ekipchi.Data.Category;
 using Hastnama.Ekipchi.Data.Event;
 using Hastnama.Ekipchi.Data.Host.AvailableDate;
 
-namespace Hastnama.Ekipchi.Data.Host
+namespace Hastnama.Ekipchi.Data.Group
 {
-    public class HostDto
+    public class UpdateGroupDto
     {
         public Guid Id { get; set; }
 
@@ -38,9 +38,7 @@ namespace Hastnama.Ekipchi.Data.Host
         public string TermsAndCondition { get; set; }
 
         public bool IsDeleted { get; set; }
-
-        public DateTime CreateDateTime { get; set; }
-
+        
         public int EventCount { get; set; }
 
         public virtual List<string> Galleries { get; set; }

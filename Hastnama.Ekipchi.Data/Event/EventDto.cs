@@ -1,22 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using Hastnama.Ekipchi.Common.Enum;
-using Hastnama.Ekipchi.Data.Country;
-using Hastnama.Ekipchi.Data.Region;
-using Microsoft.Extensions.Hosting;
+using Hastnama.Ekipchi.Data.Category;
+using Hastnama.Ekipchi.Data.City;
+using Hastnama.Ekipchi.Data.Event.Gallery;
+using Hastnama.Ekipchi.Data.Event.Schedule;
+using Hastnama.Ekipchi.Data.Host;
+using Hastnama.Ekipchi.Data.User;
 
-namespace Hastnama.Ekipchi.Data.City
+namespace Hastnama.Ekipchi.Data.Event
 {
     public class EventDto
     {
         public Guid Id { get; set; }
-        
-        public virtual CategoryDto Category { get; set; }
+
+        public CategoryDto Category { get; set; }
 
         public string Name { get; set; }
-        
-        public virtual HostDto Host { get; set; }
+
+        public HostDto Host { get; set; }
 
         public string Description { get; set; }
 
@@ -54,8 +56,10 @@ namespace Hastnama.Ekipchi.Data.City
 
         public int TotalAttendees { get; set; }
 
-        public virtual EventScheduleDto EventSchedule { get; }
+        public EventScheduleDto EventSchedule { get; set; }
 
-        public virtual EventGalleryDto EventGallery { get; }
+        public EventGalleryDto EventGallery { get; set; }
+
+        public IList<UserDto> Users { get; set; }
     }
 }

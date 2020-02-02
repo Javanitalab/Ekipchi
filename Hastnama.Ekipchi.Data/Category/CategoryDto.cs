@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using Hastnama.Ekipchi.Data.Country;
-using Hastnama.Ekipchi.Data.Region;
+using Hastnama.Ekipchi.Data.Host;
 
-namespace Hastnama.Ekipchi.Data.City
+namespace Hastnama.Ekipchi.Data.Category
 {
     public class CategoryDto
     {

@@ -1,6 +1,6 @@
-﻿namespace Hastnama.Ekipchi.Data.Event
+﻿namespace Hastnama.Ekipchi.Data.Comment
 {
-    public class FilterEventQueryDto
+    public class FilterCommentQueryDto
     {
         public string HostName { get; set; }
 

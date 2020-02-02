@@ -1,8 +1,11 @@
-﻿using System;
-using Hastnama.Ekipchi.Common.Enum;
-using Hastnama.Ekipchi.Data.Country;
+﻿using Hastnama.Ekipchi.Common.Enum;
+using Hastnama.Ekipchi.Data.Category;
+using Hastnama.Ekipchi.Data.City;
+using Hastnama.Ekipchi.Data.Event.Gallery;
+using Hastnama.Ekipchi.Data.Event.Schedule;
+using Hastnama.Ekipchi.Data.Host;
 
-namespace Hastnama.Ekipchi.Data.City
+namespace Hastnama.Ekipchi.Data.Event
 {
     public class CreateEventDto
     {
@@ -34,9 +37,9 @@ namespace Hastnama.Ekipchi.Data.City
 
         public string Tags { get; set; }
         
-        public virtual EventScheduleDto EventSchedule { get; }
+        public virtual EventScheduleDto EventSchedule { get; set; }
 
-        public virtual EventGalleryDto EventGallery { get; }
+        public virtual EventGalleryDto EventGallery { get; set; }
         
     }
 }
