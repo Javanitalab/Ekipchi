@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Hastnama.Ekipchi.Common.General;
-using Hastnama.GuitarIranShop.DataAccess.Helper;
+using Hastnama.Ekipchi.Common.Helper;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Hastnama.Ekipchi.DataAccess.Repository
