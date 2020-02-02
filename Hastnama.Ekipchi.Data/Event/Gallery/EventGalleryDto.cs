@@ -8,11 +8,9 @@ namespace Hastnama.Ekipchi.Data.Event.Gallery
         public Guid Id { get; set; }
 
         public string Image { get; set; }
-        
+
+        public Guid EventId { get; set; }
+
         public Guid UserId { get; set; }
-
-        public UserDto User { get; set; }
-
-        public bool IsConfirmed { get; set; }
     }
 }
