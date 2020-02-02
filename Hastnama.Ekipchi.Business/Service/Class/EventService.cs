@@ -7,10 +7,10 @@ using Hastnama.Ekipchi.Data.Event;
 using Hastnama.Ekipchi.DataAccess.Context;
 using Hastnama.Ekipchi.DataAccess.Entities;
 using Hastnama.Ekipchi.DataAccess.Repository;
-using Hastnama.GuitarIranShop.DataAccess.Helper;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using Hastnama.Ekipchi.Common.Helper;
 
 namespace Hastnama.Ekipchi.Business.Service.Class
 {
