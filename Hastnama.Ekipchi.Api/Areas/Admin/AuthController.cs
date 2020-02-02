@@ -40,22 +40,23 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
             var user = await _unitOfWork.UserService.Login(loginDto);
+          
             if (!user.Success)
                 return user.ApiResult;
 
-            var authToken = await _tokenGenerator.Generate(new User
-                {Username = user.Data.Username, Email = user.Data.Username, Id = user.Data.Id});
+            var authToken = await _tokenGenerator.Generate(new User {Username = user.Data.Username, Email = user.Data.Username, Id = user.Data.Id});
+          
             if (!authToken.Success)
                 return authToken.ApiResult;
-            return Ok(new TokenDto
-                {AccessToken = authToken.Data.AccessToken, RefreshToken = authToken.Data.RefreshToken});
+            
+            return Ok(new TokenDto {AccessToken = authToken.Data.AccessToken, RefreshToken = authToken.Data.RefreshToken});
         }
 
 
         /// <summary>
         /// Register
         /// </summary>
-        /// <param name="RegisterDto"></param>
+        /// <param name="registerDto"></param>
         /// <returns>Access and refresh token.</returns>
         /// <response code="200">if login successfully </response>
         /// <response code="400">If validation failure.</response>
@@ -68,9 +69,9 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
         {
             var user = await _unitOfWork.UserService.Register(registerDto);
+           
             if (!user.Success)
                 return user.ApiResult;
-
 
             return Ok();
         }

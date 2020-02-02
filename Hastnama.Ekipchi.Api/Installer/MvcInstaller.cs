@@ -29,11 +29,10 @@ namespace Hastnama.Ekipchi.Api.Installer
                     builder => { builder.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod(); });
             });
 
-            services.AddControllers();
+            services.AddControllers(opt=> { opt.Filters.Add<OnExceptionMiddleware>(); }) .AddFluentValidation(mvcConfiguration =>
+                mvcConfiguration.RegisterValidatorsFromAssemblyContaining<Startup>());;
 
-            services.AddMvc(opt => { opt.Filters.Add<OnExceptionMiddleware>(); })
-                .AddFluentValidation(mvcConfiguration =>
-                    mvcConfiguration.RegisterValidatorsFromAssemblyContaining<Startup>());
+          
 
             services.Configure<ApiBehaviorOptions>(options =>
             {
