@@ -53,5 +53,11 @@
 
 
         #endregion
+
+        #region MyRegion
+
+        public const string EventNotFound = "رویداد پیدا نشد";
+
+        #endregion
     }
 }

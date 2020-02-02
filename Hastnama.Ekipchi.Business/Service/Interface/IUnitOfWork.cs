@@ -11,6 +11,7 @@ namespace Hastnama.Ekipchi.Business.Service.Interface
         ICityService CityService { get; }
         ICountyService CountyService { get; }
         IProvinceService ProvinceService { get; }
+        IEventService EventService { get; }
 
         #endregion Services
 

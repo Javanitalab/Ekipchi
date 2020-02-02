@@ -18,9 +18,10 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         private ICityService _cityService;
         private ICountyService _countyService;
         private IProvinceService _provinceService;
+        private IEventService _eventService;
         #endregion
 
-        public UnitOfWork(EkipchiDbContext context,IMapper mapper)
+        public UnitOfWork(EkipchiDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -28,10 +29,12 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         #region Services
 
-        public IUserService UserService => _userService = _userService ?? new UserService(_context,_mapper);
-        public ICityService CityService => _cityService = _cityService ?? new CityService(_context,_mapper);
-        public ICountyService CountyService => _countyService = _countyService ?? new CountyService(_context,_mapper);
-        public IProvinceService ProvinceService => _provinceService = _provinceService ?? new ProvinceService(_context,_mapper);
+        public IUserService UserService => _userService = _userService ?? new UserService(_context, _mapper);
+        public ICityService CityService => _cityService = _cityService ?? new CityService(_context, _mapper);
+        public ICountyService CountyService => _countyService = _countyService ?? new CountyService(_context, _mapper);
+        public IProvinceService ProvinceService => _provinceService = _provinceService ?? new ProvinceService(_context, _mapper);
+
+        public IEventService EventService => _eventService = _eventService ?? new EventService(_context, _mapper);
 
         #endregion Services
 
