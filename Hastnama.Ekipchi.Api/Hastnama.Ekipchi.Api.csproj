@@ -40,7 +40,6 @@
     <Folder Include="Core\Extensions\" />
     <Folder Include="Core\Token\" />
     <Folder Include="Core\Validator\Auth\" />
-    <Folder Include="Filter\" />
     <Folder Include="Data\" />
   </ItemGroup>
 
