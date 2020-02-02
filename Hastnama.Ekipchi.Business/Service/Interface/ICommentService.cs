@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Hastnama.Ekipchi.Common.General;
+using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Result;
 using Hastnama.Ekipchi.Data.Comment;
 using Hastnama.Ekipchi.DataAccess.Entities;
 using Hastnama.Ekipchi.DataAccess.Repository;
-using Hastnama.GuitarIranShop.DataAccess.Helper;
+
 
 namespace Hastnama.Ekipchi.Business.Service.Interface
 {

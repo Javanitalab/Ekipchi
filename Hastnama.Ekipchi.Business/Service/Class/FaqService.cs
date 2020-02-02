@@ -2,13 +2,14 @@
 using AutoMapper;
 using Hastnama.Ekipchi.Business.Service.Interface;
 using Hastnama.Ekipchi.Common.General;
+using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Common.Result;
 using Hastnama.Ekipchi.Data.Faq;
 using Hastnama.Ekipchi.DataAccess.Context;
 using Hastnama.Ekipchi.DataAccess.Entities;
 using Hastnama.Ekipchi.DataAccess.Repository;
-using Hastnama.GuitarIranShop.DataAccess.Helper;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hastnama.Ekipchi.Business.Service.Class
