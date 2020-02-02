@@ -25,9 +25,11 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         private ICommentService _commentService;
         private IFaqService _faqServicee;
         private ICouponService _couponService;
+        private IEventService _eventService;
+
         #endregion
 
-        public UnitOfWork(EkipchiDbContext context,IMapper mapper)
+        public UnitOfWork(EkipchiDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -46,6 +48,8 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         public ICommentService CommentService => _commentService = _commentService ?? new CommentService(_context,_mapper);
         public IFaqService FaqService => _faqServicee = _faqServicee ?? new FaqService(_context,_mapper);
         public ICouponService CouponService => _couponService = _couponService ?? new CouponService(_context,_mapper);
+        
+        public IEventService EventService => _eventService = _eventService ?? new EventService(_context, _mapper);
 
         #endregion Services
 

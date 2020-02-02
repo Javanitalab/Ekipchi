@@ -1,19 +1,15 @@
 ﻿using Hastnama.Ekipchi.Common.Enum;
-using Hastnama.Ekipchi.Data.Category;
-using Hastnama.Ekipchi.Data.City;
-using Hastnama.Ekipchi.Data.Event.Gallery;
-using Hastnama.Ekipchi.Data.Event.Schedule;
-using Hastnama.Ekipchi.Data.Host;
+using System;
 
 namespace Hastnama.Ekipchi.Data.Event
 {
     public class CreateEventDto
     {
-        public virtual CategoryDto Category { get; set; }
+        public int CategoryId { get; set; }
 
         public string Name { get; set; }
-        
-        public virtual HostDto Host { get; set; }
+
+        public Guid? HostId { get; set; }
 
         public string Description { get; set; }
 
@@ -36,10 +32,13 @@ namespace Hastnama.Ekipchi.Data.Event
         public string TermsAndCondition { get; set; }
 
         public string Tags { get; set; }
-        
-        public virtual EventScheduleDto EventSchedule { get; set; }
 
-        public virtual EventGalleryDto EventGallery { get; set; }
-        
+        public DateTime CreateDate { get; set; }
+
+        public double Income { get; set; }
+
+        public int PinedTimes { get; set; }
+
+        public int TotalAttendees { get; set; }
     }
 }
