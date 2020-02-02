@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Hastnama.Ekipchi.Business.Service.Interface;
 using Hastnama.Ekipchi.Common.Enum;
 using Hastnama.Ekipchi.Common.General;
@@ -14,9 +15,11 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
     public class UserController : BaseAdminController
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public UserController(IUnitOfWork unitOfWork)
+        public UserController(IUnitOfWork unitOfWork, IMapper mapper)
         {
+            _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
 
@@ -24,7 +27,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// <summary>
         /// User List
         /// </summary>
-        /// <param name="filterQueryDto"></param>
+        /// <param name="queryDto"></param>
         /// <param name="pagingOptions"></param>
         /// <returns>User List</returns>
         /// <response code="200">if login successfully </response>
@@ -35,9 +38,9 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpGet]
         public async Task<IActionResult> List([FromQuery] PagingOptions pagingOptions,
-            [FromQuery] UserFilterQueryDto filterQueryDto)
+            [FromQuery] FilterUserQueryDto queryDto)
         {
-            var result = await _unitOfWork.UserService.List(pagingOptions, filterQueryDto);
+            var result = await _unitOfWork.UserService.List(pagingOptions, queryDto);
             return result.ApiResult;
         }
 
@@ -116,7 +119,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             var result = await _unitOfWork.UserService.Create(createUserDto);
             if (!result.Success)
                 return result.ApiResult;
-            return NoContent();
+            return Created(Url.Link("GetUser", new {result.Data.Id}), _mapper.Map<UserDto>(result.Data));
         }
     }
 }

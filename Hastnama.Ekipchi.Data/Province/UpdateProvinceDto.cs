@@ -6,7 +6,5 @@
 
         public string Name { get; set; }
         
-        public ProvinceDto Province { get; set; }
-
     }
 }

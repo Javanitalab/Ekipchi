@@ -2,7 +2,7 @@
 
 namespace Hastnama.Ekipchi.Data.User
 {
-    public class UserFilterQueryDto
+    public class FilterUserQueryDto
     {
         public string Keyword { get; set; }
         public UserStatus? Status { get; set; }

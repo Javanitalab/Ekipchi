@@ -21,7 +21,7 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
         [ForeignKey(nameof(CountyId))]
         public virtual County County { get; set; }
 
-        public virtual List<Region> Regions { get; }
+        public virtual List<Region> Regions { get; set; }
 
     }
 }

@@ -8,6 +8,7 @@ using Hastnama.Ekipchi.Data.Auth;
 using Hastnama.Ekipchi.Data.User;
 using Hastnama.Ekipchi.DataAccess.Entities;
 using Hastnama.Ekipchi.DataAccess.Repository;
+using Hastnama.GuitarIranShop.DataAccess.Helper;
 
 namespace Hastnama.Ekipchi.Business.Service.Interface
 {
@@ -16,9 +17,9 @@ namespace Hastnama.Ekipchi.Business.Service.Interface
         Task<Result<User>> Login(LoginDto registerDto);
         Task<Result<User>> Register(RegisterDto registerDto);
         Task<Result<User>> GetAsync(Guid id);
-        Task<Result<List<UserDto>>> List(PagingOptions pagingOptions, UserFilterQueryDto filterQueryDto);
+        Task<Result<PagedList<UserDto>>> List(PagingOptions pagingOptions, FilterUserQueryDto queryDto);
         Task<Result> UpdateProfile(UpdateUserDto updateUserDto);
-        Task<Result> Create(CreateUserDto dto);
+        Task<Result<UserDto>> Create(CreateUserDto dto);
         Task<Result<UserDto>> Get(Guid id);
         Task<Result> UpdateStatus(Guid id, UserStatus userStatus);
     }

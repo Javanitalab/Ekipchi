@@ -2,14 +2,13 @@
 {
     public static class PersianErrorMessage
     {
-
         #region Common
 
         public const string BadRequestQuery = "ورودی های داده شده معتبر نیست";
         public const string InvalidPagingOption = "پیجینگ وارد شده معتبر نیست";
 
-
         #endregion
+
         #region User
 
         public const string InvalidUserCredential = "گذرواؤه یا واژه کاربری معتبر نمیباشد";
@@ -30,10 +29,29 @@
 
         #region City
 
-        public const string CityNotFound = "شهر وارد شده معتبر نیست";
+        public const string CityNotFound = "شهر مورد نظر پیدا نشد";
+        public const string DuplicateCityName = "نام شهر تکراری است";
+        public const string CityNameIsInvalid = "نام شهر نامعتبر است";
+        public const string InvalidCityId = "ایدی شهر معتبر نمیباشد";
+
+        #endregion
+
+        #region County
+
+        public const string InvalidCountyId = "ایدی شهرستان معتبر نمیباشد";
+        public const string DuplicateCountyName = "نام شهرستان تکراری است";
+        public const string CountyNotFound = "شهرستان مورد نظر پیدا نشد";
 
 
         #endregion
 
+        #region Province
+
+        public const string InvalidProvinceId = "ایدی استان معتبر نمیباشد";
+        public const string DuplicateProvinceName = "نام استان تکراری است";
+        public const string ProvinceNotFound = "استان مورد نظر پیدا نشد";
+
+
+        #endregion
     }
 }

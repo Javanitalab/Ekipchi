@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Hastnama.Ekipchi.Common.General;
-using Hastnama.Ekipchi.Common.Helper;
+using Hastnama.GuitarIranShop.DataAccess.Helper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
@@ -60,44 +60,45 @@ namespace Hastnama.Ekipchi.DataAccess.Repository
         }
 
         public async Task<TEntity> FirstOrDefaultAsyncAsNoTracking(Expression<Func<TEntity, bool>> predicate,
-            Expression<Func<TEntity, bool>> include = null)
+            params Expression<Func<TEntity, object>>[] includes)
         {
-            var context = Context.Set<TEntity>().AsNoTracking();
-            if (include != null)
-                context = context.Include(include);
-            return await context.Where(predicate)
-                .FirstOrDefaultAsync(predicate);
+            var query = Context.Set<TEntity>().AsNoTracking();
+            if (includes == null || !includes.Any())
+                return await query.FirstOrDefaultAsync(predicate);
+            includes.ToList().ForEach(include => query = query.Include(include));
+            return await query.FirstOrDefaultAsync(predicate);
         }
 
-        public Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate,
-            Expression<Func<TEntity, bool>> include = null)
+        public async Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate,
+            params Expression<Func<TEntity, object>>[] includes)
         {
-            if (include != null)
-                return Context.Set<TEntity>().Include(include).FirstOrDefaultAsync(predicate);
-            return Context.Set<TEntity>().FirstOrDefaultAsync(predicate);
+            var query = Context.Set<TEntity>().AsQueryable();
+            if (includes == null || !includes.Any())
+                return await query.FirstOrDefaultAsync(predicate);
+            includes.ToList().ForEach(include => query = query.Include(include));
+            return await query.FirstOrDefaultAsync(predicate);
         }
 
-        public async Task<List<TEntity>> WhereAsyncAsNoTracking(Expression<Func<TEntity, bool>> predicate,
+        public async Task<PagedList<TEntity>> WhereAsyncAsNoTracking(Expression<Func<TEntity, bool>> predicate,
             PagingOptions pagingOptions,
-            Expression<Func<TEntity, bool>> include = null
-        )
+            params Expression<Func<TEntity, object>>[] includes)
         {
-            var context = Context.Set<TEntity>().AsNoTracking();
-            if (include != null)
-                context = context.Include(include);
-            return await context.Where(predicate)
-                .Skip(pagingOptions.Page * pagingOptions.Limit).Take(pagingOptions.Limit).ToListAsync();
+            var query = GetAll().AsNoTracking().Where(predicate);
+            if (includes == null || !includes.Any())
+                return await GetPagedAsync(pagingOptions.Page, pagingOptions.Limit, query);
+            includes.ToList().ForEach(include => query = query.Include(include));
+            return await GetPagedAsync(pagingOptions.Page, pagingOptions.Limit, query);
         }
 
-        public async Task<List<TEntity>> WhereAsync(Expression<Func<TEntity, bool>> predicate,
+        public async Task<PagedList<TEntity>> WhereAsync(Expression<Func<TEntity, bool>> predicate,
             PagingOptions pagingOptions,
-            Expression<Func<TEntity, bool>> include = null)
+            params Expression<Func<TEntity, object>>[] includes)
         {
-            if (include != null)
-                return await Context.Set<TEntity>().Include(include).Where(predicate)
-                    .Skip(pagingOptions.Page * pagingOptions.Limit).Take(pagingOptions.Limit).ToListAsync();
-            return await Context.Set<TEntity>().Where(predicate)
-                .Skip(pagingOptions.Page * pagingOptions.Limit).Take(pagingOptions.Limit).ToListAsync();
+            var query = GetAll().AsNoTracking().Where(predicate);
+            if (includes == null || !includes.Any())
+                return await GetPagedAsync(pagingOptions.Page, pagingOptions.Limit, query);
+            includes.ToList().ForEach(include => query = query.Include(include));
+            return await GetPagedAsync(pagingOptions.Page, pagingOptions.Limit, query);
         }
 
         public IQueryable<TEntity> GetAll()
@@ -117,6 +118,15 @@ namespace Hastnama.Ekipchi.DataAccess.Repository
 
             return await PagedList<TEntity>.CreateAsync(query, pageNumber, pageSize, rowsCount);
         }
+
+        private static string GetPropertyName<TEntity>(Expression<Func<TEntity, object>> expression)
+        {
+            MemberExpression memberExpr = expression.Body as MemberExpression;
+            if (memberExpr == null)
+                throw new ArgumentException("Expression body must be a member expression");
+            return memberExpr.Member.Name;
+        }
+
 
 
         public PagedList<TEntity> GetPagedAsync(int pageNumber, int pageSize, IEnumerable<TEntity> query)

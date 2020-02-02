@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Hastnama.Ekipchi.Common.General;
-using Hastnama.Ekipchi.Common.Helper;
+using Hastnama.GuitarIranShop.DataAccess.Helper;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Hastnama.Ekipchi.DataAccess.Repository
@@ -12,17 +12,19 @@ namespace Hastnama.Ekipchi.DataAccess.Repository
     public interface IRepository<TEntity> where TEntity : class
     {
         Task<TEntity> FirstOrDefaultAsyncAsNoTracking(Expression<Func<TEntity, bool>> predicate,
-            Expression<Func<TEntity, bool>> include= null);
+            params Expression<Func<TEntity, object>>[] includes);
 
-        Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate,Expression<Func<TEntity, bool>> include = null);
+        Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate,
+            params Expression<Func<TEntity, object>>[] includes);
 
-        Task<List<TEntity>> WhereAsyncAsNoTracking(Expression<Func<TEntity, bool>> predicate,
+        Task<PagedList<TEntity>> WhereAsyncAsNoTracking(Expression<Func<TEntity, bool>> predicate,
             PagingOptions pagingOptions,
-            Expression<Func<TEntity, bool>> include = null);
+            params  Expression<Func<TEntity, object>> [] include);
 
-        Task<List<TEntity>> WhereAsync(Expression<Func<TEntity, bool>> predicate,
+        Task<PagedList<TEntity>> WhereAsync(Expression<Func<TEntity, bool>> predicate,
             PagingOptions pagingOptions,
-            Expression<Func<TEntity, bool>> include = null);
+            params Expression<Func<TEntity, object>>[] includes);
+
         IQueryable<TEntity> GetAll();
 
         IQueryable<TEntity> FindBy(Expression<Func<TEntity, bool>> predicate);

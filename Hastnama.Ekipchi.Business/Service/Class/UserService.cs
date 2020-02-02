@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Hastnama.Ekipchi.Business.Service.Interface;
@@ -14,6 +12,7 @@ using Hastnama.Ekipchi.Data.User;
 using Hastnama.Ekipchi.DataAccess.Context;
 using Hastnama.Ekipchi.DataAccess.Entities;
 using Hastnama.Ekipchi.DataAccess.Repository;
+using Hastnama.GuitarIranShop.DataAccess.Helper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hastnama.Ekipchi.Business.Service.Class
@@ -77,8 +76,8 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             return Result<User>.SuccessFull(user);
         }
 
-        public async Task<Result<List<UserDto>>> List(PagingOptions pagingOptions,
-            UserFilterQueryDto filterQueryDto)
+        public async Task<Result<PagedList<UserDto>>> List(PagingOptions pagingOptions,
+            FilterUserQueryDto filterQueryDto)
         {
             var users = await WhereAsyncAsNoTracking(u =>
                     u.Status != UserStatus.Delete
@@ -94,11 +93,10 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 , pagingOptions
             );
             if (users == null)
-                return Result<List<UserDto>>.Failed(new NotFoundObjectResult(new ApiMessage
+                return Result<PagedList<UserDto>>.Failed(new NotFoundObjectResult(new ApiMessage
                     {Message = PersianErrorMessage.BadRequestQuery}));
 
-            var dtos = users.Select(user => _mapper.Map<UserDto>(user)).ToList();
-            return Result<List<UserDto>>.SuccessFull(dtos);
+            return Result<PagedList<UserDto>>.SuccessFull(users.MapTo<UserDto>(_mapper));
         }
 
         public async Task<Result> UpdateProfile(UpdateUserDto updateUserDto)
@@ -116,14 +114,14 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             return Result.SuccessFull();
         }
 
-        public async Task<Result> Create(CreateUserDto dto)
+        public async Task<Result<UserDto>> Create(CreateUserDto dto)
         {
             var user = _mapper.Map<User>(dto);
             if (user.Email != null)
             {
                 var duplicateUser = (await FirstOrDefaultAsyncAsNoTracking(u => u.Email == user.Email));
                 if (duplicateUser != null)
-                    return Result.Failed(new BadRequestObjectResult(new ApiMessage
+                    return Result<UserDto>.Failed(new BadRequestObjectResult(new ApiMessage
                         {Message = PersianErrorMessage.EmailAddressAlreadyExist}));
             }
 
@@ -131,7 +129,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             {
                 var duplicateUser = (await FirstOrDefaultAsyncAsNoTracking(u => u.Mobile == user.Mobile));
                 if (duplicateUser != null)
-                    return Result.Failed(new BadRequestObjectResult(new ApiMessage
+                    return Result<UserDto>.Failed(new BadRequestObjectResult(new ApiMessage
                         {Message = PersianErrorMessage.MobileAlreadyExist}));
             }
 
@@ -139,13 +137,13 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             {
                 var duplicateUser = (await FirstOrDefaultAsyncAsNoTracking(u => u.Username == user.Username));
                 if (duplicateUser != null)
-                    return Result.Failed(new BadRequestObjectResult(new ApiMessage
+                    return Result<UserDto>.Failed(new BadRequestObjectResult(new ApiMessage
                         {Message = PersianErrorMessage.UsernameAlreadyExist}));
             }
 
             await AddAsync(user);
             await Context.SaveChangesAsync();
-            return Result.SuccessFull();
+            return Result<UserDto>.SuccessFull(_mapper.Map<UserDto>(user));
         }
 
         public async Task<Result<UserDto>> Get(Guid id)
