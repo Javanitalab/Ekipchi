@@ -4,7 +4,7 @@ namespace Hastnama.Ekipchi.Data.Coupon
 {
     public class UpdateCouponDto
     {
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
 
         public string Code { get; set; }
 

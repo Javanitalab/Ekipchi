@@ -10,10 +10,10 @@ namespace Hastnama.Ekipchi.Data.Blog
         public int Id { get; set; }
         
         public UserDto User { get; set; }
-
-        public int? BlogCategoryId { get; set; }
-
-        public BlogCategoryDto BlogCategory { get; set; }
+        
+        public int BlogCategoryId { get; set; }
+        
+        public string BlogCategoryName { get; set; }
 
         public string Title { get; set; }
 

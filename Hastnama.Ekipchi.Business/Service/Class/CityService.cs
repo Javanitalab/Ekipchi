@@ -56,7 +56,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 return Result<CityDto>.Failed(new BadRequestObjectResult(new ApiMessage
                     {Message = PersianErrorMessage.DuplicateCityName}));
 
-            var city = _mapper.Map(createCityDto, new City());
+            var city = _mapper.Map<City>(createCityDto);
             await AddAsync(city);
             await Context.SaveChangesAsync();
 

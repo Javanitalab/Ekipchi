@@ -4,17 +4,17 @@ using AutoMapper;
 using Hastnama.Ekipchi.Business.Service.Interface;
 using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Message;
-using Hastnama.Ekipchi.Data.City;
+using Hastnama.Ekipchi.Data.BlogCategory;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hastnama.Ekipchi.Api.Areas.Admin
 {
-    public class CityController : BaseAdminController
+    public class BlogCategoryController : BaseAdminController
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public CityController(IUnitOfWork unitOfWork, IMapper mapper)
+        public BlogCategoryController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
@@ -22,47 +22,47 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
 
 
         /// <summary>
-        /// City List
+        /// BlogCategory List
         /// </summary>
         /// <param name="filterQueryDto"></param>
         /// <param name="pagingOptions"></param>
-        /// <returns>City List</returns>
+        /// <returns>BlogCategory List</returns>
         /// <response code="200">if login successfully </response>
         /// <response code="400">If validation failure.</response>
         /// <response code="500">If an unexpected error happen</response>
-        [ProducesResponseType(typeof(List<CityDto>), 200)]
+        [ProducesResponseType(typeof(List<BlogCategoryDto>), 200)]
         [ProducesResponseType(typeof(ApiMessage), 400)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpGet]
         public async Task<IActionResult> List([FromQuery] PagingOptions pagingOptions,
-            [FromQuery] FilterCityQueryDto filterQueryDto)
+            [FromQuery] FilterBlogCategoryQueryDto filterQueryDto)
         {
-            var result = await _unitOfWork.CityService.List(pagingOptions, filterQueryDto);
+            var result = await _unitOfWork.BlogCategoryService.List(pagingOptions, filterQueryDto);
             return result.ApiResult;
         }
 
         /// <summary>
-        /// City Profile
+        /// BlogCategory Profile
         /// </summary>
         /// <param name="id"></param>
-        /// <returns>City Profile</returns>
+        /// <returns>BlogCategory Profile</returns>
         /// <response code="200">if login successfully </response>
         /// <response code="400">If validation failure.</response>
         /// <response code="500">If an unexpected error happen</response>
-        [ProducesResponseType(typeof(CityDto), 200)]
+        [ProducesResponseType(typeof(BlogCategoryDto), 200)]
         [ProducesResponseType(typeof(ApiMessage), 400)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
-        [HttpGet("{id}", Name = "GetCity")]
+        [HttpGet("{id}", Name = "GetBlogCategory")]
         public async Task<IActionResult> Get(int id)
         {
-            var result = await _unitOfWork.CityService.Get(id);
+            var result = await _unitOfWork.BlogCategoryService.Get(id);
             return result.ApiResult;
         }
 
         /// <summary>
-        /// Update City 
+        /// Update BlogCategory 
         /// </summary>
-        /// <param name="updateCityDto"></param>
+        /// <param name="updateBlogCategoryDto"></param>
         /// <returns>NoContent</returns>
         /// <response code="200">if login successfully </response>
         /// <response code="400">If validation failure.</response>
@@ -71,9 +71,9 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPut]
-        public async Task<IActionResult> Update([FromQuery] UpdateCityDto updateCityDto)
+        public async Task<IActionResult> Update([FromQuery] UpdateBlogCategoryDto updateBlogCategoryDto)
         {
-            var result = await _unitOfWork.CityService.Update(updateCityDto);
+            var result = await _unitOfWork.BlogCategoryService.Update(updateBlogCategoryDto);
             if (!result.Success)
                 return result.ApiResult;
             return NoContent();
@@ -81,9 +81,9 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
 
 
         /// <summary>
-        /// Create City 
+        /// Create BlogCategory 
         /// </summary>
-        /// <param name="createCityDto"></param>
+        /// <param name="createBlogCategoryDto"></param>
         /// <returns>NoContent</returns>
         /// <response code="200">if login successfully </response>
         /// <response code="400">If validation failure.</response>
@@ -92,12 +92,12 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPost]
-        public async Task<IActionResult> Create([FromQuery] CreateCityDto createCityDto)
+        public async Task<IActionResult> Create([FromQuery] CreateBlogCategoryDto createBlogCategoryDto)
         {
-            var result = await _unitOfWork.CityService.Create(createCityDto);
+            var result = await _unitOfWork.BlogCategoryService.Create(createBlogCategoryDto);
             if (!result.Success)
                 return result.ApiResult;
-            return Created(Url.Link("GetCounty", new {result.Data.Id}), _mapper.Map<CityDto>(result.Data));
+            return Created(Url.Link("GetCounty", new {result.Data.Id}), _mapper.Map<BlogCategoryDto>(result.Data));
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Hastnama.Ekipchi.Data.BlogCategory
+﻿using System.Collections.Generic;
+
+namespace Hastnama.Ekipchi.Data.BlogCategory
 {
     public class BlogCategoryDto
     {
@@ -27,5 +29,8 @@
         public bool IsDeleted { get; set; }
 
         public BlogCategoryDto ParentCategory { get; set; }
+        
+        public IList<BlogCategoryDto> Children { get; }
+
     }
 }

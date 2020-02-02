@@ -4,7 +4,7 @@ namespace Hastnama.Ekipchi.Data.Comment
 {
     public class UpdateCommentDto
     {
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
         
         public string Content { get; set; }
 

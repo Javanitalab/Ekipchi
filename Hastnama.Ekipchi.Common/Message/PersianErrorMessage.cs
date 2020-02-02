@@ -50,7 +50,73 @@
         public const string InvalidProvinceId = "ایدی استان معتبر نمیباشد";
         public const string DuplicateProvinceName = "نام استان تکراری است";
         public const string ProvinceNotFound = "استان مورد نظر پیدا نشد";
+        public const string ProvinceNameIsInvalid = "نام استان نامعتبر است";
 
+
+        #endregion
+
+
+        #region Region
+
+        
+        public const string DuplicateRegionName = "نام منطقه تکراری است";
+        public const string RegionNotFound = "منطقه مورد نظر پیدا نشد";
+        public const string InvalidRegionId = "ایدی منطقه معتبر نمیباشد";
+        public const string RegionNameIsInvalid = "نام منطقه نامعتبر است";
+
+        #endregion
+
+        #region Blog
+
+        public const string DuplicateBlogTitle = "موضوع بلاگ تکراری است";
+        public const string BlogNotFound = "بلاگ مورد نظر پیدا نشد";
+        public const string InvalidBlogId = "ایدی بلاگ معتبر نمیباشد";
+        public const string BlogTitleIsInvalid = "موضوع بلاگ نامعتبر است";
+
+        #endregion
+
+        #region BlogCategory
+
+        
+        public const string DuplicateBlogCategoryName = " نام دسته بندی بلاگ تکراری است";
+        public const string BlogCategoryNotFound = "دسته بندی بلاگ مورد نظر پیدا نشد";
+        public const string InvalidBlogCategoryId = "ایدی دسته بندی معتبر نمیباشد";
+        public const string InvalidBlogCategorySlug = " شعار دسته بندی نامعتبر است";
+
+        #endregion
+        
+        #region Category
+
+        
+        public const string DuplicateCategoryName = " نام دسته بندی تکراری است";
+        public const string InvalidCategoryName = " نام دسته بندی معتبر نمیباشد";
+        public const string CategoryNotFound = "دسته بندی مورد نظر پیدا نشد";
+        public const string InvalidCategoryId = "ایدی دسته بندی معتبر نمیباشد";
+
+        #endregion
+        #region Comment
+
+        
+        public const string CommentNotFound = "کامنت مورد نظر پیدا نشد";
+        public const string InvalidCommentId = "ایدی کامنت معتبر نمیباشد";
+        public const string InvalidCommentContent = "محتوای کامنت معتبر نمیباشد";
+
+        #endregion
+        #region Faq
+
+        
+        public const string FaqNotFound = "کامنت مورد نظر پیدا نشد";
+        public const string InvalidFaqId = "ایدی کامنت معتبر نمیباشد";
+        public const string InvalidFaqQuestion = "محتوای کامنت معتبر نمیباشد";
+
+        #endregion
+        #region Coupan
+
+        
+        public const string CouponNotFound = "کامنت مورد نظر پیدا نشد";
+        public const string InvalidCouponId = "ایدی کامنت معتبر نمیباشد";
+        public const string DuplicateCouponCode = "کد تخفیف تکراری است";
+        public const string InvalidCouponCode = "کد تخفیف معتبر نمیباشد";
 
         #endregion
     }

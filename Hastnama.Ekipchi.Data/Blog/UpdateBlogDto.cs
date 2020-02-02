@@ -6,12 +6,11 @@ namespace Hastnama.Ekipchi.Data.Blog
 {
     public class UpdateBlogDto
     {
-        public Guid UseId { get; set; }
+        public int Id { get; set; }
         
-        public int? BlogCategoryId { get; set; }
+        public int BlogCategoryId { get; set; }
 
-        public BlogCategoryDto BlogCategory { get; set; }
-
+        public string BlogCategoryName { get; set; }
         public string Title { get; set; }
 
         public string Content { get; set; }
@@ -35,9 +34,9 @@ namespace Hastnama.Ekipchi.Data.Blog
         public ContentType ContentType { get; set; }
 
         public VideoType? VideoType { get; set; }
-        
+
         public DateTime? PublishDate { get; set; }
-        
+
         public bool IsSpecial { get; set; }
     }
 }

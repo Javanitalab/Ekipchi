@@ -41,8 +41,8 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 return Result.Failed(new BadRequestObjectResult(new ApiMessage
                     {Message = PersianErrorMessage.DuplicateProvinceName}));
 
-            var Province = await FirstOrDefaultAsync(c => c.Id == updateProvinceDto.Id);
-            _mapper.Map(updateProvinceDto, Province);
+            var province = await FirstOrDefaultAsync(c => c.Id == updateProvinceDto.Id);
+            _mapper.Map(updateProvinceDto, province);
             await Context.SaveChangesAsync();
 
             return Result.SuccessFull();
@@ -55,22 +55,22 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 return Result<ProvinceDto>.Failed(new BadRequestObjectResult(new ApiMessage
                     {Message = PersianErrorMessage.DuplicateProvinceName}));
 
-            var Province = _mapper.Map(createProvinceDto, new Province());
-            await AddAsync(Province);
+            var province = _mapper.Map<Province>(createProvinceDto);
+            await AddAsync(province);
             await Context.SaveChangesAsync();
 
-            return Result<ProvinceDto>.SuccessFull(_mapper.Map<ProvinceDto>(Province));
+            return Result<ProvinceDto>.SuccessFull(_mapper.Map<ProvinceDto>(province));
         }
 
         public async Task<Result<ProvinceDto>> Get(int id)
         {
-            var Province = await FirstOrDefaultAsyncAsNoTracking(c => c.Id == id, c => c.Counties);
-            if (Province == null)
+            var province = await FirstOrDefaultAsyncAsNoTracking(c => c.Id == id, c => c.Counties);
+            if (province == null)
                 return Result<ProvinceDto>.Failed(new NotFoundObjectResult(
                     new ApiMessage
                         {Message = PersianErrorMessage.ProvinceNotFound}));
 
-            return Result<ProvinceDto>.SuccessFull(_mapper.Map<ProvinceDto>(Province));
+            return Result<ProvinceDto>.SuccessFull(_mapper.Map<ProvinceDto>(province));
         }
     }
 }

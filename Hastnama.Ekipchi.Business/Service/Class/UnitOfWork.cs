@@ -18,6 +18,13 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         private ICityService _cityService;
         private ICountyService _countyService;
         private IProvinceService _provinceService;
+        private IRegionService _regionService;
+        private IBlogService _blogService;
+        private IBlogCategoryService _blogCategoryService;
+        private ICategoryService _categoryService;
+        private ICommentService _commentService;
+        private IFaqService _faqServicee;
+        private ICouponService _couponService;
         #endregion
 
         public UnitOfWork(EkipchiDbContext context,IMapper mapper)
@@ -32,6 +39,13 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         public ICityService CityService => _cityService = _cityService ?? new CityService(_context,_mapper);
         public ICountyService CountyService => _countyService = _countyService ?? new CountyService(_context,_mapper);
         public IProvinceService ProvinceService => _provinceService = _provinceService ?? new ProvinceService(_context,_mapper);
+        public IRegionService RegionService => _regionService = _regionService ?? new RegionService(_context,_mapper);
+        public IBlogService BlogService => _blogService = _blogService ?? new BlogService(_context,_mapper);
+        public IBlogCategoryService BlogCategoryService => _blogCategoryService = _blogCategoryService ?? new BlogCategoryService(_context,_mapper);
+        public ICategoryService CategoryService => _categoryService = _categoryService ?? new CategoryService(_context,_mapper);
+        public ICommentService CommentService => _commentService = _commentService ?? new CommentService(_context,_mapper);
+        public IFaqService FaqService => _faqServicee = _faqServicee ?? new FaqService(_context,_mapper);
+        public ICouponService CouponService => _couponService = _couponService ?? new CouponService(_context,_mapper);
 
         #endregion Services
 
