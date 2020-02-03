@@ -29,8 +29,9 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             FilterGroupQueryDto filterQueryDto)
         {
             var groups = await WhereAsyncAsNoTracking(c =>
-                (string.IsNullOrEmpty(filterQueryDto.Name) ||
-                 c.Name.ToLower().Contains(filterQueryDto.Name.ToLower())), pagingOptions);
+                    (string.IsNullOrEmpty(filterQueryDto.Name) ||
+                     c.Name.ToLower().Contains(filterQueryDto.Name.ToLower())), pagingOptions, g => g.User,
+                g => g.UserInGroups.Select(ug=>ug.User));
 
 
             return Result<PagedList<GroupDto>>.SuccessFull(groups.MapTo<GroupDto>(_mapper));
@@ -38,34 +39,36 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result> Update(UpdateGroupDto updateGroupDto)
         {
-            var group = await FirstOrDefaultAsync(c => c.Id == updateGroupDto.Id);
-            if (group.User.Id != updateGroupDto.User.Id)
+            var group = await FirstOrDefaultAsync(c => c.Id == updateGroupDto.Id, g => g.UserInGroups, g => g.User);
+            if (group.User.Id != updateGroupDto.OwnerId)
             {
-                var user = await Context.Users.FirstOrDefaultAsync(u => u.Id == updateGroupDto.User.Id);
+                var user = await Context.Users.FirstOrDefaultAsync(u => u.Id == updateGroupDto.OwnerId);
                 if (user == null)
                     return Result.Failed(new NotFoundObjectResult(
                         new ApiMessage
                             {Message = PersianErrorMessage.UserNotFound}));
                 group.User = user;
             }
-            
+
             _mapper.Map(updateGroupDto, group);
-            
-            if (!group.UserInGroups.Select(g => g.UserId).SequenceEqual(updateGroupDto.UsersInGroup.Select(g => g.Id)))
+
+            if (!group.UserInGroups.Select(g => g.UserId).SequenceEqual(updateGroupDto.UsersInGroup))
             {
                 // get all users that are removed 
                 var removedUsers = group.UserInGroups
-                    .Where(user => !updateGroupDto.UsersInGroup.Select(u => u.Id).Contains(user.UserId));
-                Context.UserInGroups.RemoveRange(removedUsers);
+                    .Where(user => !updateGroupDto.UsersInGroup.Contains(user.UserId));
+                if (removedUsers.Any())
+                    Context.UserInGroups.RemoveRange(removedUsers);
 
                 // get all users id that are added
-                var usersId = updateGroupDto.UsersInGroup.Select(u => u.Id).Where(userId =>
+                var usersId = updateGroupDto.UsersInGroup.Where(userId =>
                     !group.UserInGroups.Select(u => u.UserId).Contains(userId));
 
                 var addedUsers = Context.Users.Where(u => usersId.Contains(u.Id)).ToListAsync();
                 var userInGroups = addedUsers.Result.Select(user => new UserInGroup
                         {Id = Guid.NewGuid(), Groups = @group, JoinGroupDate = DateTime.Now, User = user})
                     .Union(group.UserInGroups.Where(ug => !removedUsers.Contains(ug))).ToList();
+                await Context.UserInGroups.AddRangeAsync(userInGroups);
                 group.UserInGroups = userInGroups;
             }
 
@@ -76,7 +79,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result<GroupDto>> Create(CreateGroupDto createGroupDto)
         {
-            var owner = await Context.Users.FirstOrDefaultAsync(u => u.Id == createGroupDto.User.Id);
+            var owner = await Context.Users.FirstOrDefaultAsync(u => u.Id == createGroupDto.OwnerId);
             if (owner == null)
                 return Result<GroupDto>.Failed(new NotFoundObjectResult(
                     new ApiMessage
@@ -84,6 +87,8 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
             var group = _mapper.Map<Group>(createGroupDto);
             group.User = owner;
+            group.Members = 1;
+            group.Id = Guid.NewGuid();
 
             await AddAsync(group);
             await Context.SaveChangesAsync();
@@ -93,7 +98,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result<GroupDto>> Get(Guid id)
         {
-            var group = await FirstOrDefaultAsyncAsNoTracking(c => c.Id == id);
+            var group = await FirstOrDefaultAsyncAsNoTracking(c => c.Id == id,g => g.UserInGroups.Select(ug=>ug.User));
             if (group == null)
                 return Result<GroupDto>.Failed(new NotFoundObjectResult(
                     new ApiMessage

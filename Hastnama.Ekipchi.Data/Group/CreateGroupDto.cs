@@ -13,7 +13,7 @@ namespace Hastnama.Ekipchi.Data.Group
 
         public string Name { get; set; }
 
-        public UserDto User { get; set; }
+        public Guid? OwnerId { get; set; }
         
         public bool IsPublic { get; set; }
         
