@@ -28,7 +28,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// </summary>
         /// <param name="filterEventQueryDto"></param>
         /// <param name="pagingOptions"></param>
-        /// <returns>City List</returns>
+        /// <returns>Event List</returns>
         /// <response code="200">if everything is ok </response>
         /// <response code="400">If validation failure.</response>
         /// <response code="500">If an unexpected error happen</response>
@@ -43,10 +43,10 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         }
 
         /// <summary>
-        /// Event List
+        /// Event
         /// </summary>
         /// <param name="id"></param>
-        /// <returns>City List</returns>
+        /// <returns>Event</returns>
         /// <response code="200">if item found </response>
         /// <response code="400">If validation failure.</response>
         /// <response code="404">If item not found.</response>
@@ -63,7 +63,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         }
 
         /// <summary>
-        /// Create City 
+        /// Create Event 
         /// </summary>
         /// <param name="createEvent"></param>
         /// <returns>NoContent</returns>
@@ -81,7 +81,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         }
 
         /// <summary>
-        /// Update City 
+        /// Update Event 
         /// </summary>
         /// <param name="updateEvent"></param>
         /// <returns>NoContent</returns>
@@ -104,10 +104,10 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         }
 
         /// <summary>
-        /// Event List
+        /// Delete Event
         /// </summary>
         /// <param name="id"></param>
-        /// <returns>City List</returns>
+        /// <returns>NoContent</returns>
         /// <response code="204">if item deleted </response>
         /// <response code="400">If validation failure.</response>
         /// <response code="404">If item not found.</response>
