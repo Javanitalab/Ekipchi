@@ -11,6 +11,8 @@ using Hastnama.Ekipchi.Data.City;
 using Hastnama.Ekipchi.Data.Comment;
 using Hastnama.Ekipchi.Data.Country;
 using Hastnama.Ekipchi.Data.Coupon;
+using Hastnama.Ekipchi.Data.Event;
+using Hastnama.Ekipchi.Data.Event.Gallery;
 using Hastnama.Ekipchi.Data.Host;
 using Hastnama.Ekipchi.Data.Province;
 using Hastnama.Ekipchi.Data.Region;
@@ -210,6 +212,17 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
 
             #endregion
 
+            #region EventGallery
+            CreateMap<CreateEventGalleryDto, EventGallery>();
+            CreateMap<UpdateEventGalleryDto, EventGallery>();
+            CreateMap<EventGallery, EventGalleryDto>();
+            #endregion
+
+            #region Event
+            CreateMap<CreateEventDto, Event>();
+            CreateMap<UpdateEventDto, Event>();
+            CreateMap<Event, EventDto>();
+            #endregion
 
             #region Category
 

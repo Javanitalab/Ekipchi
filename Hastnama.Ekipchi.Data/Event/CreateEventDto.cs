@@ -1,5 +1,8 @@
 ﻿using Hastnama.Ekipchi.Common.Enum;
 using System;
+using System.Collections.Generic;
+using Hastnama.Ekipchi.Data.Event.Gallery;
+using Hastnama.Ekipchi.Data.Event.Schedule;
 
 namespace Hastnama.Ekipchi.Data.Event
 {
@@ -40,5 +43,9 @@ namespace Hastnama.Ekipchi.Data.Event
         public int PinedTimes { get; set; }
 
         public int TotalAttendees { get; set; }
+
+        public List<CreateEventGalleryDto> CreateEventGallery { get; set; }
+
+        public CreateEventScheduleDto CreateEventSchedule { get; set; }
     }
 }

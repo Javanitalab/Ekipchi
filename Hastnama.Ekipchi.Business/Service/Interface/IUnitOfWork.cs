@@ -19,6 +19,7 @@ namespace Hastnama.Ekipchi.Business.Service.Interface
         IFaqService FaqService { get; }
         ICouponService CouponService { get; }
         IEventService EventService { get; }
+        IEventGalleryService EventGalleryService { get; }
 
         #endregion Services
 
