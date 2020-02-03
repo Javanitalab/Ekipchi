@@ -59,10 +59,6 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         public async Task<IActionResult> GetById(Guid id)
         {
             var events = await _unitOfWork.EventService.Get(id);
-
-            if (!events.Success)
-                return events.ApiResult;
-
             return events.ApiResult;
         }
 

@@ -11,6 +11,9 @@ using Hastnama.Ekipchi.Data.City;
 using Hastnama.Ekipchi.Data.Comment;
 using Hastnama.Ekipchi.Data.Country;
 using Hastnama.Ekipchi.Data.Coupon;
+using Hastnama.Ekipchi.Data.Event;
+using Hastnama.Ekipchi.Data.Event.Gallery;
+using Hastnama.Ekipchi.Data.Event.Schedule;
 using Hastnama.Ekipchi.Data.Faq;
 using Hastnama.Ekipchi.Data.Group;
 using Hastnama.Ekipchi.Data.Host;
@@ -83,27 +86,27 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
             CreateMap<CityDto, City>()
                 .ForMember(x => x.Name, opt => opt.MapFrom(o => o.Name))
                 .ForMember(x => x.CountyId, opt => opt.MapFrom(o => o.CountyId))
-                .ForMember(x => x.Regions, opt => opt.MapFrom(o => o.Regions.Select(r => new Region {Id = r.Id})))
+                .ForMember(x => x.Regions, opt => opt.MapFrom(o => o.Regions.Select(r => new Region { Id = r.Id })))
                 .ForMember(x => x.Id, opt => opt.MapFrom(o => o.Id));
 
             CreateMap<City, CityDto>()
                 .ForMember(x => x.Name, opt => opt.MapFrom(o => o.Name))
                 .ForMember(x => x.CountyName, opt => opt.MapFrom(o => o.County.Name))
                 .ForMember(x => x.CountyId, opt => opt.MapFrom(o => o.County.Id))
-                .ForMember(x => x.Regions, opt => opt.MapFrom(o => o.Regions.Select(r => new Region {Id = r.Id})))
+                .ForMember(x => x.Regions, opt => opt.MapFrom(o => o.Regions.Select(r => new Region { Id = r.Id })))
                 .ForMember(x => x.Id, opt => opt.MapFrom(o => o.Id));
 
             CreateMap<UpdateCityDto, City>()
                 .ForMember(x => x.Name, opt => opt.MapFrom(o => o.Name))
                 .ForMember(x => x.CountyId, opt => opt.MapFrom(o => o.CountyId))
-                .ForMember(x => x.Regions, opt => opt.MapFrom(o => o.Regions.Select(r => new Region {Id = r.Id})))
+                .ForMember(x => x.Regions, opt => opt.MapFrom(o => o.Regions.Select(r => new Region { Id = r.Id })))
                 .ForMember(x => x.Id, opt => opt.MapFrom(o => o.Id));
 
             CreateMap<City, UpdateCityDto>()
                 .ForMember(x => x.Name, opt => opt.MapFrom(o => o.Name))
                 .ForMember(x => x.CountyName, opt => opt.MapFrom(o => o.County.Name))
                 .ForMember(x => x.CountyId, opt => opt.MapFrom(o => o.County.Id))
-                .ForMember(x => x.Regions, opt => opt.MapFrom(o => o.Regions.Select(r => new RegionDto {Id = r.Id})))
+                .ForMember(x => x.Regions, opt => opt.MapFrom(o => o.Regions.Select(r => new RegionDto { Id = r.Id })))
                 .ForMember(x => x.Id, opt => opt.MapFrom(o => o.Id));
 
             CreateMap<CreateCityDto, City>()
@@ -140,19 +143,19 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
 
             CreateMap<ProvinceDto, Province>()
                 .ForMember(x => x.Name, opt => opt.MapFrom(o => o.Name))
-                .ForMember(x => x.Counties, opt => opt.MapFrom(o => o.Counties.Select(c => new County {Id = c.Id})))
+                .ForMember(x => x.Counties, opt => opt.MapFrom(o => o.Counties.Select(c => new County { Id = c.Id })))
                 .ForMember(x => x.Id, opt => opt.MapFrom(o => o.Id));
 
             CreateMap<Province, ProvinceDto>()
                 .ForMember(x => x.Name, opt => opt.MapFrom(o => o.Name))
                 .ForMember(x => x.Counties,
                     opt => opt.MapFrom(o => o.Counties.Select(c => new CountyDto
-                        {Id = c.Id, Name = c.Name, ProvinceId = c.Province.Id, ProvinceName = c.Province.Name})))
+                    { Id = c.Id, Name = c.Name, ProvinceId = c.Province.Id, ProvinceName = c.Province.Name })))
                 .ForMember(x => x.Id, opt => opt.MapFrom(o => o.Id));
 
             CreateMap<UpdateProvinceDto, Province>()
                 .ForMember(x => x.Name, opt => opt.MapFrom(o => o.Name))
-                .ForMember(x => x.Counties, opt => opt.MapFrom(o => o.Counties.Select(c => new County {Id = c.Id})))
+                .ForMember(x => x.Counties, opt => opt.MapFrom(o => o.Counties.Select(c => new County { Id = c.Id })))
                 .ForMember(x => x.Id, opt => opt.MapFrom(o => o.Id));
 
             CreateMap<CreateProvinceDto, Province>()
@@ -187,7 +190,7 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
 
             CreateMap<Blog, BlogDto>()
                 .ForMember(x => x.User,
-                    opt => opt.MapFrom(o => new UserDto {Id = o.User.Id, Username = o.User.Username}))
+                    opt => opt.MapFrom(o => new UserDto { Id = o.User.Id, Username = o.User.Username }))
                 .ForMember(x => x.BlogCategoryId, opt => opt.MapFrom(o => o.BlogCategory.Id))
                 .ForMember(x => x.BlogCategoryName, opt => opt.MapFrom(o => o.BlogCategory.Name));
 
@@ -211,17 +214,36 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
             CreateMap<CreateBlogCategoryDto, BlogCategory>();
 
             #endregion
-            
+
+            #region EventGallery
+            CreateMap<CreateEventGalleryDto, EventGallery>();
+            CreateMap<UpdateEventGalleryDto, EventGallery>();
+            CreateMap<EventGallery, EventGalleryDto>();
+            #endregion
+
+            #region EventSchedule
+            CreateMap<CreateEventScheduleDto, Event>();
+            CreateMap<UpdateEventScheduleDto, Event>();
+            CreateMap<Event, EventScheduleDto>();
+            #endregion
+
+            #region Event
+            CreateMap<CreateEventDto, Event>();
+            CreateMap<UpdateEventDto, Event>();
+            CreateMap<Event, EventDto>();
+            #endregion
+
+
             #region Category
 
             CreateMap<CategoryDto, Category>()
                 .ForMember(x => x.HostCategories,
-                    opt => opt.MapFrom(o => o.Hosts.Select(h => new HostCategory {CategoryId = o.Id, HostId = h.Id})));
+                    opt => opt.MapFrom(o => o.Hosts.Select(h => new HostCategory { CategoryId = o.Id, HostId = h.Id })));
 
             CreateMap<Category, CategoryDto>()
                 .ForMember(x => x.Hosts,
                     opt => opt.MapFrom(o =>
-                        o.HostCategories.Select(h => new HostDto {Id = h.Host.Id, Name = h.Host.Name})));
+                        o.HostCategories.Select(h => new HostDto { Id = h.Host.Id, Name = h.Host.Name })));
 
 
             CreateMap<UpdateCategoryDto, Category>();
@@ -253,7 +275,7 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
             CreateMap<CreateCouponDto, Coupon>();
 
             #endregion
-            
+
             #region Faq
 
             CreateMap<FaqDto, Faq>();

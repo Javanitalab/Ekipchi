@@ -49,6 +49,18 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         {
             var newEvent = _mapper.Map<Event>(createEventDto);
             await AddAsync(newEvent);
+
+            foreach (var gallery in createEventDto.CreateEventGallery)
+            {
+                var galleyItem = _mapper.Map<EventGallery>(gallery);
+                galleyItem.EventId = newEvent.Id;
+                await Context.EventGalleries.AddAsync(galleyItem);
+            }
+
+            var eventSchedule = _mapper.Map<EventSchedule>(createEventDto.CreateEventSchedule);
+            eventSchedule.EventId = newEvent.Id;
+            await Context.AddAsync(eventSchedule);
+
             await Context.SaveChangesAsync();
 
             return Result<EventDto>.SuccessFull(_mapper.Map<EventDto>(newEvent));
