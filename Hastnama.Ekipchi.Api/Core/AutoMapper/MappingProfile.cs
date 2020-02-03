@@ -12,6 +12,7 @@ using Hastnama.Ekipchi.Data.Comment;
 using Hastnama.Ekipchi.Data.Country;
 using Hastnama.Ekipchi.Data.Coupon;
 using Hastnama.Ekipchi.Data.Faq;
+using Hastnama.Ekipchi.Data.Group;
 using Hastnama.Ekipchi.Data.Host;
 using Hastnama.Ekipchi.Data.Province;
 using Hastnama.Ekipchi.Data.Region;
@@ -262,6 +263,18 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
             CreateMap<UpdateFaqDto, Faq>();
 
             CreateMap<CreateFaqDto, Faq>();
+
+            #endregion
+            
+            #region Group
+
+            CreateMap<GroupDto, Group>();
+
+            CreateMap<Group, GroupDto>();
+
+            CreateMap<UpdateGroupDto, Group>();
+
+            CreateMap<CreateGroupDto, Group>();
 
             #endregion
         }

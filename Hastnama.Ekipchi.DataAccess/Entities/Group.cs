@@ -31,6 +31,6 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
 
         public bool IsPublic { get; set; }
 
-        public virtual List<UserInGroup> UserInGroups { get; }
+        public virtual List<UserInGroup> UserInGroups { get; set;}
     }
 }

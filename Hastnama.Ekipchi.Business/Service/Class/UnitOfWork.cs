@@ -26,6 +26,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         private IFaqService _faqServicee;
         private ICouponService _couponService;
         private IEventService _eventService;
+        private IGroupService _groupService;
 
         #endregion
 
@@ -48,8 +49,8 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         public ICommentService CommentService => _commentService = _commentService ?? new CommentService(_context,_mapper);
         public IFaqService FaqService => _faqServicee = _faqServicee ?? new FaqService(_context,_mapper);
         public ICouponService CouponService => _couponService = _couponService ?? new CouponService(_context,_mapper);
-        
         public IEventService EventService => _eventService = _eventService ?? new EventService(_context, _mapper);
+        public IGroupService GroupService => _groupService = _groupService ?? new GroupService(_context, _mapper);
 
         #endregion Services
 
