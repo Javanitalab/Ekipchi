@@ -81,6 +81,15 @@
 
         #endregion
 
+        #region Message
+
+        public const string MessageNotFound = " پیامی پیدا نشد";
+        public const string SenderAndReceiverAreTheSame = " فرستنده و گیرنده نمیتوانند یکسان باشند";
+        public const string ParentMessageNotFound = " پیام اولیه پیدا نشد";
+        public const string ReceiverNotSet = " فرستنده مشخص نشده است";
+
+        #endregion
+
         #region Group
 
         public const string DuplicateGroupName = " نام گروه تکراری است";

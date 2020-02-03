@@ -1,4 +1,6 @@
-﻿using Hastnama.Ekipchi.Api.Filter;
+﻿using System;
+using Hastnama.Ekipchi.Api.Core.Extensions;
+using Hastnama.Ekipchi.Api.Filter;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -14,5 +16,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
     [ServiceFilter(typeof(AdminAuthorization))]
     public class BaseAdminController : Controller
     {
+        public Guid UserId => HttpContext.User.GetUserId();
+
     }
 }

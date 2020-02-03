@@ -20,6 +20,7 @@ namespace Hastnama.Ekipchi.Business.Service.Interface
         Task<Result> UpdateProfile(UpdateUserDto updateUserDto);
         Task<Result<UserDto>> Create(CreateUserDto dto);
         Task<Result<UserDto>> Get(Guid id);
+        Task<Result<UserDto>> GetByEmail(string email);
         Task<Result> UpdateStatus(Guid id, UserStatus userStatus);
     }
 }

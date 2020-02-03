@@ -29,6 +29,9 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         private IGroupService _groupService;
         private IEventGalleryService _eventGalleryService;
         private IEventScheduleService _eventScheduleService;
+        private IUserMessageService _userMessageService;
+        private IMessageService _messageService;
+
 
         #endregion
 
@@ -55,6 +58,8 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         public IGroupService GroupService => _groupService = _groupService ?? new GroupService(_context, _mapper);
         public IEventGalleryService EventGalleryService => _eventGalleryService = _eventGalleryService ?? new EventGalleryService(_context, _mapper);
         public IEventScheduleService EventScheduleService => _eventScheduleService = _eventScheduleService ?? new EventScheduleService(_context, _mapper);
+        public IUserMessageService UserMessageService => _userMessageService = _userMessageService ?? new UserMessageService(_context);
+        public IMessageService MessageService => _messageService = _messageService ?? new MessageService(_context);
 
         #endregion Services
 

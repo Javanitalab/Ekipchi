@@ -22,6 +22,8 @@ namespace Hastnama.Ekipchi.Business.Service.Interface
         IGroupService GroupService { get; }
         IEventGalleryService EventGalleryService { get; }
         IEventScheduleService EventScheduleService { get; }
+        IUserMessageService UserMessageService { get; }
+        IMessageService MessageService { get; }
 
         #endregion Services
 
