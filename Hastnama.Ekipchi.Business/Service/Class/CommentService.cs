@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Hastnama.Ekipchi.Business.Service.Interface;
@@ -62,5 +63,22 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
             return Result<CommentDto>.SuccessFull(_mapper.Map<CommentDto>(comment));
         }
+        
+        public async Task<Result> Delete(Guid id)
+        {
+            var comment = await FirstOrDefaultAsyncAsNoTracking(c => c.Id == id,
+                c => c.Children);
+            if (comment == null)
+                return Result.Failed(new NotFoundObjectResult(
+                    new ApiMessage
+                        {Message = PersianErrorMessage.CommentNotFound}));
+
+            RemoveRange(comment.Children);
+            Delete(comment);
+            await Context.SaveChangesAsync();
+
+            return Result.SuccessFull();
+        }
+
     }
 }

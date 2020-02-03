@@ -10,6 +10,7 @@ using Hastnama.Ekipchi.DataAccess.Context;
 using Hastnama.Ekipchi.DataAccess.Entities;
 using Hastnama.Ekipchi.DataAccess.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hastnama.Ekipchi.Business.Service.Class
 {
@@ -26,9 +27,11 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             FilterCountyQueryDto filterQueryDto)
         {
             var counties = await WhereAsyncAsNoTracking(c =>
-                (string.IsNullOrEmpty(filterQueryDto.Name) || c.Name.ToLower().Contains(filterQueryDto.Name.ToLower())
-                 && (string.IsNullOrEmpty(filterQueryDto.ProvinceName) ||
-                     c.Province.Name.ToLower().Contains(filterQueryDto.ProvinceName.ToLower()))), pagingOptions,c=>c.Province);
+                    (string.IsNullOrEmpty(filterQueryDto.Name) ||
+                     c.Name.ToLower().Contains(filterQueryDto.Name.ToLower())
+                     && (string.IsNullOrEmpty(filterQueryDto.ProvinceName) ||
+                         c.Province.Name.ToLower().Contains(filterQueryDto.ProvinceName.ToLower()))), pagingOptions,
+                c => c.Province);
 
 
             return Result<PagedList<CountyDto>>.SuccessFull(counties.MapTo<CountyDto>(_mapper));
@@ -42,6 +45,18 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                     {Message = PersianErrorMessage.DuplicateCountyName}));
 
             var county = await FirstOrDefaultAsync(c => c.Id == updateCountyDto.Id);
+
+            if (county.ProvinceId != updateCountyDto.ProvinceId)
+            {
+                var province = await Context.Provinces.FirstOrDefaultAsync(u => u.Id == updateCountyDto.ProvinceId);
+
+                if (province == null)
+                    return Result.Failed(new BadRequestObjectResult(new ApiMessage
+                        {Message = PersianErrorMessage.InvalidProvinceId}));
+                
+                county.Province = province;
+            }
+
             _mapper.Map(updateCountyDto, county);
             await Context.SaveChangesAsync();
 
@@ -55,7 +70,15 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 return Result<CountyDto>.Failed(new BadRequestObjectResult(new ApiMessage
                     {Message = PersianErrorMessage.DuplicateCountyName}));
 
-            var county = _mapper.Map(createCountyDto, new County());
+            var province = await Context.Provinces.FirstOrDefaultAsync(u => u.Id == createCountyDto.ProvinceId);
+
+            if (province == null)
+                return Result<CountyDto>.Failed(new BadRequestObjectResult(new ApiMessage
+                    {Message = PersianErrorMessage.InvalidProvinceId}));
+
+            var county = _mapper.Map<County>(createCountyDto);
+            county.Province = province;
+            
             await AddAsync(county);
             await Context.SaveChangesAsync();
 

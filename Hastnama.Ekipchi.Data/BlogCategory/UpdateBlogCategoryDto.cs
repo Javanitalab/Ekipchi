@@ -5,9 +5,7 @@
         public int Id { get; set; }
 
         public int? ParentId { get; set; }
-
         public string Name { get; set; }
-
         public string Slug { get; set; }
 
         public string Cover{ get; set; }
@@ -25,7 +23,5 @@
         public int SortOrder { get; set; }
 
         public bool IsDeleted { get; set; }
-
-        public BlogCategoryDto ParentCategory { get; set; }
     }
 }

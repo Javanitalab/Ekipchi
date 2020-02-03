@@ -16,7 +16,6 @@ namespace Hastnama.Ekipchi.Business.Service.Interface
     {
         Task<Result<User>> Login(LoginDto registerDto);
         Task<Result<User>> Register(RegisterDto registerDto);
-        Task<Result<User>> GetAsync(Guid id);
         Task<Result<PagedList<UserDto>>> List(PagingOptions pagingOptions, FilterUserQueryDto queryDto);
         Task<Result> UpdateProfile(UpdateUserDto updateUserDto);
         Task<Result<UserDto>> Create(CreateUserDto dto);

@@ -21,9 +21,5 @@
         public string Logo  { get; set; }
 
         public int SortOrder { get; set; }
-
-        public bool IsDeleted { get; set; }
-
-        public BlogCategoryDto ParentCategory { get; set; }
     }
 }

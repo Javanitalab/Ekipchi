@@ -9,7 +9,6 @@ using Hastnama.Ekipchi.Data.Category;
 using Hastnama.Ekipchi.DataAccess.Context;
 using Hastnama.Ekipchi.DataAccess.Entities;
 using Hastnama.Ekipchi.DataAccess.Repository;
-
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hastnama.Ekipchi.Business.Service.Class
@@ -72,6 +71,21 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                         {Message = PersianErrorMessage.CategoryNotFound}));
 
             return Result<CategoryDto>.SuccessFull(_mapper.Map<CategoryDto>(category));
+        }
+
+        public async Task<Result> Delete(int id)
+        {
+            var category =
+                await FirstOrDefaultAsyncAsNoTracking(c => c.Id == id);
+            if (category == null)
+                return Result.Failed(new NotFoundObjectResult(
+                    new ApiMessage
+                        {Message = PersianErrorMessage.CategoryNotFound}));
+
+            category.IsDeleted = true;
+            await Context.SaveChangesAsync();
+
+            return Result.SuccessFull();
         }
     }
 }

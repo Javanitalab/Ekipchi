@@ -15,5 +15,7 @@ namespace Hastnama.Ekipchi.Business.Service.Interface
         Task<Result> Update(UpdateCategoryDto updateCategoryDto);
         Task<Result<CategoryDto>> Create(CreateCategoryDto dto);
         Task<Result<CategoryDto>> Get(int id);
+        Task<Result> Delete(int id);
+
     }
 }

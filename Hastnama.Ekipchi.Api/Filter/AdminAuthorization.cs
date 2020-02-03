@@ -40,7 +40,7 @@ namespace Hastnama.Ekipchi.Api.Filter
 
             var id = new Guid(tokenS.Claims.First(claim => claim.Type == "Id").Value);
 
-            var user = await _unitOfWork.UserService.GetAsync(id);
+            var user = await _unitOfWork.UserService.Get(id);
 
             if (!user.Success)
             {

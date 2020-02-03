@@ -11,6 +11,7 @@ using Hastnama.Ekipchi.Data.City;
 using Hastnama.Ekipchi.Data.Comment;
 using Hastnama.Ekipchi.Data.Country;
 using Hastnama.Ekipchi.Data.Coupon;
+using Hastnama.Ekipchi.Data.Faq;
 using Hastnama.Ekipchi.Data.Host;
 using Hastnama.Ekipchi.Data.Province;
 using Hastnama.Ekipchi.Data.Region;
@@ -209,8 +210,7 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
             CreateMap<CreateBlogCategoryDto, BlogCategory>();
 
             #endregion
-
-
+            
             #region Category
 
             CreateMap<CategoryDto, Category>()
@@ -250,6 +250,18 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
             CreateMap<UpdateCouponDto, Coupon>();
 
             CreateMap<CreateCouponDto, Coupon>();
+
+            #endregion
+            
+            #region Faq
+
+            CreateMap<FaqDto, Faq>();
+
+            CreateMap<Faq, FaqDto>();
+
+            CreateMap<UpdateFaqDto, Faq>();
+
+            CreateMap<CreateFaqDto, Faq>();
 
             #endregion
         }

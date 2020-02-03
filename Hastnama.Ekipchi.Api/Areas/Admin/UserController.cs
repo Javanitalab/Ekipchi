@@ -29,11 +29,11 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// <param name="queryDto"></param>
         /// <param name="pagingOptions"></param>
         /// <returns>User List</returns>
-        /// <response code="200">if login successfully </response>
-        /// <response code="400">If validation failure.</response>
+        /// <response code="200">if Get List successfully </response>
+        /// <response code="404">If entity not found.</response>
         /// <response code="500">If an unexpected error happen</response>
         [ProducesResponseType(typeof(List<UserDto>), 200)]
-        [ProducesResponseType(typeof(ApiMessage), 400)]
+        [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpGet]
         public async Task<IActionResult> List([FromQuery] PagingOptions pagingOptions,
@@ -48,11 +48,11 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// </summary>
         /// <param name="id"></param>
         /// <returns>User Profile</returns>
-        /// <response code="200">if login successfully </response>
-        /// <response code="400">If validation failure.</response>
+        /// <response code="200">if Get successfully </response>
+        /// <response code="404">If entity not found.</response>
         /// <response code="500">If an unexpected error happen</response>
         [ProducesResponseType(typeof(UserDto), 200)]
-        [ProducesResponseType(typeof(ApiMessage), 400)]
+        [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpGet("{id}", Name = "GetUser")]
         public async Task<IActionResult> Get(Guid id)
@@ -67,9 +67,11 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// </summary>
         /// <param name="updateUserDto"></param>
         /// <returns>NoContent</returns>
-        /// <response code="200">if login successfully </response>
+        /// <response code="204">if Update successfully </response>
         /// <response code="400">If validation failure.</response>
+        /// <response code="404">If entity not found.</response>
         /// <response code="500">If an unexpected error happen</response>
+        [ProducesResponseType(204)]
         [ProducesResponseType(typeof(ApiMessage), 400)]
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
@@ -85,10 +87,10 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// <summary>
         /// Delete User 
         /// </summary>
-        /// <param name="updateUserDto"></param>
+        /// <param name="id"></param>
         /// <returns>NoContent</returns>
-        /// <response code="200">if login successfully </response>
-        /// <response code="400">If validation failure.</response>
+        /// <response code="204">if Delete successfully </response>
+        /// <response code="404">If entity not found.</response>
         /// <response code="500">If an unexpected error happen</response>
         [ProducesResponseType(typeof(ApiMessage), 400)]
         [ProducesResponseType(typeof(ApiMessage), 404)]
@@ -107,8 +109,9 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// </summary>
         /// <param name="createUserDto"></param>
         /// <returns>NoContent</returns>
-        /// <response code="200">if login successfully </response>
+        /// <response code="201">if Create successfully </response>
         /// <response code="400">If validation failure.</response>
+        /// <response code="404">If entity not found.</response>
         /// <response code="500">If an unexpected error happen</response>
         [ProducesResponseType(typeof(ApiMessage), 400)]
         [ProducesResponseType(typeof(ApiMessage), 404)]

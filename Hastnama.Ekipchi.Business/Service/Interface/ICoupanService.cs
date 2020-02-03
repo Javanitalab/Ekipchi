@@ -16,5 +16,7 @@ namespace Hastnama.Ekipchi.Business.Service.Interface
         Task<Result> Update(UpdateCouponDto updateCouponDto);
         Task<Result<CouponDto>> Create(CreateCouponDto dto);
         Task<Result<CouponDto>> Get(Guid id);
+        Task<Result> Delete(Guid id);
+
     }
 }

@@ -6,10 +6,12 @@ using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Common.Result;
 using Hastnama.Ekipchi.Data.City;
+using Hastnama.Ekipchi.Data.Country;
 using Hastnama.Ekipchi.DataAccess.Context;
 using Hastnama.Ekipchi.DataAccess.Entities;
 using Hastnama.Ekipchi.DataAccess.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hastnama.Ekipchi.Business.Service.Class
 {
@@ -43,6 +45,16 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                     {Message = PersianErrorMessage.DuplicateCityName}));
 
             var city = await FirstOrDefaultAsync(c => c.Id == updateCityDto.Id);
+
+            if (city.CountyId != updateCityDto.CountyId)
+            {
+                var county = await Context.Counties.FirstOrDefaultAsync(u => u.Id == updateCityDto.CountyId);
+                if (county == null)
+                    return Result.Failed(new BadRequestObjectResult(new ApiMessage
+                        {Message = PersianErrorMessage.InvalidCountyId}));
+                city.County = county;
+            }
+
             _mapper.Map(updateCityDto, city);
             await Context.SaveChangesAsync();
 
@@ -56,7 +68,14 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 return Result<CityDto>.Failed(new BadRequestObjectResult(new ApiMessage
                     {Message = PersianErrorMessage.DuplicateCityName}));
 
+            var county = await Context.Counties.FirstOrDefaultAsync(u => u.Id == createCityDto.CountyId);
+            if (county == null)
+                return Result<CityDto>.Failed(new BadRequestObjectResult(new ApiMessage
+                    {Message = PersianErrorMessage.InvalidCountyId}));
+
             var city = _mapper.Map<City>(createCityDto);
+            city.County = county;
+
             await AddAsync(city);
             await Context.SaveChangesAsync();
 

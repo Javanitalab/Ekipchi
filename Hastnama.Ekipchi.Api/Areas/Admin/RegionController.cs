@@ -42,15 +42,16 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         }
 
         /// <summary>
-        /// Region Profile
+        /// Region Detail
         /// </summary>
         /// <param name="id"></param>
-        /// <returns>Region Profile</returns>
+        /// <returns>Region Detail</returns>
         /// <response code="200">if login successfully </response>
         /// <response code="400">If validation failure.</response>
         /// <response code="500">If an unexpected error happen</response>
         [ProducesResponseType(typeof(RegionDto), 200)]
         [ProducesResponseType(typeof(ApiMessage), 400)]
+        [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpGet("{id}", Name = "GetRegion")]
         public async Task<IActionResult> Get(int id)
@@ -67,6 +68,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// <response code="200">if login successfully </response>
         /// <response code="400">If validation failure.</response>
         /// <response code="500">If an unexpected error happen</response>
+        [ProducesResponseType(204)]
         [ProducesResponseType(typeof(ApiMessage), 400)]
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
@@ -88,6 +90,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// <response code="200">if login successfully </response>
         /// <response code="400">If validation failure.</response>
         /// <response code="500">If an unexpected error happen</response>
+        [ProducesResponseType(201)]
         [ProducesResponseType(typeof(ApiMessage), 400)]
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]

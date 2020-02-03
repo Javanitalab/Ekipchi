@@ -27,8 +27,8 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// <param name="filterQueryDto"></param>
         /// <param name="pagingOptions"></param>
         /// <returns>Blog List</returns>
-        /// <response code="200">if login successfully </response>
-        /// <response code="400">If validation failure.</response>
+        /// <response code="200">if Get successfully </response>
+        /// <response code="404">If entity not found.</response>
         /// <response code="500">If an unexpected error happen</response>
         [ProducesResponseType(typeof(List<BlogDto>), 200)]
         [ProducesResponseType(typeof(ApiMessage), 400)]
@@ -42,15 +42,16 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         }
 
         /// <summary>
-        /// Blog Profile
+        /// Blog Detail
         /// </summary>
         /// <param name="id"></param>
-        /// <returns>Blog Profile</returns>
-        /// <response code="200">if login successfully </response>
-        /// <response code="400">If validation failure.</response>
+        /// <returns>Blog Detail</returns>
+        /// <response code="200">if Get successfully </response>
+        /// <response code="404">If entity not found.</response>
         /// <response code="500">If an unexpected error happen</response>
         [ProducesResponseType(typeof(BlogDto), 200)]
         [ProducesResponseType(typeof(ApiMessage), 400)]
+        [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpGet("{id}", Name = "GetBlog")]
         public async Task<IActionResult> Get(int id)
@@ -64,9 +65,11 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// </summary>
         /// <param name="updateBlogDto"></param>
         /// <returns>NoContent</returns>
-        /// <response code="200">if login successfully </response>
+        /// <response code="204">if Update successfully </response>
         /// <response code="400">If validation failure.</response>
+        /// <response code="404">If entity not found.</response>
         /// <response code="500">If an unexpected error happen</response>
+        [ProducesResponseType(204)]
         [ProducesResponseType(typeof(ApiMessage), 400)]
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
@@ -85,9 +88,11 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// </summary>
         /// <param name="createBlogDto"></param>
         /// <returns>NoContent</returns>
-        /// <response code="200">if login successfully </response>
+        /// <response code="201">if Create successfully </response>
         /// <response code="400">If validation failure.</response>
+        /// <response code="404">If entity not found.</response>
         /// <response code="500">If an unexpected error happen</response>
+        [ProducesResponseType(201)]
         [ProducesResponseType(typeof(ApiMessage), 400)]
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
@@ -99,5 +104,26 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
                 return result.ApiResult;
             return Created(Url.Link("GetCounty", new {result.Data.Id}), _mapper.Map<BlogDto>(result.Data));
         }
+        
+        
+        /// <summary>
+        /// Delete Blog 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>NoContent</returns>
+        /// <response code="204">if Delete successfully </response>
+        /// <response code="404">If entity not found.</response>
+        /// <response code="500">If an unexpected error happen</response>
+        [ProducesResponseType(typeof(ApiMessage), 404)]
+        [ProducesResponseType(typeof(ApiMessage), 500)]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _unitOfWork.BlogService.Delete(id);
+            if (!result.Success)
+                return result.ApiResult;
+            return NoContent();
+        }
+
     }
 }
