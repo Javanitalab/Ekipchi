@@ -42,7 +42,7 @@ namespace Hastnama.Ekipchi.Api
             app.UseHttpsRedirection();
             app.UseMiddleware<ApplicationMetaMiddleware>();
             app.UseMiddleware<MembershipMiddleware>();
-            app.UseAuthentication();
+            app.UseAuthorization();
             
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 

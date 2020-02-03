@@ -9,7 +9,6 @@ using Hastnama.Ekipchi.Data.BlogCategory;
 using Hastnama.Ekipchi.DataAccess.Context;
 using Hastnama.Ekipchi.DataAccess.Entities;
 using Hastnama.Ekipchi.DataAccess.Repository;
-
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hastnama.Ekipchi.Business.Service.Class
@@ -45,6 +44,16 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                     {Message = PersianErrorMessage.DuplicateBlogCategoryName}));
 
             var blogCategory = await FirstOrDefaultAsync(c => c.Id == updateBlogCategoryDto.Id);
+            if (blogCategory.ParentId != updateBlogCategoryDto.ParentId)
+            {
+                var parentBlog = await FirstOrDefaultAsync(u => u.Id == updateBlogCategoryDto.ParentId);
+
+                if (parentBlog == null)
+                    return Result.Failed(new BadRequestObjectResult(new ApiMessage
+                        {Message = PersianErrorMessage.InvalidBlogCategoryId}));
+                blogCategory.ParentCategory = parentBlog;
+            }
+
             _mapper.Map(updateBlogCategoryDto, blogCategory);
             await Context.SaveChangesAsync();
 
@@ -59,7 +68,19 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 return Result<BlogCategoryDto>.Failed(new BadRequestObjectResult(new ApiMessage
                     {Message = PersianErrorMessage.DuplicateBlogCategoryName}));
 
+            BlogCategory parentBlog = null;
+            if (createBlogCategoryDto.ParentId != null)
+            {
+                await FirstOrDefaultAsync(u => u.Id == createBlogCategoryDto.ParentId);
+
+                if (parentBlog == null)
+                    return Result<BlogCategoryDto>.Failed(new BadRequestObjectResult(new ApiMessage
+                        {Message = PersianErrorMessage.InvalidBlogCategoryId}));
+            }
+
             var blogCategory = _mapper.Map(createBlogCategoryDto, new BlogCategory());
+            blogCategory.ParentCategory = parentBlog;
+
             await AddAsync(blogCategory);
             await Context.SaveChangesAsync();
 
@@ -75,6 +96,26 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                         {Message = PersianErrorMessage.BlogCategoryNotFound}));
 
             return Result<BlogCategoryDto>.SuccessFull(_mapper.Map<BlogCategoryDto>(blogCategory));
+        }
+
+        public async Task<Result> Delete(int id)
+        {
+            var blogCategory = await FirstOrDefaultAsync(c => c.Id == id, c => c.Children);
+            if (blogCategory == null)
+                return Result.Failed(new NotFoundObjectResult(
+                    new ApiMessage
+                        {Message = PersianErrorMessage.BlogCategoryNotFound}));
+
+            blogCategory.Children.ForEach(child =>
+            {
+                child.ParentId = null;
+                child.ParentCategory = null;
+            });
+
+            Delete(blogCategory);
+            await Context.SaveChangesAsync();
+
+            return Result.SuccessFull();
         }
     }
 }

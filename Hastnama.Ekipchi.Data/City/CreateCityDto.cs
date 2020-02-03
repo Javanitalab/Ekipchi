@@ -7,7 +7,5 @@ namespace Hastnama.Ekipchi.Data.City
         public string Name { get; set; }
 
         public int CountyId { get; set; }
-
-        public string CountyName { get; set; }
     }
 }

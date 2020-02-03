@@ -62,5 +62,20 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
             return Result<FaqDto>.SuccessFull(_mapper.Map<FaqDto>(faq));
         }
+        
+        public async Task<Result> Delete(int id)
+        {
+            var faq = await FirstOrDefaultAsyncAsNoTracking(c => c.Id == id);
+            if (faq == null)
+                return Result.Failed(new NotFoundObjectResult(
+                    new ApiMessage
+                        {Message = PersianErrorMessage.FaqNotFound}));
+
+            Delete(faq);
+            await Context.SaveChangesAsync();
+
+            return Result.SuccessFull();
+        }
+
     }
 }

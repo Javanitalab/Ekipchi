@@ -45,8 +45,8 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 return Result.Failed(new BadRequestObjectResult(new ApiMessage
                     {Message = PersianErrorMessage.DuplicateCouponCode}));
 
-            var Coupon = await FirstOrDefaultAsync(c => c.Id == updateCouponDto.Id);
-            _mapper.Map(updateCouponDto, Coupon);
+            var coupon = await FirstOrDefaultAsync(c => c.Id == updateCouponDto.Id);
+            _mapper.Map(updateCouponDto, coupon);
             await Context.SaveChangesAsync();
 
             return Result.SuccessFull();
@@ -59,22 +59,37 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 return Result<CouponDto>.Failed(new BadRequestObjectResult(new ApiMessage
                     {Message = PersianErrorMessage.DuplicateCouponCode}));
 
-            var Coupon = _mapper.Map(createCouponDto, new Coupon());
-            await AddAsync(Coupon);
+            var coupon = _mapper.Map(createCouponDto, new Coupon());
+            await AddAsync(coupon);
             await Context.SaveChangesAsync();
 
-            return Result<CouponDto>.SuccessFull(_mapper.Map<CouponDto>(Coupon));
+            return Result<CouponDto>.SuccessFull(_mapper.Map<CouponDto>(coupon));
         }
 
         public async Task<Result<CouponDto>> Get(Guid id)
         {
-            var Coupon = await FirstOrDefaultAsyncAsNoTracking(c => c.Id == id);
-            if (Coupon == null)
+            var coupon = await FirstOrDefaultAsyncAsNoTracking(c => c.Id == id);
+            if (coupon == null)
                 return Result<CouponDto>.Failed(new NotFoundObjectResult(
                     new ApiMessage
                         {Message = PersianErrorMessage.CouponNotFound}));
 
-            return Result<CouponDto>.SuccessFull(_mapper.Map<CouponDto>(Coupon));
+            return Result<CouponDto>.SuccessFull(_mapper.Map<CouponDto>(coupon));
         }
+        
+        public async Task<Result> Delete(Guid id)
+        {
+            var coupon = await FirstOrDefaultAsyncAsNoTracking(c => c.Id == id);
+            if (coupon == null)
+                return Result.Failed(new NotFoundObjectResult(
+                    new ApiMessage
+                        {Message = PersianErrorMessage.CouponNotFound}));
+
+            Delete(coupon);
+            await Context.SaveChangesAsync();
+
+            return Result.SuccessFull();
+        }
+
     }
 }

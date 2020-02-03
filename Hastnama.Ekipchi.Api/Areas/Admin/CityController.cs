@@ -27,8 +27,8 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// <param name="filterQueryDto"></param>
         /// <param name="pagingOptions"></param>
         /// <returns>City List</returns>
-        /// <response code="200">if login successfully </response>
-        /// <response code="400">If validation failure.</response>
+        /// <response code="200">if Get successfully </response>
+        /// <response code="404">If entity not found.</response>
         /// <response code="500">If an unexpected error happen</response>
         [ProducesResponseType(typeof(List<CityDto>), 200)]
         [ProducesResponseType(typeof(ApiMessage), 400)]
@@ -42,15 +42,16 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         }
 
         /// <summary>
-        /// City Profile
+        /// City Detail
         /// </summary>
         /// <param name="id"></param>
-        /// <returns>City Profile</returns>
-        /// <response code="200">if login successfully </response>
-        /// <response code="400">If validation failure.</response>
+        /// <returns>City Detail</returns>
+        /// <response code="200">if Get successfully </response>
+        /// <response code="404">If entity not found.</response>
         /// <response code="500">If an unexpected error happen</response>
         [ProducesResponseType(typeof(CityDto), 200)]
         [ProducesResponseType(typeof(ApiMessage), 400)]
+        [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpGet("{id}", Name = "GetCity")]
         public async Task<IActionResult> Get(int id)
@@ -64,9 +65,11 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// </summary>
         /// <param name="updateCityDto"></param>
         /// <returns>NoContent</returns>
-        /// <response code="200">if login successfully </response>
+        /// <response code="204">if Update successfully </response>
         /// <response code="400">If validation failure.</response>
+        /// <response code="404">If entity not found.</response>
         /// <response code="500">If an unexpected error happen</response>
+        [ProducesResponseType(204)]
         [ProducesResponseType(typeof(ApiMessage), 400)]
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
@@ -85,9 +88,11 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// </summary>
         /// <param name="createCityDto"></param>
         /// <returns>NoContent</returns>
-        /// <response code="200">if login successfully </response>
+        /// <response code="201">if Create successfully </response>
         /// <response code="400">If validation failure.</response>
+        /// <response code="404">If entity not found.</response>
         /// <response code="500">If an unexpected error happen</response>
+        [ProducesResponseType(201)]
         [ProducesResponseType(typeof(ApiMessage), 400)]
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]

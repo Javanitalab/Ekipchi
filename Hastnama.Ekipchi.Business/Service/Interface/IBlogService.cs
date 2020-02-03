@@ -15,5 +15,7 @@ namespace Hastnama.Ekipchi.Business.Service.Interface
         Task<Result> Update(UpdateBlogDto updateBlogDto);
         Task<Result<BlogDto>> Create(CreateBlogDto dto);
         Task<Result<BlogDto>> Get(int id);
+        Task<Result> Delete(int id);
+
     }
 }
