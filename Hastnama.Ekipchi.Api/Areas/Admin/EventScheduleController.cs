@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Hastnama.Ekipchi.Business.Service.Interface;
-using Microsoft.AspNetCore.Http;
+﻿using Hastnama.Ekipchi.Business.Service.Interface;
+using Hastnama.Ekipchi.Data.Event.Schedule;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace Hastnama.Ekipchi.Api.Areas.Admin
 {
@@ -24,6 +22,17 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         {
             var schedule = await _unitOfWork.EventScheduleService.GetScheduleAsync(id);
             return schedule.ApiResult;
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update(UpdateEventScheduleDto updateEventSchedule)
+        {
+            var result = await _unitOfWork.EventScheduleService.Update(updateEventSchedule);
+
+            if (!result.Success)
+                return result.ApiResult;
+
+            return NoContent();
         }
     }
 }

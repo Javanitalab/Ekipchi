@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Hastnama.Ekipchi.Business.Service.Interface;
+﻿using Hastnama.Ekipchi.Business.Service.Interface;
 using Hastnama.Ekipchi.Data.Event.Gallery;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace Hastnama.Ekipchi.Api.Areas.Admin
 {
