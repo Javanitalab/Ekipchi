@@ -24,20 +24,16 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         public async Task<IActionResult> Get(Guid id)
         {
             var gallery = await _unitOfWork.EventGalleryService.GetAllAsync(id);
-
-            if (!gallery.Success)
-                return gallery.ApiResult;
-
             return gallery.ApiResult;
         }
 
         [HttpPut]
         public async Task<IActionResult> Put(UpdateEventGalleryDto updateEventGallery)
         {
-            var gallery = await _unitOfWork.EventGalleryService.Update(updateEventGallery);
+            var result = await _unitOfWork.EventGalleryService.Update(updateEventGallery);
 
-            if (!gallery.Success)
-                return NotFound();
+            if (!result.Success)
+                return result.ApiResult;
 
             return NoContent();
         }
