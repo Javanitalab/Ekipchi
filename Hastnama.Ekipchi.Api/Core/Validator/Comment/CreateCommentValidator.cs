@@ -1,9 +1,8 @@
 ﻿using FluentValidation;
 using Hastnama.Ekipchi.Common.Message;
-using Hastnama.Ekipchi.Data.Category;
 using Hastnama.Ekipchi.Data.Comment;
 
-namespace Hastnama.Ekipchi.Api.Core.Validator.City
+namespace Hastnama.Ekipchi.Api.Core.Validator.Comment
 {
     public class CreateCommentValidator : AbstractValidator<CreateCommentDto>
     {

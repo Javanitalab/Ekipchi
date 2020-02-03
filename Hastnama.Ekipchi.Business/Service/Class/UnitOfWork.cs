@@ -26,8 +26,12 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         private IFaqService _faqServicee;
         private ICouponService _couponService;
         private IEventService _eventService;
+        private IGroupService _groupService;
         private IEventGalleryService _eventGalleryService;
         private IEventScheduleService _eventScheduleService;
+        private IUserMessageService _userMessageService;
+        private IMessageService _messageService;
+
 
         #endregion
 
@@ -39,20 +43,23 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         #region Services
 
-        public IUserService UserService => _userService = _userService ?? new UserService(_context, _mapper);
-        public ICityService CityService => _cityService = _cityService ?? new CityService(_context, _mapper);
-        public ICountyService CountyService => _countyService = _countyService ?? new CountyService(_context, _mapper);
-        public IProvinceService ProvinceService => _provinceService = _provinceService ?? new ProvinceService(_context, _mapper);
-        public IRegionService RegionService => _regionService = _regionService ?? new RegionService(_context, _mapper);
-        public IBlogService BlogService => _blogService = _blogService ?? new BlogService(_context, _mapper);
-        public IBlogCategoryService BlogCategoryService => _blogCategoryService = _blogCategoryService ?? new BlogCategoryService(_context, _mapper);
-        public ICategoryService CategoryService => _categoryService = _categoryService ?? new CategoryService(_context, _mapper);
-        public ICommentService CommentService => _commentService = _commentService ?? new CommentService(_context, _mapper);
-        public IFaqService FaqService => _faqServicee = _faqServicee ?? new FaqService(_context, _mapper);
-        public ICouponService CouponService => _couponService = _couponService ?? new CouponService(_context, _mapper);
+        public IUserService UserService => _userService = _userService ?? new UserService(_context,_mapper);
+        public ICityService CityService => _cityService = _cityService ?? new CityService(_context,_mapper);
+        public ICountyService CountyService => _countyService = _countyService ?? new CountyService(_context,_mapper);
+        public IProvinceService ProvinceService => _provinceService = _provinceService ?? new ProvinceService(_context,_mapper);
+        public IRegionService RegionService => _regionService = _regionService ?? new RegionService(_context,_mapper);
+        public IBlogService BlogService => _blogService = _blogService ?? new BlogService(_context,_mapper);
+        public IBlogCategoryService BlogCategoryService => _blogCategoryService = _blogCategoryService ?? new BlogCategoryService(_context,_mapper);
+        public ICategoryService CategoryService => _categoryService = _categoryService ?? new CategoryService(_context,_mapper);
+        public ICommentService CommentService => _commentService = _commentService ?? new CommentService(_context,_mapper);
+        public IFaqService FaqService => _faqServicee = _faqServicee ?? new FaqService(_context,_mapper);
+        public ICouponService CouponService => _couponService = _couponService ?? new CouponService(_context,_mapper);
         public IEventService EventService => _eventService = _eventService ?? new EventService(_context, _mapper);
+        public IGroupService GroupService => _groupService = _groupService ?? new GroupService(_context, _mapper);
         public IEventGalleryService EventGalleryService => _eventGalleryService = _eventGalleryService ?? new EventGalleryService(_context, _mapper);
         public IEventScheduleService EventScheduleService => _eventScheduleService = _eventScheduleService ?? new EventScheduleService(_context, _mapper);
+        public IUserMessageService UserMessageService => _userMessageService = _userMessageService ?? new UserMessageService(_context);
+        public IMessageService MessageService => _messageService = _messageService ?? new MessageService(_context);
 
         #endregion Services
 

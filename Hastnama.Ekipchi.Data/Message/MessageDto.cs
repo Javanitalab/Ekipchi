@@ -1,6 +1,6 @@
-﻿using System;
+﻿﻿using System;
 
-namespace Hastnama.Ekipchi.Data.Message
+ namespace Hastnama.Ekipchi.Data.Message
 {
     public class MessageDto
     {
@@ -12,13 +12,13 @@ namespace Hastnama.Ekipchi.Data.Message
 
         public string Body { get; set; }
 
-        public DateTime CreateDate { get; set; }
+        public string SenderUserId { get; set; }
 
-        public MessageDto Replay { get; set; }
+        public string SenderEmail { get; set; }
 
-        public Guid? SenderUserId { get; set; }
+        public string ReceiverUserId { get; set; }
 
-        public Guid ReceiverUserId { get; set; }
+        public string ReceiverEmail { get; set; }
 
         public DateTime SendDate { get; set; }
 

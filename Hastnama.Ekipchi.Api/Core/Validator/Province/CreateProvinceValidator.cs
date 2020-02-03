@@ -1,10 +1,8 @@
 ﻿using FluentValidation;
 using Hastnama.Ekipchi.Common.Message;
-using Hastnama.Ekipchi.Data.City;
-using Hastnama.Ekipchi.Data.Country;
 using Hastnama.Ekipchi.Data.Province;
 
-namespace Hastnama.Ekipchi.Api.Core.Validator.City
+namespace Hastnama.Ekipchi.Api.Core.Validator.Province
 {
     public class CreateProvinceValidator : AbstractValidator<CreateProvinceDto>
     {

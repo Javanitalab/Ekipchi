@@ -28,6 +28,12 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
 
         [ForeignKey(nameof(UserId))]
         public virtual User User { get; set; }
+        
+        public Guid EventId { get; set; }
+
+        [ForeignKey(nameof(EventId))]
+        public virtual Event Event { get; set; }
+
 
         public bool IsConfirmed { get; set; }
 

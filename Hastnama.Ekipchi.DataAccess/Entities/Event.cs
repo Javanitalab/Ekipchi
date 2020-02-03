@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Hastnama.Ekipchi.Common.Enum;
@@ -69,5 +70,8 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
         public virtual EventSchedule EventSchedule { get; }
 
         public virtual EventGallery EventGallery { get; }
+        
+        public virtual List<Comment> Comment { get; }
+
     }
 }

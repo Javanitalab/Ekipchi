@@ -1,10 +1,8 @@
 ﻿using FluentValidation;
 using Hastnama.Ekipchi.Common.Message;
-using Hastnama.Ekipchi.Data.Category;
-using Hastnama.Ekipchi.Data.Comment;
 using Hastnama.Ekipchi.Data.Faq;
 
-namespace Hastnama.Ekipchi.Api.Core.Validator.City
+namespace Hastnama.Ekipchi.Api.Core.Validator.Faq
 {
     public class CreateFaqValidator : AbstractValidator<CreateFaqDto>
     {

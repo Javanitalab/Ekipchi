@@ -81,6 +81,25 @@
 
         #endregion
 
+        #region Message
+
+        public const string MessageNotFound = " پیامی پیدا نشد";
+        public const string SenderAndReceiverAreTheSame = " فرستنده و گیرنده نمیتوانند یکسان باشند";
+        public const string ParentMessageNotFound = " پیام اولیه پیدا نشد";
+        public const string ReceiverNotSet = " فرستنده مشخص نشده است";
+
+        #endregion
+
+        #region Group
+
+        public const string DuplicateGroupName = " نام گروه تکراری است";
+        public const string GroupNotFound = "گروه مورد نظر پیدا نشد";
+        public const string InvalidGroupId = "ایدی گروه معتبر نمیباشد";
+        public const string GroupNameIsInvalid = " نام گروه معتبر نمیباشد";
+        public const string GroupOwnerIsInvalid = "مشخص کردن مدیر گروه الزامی است";
+
+        #endregion
+
         #region Category
 
         public const string DuplicateCategoryName = " نام دسته بندی تکراری است";

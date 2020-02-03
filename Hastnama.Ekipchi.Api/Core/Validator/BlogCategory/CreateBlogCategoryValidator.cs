@@ -1,10 +1,8 @@
 ﻿using FluentValidation;
 using Hastnama.Ekipchi.Common.Message;
-using Hastnama.Ekipchi.Data.Blog;
 using Hastnama.Ekipchi.Data.BlogCategory;
-using Hastnama.Ekipchi.Data.City;
 
-namespace Hastnama.Ekipchi.Api.Core.Validator.City
+namespace Hastnama.Ekipchi.Api.Core.Validator.BlogCategory
 {
     public class CreateBlogCategoryValidator : AbstractValidator<CreateBlogCategoryDto>
     {

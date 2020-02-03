@@ -1,9 +1,8 @@
 ﻿using FluentValidation;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Data.Category;
-using Hastnama.Ekipchi.Data.City;
 
-namespace Hastnama.Ekipchi.Api.Core.Validator.City
+namespace Hastnama.Ekipchi.Api.Core.Validator.Category
 {
     public class UpdateCategoryValidator : AbstractValidator<UpdateCategoryDto>
     {

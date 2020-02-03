@@ -15,6 +15,7 @@ using Hastnama.Ekipchi.Data.Event;
 using Hastnama.Ekipchi.Data.Event.Gallery;
 using Hastnama.Ekipchi.Data.Event.Schedule;
 using Hastnama.Ekipchi.Data.Faq;
+using Hastnama.Ekipchi.Data.Group;
 using Hastnama.Ekipchi.Data.Host;
 using Hastnama.Ekipchi.Data.Province;
 using Hastnama.Ekipchi.Data.Region;
@@ -284,6 +285,18 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
             CreateMap<UpdateFaqDto, Faq>();
 
             CreateMap<CreateFaqDto, Faq>();
+
+            #endregion
+            
+            #region Group
+
+            CreateMap<GroupDto, Group>();
+
+            CreateMap<Group, GroupDto>();
+
+            CreateMap<UpdateGroupDto, Group>();
+
+            CreateMap<CreateGroupDto, Group>();
 
             #endregion
         }

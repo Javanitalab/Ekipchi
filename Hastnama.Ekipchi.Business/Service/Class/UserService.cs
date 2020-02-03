@@ -162,6 +162,21 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             return Result<UserDto>.SuccessFull(dto);
         }
 
+        public async Task<Result<UserDto>> GetByEmail(string email)
+        {
+            if (string.IsNullOrEmpty(email))
+                return Result<UserDto>.Failed(new BadRequestObjectResult(new ApiMessage { Message = PersianErrorMessage.InvalidEmailAddress }));
+
+            var user = await FirstOrDefaultAsyncAsNoTracking(u => u.Email == email);
+
+            if (user == null)
+                return Result<UserDto>.Failed(new NotFoundObjectResult(new ApiMessage { Message = PersianErrorMessage.UserNotFound }));
+
+            var dto = _mapper.Map<UserDto>(user);
+
+            return Result<UserDto>.SuccessFull(dto);
+        }
+
         public async Task<Result> UpdateStatus(Guid id, UserStatus userStatus)
         {
             if (id == Guid.Empty)

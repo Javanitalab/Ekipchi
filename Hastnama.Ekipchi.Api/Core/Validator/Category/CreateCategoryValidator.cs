@@ -2,7 +2,7 @@
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Data.Category;
 
-namespace Hastnama.Ekipchi.Api.Core.Validator.City
+namespace Hastnama.Ekipchi.Api.Core.Validator.Category
 {
     public class CreateCategoryValidator : AbstractValidator<CreateCategoryDto>
     {
