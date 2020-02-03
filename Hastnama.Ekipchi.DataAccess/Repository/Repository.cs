@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
 using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Helper;
+using Hastnama.Ekipchi.Common.Result;
+using Hastnama.Ekipchi.DataAccess.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
@@ -62,31 +65,40 @@ namespace Hastnama.Ekipchi.DataAccess.Repository
         public async Task<TEntity> FirstOrDefaultAsyncAsNoTracking(Expression<Func<TEntity, bool>> predicate,
             params Expression<Func<TEntity, object>>[] includes)
         {
-            var query = Context.Set<TEntity>().AsNoTracking();
-            if (includes == null || !includes.Any())
-                return await query.FirstOrDefaultAsync(predicate);
-            includes.ToList().ForEach(include => query = query.Include(include));
-            return await query.FirstOrDefaultAsync(predicate);
+            IQueryable<TEntity> query = Context.Set<TEntity>().AsNoTracking().AsQueryable<TEntity>();
+            Expression<Func<TEntity, object>>[] expressionArray = includes;
+            for (int index = 0; index < expressionArray.Length; ++index)
+            {
+                Expression<Func<TEntity, object>> include = expressionArray[index];
+                query = (IQueryable<TEntity>) EntityFrameworkQueryableExtensions.Include<TEntity>((IQueryable<TEntity>) query, include.AsPath());
+            }
+            return await (Task<TEntity>) EntityFrameworkQueryableExtensions.FirstOrDefaultAsync<TEntity>((IQueryable<TEntity>) query, predicate, new CancellationToken());
         }
 
         public async Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate,
             params Expression<Func<TEntity, object>>[] includes)
         {
-            var query = Context.Set<TEntity>().AsQueryable();
-            if (includes == null || !includes.Any())
-                return await query.FirstOrDefaultAsync(predicate);
-            includes.ToList().ForEach(include => query = query.Include(include));
-            return await query.FirstOrDefaultAsync(predicate);
+            IQueryable<TEntity> query = Context.Set<TEntity>().AsQueryable<TEntity>();
+            Expression<Func<TEntity, object>>[] expressionArray = includes;
+            for (int index = 0; index < expressionArray.Length; ++index)
+            {
+                Expression<Func<TEntity, object>> include = expressionArray[index];
+                query = (IQueryable<TEntity>) EntityFrameworkQueryableExtensions.Include<TEntity>((IQueryable<TEntity>) query, include.AsPath());
+            }
+            return await (Task<TEntity>) EntityFrameworkQueryableExtensions.FirstOrDefaultAsync<TEntity>((IQueryable<TEntity>) query, predicate, new CancellationToken());
         }
 
         public async Task<PagedList<TEntity>> WhereAsyncAsNoTracking(Expression<Func<TEntity, bool>> predicate,
             PagingOptions pagingOptions,
             params Expression<Func<TEntity, object>>[] includes)
         {
-            var query = GetAll().AsNoTracking().Where(predicate);
-            if (includes == null || !includes.Any())
-                return await GetPagedAsync(pagingOptions.Page, pagingOptions.Limit, query);
-            includes.ToList().ForEach(include => query = query.Include(include));
+            IQueryable<TEntity> query = ((IQueryable<TEntity>) Context.Set<TEntity>()).AsNoTracking().Where<TEntity>(predicate).AsQueryable<TEntity>();
+            Expression<Func<TEntity, object>>[] expressionArray = includes;
+            for (int index = 0; index < expressionArray.Length; ++index)
+            {
+                Expression<Func<TEntity, object>> include = expressionArray[index];
+                query = (IQueryable<TEntity>) EntityFrameworkQueryableExtensions.Include<TEntity>((IQueryable<TEntity>) query, include.AsPath());
+            }
             return await GetPagedAsync(pagingOptions.Page, pagingOptions.Limit, query);
         }
 
@@ -94,10 +106,13 @@ namespace Hastnama.Ekipchi.DataAccess.Repository
             PagingOptions pagingOptions,
             params Expression<Func<TEntity, object>>[] includes)
         {
-            var query = GetAll().AsNoTracking().Where(predicate);
-            if (includes == null || !includes.Any())
-                return await GetPagedAsync(pagingOptions.Page, pagingOptions.Limit, query);
-            includes.ToList().ForEach(include => query = query.Include(include));
+            IQueryable<TEntity> query = ((IQueryable<TEntity>) Context.Set<TEntity>()).Where<TEntity>(predicate).AsQueryable<TEntity>();
+            Expression<Func<TEntity, object>>[] expressionArray = includes;
+            for (int index = 0; index < expressionArray.Length; ++index)
+            {
+                Expression<Func<TEntity, object>> include = expressionArray[index];
+                query = (IQueryable<TEntity>) EntityFrameworkQueryableExtensions.Include<TEntity>((IQueryable<TEntity>) query, include.AsPath());
+            }
             return await GetPagedAsync(pagingOptions.Page, pagingOptions.Limit, query);
         }
 

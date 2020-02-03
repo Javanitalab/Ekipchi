@@ -12,14 +12,14 @@ namespace Hastnama.Ekipchi.Data.Group
     {
         public Guid? Id { get; set; }
         public string Name { get; set; }
-        public UserDto User { get; set; }
         
+        public Guid OwnerId { get; set; }
+
         public bool IsDeleted { get; set; }
 
         public int Members { get; set; }
 
         public bool IsPublic { get; set; }
-        public virtual List<UserDto> UsersInGroup { get; set; }
-
+        public List<Guid> UsersInGroup { get; set; }
     }
 }

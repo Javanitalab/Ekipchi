@@ -10,7 +10,9 @@ namespace Hastnama.Ekipchi.Data.Group
 
         public string Name { get; set; }
 
-        public UserDto Owner { get; set; }
+        public Guid OwnerId { get; set; }
+        public string OwnerUsername { get; set; }
+        public string OwnerAvatar { get; set; }
 
         public DateTime CreateDate { get; set; }
 
