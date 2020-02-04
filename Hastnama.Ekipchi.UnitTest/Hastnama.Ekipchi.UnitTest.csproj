@@ -20,4 +20,9 @@
       <ProjectReference Include="..\Hastnama.Ekipchi.Data\Hastnama.Ekipchi.Data.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="ControllerTest\Admin" />
+      <Folder Include="ControllerTest\Base" />
+    </ItemGroup>
+
 </Project>

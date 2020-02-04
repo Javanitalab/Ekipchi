@@ -50,7 +50,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// <response code="404">If entity not found.</response>
         /// <response code="500">If an unexpected error happen</response>
         [ProducesResponseType(typeof(FaqDto), 200)]
-        [ProducesResponseType(typeof(ApiMessage), 400)]
+        [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpGet("{id}", Name = "GetFaq")]
         public async Task<IActionResult> Get(int id)

@@ -6,6 +6,7 @@ using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Result;
 using Hastnama.Ekipchi.Data.Auth;
+using Hastnama.Ekipchi.Data.Group;
 using Hastnama.Ekipchi.Data.User;
 using Hastnama.Ekipchi.DataAccess.Entities;
 using Hastnama.Ekipchi.DataAccess.Repository;
@@ -22,5 +23,6 @@ namespace Hastnama.Ekipchi.Business.Service.Interface
         Task<Result<UserDto>> Get(Guid id);
         Task<Result<UserDto>> GetByEmail(string email);
         Task<Result> UpdateStatus(Guid id, UserStatus userStatus);
+        Task<Result<IList<GroupDto>>> UserGroups(Guid id);
     }
 }

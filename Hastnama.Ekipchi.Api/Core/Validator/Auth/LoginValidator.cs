@@ -10,12 +10,9 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Auth
     {
         public LoginValidator()
         {
-            RuleFor(dto => dto)
+            RuleFor(dto => dto.Username)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .Must(dto => (!string.IsNullOrEmpty(dto.Username) && dto.Username.Length < 16)
-                             || (!string.IsNullOrEmpty(dto.Email) && new EmailAddressAttribute().IsValid(dto.Email))
-                             || (!string.IsNullOrEmpty(dto.Mobile) && dto.Mobile.Length <= 11 &&
-                                 Regex.IsMatch(dto.Mobile, "^[0-9 ]+$")))
+                .NotEmpty()
                 .WithMessage(PersianErrorMessage.InvalidUserCredential);
 
             RuleFor(dto => dto.Password)

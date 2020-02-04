@@ -16,6 +16,5 @@ namespace Hastnama.Ekipchi.Business.Service.Interface
         Task<Result<GroupDto>> Create(CreateGroupDto dto);
         Task<Result<GroupDto>> Get(Guid id);
         Task<Result> Delete(Guid id);
-
     }
 }

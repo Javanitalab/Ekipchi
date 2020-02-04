@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Hastnama.Ekipchi.Business.Service.Interface;
@@ -9,11 +11,13 @@ using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Common.Result;
 using Hastnama.Ekipchi.Common.Util;
 using Hastnama.Ekipchi.Data.Auth;
+using Hastnama.Ekipchi.Data.Group;
 using Hastnama.Ekipchi.Data.User;
 using Hastnama.Ekipchi.DataAccess.Context;
 using Hastnama.Ekipchi.DataAccess.Entities;
 using Hastnama.Ekipchi.DataAccess.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hastnama.Ekipchi.Business.Service.Class
 {
@@ -28,17 +32,23 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result<User>> Login(LoginDto loginDto)
         {
-            var user = await FirstOrDefaultAsyncAsNoTracking(u => (string.IsNullOrEmpty(loginDto.Username) || u.Username == loginDto.Username) && (string.IsNullOrEmpty(loginDto.Email) || u.Email == loginDto.Email) && (string.IsNullOrEmpty(loginDto.Mobile) || u.Mobile == loginDto.Mobile));
+            var user = await FirstOrDefaultAsyncAsNoTracking(u =>
+                u.Username == loginDto.Username
+                || u.Email == loginDto.Username
+                || u.Mobile == loginDto.Username);
 
             if (user == null)
-                return Result<User>.Failed(new NotFoundObjectResult(new ApiMessage { Message = PersianErrorMessage.UserNotFound }));
+                return Result<User>.Failed(new NotFoundObjectResult(new ApiMessage
+                    {Message = PersianErrorMessage.UserNotFound}));
 
             if (!StringUtil.CheckPassword(loginDto.Password, user.Password))
 
-                return Result<User>.Failed(new BadRequestObjectResult(new ApiMessage { Message = PersianErrorMessage.InvalidUserCredential }));
+                return Result<User>.Failed(new BadRequestObjectResult(new ApiMessage
+                    {Message = PersianErrorMessage.InvalidUserCredential}));
 
             if (user.Status != UserStatus.Active)
-                return Result<User>.Failed(new BadRequestObjectResult(new ApiMessage { Message = PersianErrorMessage.UserIsDeActive }));
+                return Result<User>.Failed(new BadRequestObjectResult(new ApiMessage
+                    {Message = PersianErrorMessage.UserIsDeActive}));
 
             return Result<User>.SuccessFull(user);
         }
@@ -52,7 +62,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
             if (user != null)
                 return Result<User>.Failed(new BadRequestObjectResult(new ApiMessage
-                { Message = PersianErrorMessage.UserAlreadyExist }));
+                    {Message = PersianErrorMessage.UserAlreadyExist}));
 
             user = _mapper.Map<User>(registerDto);
 
@@ -67,7 +77,8 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             var user = await FirstOrDefaultAsyncAsNoTracking(u => u.Id == id && u.Status == UserStatus.Active);
 
             if (user == null)
-                return Result<User>.Failed(new NotFoundObjectResult(new ApiMessage { Message = PersianErrorMessage.UserNotFound }));
+                return Result<User>.Failed(new NotFoundObjectResult(new ApiMessage
+                    {Message = PersianErrorMessage.UserNotFound}));
 
             return Result<User>.SuccessFull(user);
         }
@@ -100,7 +111,8 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             var user = await FirstOrDefaultAsync(u => u.Id == updateUserDto.Id);
 
             if (user == null)
-                return Result.Failed(new NotFoundObjectResult(new ApiMessage { Message = PersianErrorMessage.UserNotFound }));
+                return Result.Failed(new NotFoundObjectResult(new ApiMessage
+                    {Message = PersianErrorMessage.UserNotFound}));
 
             _mapper.Map(updateUserDto, user);
 
@@ -150,12 +162,14 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         public async Task<Result<UserDto>> Get(Guid id)
         {
             if (id == Guid.Empty)
-                return Result<UserDto>.Failed(new BadRequestObjectResult(new ApiMessage { Message = PersianErrorMessage.InvalidUserId }));
+                return Result<UserDto>.Failed(new BadRequestObjectResult(new ApiMessage
+                    {Message = PersianErrorMessage.InvalidUserId}));
 
             var user = await FirstOrDefaultAsyncAsNoTracking(u => u.Id == id);
 
             if (user == null)
-                return Result<UserDto>.Failed(new NotFoundObjectResult(new ApiMessage { Message = PersianErrorMessage.UserNotFound }));
+                return Result<UserDto>.Failed(new NotFoundObjectResult(new ApiMessage
+                    {Message = PersianErrorMessage.UserNotFound}));
 
             var dto = _mapper.Map<UserDto>(user);
 
@@ -165,12 +179,14 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         public async Task<Result<UserDto>> GetByEmail(string email)
         {
             if (string.IsNullOrEmpty(email))
-                return Result<UserDto>.Failed(new BadRequestObjectResult(new ApiMessage { Message = PersianErrorMessage.InvalidEmailAddress }));
+                return Result<UserDto>.Failed(new BadRequestObjectResult(new ApiMessage
+                    {Message = PersianErrorMessage.InvalidEmailAddress}));
 
             var user = await FirstOrDefaultAsyncAsNoTracking(u => u.Email == email);
 
             if (user == null)
-                return Result<UserDto>.Failed(new NotFoundObjectResult(new ApiMessage { Message = PersianErrorMessage.UserNotFound }));
+                return Result<UserDto>.Failed(new NotFoundObjectResult(new ApiMessage
+                    {Message = PersianErrorMessage.UserNotFound}));
 
             var dto = _mapper.Map<UserDto>(user);
 
@@ -180,17 +196,41 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         public async Task<Result> UpdateStatus(Guid id, UserStatus userStatus)
         {
             if (id == Guid.Empty)
-                return Result.Failed(new BadRequestObjectResult(new ApiMessage { Message = PersianErrorMessage.InvalidUserId }));
+                return Result.Failed(new BadRequestObjectResult(new ApiMessage
+                    {Message = PersianErrorMessage.InvalidUserId}));
 
             var user = await FirstOrDefaultAsync(u => u.Id == id);
 
             if (user == null)
-                return Result.Failed(new NotFoundObjectResult(new ApiMessage { Message = PersianErrorMessage.UserNotFound }));
+                return Result.Failed(new NotFoundObjectResult(new ApiMessage
+                    {Message = PersianErrorMessage.UserNotFound}));
 
             user.Status = userStatus;
             await Context.SaveChangesAsync();
 
             return Result.SuccessFull();
+        }
+
+        public async Task<Result<IList<GroupDto>>> UserGroups(Guid id)
+        {
+            if (id == Guid.Empty)
+                return Result<IList<GroupDto>>.Failed(new BadRequestObjectResult(new ApiMessage
+                    {Message = PersianErrorMessage.InvalidUserId}));
+            var user = await FirstOrDefaultAsync(u => u.Id == id);
+
+            if (user == null)
+                return Result<IList<GroupDto>>.Failed(new NotFoundObjectResult(new ApiMessage
+                    {Message = PersianErrorMessage.UserNotFound}));
+
+            // groups that created by user
+            var groups = await Context.Groups.Where(ug => ug.OwnerId == id).ToListAsync();
+            // groups that invited or added user
+            var userInGroups = await Context.UserInGroups.Where(ug => ug.UserId == id).Include(ug => ug.Groups)
+                .ToListAsync();
+            if (userInGroups.Any())
+                groups.AddRange(userInGroups.Select(ug => ug.Groups));
+
+            return Result<IList<GroupDto>>.SuccessFull(_mapper.Map<List<GroupDto>>(groups));
         }
     }
 }

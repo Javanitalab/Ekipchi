@@ -8,8 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Hastnama.Ekipchi.Api.Areas.Admin
 {
-    [Area("Admin")]
-    [Route("[Area]/[Controller]")]
+    [Route("[Controller]")]
     [EnableCors("MyPolicy")]
     [ApiController]
     public class AuthController : Controller

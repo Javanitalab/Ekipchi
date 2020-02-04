@@ -298,15 +298,12 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
 
             CreateMap<GroupDto, Group>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(o => Guid.NewGuid()))
-                .ForMember(x => x.OwnerId, opt => opt.MapFrom(o => o.OwnerId));
+                .ForMember(x => x.OwnerId, opt => opt.MapFrom(o => o.Owner.Id));
 
             CreateMap<Group, GroupDto>()
-                .ForMember(x => x.OwnerId, opt => opt.MapFrom(o => o.OwnerId))
-                .ForMember(x => x.OwnerUsername, opt => opt.MapFrom(o => o.User.Username))
+                .ForMember(x => x.Owner, opt => opt.MapFrom(o => o.User))
                 .ForMember(x => x.UsersInGroup,
-                    opt => opt.MapFrom(o => o.UserInGroups.Select(ug => new UserDto
-                        {Id = ug.UserId, Username = ug.User.Username, Avatar = ug.User.Avatar})))
-                .ForMember(x => x.OwnerAvatar, opt => opt.MapFrom(o => o.User.Avatar));
+                    opt => opt.MapFrom(o => o.UserInGroups.Select(ug=>ug.User)));
 
 
             CreateMap<UpdateGroupDto, Group>()
