@@ -11,9 +11,7 @@ namespace Hastnama.Ekipchi.Data.Group
         public Guid OwnerId { get; set; }
 
         public bool IsDeleted { get; set; }
-
-        public int Members { get; set; }
-
+        
         public bool IsPublic { get; set; }
         public List<Guid> UsersInGroup { get; set; }
     }
