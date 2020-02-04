@@ -8,6 +8,6 @@ namespace Hastnama.Ekipchi.Data.Comment
         public Guid? ParentId { get; set; }
         public string Content { get; set; }
 
-        public UserDto User { get; set; }
+        public Guid UserId { get; set; }
     }
 }

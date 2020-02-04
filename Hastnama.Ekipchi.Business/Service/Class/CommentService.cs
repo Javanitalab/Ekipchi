@@ -11,8 +11,8 @@ using Hastnama.Ekipchi.Data.Comment;
 using Hastnama.Ekipchi.DataAccess.Context;
 using Hastnama.Ekipchi.DataAccess.Entities;
 using Hastnama.Ekipchi.DataAccess.Repository;
-
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hastnama.Ekipchi.Business.Service.Class
 {
@@ -35,7 +35,6 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result> Update(UpdateCommentDto updateCommentDto)
         {
-
             var comment = await FirstOrDefaultAsync(c => c.Id == updateCommentDto.Id);
             _mapper.Map(updateCommentDto, comment);
             await Context.SaveChangesAsync();
@@ -45,7 +44,14 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result<CommentDto>> Create(CreateCommentDto createCommentDto)
         {
-            var comment = _mapper.Map(createCommentDto, new Comment());
+            var user = await Context.Users.FirstOrDefaultAsync(u => u.Id == createCommentDto.UserId);
+            if (user == null)
+                return Result<CommentDto>.Failed(new NotFoundObjectResult(new ApiMessage
+                    {Message = PersianErrorMessage.UserNotFound}));
+
+            var comment = _mapper.Map<Comment>(createCommentDto);
+            comment.User = user;
+            
             await AddAsync(comment);
             await Context.SaveChangesAsync();
 
@@ -63,7 +69,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
             return Result<CommentDto>.SuccessFull(_mapper.Map<CommentDto>(comment));
         }
-        
+
         public async Task<Result> Delete(Guid id)
         {
             var comment = await FirstOrDefaultAsyncAsNoTracking(c => c.Id == id,
@@ -79,6 +85,5 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
             return Result.SuccessFull();
         }
-
     }
 }

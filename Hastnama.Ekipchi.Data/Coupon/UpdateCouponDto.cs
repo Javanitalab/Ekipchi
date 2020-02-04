@@ -9,9 +9,7 @@ namespace Hastnama.Ekipchi.Data.Coupon
         public string Code { get; set; }
 
         public int Count { get; set; }
-
-        public int UsageCount { get; set; }
-
+        
         public int TotalCount { get; set; }
 
         public long Amount { get; set; }
