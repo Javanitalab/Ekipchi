@@ -9,8 +9,10 @@ using Hastnama.Ekipchi.DataAccess.Entities;
 using Hastnama.Ekipchi.DataAccess.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Hastnama.Ekipchi.Common.Helper;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hastnama.Ekipchi.Business.Service.Class
 {
@@ -73,6 +75,18 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             if (eventDetail is null)
                 return Result.Failed(new NotFoundObjectResult(new ApiMessage
                 { Message = PersianErrorMessage.EventNotFound }));
+
+            var userEvent = await Context.UserInEvents.Where(x => x.EventId == updateEvent.Id).ToListAsync();
+            var userIdList = userEvent.Select(x => x.UserId).ToList();
+            if (!userIdList.SequenceEqual(updateEvent.UserList))
+            {
+                var addedUsers = await Context.Users.Where(x => updateEvent.UserList.Contains(x.Id)).ToListAsync();
+
+                if (addedUsers.Count != updateEvent.UserList.Count)
+                    return Result.Failed(new NotFoundObjectResult(new ApiMessage { Message = PersianErrorMessage.UserNotFound }));
+
+                Context.UserInEvents.RemoveRange(userEvent);
+            }
 
             _mapper.Map(updateEvent, eventDetail);
             await Context.SaveChangesAsync();

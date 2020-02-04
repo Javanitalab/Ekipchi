@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <LangVersion>8</LangVersion>
     <UserSecretsId>b8e0d0bd-a869-4f01-9f9e-ae4e537dcc5e</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
@@ -43,7 +44,6 @@
     <Folder Include="Core\Token\" />
     <Folder Include="Core\Validator\Auth\" />
     <Folder Include="Filter\" />
-    <Folder Include="Data\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -3,6 +3,7 @@ using Hastnama.Ekipchi.Data.Event.Gallery;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using Hastnama.Ekipchi.Business.Service;
 using Hastnama.Ekipchi.Common.Message;
 
 namespace Hastnama.Ekipchi.Api.Areas.Admin

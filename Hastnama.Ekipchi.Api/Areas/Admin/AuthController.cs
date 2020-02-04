@@ -1,6 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Hastnama.Ekipchi.Api.Core.Token;
+using Hastnama.Ekipchi.Business.Service;
 using Hastnama.Ekipchi.Business.Service.Interface;
+using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Data.Auth;
 using Hastnama.Ekipchi.DataAccess.Entities;
 using Microsoft.AspNetCore.Cors;
@@ -32,8 +34,8 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// <response code="400">If validation failure.</response>
         /// <response code="500">If an unexpected error happen</response>
         [ProducesResponseType(typeof(TokenDto), 200)]
-        [ProducesResponseType(typeof(string), 400)]
-        [ProducesResponseType(typeof(string), 500)]
+        [ProducesResponseType(typeof(ApiMessage), 400)]
+        [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPost]
         [Route("[Action]")]
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
@@ -61,8 +63,8 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// <response code="400">If validation failure.</response>
         /// <response code="500">If an unexpected error happen</response>
         [ProducesResponseType(typeof(TokenDto), 200)]
-        [ProducesResponseType(typeof(string), 400)]
-        [ProducesResponseType(typeof(string), 500)]
+        [ProducesResponseType(typeof(ApiMessage), 400)]
+        [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPost]
         [Route("[Action]")]
         public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)

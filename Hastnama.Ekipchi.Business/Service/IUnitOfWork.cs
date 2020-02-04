@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Hastnama.Ekipchi.Business.Service.Interface;
 
-namespace Hastnama.Ekipchi.Business.Service.Interface
+namespace Hastnama.Ekipchi.Business.Service
 {
     public interface IUnitOfWork : IDisposable
     {
@@ -24,6 +25,14 @@ namespace Hastnama.Ekipchi.Business.Service.Interface
         IEventScheduleService EventScheduleService { get; }
         IUserMessageService UserMessageService { get; }
         IMessageService MessageService { get; }
+
+        IRolePermissionService RolePermissionService { get; }
+
+        IUserInRoleService UserInRoleService { get; }
+
+        IPermissionService PermissionService { get; }
+
+        IRoleService RoleService { get; }
 
         #endregion Services
 
