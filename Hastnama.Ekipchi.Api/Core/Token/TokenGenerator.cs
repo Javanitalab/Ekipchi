@@ -38,7 +38,7 @@ namespace Hastnama.Ekipchi.Api.Core.Token
                     new Claim(JwtRegisteredClaimNames.Email, user.Email),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim("Username", user.Username),
-                    new Claim("Roles", user.UserInRoles.Select(ur => $"{ur.RoleId}").Aggregate((a, b) => $"{a},{b}")),
+                    new Claim("Roles", user.UserInRoles?.Select(ur => $"{ur.RoleId}")?.Aggregate((a, b) => $"{a},{b}")),
                     new Claim("Id", user.Id.ToString())
                 }),
                 Expires = DateTime.Now.AddDays(14),

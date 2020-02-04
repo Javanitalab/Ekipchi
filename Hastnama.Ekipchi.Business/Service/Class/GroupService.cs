@@ -65,18 +65,20 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                     !group.UserInGroups.Select(u => u.UserId).Contains(userId));
 
                 var addedUsers = await Context.Users.Where(u => addedUsersId.Contains(u.Id)).ToListAsync();
-                
+
                 // if invalid user id sent 
                 if (addedUsers.Count != addedUsersId.Count())
                     return Result.Failed(new BadRequestObjectResult(new ApiMessage
                         {Message = PersianErrorMessage.UserNotFound}));
-                
+
                 var userInGroups = addedUsers.Select(user => new UserInGroup
                         {Id = Guid.NewGuid(), Groups = @group, JoinGroupDate = DateTime.Now, User = user})
                     .Union(group.UserInGroups.Where(ug => !removedUsers.Contains(ug))).ToList();
                 await Context.UserInGroups.AddRangeAsync(userInGroups);
                 group.UserInGroups = userInGroups;
             }
+
+            group.Members = group.UserInGroups.Count + 1;
 
             await Context.SaveChangesAsync();
 

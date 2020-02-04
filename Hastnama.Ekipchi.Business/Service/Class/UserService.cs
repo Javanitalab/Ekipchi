@@ -65,7 +65,9 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                     {Message = PersianErrorMessage.UserAlreadyExist}));
 
             user = _mapper.Map<User>(registerDto);
-
+            var role = await Context.Roles.FirstOrDefaultAsync(r => r.Name == "User");
+            user.UserInRoles = new List<UserInRole>() {new UserInRole {Role = role, User = user}};
+            
             await AddAsync(user);
             await Context.SaveChangesAsync();
 
@@ -117,15 +119,16 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 var addedRolesId = updateUserDto.Roles.Where(roleId =>
                     !user.UserInRoles.Select(u => u.RoleId).Contains(roleId));
                 var addedRoles = await Context.Roles.Where(u => addedRolesId.Contains(u.Id)).ToListAsync();
-                
+
                 // if invalid role id sent 
-                if(addedRoles.Count!=addedRolesId.Count())
-                    return Result.Failed(new BadRequestObjectResult(new ApiMessage{Message = PersianErrorMessage.RoleNotFound}));
-                
+                if (addedRoles.Count != addedRolesId.Count())
+                    return Result.Failed(new BadRequestObjectResult(new ApiMessage
+                        {Message = PersianErrorMessage.RoleNotFound}));
+
                 var userRoles = addedRoles.Select(role => new UserInRole
                         {Id = Guid.NewGuid(), Role = role, User = user})
                     .Union(user.UserInRoles.Where(ug => !removedUsers.Contains(ug))).ToList();
-                
+
                 await Context.UserInRoles.AddRangeAsync(userRoles);
                 user.UserInRoles = userRoles;
             }
