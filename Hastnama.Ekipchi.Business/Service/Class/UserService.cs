@@ -84,7 +84,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                         || u.Username.ToLower().Contains(filterQueryDto.Keyword)
                         || u.Mobile.ToLower().Contains(filterQueryDto.Keyword)
                         || u.Email.ToLower().Contains(filterQueryDto.Keyword))
-                    && (filterQueryDto.Role == null || u.Role == filterQueryDto.Role)
+                    && (filterQueryDto.Role == null )
                     && (filterQueryDto.Status == null || u.Status == filterQueryDto.Status)
                 , pagingOptions
             );

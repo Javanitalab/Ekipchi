@@ -7,6 +7,7 @@ using Hastnama.Ekipchi.Data.Event;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Hastnama.Ekipchi.Business.Service;
 
 namespace Hastnama.Ekipchi.Api.Areas.Admin
 {

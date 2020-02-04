@@ -1,6 +1,7 @@
 ﻿using Hastnama.Ekipchi.Api.Core.Environment;
 using Hastnama.Ekipchi.Api.Core.Token;
 using Hastnama.Ekipchi.Api.Filter;
+using Hastnama.Ekipchi.Business.Service;
 using Hastnama.Ekipchi.Business.Service.Class;
 using Hastnama.Ekipchi.Business.Service.Interface;
 using Microsoft.Extensions.Configuration;

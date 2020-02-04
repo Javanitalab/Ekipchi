@@ -6,6 +6,6 @@ namespace Hastnama.Ekipchi.Data.User
     {
         public string Keyword { get; set; }
         public UserStatus? Status { get; set; }
-        public Role? Role { get; set; }
+        public Common.Enum.Role? Role { get; set; }
     }
 }

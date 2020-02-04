@@ -71,6 +71,14 @@ namespace Hastnama.Ekipchi.DataAccess.Context
 
         public virtual DbSet<HostAvailableDate> HostAvailableDates { get; set; }
 
+        public virtual DbSet<UserInRole> UserInRoles { get; set; }
+
+        public virtual DbSet<Role> Roles { get; set; }
+
+        public virtual DbSet<Permission> Permissions { get; set; }
+
+        public virtual DbSet<RolePermission> RolePermissions { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserMessage>()

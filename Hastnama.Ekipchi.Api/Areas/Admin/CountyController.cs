@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Hastnama.Ekipchi.Business.Service;
 using Hastnama.Ekipchi.Business.Service.Interface;
 using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Message;
@@ -38,6 +39,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             [FromQuery] FilterCountyQueryDto filterQueryDto)
         {
             var result = await _unitOfWork.CountyService.List(pagingOptions, filterQueryDto);
+         
             return result.ApiResult;
         }
 
@@ -57,6 +59,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         public async Task<IActionResult> Get(int id)
         {
             var result = await _unitOfWork.CountyService.Get(id);
+         
             return result.ApiResult;
         }
 
@@ -77,8 +80,10 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         public async Task<IActionResult> Update([FromQuery] UpdateCountyDto updateCountyDto)
         {
             var result = await _unitOfWork.CountyService.Update(updateCountyDto);
+          
             if (!result.Success)
                 return result.ApiResult;
+           
             return NoContent();
         }
 
@@ -100,8 +105,10 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         public async Task<IActionResult> Create([FromQuery] CreateCountyDto createCountyDto)
         {
             var result = await _unitOfWork.CountyService.Create(createCountyDto);
+           
             if (!result.Success)
                 return result.ApiResult;
+           
             return Created(Url.Link("GetCounty", new {result.Data.Id}), _mapper.Map<CountyDto>(result.Data));
         }
     }
