@@ -5,6 +5,7 @@ using AutoMapper;
 using Hastnama.Ekipchi.Business.Service;
 using Hastnama.Ekipchi.Business.Service.Interface;
 using Hastnama.Ekipchi.Common.General;
+using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Data.Group;
 using Microsoft.AspNetCore.Mvc;
@@ -32,7 +33,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// <response code="200">if Get List successfully </response>
         /// <response code="404">If entity not found.</response>
         /// <response code="500">If an unexpected error happen</response>
-        [ProducesResponseType(typeof(List<GroupDto>), 200)]
+        [ProducesResponseType(typeof(PagedList<GroupDto>), 200)]
         [ProducesResponseType(typeof(ApiMessage), 400)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpGet]

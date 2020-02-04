@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Hastnama.Ekipchi.Business.Service;
-using Hastnama.Ekipchi.Business.Service.Interface;
 using Hastnama.Ekipchi.Common.Enum;
 using Hastnama.Ekipchi.Common.General;
+using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Data.Group;
 using Hastnama.Ekipchi.Data.User;
@@ -34,7 +34,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// <response code="200">if Get List successfully </response>
         /// <response code="404">If entity not found.</response>
         /// <response code="500">If an unexpected error happen</response>
-        [ProducesResponseType(typeof(List<UserDto>), 200)]
+        [ProducesResponseType(typeof(PagedList<UserDto>), 200)]
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpGet]

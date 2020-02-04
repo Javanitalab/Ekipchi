@@ -1,4 +1,5 @@
-﻿using Hastnama.Ekipchi.Common.Enum;
+﻿using System;
+using Hastnama.Ekipchi.Common.Enum;
 
 namespace Hastnama.Ekipchi.Data.User
 {
@@ -6,6 +7,6 @@ namespace Hastnama.Ekipchi.Data.User
     {
         public string Keyword { get; set; }
         public UserStatus? Status { get; set; }
-        public Common.Enum.Role? Role { get; set; }
+        public Guid RoleId { get; set; }
     }
 }

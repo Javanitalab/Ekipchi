@@ -33,10 +33,9 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.User
                 .EmailAddress().WithMessage(PersianErrorMessage.InvalidEmailAddress)
                 .MaximumLength(32).WithMessage(PersianErrorMessage.InvalidEmailAddress);
             
-            RuleFor(dto => dto.Role)
-                .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage(PersianErrorMessage.InvalidUserRole)
-                .IsInEnum().WithMessage(PersianErrorMessage.InvalidUserRole);
+            // RuleFor(dto => dto.RoleId)
+                // .Cascade(CascadeMode.StopOnFirstFailure)
+                // .GreaterThanOrEqualTo(1).WithMessage(PersianErrorMessage.InvalidUserRole);
             
             RuleFor(dto => dto.Name)
                 .Cascade(CascadeMode.StopOnFirstFailure)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,9 +37,11 @@ namespace Hastnama.Ekipchi.Api.Core.Token
                     new Claim(JwtRegisteredClaimNames.Sub, user.Status.ToString()),
                     new Claim(JwtRegisteredClaimNames.Email, user.Email),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new Claim("Username", user.Username),
+                    new Claim("Roles", user.UserInRoles.Select(ur => $"{ur.RoleId}").Aggregate((a, b) => $"{a},{b}")),
                     new Claim("Id", user.Id.ToString())
                 }),
-                Expires = DateTime.Now.AddDays(1),
+                Expires = DateTime.Now.AddDays(14),
                 SigningCredentials =
                     new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
                 Audience = _jwtSettings.ValidAudience,

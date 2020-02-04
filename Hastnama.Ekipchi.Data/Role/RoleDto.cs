@@ -4,7 +4,7 @@ namespace Hastnama.Ekipchi.Data.Role
 {
     public class RoleDto
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         public string Name { get; set; }
 

@@ -33,10 +33,10 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         public async Task<Result<User>> Login(LoginDto loginDto)
         {
             var user = await FirstOrDefaultAsyncAsNoTracking(u =>
-                u.Username == loginDto.Username
-                || u.Email == loginDto.Username
-                || u.Mobile == loginDto.Username);
-
+                    u.Username == loginDto.Username
+                    || u.Email == loginDto.Username
+                    || u.Mobile == loginDto.Username,
+                u => u.UserInRoles.Select(ur => ur.Role.RolePermissions.Select(rp => rp.Permission)));
             if (user == null)
                 return Result<User>.Failed(new NotFoundObjectResult(new ApiMessage
                     {Message = PersianErrorMessage.UserNotFound}));
@@ -72,17 +72,6 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             return Result<User>.SuccessFull(user);
         }
 
-        public async Task<Result<User>> GetAsync(Guid id)
-        {
-            var user = await FirstOrDefaultAsyncAsNoTracking(u => u.Id == id && u.Status == UserStatus.Active);
-
-            if (user == null)
-                return Result<User>.Failed(new NotFoundObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.UserNotFound}));
-
-            return Result<User>.SuccessFull(user);
-        }
-
         public async Task<Result<PagedList<UserDto>>> List(PagingOptions pagingOptions,
             FilterUserQueryDto filterQueryDto)
         {
@@ -95,10 +84,9 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                         || u.Username.ToLower().Contains(filterQueryDto.Keyword)
                         || u.Mobile.ToLower().Contains(filterQueryDto.Keyword)
                         || u.Email.ToLower().Contains(filterQueryDto.Keyword))
-                    && (filterQueryDto.Role == null )
                     && (filterQueryDto.Status == null || u.Status == filterQueryDto.Status)
-                , pagingOptions
-            );
+                , pagingOptions,
+                u => u.UserInRoles.Select(ur => ur.Role.RolePermissions.Select(rp => rp.Permission)));
             if (users == null)
                 return Result<PagedList<UserDto>>.Failed(new NotFoundObjectResult(new ApiMessage
                     {Message = PersianErrorMessage.BadRequestQuery}));
@@ -108,13 +96,39 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result> UpdateProfile(UpdateUserDto updateUserDto)
         {
-            var user = await FirstOrDefaultAsync(u => u.Id == updateUserDto.Id);
+            var user = await FirstOrDefaultAsync(u => u.Id == updateUserDto.Id,
+                u => u.UserInRoles.Select(ur => ur.Role.RolePermissions.Select(rp => rp.Permission)));
 
             if (user == null)
                 return Result.Failed(new NotFoundObjectResult(new ApiMessage
                     {Message = PersianErrorMessage.UserNotFound}));
 
             _mapper.Map(updateUserDto, user);
+
+            if (!user.UserInRoles.Select(g => g.RoleId).SequenceEqual(updateUserDto.Roles))
+            {
+                // get all roles that are removed 
+                var removedUsers = user.UserInRoles
+                    .Where(ur => !updateUserDto.Roles.Contains(ur.RoleId));
+                if (removedUsers.Any())
+                    Context.UserInRoles.RemoveRange(removedUsers);
+
+                // get all roles id that are added
+                var addedRolesId = updateUserDto.Roles.Where(roleId =>
+                    !user.UserInRoles.Select(u => u.RoleId).Contains(roleId));
+                var addedRoles = await Context.Roles.Where(u => addedRolesId.Contains(u.Id)).ToListAsync();
+                
+                // if invalid role id sent 
+                if(addedRoles.Count!=addedRolesId.Count())
+                    return Result.Failed(new BadRequestObjectResult(new ApiMessage{Message = PersianErrorMessage.RoleNotFound}));
+                
+                var userRoles = addedRoles.Select(role => new UserInRole
+                        {Id = Guid.NewGuid(), Role = role, User = user})
+                    .Union(user.UserInRoles.Where(ug => !removedUsers.Contains(ug))).ToList();
+                
+                await Context.UserInRoles.AddRangeAsync(userRoles);
+                user.UserInRoles = userRoles;
+            }
 
             if (!string.IsNullOrEmpty(updateUserDto.Password))
                 user.Password = StringUtil.HashPass(updateUserDto.Password);
@@ -165,7 +179,8 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 return Result<UserDto>.Failed(new BadRequestObjectResult(new ApiMessage
                     {Message = PersianErrorMessage.InvalidUserId}));
 
-            var user = await FirstOrDefaultAsyncAsNoTracking(u => u.Id == id);
+            var user = await FirstOrDefaultAsyncAsNoTracking(u => u.Id == id,
+                u => u.UserInRoles.Select(ur => ur.Role.RolePermissions.Select(rp => rp.Permission)));
 
             if (user == null)
                 return Result<UserDto>.Failed(new NotFoundObjectResult(new ApiMessage

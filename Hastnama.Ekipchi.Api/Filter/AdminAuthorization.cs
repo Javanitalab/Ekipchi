@@ -49,7 +49,7 @@ namespace Hastnama.Ekipchi.Api.Filter
                 return;
             }
 
-            if (user.Data.Role != Role.Admin)
+            if (!user.Data.UserInRoles.Any() || !user.Data.UserInRoles.Any(r => r.Name == "Admin"))
                 context.Result =
                     new UnauthorizedObjectResult(new ApiMessage {Message = PersianErrorMessage.UnAuthorized});
         }

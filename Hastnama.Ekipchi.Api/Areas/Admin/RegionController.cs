@@ -4,6 +4,7 @@ using AutoMapper;
 using Hastnama.Ekipchi.Business.Service;
 using Hastnama.Ekipchi.Business.Service.Interface;
 using Hastnama.Ekipchi.Common.General;
+using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Data.Region;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +32,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// <response code="200">if login successfully </response>
         /// <response code="400">If validation failure.</response>
         /// <response code="500">If an unexpected error happen</response>
-        [ProducesResponseType(typeof(List<RegionDto>), 200)]
+        [ProducesResponseType(typeof(PagedList<RegionDto>), 200)]
         [ProducesResponseType(typeof(ApiMessage), 400)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpGet]

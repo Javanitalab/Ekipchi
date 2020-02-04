@@ -8,7 +8,6 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
 {
     public class User
     {
-
         public User()
         {
             UserTokens = new List<UserToken>();
@@ -30,11 +29,7 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("UserId")]
         public Guid Id { get; set; }
-
         public string Mobile { get; set; }
-
-        public Role Role { get; set; }
-
         public string Password { get; set; }
 
         public string Email { get; set; }
@@ -76,5 +71,8 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
         public virtual List<UserMessage> ReceiverMessages { get; }
 
         public virtual List<UserMessage> SenderMessage { get; }
+        
+        public virtual List<UserInRole> UserInRoles { get; set; }
+
     }
 }

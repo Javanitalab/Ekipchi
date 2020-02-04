@@ -45,7 +45,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             if (!user.Success)
                 return user.ApiResult;
 
-            var authToken = await _tokenGenerator.Generate(new User {Username = user.Data.Username, Email = user.Data.Username, Id = user.Data.Id});
+            var authToken = await _tokenGenerator.Generate(user.Data);
           
             if (!authToken.Success)
                 return authToken.ApiResult;

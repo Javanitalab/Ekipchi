@@ -19,6 +19,7 @@ using Hastnama.Ekipchi.Data.Group;
 using Hastnama.Ekipchi.Data.Host;
 using Hastnama.Ekipchi.Data.Province;
 using Hastnama.Ekipchi.Data.Region;
+using Hastnama.Ekipchi.Data.Role;
 using Hastnama.Ekipchi.Data.User;
 using Hastnama.Ekipchi.DataAccess.Entities;
 
@@ -45,7 +46,17 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
                 .ForMember(x => x.Gender, opt => opt.MapFrom(des => des.Gender))
                 .ForMember(x => x.Avatar, opt => opt.MapFrom(des => des.Avatar))
                 .ForMember(x => x.Id, opt => opt.MapFrom(des => des.Id))
-                .ForMember(x => x.Role, opt => opt.MapFrom(des => des.Role))
+                .ForMember(x => x.UserInRoles,
+                    opt => opt.MapFrom(des =>
+                        des.UserInRoles.Select(ur => new RoleDto
+                        {
+                            Id = ur.Role.Id, Name = ur.Role.Name,
+                            RolePermissions = ur.Role.RolePermissions.Select(rp => new RolePermissionDto
+                                {
+                                    Id = rp.Permission.Id, Name = rp.Permission.Name, ParentId = rp.Permission.ParentId
+                                })
+                                .ToList()
+                        })))
                 .ForMember(x => x.Mobile, opt => opt.MapFrom(des => des.Mobile));
 
             CreateMap<UserDto, User>()
@@ -55,7 +66,6 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
                 .ForMember(x => x.Gender, opt => opt.MapFrom(des => des.Gender))
                 .ForMember(x => x.Avatar, opt => opt.MapFrom(des => des.Avatar))
                 .ForMember(x => x.Id, opt => opt.MapFrom(des => des.Id))
-                .ForMember(x => x.Role, opt => opt.MapFrom(des => des.Role))
                 .ForMember(x => x.Mobile, opt => opt.MapFrom(des => des.Mobile));
 
             CreateMap<UpdateUserDto, User>()
@@ -65,7 +75,6 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
                 .ForMember(x => x.Gender, opt => opt.MapFrom(des => des.Gender))
                 .ForMember(x => x.Avatar, opt => opt.MapFrom(des => des.Avatar))
                 .ForMember(x => x.Id, opt => opt.MapFrom(des => des.Id))
-                .ForMember(x => x.Role, opt => opt.MapFrom(des => des.Role))
                 .ForMember(x => x.Mobile, opt => opt.MapFrom(des => des.Mobile));
 
             CreateMap<CreateUserDto, User>()
@@ -76,7 +85,6 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
                 .ForMember(x => x.Gender, opt => opt.MapFrom(des => des.Gender))
                 .ForMember(x => x.Avatar, opt => opt.MapFrom(des => des.Avatar))
                 .ForMember(x => x.Id, opt => Guid.NewGuid())
-                .ForMember(x => x.Role, opt => opt.MapFrom(des => des.Role))
                 .ForMember(x => x.Mobile, opt => opt.MapFrom(des => des.Mobile));
 
             #endregion
@@ -239,7 +247,6 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
 
             #endregion
 
-
             #region Category
 
             CreateMap<CategoryDto, Category>()
@@ -303,7 +310,7 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
             CreateMap<Group, GroupDto>()
                 .ForMember(x => x.Owner, opt => opt.MapFrom(o => o.User))
                 .ForMember(x => x.UsersInGroup,
-                    opt => opt.MapFrom(o => o.UserInGroups.Select(ug=>ug.User)));
+                    opt => opt.MapFrom(o => o.UserInGroups.Select(ug => ug.User)));
 
 
             CreateMap<UpdateGroupDto, Group>()
@@ -312,6 +319,27 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
 
             CreateMap<CreateGroupDto, Group>()
                 .ForMember(x => x.OwnerId, opt => opt.MapFrom(o => o.OwnerId));
+
+            #endregion
+
+            #region Role
+
+            CreateMap<RoleDto, Role>();
+
+            CreateMap<Role, FaqDto>();
+
+            CreateMap<UpdateRoleDto, Role>();
+
+            CreateMap<CreateRoleDto, Role>();
+
+            #endregion
+
+            #region RolePermission
+
+            CreateMap<RolePermission, RolePermissionDto>()
+                .ForMember(x => x.Id, opt => opt.MapFrom(des => des.PermissionId))
+                .ForMember(x => x.Name, opt => opt.MapFrom(des => des.Permission.Name))
+                .ForMember(x => x.ParentId, opt => opt.MapFrom(des => des.Permission.ParentId));
 
             #endregion
         }

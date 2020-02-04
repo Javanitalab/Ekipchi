@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Hastnama.Ekipchi.Common.Enum;
+using Hastnama.Ekipchi.Data.Role;
 
 namespace Hastnama.Ekipchi.Data.User
 {
@@ -8,7 +9,6 @@ namespace Hastnama.Ekipchi.Data.User
     {
         public Guid Id { get; set; }
         public string Mobile { get; set; }
-        public Common.Enum.Role? Role { get; set; }
         public string Email { get; set; }
         public string Name { get; set; }
         public string Family { get; set; }
@@ -17,5 +17,7 @@ namespace Hastnama.Ekipchi.Data.User
         public string Avatar { get; set; }
         public UserStatus Status { get; set; }
         public bool Gender { get; set; }
+
+        public List<RoleDto> UserInRoles { get; set; } = new List<RoleDto>();
     }
 }

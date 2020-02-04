@@ -27,8 +27,7 @@ namespace Hastnama.Ekipchi.Api.Data
                 context.Users.Add(new User { Email = "alireza.ra1996@gmail.com", Family = "nobahari", Name = "alireza", IsEmailConfirmed = true, ConfirmCode = "1234", Username = "naser", Password = StringUtil.HashPass("1234qwer"), CreateDateTime = DateTime.Now, ExpiredVerificationCode = DateTime.Now.AddDays(2) });
                 context.SaveChanges();
             }
-
-
+            
         }
     }
 }

@@ -53,7 +53,6 @@
 
         #endregion
 
-
         #region Region
 
         public const string DuplicateRegionName = "نام منطقه تکراری است";
@@ -131,6 +130,14 @@
         public const string InvalidCouponId = "ایدی کامنت معتبر نمیباشد";
         public const string DuplicateCouponCode = "کد تخفیف تکراری است";
         public const string InvalidCouponCode = "کد تخفیف معتبر نمیباشد";
+
+        #endregion
+
+        #region Role
+        public const string RoleNotFound = "نقش مورد نظر پیدا نشد";
+        public const string RoleIsVitual = "نقش مورد ویتیال است";
+
+        
 
         #endregion
 
