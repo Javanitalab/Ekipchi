@@ -108,16 +108,16 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
             #region Update UserInEvents
 
-            if (!eventDetail.UserInEvents.Select(g => g.UserId).SequenceEqual(updateEventDto.UserInEvents))
+            if (!eventDetail.UserInEvents.Select(g => g.UserId).SequenceEqual(updateEventDto.Users))
             {
                 // get all users that are removed 
                 var removedUsers = eventDetail.UserInEvents
-                    .Where(user => !updateEventDto.UserInEvents.Contains(user.UserId));
+                    .Where(user => !updateEventDto.Users.Contains(user.UserId));
                 if (removedUsers.Any())
                     Context.UserInEvents.RemoveRange(removedUsers);
 
                 // get all users id that are added
-                var addedUsersId = updateEventDto.UserInEvents.Where(userId =>
+                var addedUsersId = updateEventDto.Users.Where(userId =>
                     !eventDetail.UserInEvents.Select(u => u.UserId).Contains(userId));
 
                 var addedUsers = await Context.Users.Where(u => addedUsersId.Contains(u.Id)).ToListAsync();
@@ -127,14 +127,14 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                     return Result.Failed(new BadRequestObjectResult(new ApiMessage
                         {Message = PersianErrorMessage.UserNotFound}));
 
-                var userInEvents = addedUsers.Select(user => new UserInEvent
+                var addedUserInEvents = addedUsers.Select(user => new UserInEvent
                         {Guid = Guid.NewGuid(), Event = eventDetail, User = user})
                     .ToList();
 
-                if (userInEvents.Any())
-                    await Context.UserInEvents.AddRangeAsync(userInEvents);
+                if (addedUserInEvents.Any())
+                    await Context.UserInEvents.AddRangeAsync(addedUserInEvents);
 
-                eventDetail.UserInEvents = userInEvents.Union(eventDetail.UserInEvents.Where(ur =>
+                eventDetail.UserInEvents = addedUserInEvents.Union(eventDetail.UserInEvents.Where(ur =>
                         !addedUsersId.Contains(ur.UserId) && !removedUsers.Select(rr => rr.UserId).Contains(ur.UserId)))
                     .ToList();
             }

@@ -43,6 +43,6 @@ namespace Hastnama.Ekipchi.Data.Event
 
         public EventScheduleDto EventSchedule { get; set; }
 
-        public List<Guid> UserInEvents { get; set; }
+        public List<Guid> Users { get; set; }
     }
 }

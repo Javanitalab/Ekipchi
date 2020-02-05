@@ -201,6 +201,7 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
             CreateMap<UpdateBlogDto, Blog>();
 
             CreateMap<CreateBlogDto, Blog>();
+
             #endregion
 
             #region BlogCategory
@@ -224,7 +225,11 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
 
             CreateMap<UpdateEventDto, Event>();
 
-            CreateMap<Event, EventDto>();
+            CreateMap<Event, EventDto>()
+                .ForMember(x => x.UserInEvents,
+                    opt => opt.MapFrom(x => x.UserInEvents.Select(ur=>ur.User)));
+                
+
 
             CreateMap<EventSchedule, EventScheduleDto>();
 

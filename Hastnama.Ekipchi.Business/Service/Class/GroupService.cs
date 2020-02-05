@@ -71,14 +71,14 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                     return Result.Failed(new BadRequestObjectResult(new ApiMessage
                         {Message = PersianErrorMessage.UserNotFound}));
 
-                var userInGroups = addedUsers.Select(user => new UserInGroup
+                var addedUserInGroups = addedUsers.Select(user => new UserInGroup
                         {Id = Guid.NewGuid(), Groups = @group, JoinGroupDate = DateTime.Now, User = user})
                     .ToList();
                 
-                if (userInGroups.Any())
-                    await Context.UserInGroups.AddRangeAsync(userInGroups);
+                if (addedUserInGroups.Any())
+                    await Context.UserInGroups.AddRangeAsync(addedUserInGroups);
 
-                group.UserInGroups = userInGroups.Union(group.UserInGroups.Where(ur =>
+                group.UserInGroups = addedUserInGroups.Union(group.UserInGroups.Where(ur =>
                         !addedUsersId.Contains(ur.UserId) && !removedUsers.Select(rr => rr.UserId).Contains(ur.UserId)))
                     .ToList();
             }

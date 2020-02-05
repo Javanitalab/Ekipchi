@@ -128,13 +128,13 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                     return Result.Failed(new BadRequestObjectResult(new ApiMessage
                         {Message = PersianErrorMessage.RoleNotFound}));
 
-                var userRoles = addedRoles.Select(role => new UserInRole
+                var addedUserRoles = addedRoles.Select(role => new UserInRole
                     {Id = Guid.NewGuid(), Role = role, User = user}).ToList();
 
-                if (userRoles.Any())
-                    await Context.UserInRoles.AddRangeAsync(userRoles);
+                if (addedUserRoles.Any())
+                    await Context.UserInRoles.AddRangeAsync(addedUserRoles);
                 
-                user.UserInRoles = userRoles.Union(user.UserInRoles.Where(ur =>
+                user.UserInRoles = addedUserRoles.Union(user.UserInRoles.Where(ur =>
                         !addedRolesId.Contains(ur.RoleId) && !removeRoles.Select(rr => rr.RoleId).Contains(ur.RoleId)))
                     .ToList();
             }
