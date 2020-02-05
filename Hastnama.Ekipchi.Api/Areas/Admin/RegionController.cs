@@ -75,7 +75,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPut]
-        public async Task<IActionResult> Update([FromQuery] UpdateRegionDto updateRegionDto)
+        public async Task<IActionResult> Update([FromBody] UpdateRegionDto updateRegionDto)
         {
             var result = await _unitOfWork.RegionService.Update(updateRegionDto);
             if (!result.Success)
@@ -97,7 +97,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPost]
-        public async Task<IActionResult> Create([FromQuery] CreateRegionDto createRegionDto)
+        public async Task<IActionResult> Create([FromBody] CreateRegionDto createRegionDto)
         {
             var result = await _unitOfWork.RegionService.Create(createRegionDto);
             if (!result.Success)

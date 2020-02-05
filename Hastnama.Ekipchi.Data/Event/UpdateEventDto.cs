@@ -35,15 +35,6 @@ namespace Hastnama.Ekipchi.Data.Event
         public string TermsAndCondition { get; set; }
 
         public string Tags { get; set; }
-
-        public DateTime CreateDate { get; set; }
-
-        public double Income { get; set; }
-
-        public int PinedTimes { get; set; }
-
-        public int TotalAttendees { get; set; }
-
-        public List<Guid> UserList { get; set; }
+        public List<Guid> UserInEvents { get; set; }
     }
 }

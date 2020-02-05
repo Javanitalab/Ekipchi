@@ -76,7 +76,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPut]
-        public async Task<IActionResult> Update([FromQuery] UpdateCouponDto updateCouponDto)
+        public async Task<IActionResult> Update([FromBody] UpdateCouponDto updateCouponDto)
         {
             var result = await _unitOfWork.CouponService.Update(updateCouponDto);
             if (!result.Success)
@@ -97,7 +97,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 400)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPost]
-        public async Task<IActionResult> Create([FromQuery] CreateCouponDto createCouponDto)
+        public async Task<IActionResult> Create([FromBody] CreateCouponDto createCouponDto)
         {
             var result = await _unitOfWork.CouponService.Create(createCouponDto);
             if (!result.Success)

@@ -8,27 +8,25 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
 {
     public class Event
     {
-
         public Event()
         {
             EventSchedule = new EventSchedule();
             EventGallery = new EventGallery();
         }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
         public int CategoryId { get; set; }
 
-        [ForeignKey(nameof(CategoryId))]
-        public virtual Category Category { get; set; }
+        [ForeignKey(nameof(CategoryId))] public virtual Category Category { get; set; }
 
         public string Name { get; set; }
 
         public Guid? HostId { get; set; }
 
-        [ForeignKey(nameof(HostId))]
-        public virtual Host Host { get; set; }
+        [ForeignKey(nameof(HostId))] public virtual Host Host { get; set; }
 
         public string Description { get; set; }
 
@@ -67,11 +65,12 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
 
         public int TotalAttendees { get; set; }
 
-        public virtual EventSchedule EventSchedule { get; }
+        public virtual EventSchedule EventSchedule { get; set; }
 
-        public virtual EventGallery EventGallery { get; }
-        
-        public virtual List<Comment> Comment { get; }
+        public virtual EventGallery EventGallery { get; set; }
 
+        public virtual List<Comment> Comment { get; set; }
+
+        public virtual List<UserInEvent> UserInEvents { get; set; }
     }
 }

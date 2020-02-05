@@ -17,6 +17,7 @@ using Hastnama.Ekipchi.Data.Event.Schedule;
 using Hastnama.Ekipchi.Data.Faq;
 using Hastnama.Ekipchi.Data.Group;
 using Hastnama.Ekipchi.Data.Host;
+using Hastnama.Ekipchi.Data.Host.AvailableDate;
 using Hastnama.Ekipchi.Data.Message;
 using Hastnama.Ekipchi.Data.Province;
 using Hastnama.Ekipchi.Data.Region;
@@ -226,16 +227,12 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
 
             #region EventGallery
 
-            CreateMap<CreateEventGalleryDto, EventGallery>();
-            CreateMap<UpdateEventGalleryDto, EventGallery>();
             CreateMap<EventGallery, EventGalleryDto>();
 
             #endregion
 
             #region EventSchedule
 
-            CreateMap<CreateEventScheduleDto, Event>();
-            CreateMap<UpdateEventScheduleDto, Event>();
             CreateMap<Event, EventScheduleDto>();
 
             #endregion
@@ -250,14 +247,9 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
 
             #region Category
 
-            CreateMap<CategoryDto, Category>()
-                .ForMember(x => x.HostCategories,
-                    opt => opt.MapFrom(o => o.Hosts.Select(h => new HostCategory {CategoryId = o.Id, HostId = h.Id})));
+            CreateMap<CategoryDto, Category>();
 
-            CreateMap<Category, CategoryDto>()
-                .ForMember(x => x.Hosts,
-                    opt => opt.MapFrom(o =>
-                        o.HostCategories.Select(h => new HostDto {Id = h.Host.Id, Name = h.Host.Name})));
+            CreateMap<Category, CategoryDto>();
 
 
             CreateMap<UpdateCategoryDto, Category>();
@@ -344,7 +336,6 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
 
             #endregion
 
-
             #region Message
 
             CreateMap<UserMessage, UserMessageDto>()
@@ -363,6 +354,26 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
             CreateMap<CreateMessageDto, Message>().ForMember(x => x.CreateDate, opt => opt.MapFrom(o => DateTime.Now));
 
             CreateMap<CreateReplyTo, Message>().ForMember(x => x.CreateDate, opt => opt.MapFrom(des => DateTime.Now));
+
+            #endregion
+
+            #region Host
+
+            CreateMap<HostDto, Host>();
+
+            CreateMap<Host, HostDto>()
+                .ForMember(x => x.Galleries, opt => opt.MapFrom(x => x.HostGalleries.Select(g => g.Image)))
+                .ForMember(x => x.Categories,
+                    opt => opt.MapFrom(x => x.HostCategories.Select(c => new CategoryDto
+                        {Id = c.Category.Id, IsDeleted = c.Category.IsDeleted, Name = c.Category.Name})));
+
+            CreateMap<UpdateHostDto, Host>();
+
+            CreateMap<CreateHostDto, Host>();
+
+            CreateMap<HostAvailableDateDto, HostAvailableDate>();
+
+            CreateMap<HostAvailableDate, HostAvailableDateDto>();
 
             #endregion
         }

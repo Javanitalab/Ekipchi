@@ -10,10 +10,6 @@ namespace Hastnama.Ekipchi.Data.Category
         public string Name { get; set; }
 
         public bool IsDeleted { get; set; }
-
-        public virtual List<CategoryDto> Categories { get; set; }
-
-        public virtual List<HostDto> Hosts { get; set; }
-
+        
     }
 }

@@ -5,8 +5,6 @@ namespace Hastnama.Ekipchi.Data.Host.AvailableDate
 {
     public class HostAvailableDateDto
     {
-        public Guid Id { get; set; }
-
         public TimeSpan FromHour { get; set; }
         
         public TimeSpan ToHour { get; set; }

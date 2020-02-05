@@ -78,7 +78,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPut]
-        public async Task<IActionResult> Update([FromQuery] UpdateUserDto updateUserDto)
+        public async Task<IActionResult> Update([FromBody] UpdateUserDto updateUserDto)
         {
             var result = await _unitOfWork.UserService.UpdateProfile(updateUserDto);
             if (!result.Success)
@@ -119,7 +119,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPost]
-        public async Task<IActionResult> Create([FromQuery] CreateUserDto createUserDto)
+        public async Task<IActionResult> Create([FromBody] CreateUserDto createUserDto)
         {
             var result = await _unitOfWork.UserService.Create(createUserDto);
             if (!result.Success)

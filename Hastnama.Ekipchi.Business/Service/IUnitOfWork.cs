@@ -20,9 +20,8 @@ namespace Hastnama.Ekipchi.Business.Service
         IFaqService FaqService { get; }
         ICouponService CouponService { get; }
         IEventService EventService { get; }
-        IGroupService GroupService { get; }
-        IEventGalleryService EventGalleryService { get; }
-        IEventScheduleService EventScheduleService { get; }
+        IHostService HostService { get; }
+        IGroupService GroupService { get; } 
         IUserMessageService UserMessageService { get; }
         IMessageService MessageService { get; }
 

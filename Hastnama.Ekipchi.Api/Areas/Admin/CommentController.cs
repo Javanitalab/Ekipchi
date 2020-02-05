@@ -74,7 +74,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPut]
-        public async Task<IActionResult> Update([FromQuery] UpdateCommentDto updateCommentDto)
+        public async Task<IActionResult> Update([FromBody] UpdateCommentDto updateCommentDto)
         {
             var result = await _unitOfWork.CommentService.Update(updateCommentDto);
             if (!result.Success)
@@ -97,7 +97,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPost]
-        public async Task<IActionResult> Create([FromQuery] CreateCommentDto createCommentDto)
+        public async Task<IActionResult> Create([FromBody] CreateCommentDto createCommentDto)
         {
             var result = await _unitOfWork.CommentService.Create(createCommentDto);
             if (!result.Success)

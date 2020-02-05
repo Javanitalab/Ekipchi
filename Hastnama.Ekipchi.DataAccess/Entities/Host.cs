@@ -52,13 +52,13 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
 
         public int EventCount { get; set; }
 
-        public virtual List<HostGallery> HostGalleries { get; }
+        public virtual List<HostGallery> HostGalleries { get; set; }
 
-        public virtual List<HostCategory> HostCategories { get; }
+        public virtual List<HostCategory> HostCategories { get; set;}
 
         public virtual List<Event> Events { get; }
 
-        public virtual List<HostAvailableDate> HostAvailableDates { get; }
+        public virtual List<HostAvailableDate> HostAvailableDates { get; set; }
 
     }
 }

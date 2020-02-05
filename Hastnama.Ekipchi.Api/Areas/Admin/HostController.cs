@@ -1,22 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Threading.Tasks;
 using AutoMapper;
 using Hastnama.Ekipchi.Business.Service;
-using Hastnama.Ekipchi.Business.Service.Interface;
 using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Message;
-using Hastnama.Ekipchi.Data.City;
+using Hastnama.Ekipchi.Data.Host;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hastnama.Ekipchi.Api.Areas.Admin
 {
-    public class CityController : BaseAdminController
+    public class HostController : BaseAdminController
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public CityController(IUnitOfWork unitOfWork, IMapper mapper)
+        public HostController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
@@ -24,47 +23,47 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
 
 
         /// <summary>
-        /// City List
+        /// Host List
         /// </summary>
         /// <param name="filterQueryDto"></param>
         /// <param name="pagingOptions"></param>
-        /// <returns>City List</returns>
-        /// <response code="200">if Get successfully </response>
+        /// <returns>Host List</returns>
+        /// <response code="200">if Get List successfully </response>
         /// <response code="404">If entity not found.</response>
         /// <response code="500">If an unexpected error happen</response>
-        [ProducesResponseType(typeof(PagedList<CityDto>), 200)]
+        [ProducesResponseType(typeof(PagedList<HostDto>), 200)]
         [ProducesResponseType(typeof(ApiMessage), 400)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpGet]
         public async Task<IActionResult> List([FromQuery] PagingOptions pagingOptions,
-            [FromQuery] FilterCityQueryDto filterQueryDto)
+            [FromQuery] FilterHostQueryDto filterQueryDto)
         {
-            var result = await _unitOfWork.CityService.List(pagingOptions, filterQueryDto);
+            var result = await _unitOfWork.HostService.List(pagingOptions, filterQueryDto);
             return result.ApiResult;
         }
 
         /// <summary>
-        /// City Detail
+        /// Host Detail
         /// </summary>
         /// <param name="id"></param>
-        /// <returns>City Detail</returns>
+        /// <returns>Host Detail</returns>
         /// <response code="200">if Get successfully </response>
         /// <response code="404">If entity not found.</response>
         /// <response code="500">If an unexpected error happen</response>
-        [ProducesResponseType(typeof(CityDto), 200)]
+        [ProducesResponseType(typeof(HostDto), 200)]
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
-        [HttpGet("{id}", Name = "GetCity")]
-        public async Task<IActionResult> Get(int id)
+        [HttpGet("{id}", Name = "GetHost")]
+        public async Task<IActionResult> Get(Guid id)
         {
-            var result = await _unitOfWork.CityService.Get(id);
+            var result = await _unitOfWork.HostService.Get(id);
             return result.ApiResult;
         }
 
         /// <summary>
-        /// Update City 
+        /// Update Host 
         /// </summary>
-        /// <param name="updateCityDto"></param>
+        /// <param name="updateHostDto"></param>
         /// <returns>NoContent</returns>
         /// <response code="204">if Update successfully </response>
         /// <response code="400">If validation failure.</response>
@@ -75,9 +74,9 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UpdateCityDto updateCityDto)
+        public async Task<IActionResult> Update([FromBody] UpdateHostDto updateHostDto)
         {
-            var result = await _unitOfWork.CityService.Update(updateCityDto);
+            var result = await _unitOfWork.HostService.Update(updateHostDto);
             if (!result.Success)
                 return result.ApiResult;
             return NoContent();
@@ -85,9 +84,9 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
 
 
         /// <summary>
-        /// Create City 
+        /// Create Host 
         /// </summary>
-        /// <param name="createCityDto"></param>
+        /// <param name="createHostDto"></param>
         /// <returns>NoContent</returns>
         /// <response code="201">if Create successfully </response>
         /// <response code="400">If validation failure.</response>
@@ -98,12 +97,32 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateCityDto createCityDto)
+        public async Task<IActionResult> Create([FromBody] CreateHostDto createHostDto)
         {
-            var result = await _unitOfWork.CityService.Create(createCityDto);
+            var result = await _unitOfWork.HostService.Create(createHostDto);
             if (!result.Success)
                 return result.ApiResult;
-            return Created(Url.Link("GetCounty", new {result.Data.Id}), _mapper.Map<CityDto>(result.Data));
+            return Created(Url.Link("GetHost", new {result.Data.Id}), _mapper.Map<HostDto>(result.Data));
         }
+        
+        /// <summary>
+        /// Delete Host 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>NoContent</returns>
+        /// <response code="204">if Delete successfully </response>
+        /// <response code="404">If entity not found.</response>
+        /// <response code="500">If an unexpected error happen</response>
+        [ProducesResponseType(typeof(ApiMessage), 404)]
+        [ProducesResponseType(typeof(ApiMessage), 500)]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var result = await _unitOfWork.HostService.Delete(id);
+            if (!result.Success)
+                return result.ApiResult;
+            return NoContent();
+        }
+
     }
 }

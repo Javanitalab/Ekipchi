@@ -76,7 +76,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPut]
-        public async Task<IActionResult> Update([FromQuery] UpdateGroupDto updateGroupDto)
+        public async Task<IActionResult> Update([FromBody] UpdateGroupDto updateGroupDto)
         {
             var result = await _unitOfWork.GroupService.Update(updateGroupDto);
             if (!result.Success)
@@ -99,7 +99,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPost]
-        public async Task<IActionResult> Create([FromQuery] CreateGroupDto createGroupDto)
+        public async Task<IActionResult> Create([FromBody] CreateGroupDto createGroupDto)
         {
             var result = await _unitOfWork.GroupService.Create(createGroupDto);
             if (!result.Success)

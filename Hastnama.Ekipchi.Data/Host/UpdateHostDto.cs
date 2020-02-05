@@ -39,14 +39,10 @@ namespace Hastnama.Ekipchi.Data.Host
 
         public bool IsDeleted { get; set; }
         
-        public int EventCount { get; set; }
-
         public virtual List<string> Galleries { get; set; }
 
-        public virtual List<CategoryDto> Categories { get; set; }
-
-        public virtual List<EventDto> Events { get; set; }
-
+        public virtual List<int> Categories { get; set; }
+        
         public virtual List<HostAvailableDateDto> HostAvailableDates { get; set; }
 
     }

@@ -75,7 +75,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPut]
-        public async Task<IActionResult> Update([FromQuery] UpdateCategoryDto updateCategoryDto)
+        public async Task<IActionResult> Update([FromBody] UpdateCategoryDto updateCategoryDto)
         {
             var result = await _unitOfWork.CategoryService.Update(updateCategoryDto);
             if (!result.Success)
@@ -98,7 +98,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPost]
-        public async Task<IActionResult> Create([FromQuery] CreateCategoryDto createCategoryDto)
+        public async Task<IActionResult> Create([FromBody] CreateCategoryDto createCategoryDto)
         {
             var result = await _unitOfWork.CategoryService.Create(createCategoryDto);
             if (!result.Success)

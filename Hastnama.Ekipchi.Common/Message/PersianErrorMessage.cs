@@ -134,10 +134,15 @@
         #endregion
 
         #region Role
+
         public const string RoleNotFound = "نقش مورد نظر پیدا نشد";
         public const string RoleIsVitual = "نقش مورد ویتیال است";
 
-        
+        #endregion
+
+        #region Host
+
+        public const string HostNotFound = "میزبان مورد نظر پیدا نشد";
 
         #endregion
 

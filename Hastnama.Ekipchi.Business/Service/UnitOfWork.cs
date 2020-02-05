@@ -28,14 +28,13 @@ namespace Hastnama.Ekipchi.Business.Service
         private ICouponService _couponService;
         private IEventService _eventService;
         private IGroupService _groupService;
-        private IEventGalleryService _eventGalleryService;
-        private IEventScheduleService _eventScheduleService;
         private IUserMessageService _userMessageService;
         private IMessageService _messageService;
         private IRolePermissionService _rolePermissionService;
         private IRoleService _roleService;
         private IPermissionService _permissionService;
         private IUserInRoleService _userInRoleService;
+        private IHostService _hostService;
 
 
         #endregion
@@ -49,6 +48,7 @@ namespace Hastnama.Ekipchi.Business.Service
         #region Services
 
         public IUserService UserService => _userService ??= new UserService(_context, _mapper);
+        public IHostService HostService => _hostService ??= new HostService(_context, _mapper);
         public ICityService CityService => _cityService ??= new CityService(_context, _mapper);
         public ICountyService CountyService => _countyService ??= new CountyService(_context, _mapper);
         public IProvinceService ProvinceService => _provinceService ??= new ProvinceService(_context, _mapper);
@@ -60,10 +60,7 @@ namespace Hastnama.Ekipchi.Business.Service
         public IFaqService FaqService => _faqServicee ??= new FaqService(_context, _mapper);
         public ICouponService CouponService => _couponService ??= new CouponService(_context, _mapper);
         public IEventService EventService => _eventService ??= new EventService(_context, _mapper);
-        public IGroupService GroupService => _groupService ??= new GroupService(_context, _mapper);
-        public IEventGalleryService EventGalleryService => _eventGalleryService ??= new EventGalleryService(_context, _mapper);
-        public IEventScheduleService EventScheduleService => _eventScheduleService ??= new EventScheduleService(_context, _mapper);
-        public IUserMessageService UserMessageService => _userMessageService ??= new UserMessageService(_context);
+        public IGroupService GroupService => _groupService ??= new GroupService(_context, _mapper); public IUserMessageService UserMessageService => _userMessageService ??= new UserMessageService(_context);
         public IMessageService MessageService => _messageService ??= new MessageService(_context);
         public IRolePermissionService RolePermissionService => new RolePermissionService(_context); 
         public IUserInRoleService UserInRoleService { get; }

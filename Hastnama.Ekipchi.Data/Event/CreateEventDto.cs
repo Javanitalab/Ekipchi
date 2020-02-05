@@ -12,7 +12,7 @@ namespace Hastnama.Ekipchi.Data.Event
 
         public string Name { get; set; }
 
-        public Guid? HostId { get; set; }
+        public Guid HostId { get; set; }
 
         public string Description { get; set; }
 
@@ -35,17 +35,9 @@ namespace Hastnama.Ekipchi.Data.Event
         public string TermsAndCondition { get; set; }
 
         public string Tags { get; set; }
+        
+        public EventGalleryDto EventGallery { get; set; }
 
-        public DateTime CreateDate { get; set; }
-
-        public double Income { get; set; }
-
-        public int PinedTimes { get; set; }
-
-        public int TotalAttendees { get; set; }
-
-        public List<CreateEventGalleryDto> CreateEventGallery { get; set; }
-
-        public CreateEventScheduleDto CreateEventSchedule { get; set; }
+        public EventScheduleDto EventSchedule { get; set; }
     }
 }

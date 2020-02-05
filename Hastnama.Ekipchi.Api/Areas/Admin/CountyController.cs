@@ -77,7 +77,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPut]
-        public async Task<IActionResult> Update([FromQuery] UpdateCountyDto updateCountyDto)
+        public async Task<IActionResult> Update([FromBody] UpdateCountyDto updateCountyDto)
         {
             var result = await _unitOfWork.CountyService.Update(updateCountyDto);
           
@@ -102,7 +102,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPost]
-        public async Task<IActionResult> Create([FromQuery] CreateCountyDto createCountyDto)
+        public async Task<IActionResult> Create([FromBody] CreateCountyDto createCountyDto)
         {
             var result = await _unitOfWork.CountyService.Create(createCountyDto);
            

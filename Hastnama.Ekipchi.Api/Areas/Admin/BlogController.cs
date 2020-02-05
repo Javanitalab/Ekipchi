@@ -75,7 +75,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPut]
-        public async Task<IActionResult> Update([FromQuery] UpdateBlogDto updateBlogDto)
+        public async Task<IActionResult> Update([FromBody] UpdateBlogDto updateBlogDto)
         {
             var result = await _unitOfWork.BlogService.Update(updateBlogDto);
             if (!result.Success)
@@ -98,7 +98,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPost]
-        public async Task<IActionResult> Create([FromQuery] CreateBlogDto createBlogDto)
+        public async Task<IActionResult> Create([FromBody] CreateBlogDto createBlogDto)
         {
             var result = await _unitOfWork.BlogService.Create(createBlogDto);
             if (!result.Success)
