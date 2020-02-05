@@ -306,7 +306,7 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
 
             CreateMap<Group, GroupDto>()
                 .ForMember(x => x.Owner, opt => opt.MapFrom(o => o.User))
-                .ForMember(x => x.UsersInGroup,
+                .ForMember(x => x.UsersInGroups,
                     opt => opt.MapFrom(o => o.UserInGroups.Select(ug => ug.User)));
 
 

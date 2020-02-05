@@ -33,8 +33,19 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                      e.Name.ToLower().Contains(filterQueryDto.Name.ToLower())
                      && (string.IsNullOrEmpty(filterQueryDto.HostName) ||
                          e.Host.Name.ToLower().Contains(filterQueryDto.HostName.ToLower()))) && !e.IsDeleted,
-                pagingOptions, e => e.Category,
+                pagingOptions, e => e.Category, e => e.Comment,
                 e => e.Host, e => e.UserInEvents.Select(ur => ur.User), e => e.EventGallery.User, e => e.EventSchedule);
+            if (events.Items.Any())
+            {
+                events.Items.ForEach(eventDetail =>
+                {
+                    if (eventDetail.Comment != null)
+                    {
+                        eventDetail.Comment = eventDetail.Comment.Where(c => c.IsConfirmed && !c.IsDeleted)
+                            .OrderBy(c => c.ModifiedDateTime).ToList();
+                    }
+                });
+            }
 
             return Result<PagedList<EventDto>>.SuccessFull(events.MapTo<EventDto>(_mapper));
         }
@@ -42,6 +53,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         public async Task<Result<EventDto>> Get(Guid id)
         {
             var eventDetail = await FirstOrDefaultAsyncAsNoTracking(x => x.Id == id && !x.IsDeleted, e => e.Category,
+                e => e.Comment,
                 e => e.Host, e => e.UserInEvents.Select(ur => ur.User), e => e.EventGallery, e => e.EventSchedule);
             if (eventDetail != null)
                 return Result<EventDto>.Failed(new NotFoundObjectResult(
@@ -87,11 +99,14 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             var eventDetail =
                 await FirstOrDefaultAsync(x => x.Id == updateEventDto.Id && !x.IsDeleted
                     , e => e.Category,
-                    e => e.Host, e => e.UserInEvents.Select(ur => ur.User), e => e.EventGallery, e => e.EventSchedule);
+                    e => e.Host, e => e.UserInEvents.Select(ur => ur.User), e => e.EventGallery, e => e.EventSchedule,
+                    e => e.Comment.Select(c => c.ParentComment), e => e.Comment.Select(c => c.Children));
 
             if (eventDetail is null)
                 return Result.Failed(new NotFoundObjectResult(new ApiMessage
                     {Message = PersianErrorMessage.EventNotFound}));
+
+            #region Update UserInEvents
 
             if (!eventDetail.UserInEvents.Select(g => g.UserId).SequenceEqual(updateEventDto.UserInEvents))
             {
@@ -119,9 +134,12 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 eventDetail.UserInEvents = userInGroups;
             }
 
+            #endregion
+
             _mapper.Map(updateEventDto, eventDetail);
             eventDetail.Category = category;
             eventDetail.Host = host;
+
             await Context.SaveChangesAsync();
 
             return Result.SuccessFull();

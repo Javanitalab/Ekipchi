@@ -12,7 +12,7 @@ namespace Hastnama.Ekipchi.Business.Service.Interface
 {
     public interface ICommentService : IRepository<Comment>
     {
-        Task<Result<PagedList<CommentDto>>> List(PagingOptions pagingOptions);
+        Task<Result<PagedList<CommentDto>>> List(PagingOptions pagingOptions,FilterCommentQueryDto filterCommentQueryDto);
         Task<Result> Update(UpdateCommentDto updateCommentDto);
         Task<Result<CommentDto>> Create(CreateCommentDto dto);
         Task<Result<CommentDto>> Get(Guid id);

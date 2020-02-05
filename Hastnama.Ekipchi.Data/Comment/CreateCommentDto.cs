@@ -9,5 +9,6 @@ namespace Hastnama.Ekipchi.Data.Comment
         public string Content { get; set; }
 
         public Guid UserId { get; set; }
+        public Guid EventId { get; set; }
     }
 }

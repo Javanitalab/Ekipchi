@@ -70,7 +70,6 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
         public virtual EventGallery EventGallery { get; set; }
 
         public virtual List<Comment> Comment { get; set; }
-
         public virtual List<UserInEvent> UserInEvents { get; set; }
     }
 }

@@ -36,9 +36,9 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 400)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpGet]
-        public async Task<IActionResult> List([FromQuery] PagingOptions pagingOptions)
+        public async Task<IActionResult> List([FromQuery] PagingOptions pagingOptions,[FromQuery]FilterCommentQueryDto filterCommentQueryDto)
         {
-            var result = await _unitOfWork.CommentService.List(pagingOptions);
+            var result = await _unitOfWork.CommentService.List(pagingOptions,filterCommentQueryDto);
             return result.ApiResult;
         }
 

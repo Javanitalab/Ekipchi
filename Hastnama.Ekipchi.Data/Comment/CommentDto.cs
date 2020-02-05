@@ -6,7 +6,7 @@ namespace Hastnama.Ekipchi.Data.Comment
 {
     public class CommentDto
     {
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
 
         public Guid? ParentId { get; set; }
 

@@ -25,9 +25,13 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             _mapper = mapper;
         }
 
-        public async Task<Result<PagedList<CommentDto>>> List(PagingOptions pagingOptions)
+        public async Task<Result<PagedList<CommentDto>>> List(PagingOptions pagingOptions,
+            FilterCommentQueryDto filterCommentQueryDto)
         {
-            var cities = await WhereAsyncAsNoTracking(c => true, pagingOptions,
+            var cities = await WhereAsyncAsNoTracking(c =>
+                    (filterCommentQueryDto.IsConfirmed == null || c.IsConfirmed == filterCommentQueryDto.IsConfirmed)
+                    && (filterCommentQueryDto.UserId == null || c.UserId == filterCommentQueryDto.UserId),
+                pagingOptions,
                 c => c.User, c => c.ParentComment, c => c.Children);
 
             return Result<PagedList<CommentDto>>.SuccessFull(cities.MapTo<CommentDto>(_mapper));
@@ -49,9 +53,15 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 return Result<CommentDto>.Failed(new NotFoundObjectResult(new ApiMessage
                     {Message = PersianErrorMessage.UserNotFound}));
 
+            var eEvent = await Context.Events.FirstOrDefaultAsync(u => u.Id == createCommentDto.EventId);
+            if (eEvent == null)
+                return Result<CommentDto>.Failed(new NotFoundObjectResult(new ApiMessage
+                    {Message = PersianErrorMessage.UserNotFound}));
+
             var comment = _mapper.Map<Comment>(createCommentDto);
             comment.User = user;
-            
+            comment.Event = eEvent;
+
             await AddAsync(comment);
             await Context.SaveChangesAsync();
 

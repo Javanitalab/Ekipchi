@@ -13,6 +13,6 @@ namespace Hastnama.Ekipchi.Data.Group
         public bool IsDeleted { get; set; }
         
         public bool IsPublic { get; set; }
-        public List<Guid> UsersInGroup { get; set; }
+        public List<Guid> UsersInGroups { get; set; }
     }
 }

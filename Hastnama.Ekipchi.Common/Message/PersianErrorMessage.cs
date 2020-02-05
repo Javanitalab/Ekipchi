@@ -143,12 +143,17 @@
         #region Host
 
         public const string HostNotFound = "میزبان مورد نظر پیدا نشد";
+        public const string InvalidHostId = "آیدی میزبان معتبر نیست";
+        public const string InvalidHostName = "نام میزبان معتبر نیست";
+        public const string InvalidHostAvailableDates = "روزهای دردسترس میزبان معتبر نیست";
 
         #endregion
 
-        #region MyRegion
+        #region Event
 
         public const string EventNotFound = "رویداد پیدا نشد";
+        public const string InvalidEventName = "نام رویداد معتبر نیست";
+        public const string InvalidEventSchedule = " زمانبندیه رویداد معتبر نیست";
 
         #endregion
     }

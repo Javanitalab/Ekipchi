@@ -9,7 +9,7 @@ namespace Hastnama.Ekipchi.Data.Host
 {
     public class UpdateHostDto
     {
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
 
         public string Name { get; set; }
 

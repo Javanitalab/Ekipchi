@@ -16,7 +16,7 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Group
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage(PersianErrorMessage.InvalidGroupId);
             
-            RuleFor(dto => dto.UsersInGroup)
+            RuleFor(dto => dto.UsersInGroups)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage(PersianErrorMessage.GroupOwnerIsInvalid);
             

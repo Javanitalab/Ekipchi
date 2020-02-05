@@ -52,16 +52,16 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
             _mapper.Map(updateGroupDto, group);
 
-            if (!group.UserInGroups.Select(g => g.UserId).SequenceEqual(updateGroupDto.UsersInGroup))
+            if (!group.UserInGroups.Select(g => g.UserId).SequenceEqual(updateGroupDto.UsersInGroups))
             {
                 // get all users that are removed 
                 var removedUsers = group.UserInGroups
-                    .Where(user => !updateGroupDto.UsersInGroup.Contains(user.UserId));
+                    .Where(user => !updateGroupDto.UsersInGroups.Contains(user.UserId));
                 if (removedUsers.Any())
                     Context.UserInGroups.RemoveRange(removedUsers);
 
                 // get all users id that are added
-                var addedUsersId = updateGroupDto.UsersInGroup.Where(userId =>
+                var addedUsersId = updateGroupDto.UsersInGroups.Where(userId =>
                     !group.UserInGroups.Select(u => u.UserId).Contains(userId));
 
                 var addedUsers = await Context.Users.Where(u => addedUsersId.Contains(u.Id)).ToListAsync();

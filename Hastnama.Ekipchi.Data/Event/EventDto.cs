@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Hastnama.Ekipchi.Common.Enum;
 using Hastnama.Ekipchi.Data.Category;
+using Hastnama.Ekipchi.Data.Comment;
 using Hastnama.Ekipchi.Data.Event.Gallery;
 using Hastnama.Ekipchi.Data.Event.Schedule;
 using Hastnama.Ekipchi.Data.Host;
@@ -58,7 +59,9 @@ namespace Hastnama.Ekipchi.Data.Event
         public EventScheduleDto EventSchedule { get; set; }
 
         public EventGalleryDto EventGallery { get; set; }
+
+        public IList<CommentDto> Comment { get; set; }
         
-        public IList<UserDto> Users { get; set; }
+        public IList<UserDto> UserInEvents { get; set; }
     }
 }

@@ -8,11 +8,11 @@ namespace Hastnama.Ekipchi.Data.Event
 {
     public class CreateEventDto
     {
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
 
         public string Name { get; set; }
 
-        public Guid HostId { get; set; }
+        public Guid? HostId { get; set; }
 
         public string Description { get; set; }
 
