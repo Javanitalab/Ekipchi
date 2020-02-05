@@ -7,6 +7,6 @@ namespace Hastnama.Ekipchi.Data.User
     {
         public string Keyword { get; set; }
         public UserStatus? Status { get; set; }
-        public Guid RoleId { get; set; }
+        public int? RoleId { get; set; }
     }
 }

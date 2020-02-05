@@ -194,23 +194,13 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
 
             #region Blog
 
-            CreateMap<BlogDto, Blog>()
-                .ForMember(x => x.UseId, opt => opt.MapFrom(o => o.User.Id))
-                .ForMember(x => x.BlogCategoryId, opt => opt.MapFrom(o => o.BlogCategoryId));
+            CreateMap<BlogDto, Blog>();
 
-            CreateMap<Blog, BlogDto>()
-                .ForMember(x => x.User,
-                    opt => opt.MapFrom(o => new UserDto {Id = o.User.Id, Username = o.User.Username}))
-                .ForMember(x => x.BlogCategoryId, opt => opt.MapFrom(o => o.BlogCategory.Id))
-                .ForMember(x => x.BlogCategoryName, opt => opt.MapFrom(o => o.BlogCategory.Name));
+            CreateMap<Blog, BlogDto>();
 
-            CreateMap<UpdateBlogDto, Blog>()
-                .ForMember(x => x.BlogCategoryId, opt => opt.MapFrom(o => o.BlogCategoryId));
+            CreateMap<UpdateBlogDto, Blog>();
 
-            CreateMap<CreateBlogDto, Blog>()
-                .ForMember(x => x.BlogCategoryId, opt => opt.MapFrom(o => o.BlogCategoryId))
-                .ForMember(x => x.UseId, opt => opt.MapFrom(o => o.UserId));
-
+            CreateMap<CreateBlogDto, Blog>();
             #endregion
 
             #region BlogCategory
@@ -246,6 +236,8 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
                 .ForMember(x => x.UserAvatar, opt => opt.MapFrom(x => x.User.Avatar));
 
             CreateMap<EventGalleryDto, EventGallery>();
+            CreateMap<UpdateEventGalleryDto, EventGallery>();
+            CreateMap<EventGallery, UpdateEventGalleryDto>();
 
             #endregion
 

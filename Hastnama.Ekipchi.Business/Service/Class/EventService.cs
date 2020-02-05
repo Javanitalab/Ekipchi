@@ -55,7 +55,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             var eventDetail = await FirstOrDefaultAsyncAsNoTracking(x => x.Id == id && !x.IsDeleted, e => e.Category,
                 e => e.Comment,
                 e => e.Host, e => e.UserInEvents.Select(ur => ur.User), e => e.EventGallery, e => e.EventSchedule);
-            if (eventDetail != null)
+            if (eventDetail == null)
                 return Result<EventDto>.Failed(new NotFoundObjectResult(
                     new ApiMessage
                         {Message = PersianErrorMessage.EventNotFound}));
@@ -127,11 +127,16 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                     return Result.Failed(new BadRequestObjectResult(new ApiMessage
                         {Message = PersianErrorMessage.UserNotFound}));
 
-                var userInGroups = addedUsers.Select(user => new UserInEvent
+                var userInEvents = addedUsers.Select(user => new UserInEvent
                         {Guid = Guid.NewGuid(), Event = eventDetail, User = user})
-                    .Union(eventDetail.UserInEvents.Where(ug => !removedUsers.Contains(ug))).ToList();
-                await Context.UserInEvents.AddRangeAsync(userInGroups);
-                eventDetail.UserInEvents = userInGroups;
+                    .ToList();
+
+                if (userInEvents.Any())
+                    await Context.UserInEvents.AddRangeAsync(userInEvents);
+
+                eventDetail.UserInEvents = userInEvents.Union(eventDetail.UserInEvents.Where(ur =>
+                        !addedUsersId.Contains(ur.UserId) && !removedUsers.Select(rr => rr.UserId).Contains(ur.UserId)))
+                    .ToList();
             }
 
             #endregion

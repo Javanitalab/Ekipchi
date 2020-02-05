@@ -32,7 +32,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                      b.Title.ToLower().Contains(filterQueryDto.Title.ToLower())
                      && (filterQueryDto.UserId == null ||
                          b.UseId == filterQueryDto.UserId)), pagingOptions,
-                b => b.BlogCategory);
+                b => b.BlogCategory,b=>b.User);
 
             return Result<PagedList<BlogDto>>.SuccessFull(cities.MapTo<BlogDto>(_mapper));
         }

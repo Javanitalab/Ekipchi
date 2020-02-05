@@ -19,6 +19,7 @@ using Hastnama.Ekipchi.DataAccess.Entities;
 using Hastnama.Ekipchi.DataAccess.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Hastnama.Ekipchi.Business.Service.Class
 {
@@ -88,6 +89,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                         || u.Mobile.ToLower().Contains(filterQueryDto.Keyword)
                         || u.Email.ToLower().Contains(filterQueryDto.Keyword))
                     && (filterQueryDto.Status == null || u.Status == filterQueryDto.Status)
+                    && (filterQueryDto.RoleId == null || u.UserInRoles.Any(ur => ur.RoleId == filterQueryDto.RoleId))
                 , pagingOptions,
                 u => u.UserInRoles.Select(ur => ur.Role.RolePermissions.Select(rp => rp.Permission)));
             if (users == null)
@@ -111,10 +113,10 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             if (!user.UserInRoles.Select(g => g.RoleId).SequenceEqual(updateUserDto.Roles))
             {
                 // get all roles that are removed 
-                var removedUsers = user.UserInRoles
+                var removeRoles = user.UserInRoles
                     .Where(ur => !updateUserDto.Roles.Contains(ur.RoleId));
-                if (removedUsers.Any())
-                    Context.UserInRoles.RemoveRange(removedUsers);
+                if (removeRoles.Any())
+                    Context.UserInRoles.RemoveRange(removeRoles);
 
                 // get all roles id that are added
                 var addedRolesId = updateUserDto.Roles.Where(roleId =>
@@ -127,11 +129,14 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                         {Message = PersianErrorMessage.RoleNotFound}));
 
                 var userRoles = addedRoles.Select(role => new UserInRole
-                        {Id = Guid.NewGuid(), Role = role, User = user})
-                    .Union(user.UserInRoles.Where(ug => !removedUsers.Contains(ug))).ToList();
+                    {Id = Guid.NewGuid(), Role = role, User = user}).ToList();
 
-                await Context.UserInRoles.AddRangeAsync(userRoles);
-                user.UserInRoles = userRoles;
+                if (userRoles.Any())
+                    await Context.UserInRoles.AddRangeAsync(userRoles);
+                
+                user.UserInRoles = userRoles.Union(user.UserInRoles.Where(ur =>
+                        !addedRolesId.Contains(ur.RoleId) && !removeRoles.Select(rr => rr.RoleId).Contains(ur.RoleId)))
+                    .ToList();
             }
 
             if (!string.IsNullOrEmpty(updateUserDto.Password))

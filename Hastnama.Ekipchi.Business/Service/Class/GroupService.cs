@@ -73,9 +73,14 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
                 var userInGroups = addedUsers.Select(user => new UserInGroup
                         {Id = Guid.NewGuid(), Groups = @group, JoinGroupDate = DateTime.Now, User = user})
-                    .Union(group.UserInGroups.Where(ug => !removedUsers.Contains(ug))).ToList();
-                await Context.UserInGroups.AddRangeAsync(userInGroups);
-                group.UserInGroups = userInGroups;
+                    .ToList();
+                
+                if (userInGroups.Any())
+                    await Context.UserInGroups.AddRangeAsync(userInGroups);
+
+                group.UserInGroups = userInGroups.Union(group.UserInGroups.Where(ur =>
+                        !addedUsersId.Contains(ur.UserId) && !removedUsers.Select(rr => rr.UserId).Contains(ur.UserId)))
+                    .ToList();
             }
 
             group.Members = group.UserInGroups.Count + 1;
