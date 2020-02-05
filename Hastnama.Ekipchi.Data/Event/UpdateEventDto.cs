@@ -1,6 +1,8 @@
 ﻿using Hastnama.Ekipchi.Common.Enum;
 using System;
 using System.Collections.Generic;
+using Hastnama.Ekipchi.Data.Event.Gallery;
+using Hastnama.Ekipchi.Data.Event.Schedule;
 
 namespace Hastnama.Ekipchi.Data.Event
 {
@@ -35,6 +37,11 @@ namespace Hastnama.Ekipchi.Data.Event
         public string TermsAndCondition { get; set; }
 
         public string Tags { get; set; }
+
+        public UpdateEventGalleryDto EventGallery { get; set; }
+
+        public EventScheduleDto EventSchedule { get; set; }
+
         public List<Guid> UserInEvents { get; set; }
     }
 }

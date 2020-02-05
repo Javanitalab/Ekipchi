@@ -11,6 +11,7 @@ using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Common.Result;
 using Hastnama.Ekipchi.Common.Util;
 using Hastnama.Ekipchi.Data.Auth;
+using Hastnama.Ekipchi.Data.Event;
 using Hastnama.Ekipchi.Data.Group;
 using Hastnama.Ekipchi.Data.User;
 using Hastnama.Ekipchi.DataAccess.Context;
@@ -67,7 +68,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             user = _mapper.Map<User>(registerDto);
             var role = await Context.Roles.FirstOrDefaultAsync(r => r.Name == "User");
             user.UserInRoles = new List<UserInRole>() {new UserInRole {Role = role, User = user}};
-            
+
             await AddAsync(user);
             await Context.SaveChangesAsync();
 
@@ -249,6 +250,26 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 groups.AddRange(userInGroups.Select(ug => ug.Groups));
 
             return Result<IList<GroupDto>>.SuccessFull(_mapper.Map<List<GroupDto>>(groups));
+        }
+
+        public async Task<Result<IList<EventDto>>> UserEvents(Guid id)
+        {
+            if (id == Guid.Empty)
+                return Result<IList<EventDto>>.Failed(new BadRequestObjectResult(new ApiMessage
+                    {Message = PersianErrorMessage.InvalidUserId}));
+            var user = await FirstOrDefaultAsync(u => u.Id == id);
+
+            if (user == null)
+                return Result<IList<EventDto>>.Failed(new NotFoundObjectResult(new ApiMessage
+                    {Message = PersianErrorMessage.UserNotFound}));
+
+            var events = await Context.UserInEvents.Where(ug => ug.UserId == id)
+                .Include(ug => ug.Event.Category)
+                .Include(ug => ug.Event.EventSchedule)
+                .Include(ug => ug.Event.EventGallery)
+                .ToListAsync();
+
+            return Result<IList<EventDto>>.SuccessFull(_mapper.Map<List<EventDto>>(events));
         }
     }
 }

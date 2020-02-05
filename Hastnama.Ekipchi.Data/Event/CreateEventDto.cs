@@ -36,7 +36,7 @@ namespace Hastnama.Ekipchi.Data.Event
 
         public string Tags { get; set; }
         
-        public EventGalleryDto EventGallery { get; set; }
+        public CreateEventGalleryDto EventGallery { get; set; }
 
         public EventScheduleDto EventSchedule { get; set; }
     }

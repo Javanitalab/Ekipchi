@@ -34,7 +34,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                      && (string.IsNullOrEmpty(filterQueryDto.HostName) ||
                          e.Host.Name.ToLower().Contains(filterQueryDto.HostName.ToLower()))) && !e.IsDeleted,
                 pagingOptions, e => e.Category,
-                e => e.Host, e => e.UserInEvents.Select(ur => ur.User), e => e.EventGallery, e => e.EventSchedule);
+                e => e.Host, e => e.UserInEvents.Select(ur => ur.User), e => e.EventGallery.User, e => e.EventSchedule);
 
             return Result<PagedList<EventDto>>.SuccessFull(events.MapTo<EventDto>(_mapper));
         }
