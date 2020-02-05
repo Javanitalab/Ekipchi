@@ -19,7 +19,7 @@ namespace Hastnama.Ekipchi.DataAccess.Context
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"Server=192.168.1.10;Initial Catalog =EkipchiDb;MultipleActiveResultSets=true;User ID=sa;Password=123qwe!@#QWE");
+                optionsBuilder.UseSqlServer(@"Server=185.88.132.154;Initial Catalog =EkipchiDb;MultipleActiveResultSets=true;User ID=sa;Password=123qwe!@#QWE");
             }
         }
 

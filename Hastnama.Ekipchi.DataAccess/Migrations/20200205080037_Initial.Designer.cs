@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hastnama.Ekipchi.DataAccess.Migrations
 {
     [DbContext(typeof(EkipchiDbContext))]
-    [Migration("20200128080809_Initial")]
+    [Migration("20200205080037_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -204,6 +204,9 @@ namespace Hastnama.Ekipchi.DataAccess.Migrations
                     b.Property<DateTime>("CreateDateTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<bool>("IsConfirmed")
                         .HasColumnType("bit");
 
@@ -220,6 +223,8 @@ namespace Hastnama.Ekipchi.DataAccess.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EventId");
 
                     b.HasIndex("ParentId");
 
@@ -594,6 +599,29 @@ namespace Hastnama.Ekipchi.DataAccess.Migrations
                     b.ToTable("Messages");
                 });
 
+            modelBuilder.Entity("Hastnama.Ekipchi.DataAccess.Entities.Permission", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
+
+                    b.ToTable("Permissions");
+                });
+
             modelBuilder.Entity("Hastnama.Ekipchi.DataAccess.Entities.Province", b =>
                 {
                     b.Property<int>("Id")
@@ -631,6 +659,46 @@ namespace Hastnama.Ekipchi.DataAccess.Migrations
                     b.HasIndex("CityId");
 
                     b.ToTable("Regions");
+                });
+
+            modelBuilder.Entity("Hastnama.Ekipchi.DataAccess.Entities.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("IsVital")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("Hastnama.Ekipchi.DataAccess.Entities.RolePermission", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("PermissionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PermissionId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("RolePermissions");
                 });
 
             modelBuilder.Entity("Hastnama.Ekipchi.DataAccess.Entities.User", b =>
@@ -675,9 +743,6 @@ namespace Hastnama.Ekipchi.DataAccess.Migrations
 
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("int");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -742,6 +807,27 @@ namespace Hastnama.Ekipchi.DataAccess.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserInGroups");
+                });
+
+            modelBuilder.Entity("Hastnama.Ekipchi.DataAccess.Entities.UserInRole", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserInRoles");
                 });
 
             modelBuilder.Entity("Hastnama.Ekipchi.DataAccess.Entities.UserMessage", b =>
@@ -893,6 +979,12 @@ namespace Hastnama.Ekipchi.DataAccess.Migrations
 
             modelBuilder.Entity("Hastnama.Ekipchi.DataAccess.Entities.Comment", b =>
                 {
+                    b.HasOne("Hastnama.Ekipchi.DataAccess.Entities.Event", "Event")
+                        .WithMany("Comment")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Hastnama.Ekipchi.DataAccess.Entities.Comment", "ParentComment")
                         .WithMany("Children")
                         .HasForeignKey("ParentId");
@@ -999,11 +1091,33 @@ namespace Hastnama.Ekipchi.DataAccess.Migrations
                         .HasForeignKey("ParentId");
                 });
 
+            modelBuilder.Entity("Hastnama.Ekipchi.DataAccess.Entities.Permission", b =>
+                {
+                    b.HasOne("Hastnama.Ekipchi.DataAccess.Entities.Permission", "Parent")
+                        .WithMany("Children")
+                        .HasForeignKey("ParentId");
+                });
+
             modelBuilder.Entity("Hastnama.Ekipchi.DataAccess.Entities.Region", b =>
                 {
                     b.HasOne("Hastnama.Ekipchi.DataAccess.Entities.City", "City")
                         .WithMany("Regions")
                         .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Hastnama.Ekipchi.DataAccess.Entities.RolePermission", b =>
+                {
+                    b.HasOne("Hastnama.Ekipchi.DataAccess.Entities.Permission", "Permission")
+                        .WithMany("RolePermissions")
+                        .HasForeignKey("PermissionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Hastnama.Ekipchi.DataAccess.Entities.Role", "Role")
+                        .WithMany("RolePermissions")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -1035,6 +1149,21 @@ namespace Hastnama.Ekipchi.DataAccess.Migrations
                         .WithMany("UserInGroups")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Hastnama.Ekipchi.DataAccess.Entities.UserInRole", b =>
+                {
+                    b.HasOne("Hastnama.Ekipchi.DataAccess.Entities.Role", "Role")
+                        .WithMany("UserInRoles")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Hastnama.Ekipchi.DataAccess.Entities.User", "User")
+                        .WithMany("UserInRoles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
