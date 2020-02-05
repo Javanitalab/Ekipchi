@@ -166,14 +166,14 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
 
             var message = _mapper.Map<Message>(messageDto);
 
-            await _unitOfWork.MessageService.AddAsync(message);
+            // await _unitOfWork.MessageService.AddAsync(message);
 
             var userMessage = new UserMessage
             {
                 SenderUserId = User.GetUserId(),
                 ReceiverUserId = user.Id,
                 SendDate = DateTime.Now,
-                MessageId = message.Id,
+                Message = message,
             };
 
             await _unitOfWork.UserMessageService.AddAsync(userMessage);

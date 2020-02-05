@@ -17,6 +17,7 @@ using Hastnama.Ekipchi.Data.Event.Schedule;
 using Hastnama.Ekipchi.Data.Faq;
 using Hastnama.Ekipchi.Data.Group;
 using Hastnama.Ekipchi.Data.Host;
+using Hastnama.Ekipchi.Data.Message;
 using Hastnama.Ekipchi.Data.Province;
 using Hastnama.Ekipchi.Data.Region;
 using Hastnama.Ekipchi.Data.Role;
@@ -340,6 +341,28 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
                 .ForMember(x => x.Id, opt => opt.MapFrom(des => des.PermissionId))
                 .ForMember(x => x.Name, opt => opt.MapFrom(des => des.Permission.Name))
                 .ForMember(x => x.ParentId, opt => opt.MapFrom(des => des.Permission.ParentId));
+
+            #endregion
+
+
+            #region Message
+
+            CreateMap<UserMessage, UserMessageDto>()
+                .ForMember(x => x.ReceiverName, opt => opt.MapFrom(x => x.ReceiverUser.Email))
+                .ForMember(x => x.SenderName, opt => opt.MapFrom(x => x.SenderUser.Email))
+                .ForMember(x => x.Body, opt => opt.MapFrom(des => des.Message.Body))
+                .ForMember(x => x.Title, opt => opt.MapFrom(des => des.Message.Title))
+                .ForMember(x => x.ParentId, opt => opt.MapFrom(x => x.Message.ParentId))
+                .ForMember(x => x.SendDate, opt => opt.MapFrom((src, dest, destMember, context) =>
+                    PersianDateUtil.ChangeDateTime(src.SendDate, context.Items["lang"].ToString())));
+
+            CreateMap<Message, MessageDto>();
+
+            CreateMap<CreateMessageDto, MessageDto>();
+
+            CreateMap<CreateMessageDto, Message>().ForMember(x => x.CreateDate, opt => opt.MapFrom(o => DateTime.Now));
+
+            CreateMap<CreateReplyTo, Message>().ForMember(x => x.CreateDate, opt => opt.MapFrom(des => DateTime.Now));
 
             #endregion
         }
