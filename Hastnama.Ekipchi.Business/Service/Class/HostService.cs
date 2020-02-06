@@ -77,7 +77,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             {
                 categories = await Context.Categories.Where(c => createHostDto.Categories.Contains(c.Id))
                     .ToListAsync();
-                if (categories.Count != createHostDto.Categories.Count())
+                if (categories.Count != createHostDto.Categories.Count)
                     return Result<HostDto>.Failed(new NotFoundObjectResult(
                         new ApiMessage
                             {Message = PersianErrorMessage.CategoryNotFound}));

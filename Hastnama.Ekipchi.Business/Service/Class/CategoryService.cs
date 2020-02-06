@@ -25,12 +25,12 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         public async Task<Result<PagedList<CategoryDto>>> List(PagingOptions pagingOptions,
             FilterCategoryQueryDto filterQueryDto)
         {
-            var cities = await WhereAsyncAsNoTracking(c =>
+            var categoryList = await WhereAsyncAsNoTracking(c =>
                     (string.IsNullOrEmpty(filterQueryDto.Name) ||
                      c.Name.ToLower().Contains(filterQueryDto.Name.ToLower())), pagingOptions,
                 c => c.HostCategories, c => c.Categories);
 
-            return Result<PagedList<CategoryDto>>.SuccessFull(cities.MapTo<CategoryDto>(_mapper));
+            return Result<PagedList<CategoryDto>>.SuccessFull(categoryList.MapTo<CategoryDto>(_mapper));
         }
 
         public async Task<Result> Update(UpdateCategoryDto updateCategoryDto)

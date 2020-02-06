@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
 using Hastnama.Ekipchi.Business.Service;
-using Hastnama.Ekipchi.Business.Service.Interface;
 using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Message;
@@ -30,6 +28,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// <param name="pagingOptions"></param>
         /// <returns>BlogCategory List</returns>
         /// <response code="200">if Get List successfully </response>
+        /// <response code="400">if Param Validation Failure </response>
         /// <response code="500">If an unexpected error happen</response>
         [ProducesResponseType(typeof(PagedList<BlogCategoryDto>), 200)]
         [ProducesResponseType(typeof(ApiMessage), 400)]

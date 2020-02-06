@@ -17,8 +17,6 @@ namespace Hastnama.Ekipchi.Data.Blog
 
         public string MetaKeyWord { get; set; }
 
-        public string LanguageCode { get; set; }
-
         public string Slug { get; set; }
 
         public string ShortDescription { get; set; }

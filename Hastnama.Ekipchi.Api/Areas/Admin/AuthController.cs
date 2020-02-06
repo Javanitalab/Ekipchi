@@ -1,10 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Hastnama.Ekipchi.Api.Core.Token;
 using Hastnama.Ekipchi.Business.Service;
-using Hastnama.Ekipchi.Business.Service.Interface;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Data.Auth;
-using Hastnama.Ekipchi.DataAccess.Entities;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,9 +30,11 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// <returns>Access and refresh token.</returns>
         /// <response code="200">if login successfully </response>
         /// <response code="400">If validation failure.</response>
+        /// <response code="404">If User Not Fround.</response>
         /// <response code="500">If an unexpected error happen</response>
         [ProducesResponseType(typeof(TokenDto), 200)]
         [ProducesResponseType(typeof(ApiMessage), 400)]
+        [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPost]
         [Route("[Action]")]

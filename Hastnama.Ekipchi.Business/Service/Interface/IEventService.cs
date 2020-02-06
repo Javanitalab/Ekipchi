@@ -16,9 +16,9 @@ namespace Hastnama.Ekipchi.Business.Service.Interface
 
         Task<Result<EventDto>> Get(Guid id);
 
-        Task<Result<EventDto>> Create(CreateEventDto createEventDto);
+        Task<Result<EventDto>> Create(CreateEventDto createEventDto,Guid userId);
 
-        Task<Result> Update(UpdateEventDto updateEvent);
+        Task<Result> Update(UpdateEventDto updateEvent,Guid userId);
 
         Task<Result> Delete(Guid id);
     }

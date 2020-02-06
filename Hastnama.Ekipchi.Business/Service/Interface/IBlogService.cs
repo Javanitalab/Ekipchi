@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Result;
@@ -13,7 +14,7 @@ namespace Hastnama.Ekipchi.Business.Service.Interface
     {
         Task<Result<PagedList<BlogDto>>> List(PagingOptions pagingOptions, FilterBlogQueryDto filterQueryDto);
         Task<Result> Update(UpdateBlogDto updateBlogDto);
-        Task<Result<BlogDto>> Create(CreateBlogDto dto);
+        Task<Result<BlogDto>> Create(CreateBlogDto dto,Guid userId);
         Task<Result<BlogDto>> Get(int id);
         Task<Result> Delete(int id);
 

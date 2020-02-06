@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Hastnama.Ekipchi.Business.Service.Interface;
@@ -28,13 +27,13 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         public async Task<Result<PagedList<CommentDto>>> List(PagingOptions pagingOptions,
             FilterCommentQueryDto filterCommentQueryDto)
         {
-            var cities = await WhereAsyncAsNoTracking(c =>
+            var comments = await WhereAsyncAsNoTracking(c =>
                     (filterCommentQueryDto.IsConfirmed == null || c.IsConfirmed == filterCommentQueryDto.IsConfirmed)
                     && (filterCommentQueryDto.UserId == null || c.UserId == filterCommentQueryDto.UserId),
                 pagingOptions,
                 c => c.User, c => c.ParentComment, c => c.Children);
 
-            return Result<PagedList<CommentDto>>.SuccessFull(cities.MapTo<CommentDto>(_mapper));
+            return Result<PagedList<CommentDto>>.SuccessFull(comments.MapTo<CommentDto>(_mapper));
         }
 
         public async Task<Result> Update(UpdateCommentDto updateCommentDto)
@@ -46,9 +45,9 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             return Result.SuccessFull();
         }
 
-        public async Task<Result<CommentDto>> Create(CreateCommentDto createCommentDto)
+        public async Task<Result<CommentDto>> Create(CreateCommentDto createCommentDto,Guid userId)
         {
-            var user = await Context.Users.FirstOrDefaultAsync(u => u.Id == createCommentDto.UserId);
+            var user = await Context.Users.FirstOrDefaultAsync(u => u.Id == userId);
             if (user == null)
                 return Result<CommentDto>.Failed(new NotFoundObjectResult(new ApiMessage
                     {Message = PersianErrorMessage.UserNotFound}));

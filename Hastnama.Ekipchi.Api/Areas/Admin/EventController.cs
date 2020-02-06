@@ -1,6 +1,5 @@
 ﻿using System;
 using AutoMapper;
-using Hastnama.Ekipchi.Business.Service.Interface;
 using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Data.Event;
@@ -37,7 +36,8 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 400)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] PagingOptions pagingOptions, [FromQuery]FilterEventQueryDto filterEventQueryDto)
+        public async Task<IActionResult> Get([FromQuery] PagingOptions pagingOptions,
+            [FromQuery] FilterEventQueryDto filterEventQueryDto)
         {
             var events = await _unitOfWork.EventService.List(pagingOptions, filterEventQueryDto);
             return events.ApiResult;
@@ -77,8 +77,8 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [HttpPost]
         public async Task<IActionResult> Post(CreateEventDto createEvent)
         {
-            var result = await _unitOfWork.EventService.Create(createEvent);
-            return Created(Url.Link("GetEvent", new { result.Data.Id }), _mapper.Map<EventDto>(result.Data));
+            var result = await _unitOfWork.EventService.Create(createEvent, UserId);
+            return Created(Url.Link("GetEvent", new {result.Data.Id}), _mapper.Map<EventDto>(result.Data));
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [HttpPut]
         public async Task<IActionResult> Update(UpdateEventDto updateEvent)
         {
-            var result = await _unitOfWork.EventService.Update(updateEvent);
+            var result = await _unitOfWork.EventService.Update(updateEvent, UserId);
 
             if (!result.Success)
                 return result.ApiResult;

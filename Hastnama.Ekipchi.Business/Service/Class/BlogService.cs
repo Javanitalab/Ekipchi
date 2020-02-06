@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AutoMapper;
 using Hastnama.Ekipchi.Business.Service.Interface;
 using Hastnama.Ekipchi.Common.General;
@@ -6,7 +7,6 @@ using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Common.Result;
 using Hastnama.Ekipchi.Data.Blog;
-using Hastnama.Ekipchi.Data.City;
 using Hastnama.Ekipchi.DataAccess.Context;
 using Hastnama.Ekipchi.DataAccess.Entities;
 using Hastnama.Ekipchi.DataAccess.Repository;
@@ -27,14 +27,14 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         public async Task<Result<PagedList<BlogDto>>> List(PagingOptions pagingOptions,
             FilterBlogQueryDto filterQueryDto)
         {
-            var cities = await WhereAsyncAsNoTracking(b =>
+            var blogList = await WhereAsyncAsNoTracking(b =>
                     (string.IsNullOrEmpty(filterQueryDto.Title) ||
                      b.Title.ToLower().Contains(filterQueryDto.Title.ToLower())
                      && (filterQueryDto.UserId == null ||
                          b.UseId == filterQueryDto.UserId)), pagingOptions,
-                b => b.BlogCategory,b=>b.User);
+                b => b.BlogCategory, b => b.User);
 
-            return Result<PagedList<BlogDto>>.SuccessFull(cities.MapTo<BlogDto>(_mapper));
+            return Result<PagedList<BlogDto>>.SuccessFull(blogList.MapTo<BlogDto>(_mapper));
         }
 
         public async Task<Result> Update(UpdateBlogDto updateBlogDto)
@@ -61,7 +61,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             return Result.SuccessFull();
         }
 
-        public async Task<Result<BlogDto>> Create(CreateBlogDto createBlogDto)
+        public async Task<Result<BlogDto>> Create(CreateBlogDto createBlogDto, Guid userId)
         {
             var duplicateBlog = await FirstOrDefaultAsyncAsNoTracking(c => c.Title == createBlogDto.Title);
             if (duplicateBlog != null)
@@ -74,9 +74,11 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 return Result<BlogDto>.Failed(new BadRequestObjectResult(new ApiMessage
                     {Message = PersianErrorMessage.InvalidBlogCategoryId}));
 
+
             var blog = _mapper.Map(createBlogDto, new Blog());
             blog.BlogCategory = blogCategory;
-
+            blog.UseId = userId;
+            
             await AddAsync(blog);
             await Context.SaveChangesAsync();
 
@@ -96,7 +98,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result> Delete(int id)
         {
-            var blog = await FirstOrDefaultAsyncAsNoTracking(c => c.Id == id);
+            var blog = await FirstOrDefaultAsyncAsNoTracking(b => b.Id == id,b=>b.User);
             if (blog == null)
                 return Result.Failed(new NotFoundObjectResult(
                     new ApiMessage

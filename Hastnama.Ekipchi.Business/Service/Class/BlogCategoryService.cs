@@ -25,14 +25,14 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         public async Task<Result<PagedList<BlogCategoryDto>>> List(PagingOptions pagingOptions,
             FilterBlogCategoryQueryDto filterQueryDto)
         {
-            var cities = await WhereAsyncAsNoTracking(b =>
+            var blogCategoryList = await WhereAsyncAsNoTracking(b =>
                     (string.IsNullOrEmpty(filterQueryDto.Name) ||
                      b.Name.ToLower().Contains(filterQueryDto.Name.ToLower())
                      && (string.IsNullOrEmpty(filterQueryDto.Slug) ||
                          b.Slug.ToLower().Contains(filterQueryDto.Slug))), pagingOptions,
                 b => b.ParentCategory);
 
-            return Result<PagedList<BlogCategoryDto>>.SuccessFull(cities.MapTo<BlogCategoryDto>(_mapper));
+            return Result<PagedList<BlogCategoryDto>>.SuccessFull(blogCategoryList.MapTo<BlogCategoryDto>(_mapper));
         }
 
         public async Task<Result> Update(UpdateBlogCategoryDto updateBlogCategoryDto)
@@ -44,6 +44,11 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                     {Message = PersianErrorMessage.DuplicateBlogCategoryName}));
 
             var blogCategory = await FirstOrDefaultAsync(c => c.Id == updateBlogCategoryDto.Id);
+            
+            if (blogCategory == null)
+                return Result.Failed(new NotFoundObjectResult(new ApiMessage
+                    {Message = PersianErrorMessage.BlogCategoryNotFound}));
+
             if (blogCategory.ParentId != updateBlogCategoryDto.ParentId)
             {
                 var parentBlog = await FirstOrDefaultAsync(u => u.Id == updateBlogCategoryDto.ParentId);
@@ -71,7 +76,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             BlogCategory parentBlog = null;
             if (createBlogCategoryDto.ParentId != null)
             {
-                await FirstOrDefaultAsync(u => u.Id == createBlogCategoryDto.ParentId);
+                parentBlog = await FirstOrDefaultAsync(u => u.Id == createBlogCategoryDto.ParentId);
 
                 if (parentBlog == null)
                     return Result<BlogCategoryDto>.Failed(new BadRequestObjectResult(new ApiMessage

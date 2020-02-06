@@ -19,7 +19,6 @@ using Hastnama.Ekipchi.DataAccess.Entities;
 using Hastnama.Ekipchi.DataAccess.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Hastnama.Ekipchi.Business.Service.Class
 {
@@ -114,17 +113,17 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             {
                 // get all roles that are removed 
                 var removeRoles = user.UserInRoles
-                    .Where(ur => !updateUserDto.Roles.Contains(ur.RoleId));
+                    .Where(ur => !updateUserDto.Roles.Contains(ur.RoleId)).ToList();
                 if (removeRoles.Any())
                     Context.UserInRoles.RemoveRange(removeRoles);
 
                 // get all roles id that are added
                 var addedRolesId = updateUserDto.Roles.Where(roleId =>
-                    !user.UserInRoles.Select(u => u.RoleId).Contains(roleId));
+                    !user.UserInRoles.Select(u => u.RoleId).Contains(roleId)).ToList();
                 var addedRoles = await Context.Roles.Where(u => addedRolesId.Contains(u.Id)).ToListAsync();
 
                 // if invalid role id sent 
-                if (addedRoles.Count != addedRolesId.Count())
+                if (addedRoles.Count != addedRolesId.Count)
                     return Result.Failed(new BadRequestObjectResult(new ApiMessage
                         {Message = PersianErrorMessage.RoleNotFound}));
 

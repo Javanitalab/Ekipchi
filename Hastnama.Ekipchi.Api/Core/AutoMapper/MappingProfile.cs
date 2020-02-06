@@ -71,6 +71,7 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
                 .ForMember(x => x.Mobile, opt => opt.MapFrom(des => des.Mobile));
 
             CreateMap<UpdateUserDto, User>()
+                .ForMember(x => x.Password, opt => opt.Ignore())
                 .ForMember(x => x.Status, opt => opt.MapFrom(des => des.Status))
                 .ForMember(x => x.Username, opt => opt.MapFrom(des => des.Username))
                 .ForMember(x => x.Email, opt => opt.MapFrom(des => des.Email))
@@ -221,14 +222,13 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
             CreateMap<CreateEventDto, Event>()
                 .ForMember(x => x.EventGallery,
                     opt => opt.MapFrom(x => new EventGallery
-                        {Image = x.EventGallery.Image, UserId = x.EventGallery.UserId}));
+                        {Image = x.EventGallery}));
 
             CreateMap<UpdateEventDto, Event>();
 
             CreateMap<Event, EventDto>()
                 .ForMember(x => x.UserInEvents,
-                    opt => opt.MapFrom(x => x.UserInEvents.Select(ur=>ur.User)));
-                
+                    opt => opt.MapFrom(x => x.UserInEvents.Select(ur => ur.User)));
 
 
             CreateMap<EventSchedule, EventScheduleDto>();

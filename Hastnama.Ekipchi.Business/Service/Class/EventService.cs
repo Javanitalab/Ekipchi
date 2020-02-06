@@ -63,7 +63,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             return Result<EventDto>.SuccessFull(_mapper.Map<EventDto>(eventDetail));
         }
 
-        public async Task<Result<EventDto>> Create(CreateEventDto createEventDto)
+        public async Task<Result<EventDto>> Create(CreateEventDto createEventDto,Guid userId)
         {
             var category = await Context.Categories.FirstOrDefaultAsync(c => c.Id == createEventDto.CategoryId);
             if (category == null)
@@ -77,13 +77,15 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
 
             var newEvent = _mapper.Map<Event>(createEventDto);
+            if (newEvent.EventGallery != null)
+                newEvent.EventGallery.UserId = userId;
             await AddAsync(newEvent);
             await Context.SaveChangesAsync();
 
             return Result<EventDto>.SuccessFull(_mapper.Map<EventDto>(newEvent));
         }
 
-        public async Task<Result> Update(UpdateEventDto updateEventDto)
+        public async Task<Result> Update(UpdateEventDto updateEventDto,Guid userId)
         {
             var category = await Context.Categories.FirstOrDefaultAsync(c => c.Id == updateEventDto.CategoryId);
             if (category == null)
@@ -112,13 +114,13 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             {
                 // get all users that are removed 
                 var removedUsers = eventDetail.UserInEvents
-                    .Where(user => !updateEventDto.Users.Contains(user.UserId));
+                    .Where(user => !updateEventDto.Users.Contains(user.UserId)).ToList();
                 if (removedUsers.Any())
                     Context.UserInEvents.RemoveRange(removedUsers);
 
                 // get all users id that are added
                 var addedUsersId = updateEventDto.Users.Where(userId =>
-                    !eventDetail.UserInEvents.Select(u => u.UserId).Contains(userId));
+                    !eventDetail.UserInEvents.Select(u => u.UserId).Contains(userId)).ToList();
 
                 var addedUsers = await Context.Users.Where(u => addedUsersId.Contains(u.Id)).ToListAsync();
 
@@ -144,6 +146,8 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             _mapper.Map(updateEventDto, eventDetail);
             eventDetail.Category = category;
             eventDetail.Host = host;
+            if (eventDetail.EventGallery != null && eventDetail.EventGallery.UserId != Guid.Empty)
+                eventDetail.EventGallery.UserId = userId;
 
             await Context.SaveChangesAsync();
 

@@ -56,23 +56,23 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             {
                 // get all users that are removed 
                 var removedUsers = group.UserInGroups
-                    .Where(user => !updateGroupDto.UsersInGroups.Contains(user.UserId));
+                    .Where(user => !updateGroupDto.UsersInGroups.Contains(user.UserId)).ToList();
                 if (removedUsers.Any())
                     Context.UserInGroups.RemoveRange(removedUsers);
 
                 // get all users id that are added
                 var addedUsersId = updateGroupDto.UsersInGroups.Where(userId =>
-                    !group.UserInGroups.Select(u => u.UserId).Contains(userId));
+                    !group.UserInGroups.Select(u => u.UserId).Contains(userId)).ToList();
 
                 var addedUsers = await Context.Users.Where(u => addedUsersId.Contains(u.Id)).ToListAsync();
 
                 // if invalid user id sent 
-                if (addedUsers.Count != addedUsersId.Count())
+                if (addedUsers.Count != addedUsersId.Count)
                     return Result.Failed(new BadRequestObjectResult(new ApiMessage
                         {Message = PersianErrorMessage.UserNotFound}));
 
                 var addedUserInGroups = addedUsers.Select(user => new UserInGroup
-                        {Id = Guid.NewGuid(), Groups = @group, JoinGroupDate = DateTime.Now, User = user})
+                        {Id = Guid.NewGuid(), Groups = group, JoinGroupDate = DateTime.Now, User = user})
                     .ToList();
                 
                 if (addedUserInGroups.Any())

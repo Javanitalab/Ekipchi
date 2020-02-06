@@ -11,9 +11,7 @@
         public string Cover{ get; set; }
 
         public string SlugPath { get; set; }
-
-        public string LanguageCode { get; set; }
-
+        
         public string Description { get; set; }
 
         public string LongDescription { get; set; }

@@ -6,16 +6,13 @@ namespace Hastnama.Ekipchi.Data.Blog
 {
     public class CreateBlogDto
     {
-        public Guid? UserId { get; set; }
         public int BlogCategoryId { get; set; }
         public string Title { get; set; }
 
         public string Content { get; set; }
 
         public string MetaKeyWord { get; set; }
-
-        public string LanguageCode { get; set; }
-
+        
         public string Slug { get; set; }
 
         public string ShortDescription { get; set; }
