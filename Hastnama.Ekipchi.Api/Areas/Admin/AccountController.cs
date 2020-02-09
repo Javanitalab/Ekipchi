@@ -121,7 +121,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 400)]
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
-        [HttpPut("{id}")]
+        [HttpPut("[Action]/{id}")]
         public async Task<IActionResult> Profile(Guid? id, [FromBody] UpdateUserDto updateUserDto)
         {
             if (id != null)
