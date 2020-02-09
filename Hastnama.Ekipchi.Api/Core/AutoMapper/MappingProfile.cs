@@ -15,6 +15,7 @@ using Hastnama.Ekipchi.Data.Event;
 using Hastnama.Ekipchi.Data.Event.Gallery;
 using Hastnama.Ekipchi.Data.Event.Schedule;
 using Hastnama.Ekipchi.Data.Faq;
+using Hastnama.Ekipchi.Data.File;
 using Hastnama.Ekipchi.Data.Group;
 using Hastnama.Ekipchi.Data.Host;
 using Hastnama.Ekipchi.Data.Host.AvailableDate;
@@ -32,6 +33,15 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
     {
         public MappingProfile()
         {
+
+            #region File
+
+            CreateMap<UserFile, UserFileDto>()
+                .ForMember(x => x.Id, opt => opt.MapFrom(src => src.UniqueId))
+                .ForMember(x => x.Size, opt => opt.MapFrom(src => $"{Math.Round(src.Size / (1024))} Kb"));
+
+
+            #endregion
             #region User
 
             CreateMap<RegisterDto, User>()
