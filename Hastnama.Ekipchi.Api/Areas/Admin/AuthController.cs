@@ -105,5 +105,6 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             var user = await _unitOfWork.UserService.Get(userId.Value);
             return user.ApiResult;
         }
+        
     }
 }
