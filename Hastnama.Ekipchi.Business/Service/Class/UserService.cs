@@ -53,6 +53,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
             return Result<User>.SuccessFull(user);
         }
+        
 
         public async Task<Result<User>> Register(RegisterDto registerDto)
         {

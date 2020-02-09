@@ -41,16 +41,17 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
             var user = await _unitOfWork.UserService.Login(loginDto);
-          
+
             if (!user.Success)
                 return user.ApiResult;
 
             var authToken = await _tokenGenerator.Generate(user.Data);
-          
+
             if (!authToken.Success)
                 return authToken.ApiResult;
-            
-            return Ok(new TokenDto {AccessToken = authToken.Data.AccessToken, RefreshToken = authToken.Data.RefreshToken});
+
+            return Ok(new TokenDto
+                {AccessToken = authToken.Data.AccessToken, RefreshToken = authToken.Data.RefreshToken});
         }
 
 
@@ -70,7 +71,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
         {
             var user = await _unitOfWork.UserService.Register(registerDto);
-           
+
             if (!user.Success)
                 return user.ApiResult;
 

@@ -4,14 +4,12 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Hastnama.Ekipchi.Api.Core.Extensions;
 using Hastnama.Ekipchi.Business.Service;
-using Hastnama.Ekipchi.Business.Service.Interface;
 using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Data.Message;
 using Hastnama.Ekipchi.DataAccess.Entities;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using Message = Hastnama.Ekipchi.DataAccess.Entities.Message;
 
 namespace Hastnama.Ekipchi.Api.Areas.Admin
@@ -26,6 +24,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
+
 
 
         /// <summary>
@@ -45,15 +44,13 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] PagingOptions pagingOptions, string query, bool receive)
         {
+
             PagedList<UserMessage> messages;
 
             if (receive)
-                messages = await _unitOfWork.UserMessageService.GetReceiveMessageListAsync(pagingOptions,
-                    User.GetUserId(), query);
-
+                messages = await _unitOfWork.UserMessageService.GetReceiveMessageListAsync(pagingOptions, User.GetUserId(), query);
             else
-                messages = await _unitOfWork.UserMessageService.GetSendMessageListAsync(pagingOptions, User.GetUserId(),
-                    query);
+                messages = await _unitOfWork.UserMessageService.GetSendMessageListAsync(pagingOptions, User.GetUserId(), query);
 
             return Ok(messages.MapTo<UserMessageDto>(_mapper));
         }
@@ -72,7 +69,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             var message = await _unitOfWork.MessageService.GetMessageAsync(User.GetUserId(), id);
 
             if (message == null)
-                return NotFound(new ApiMessage {Message = PersianErrorMessage.MessageNotFound});
+                return NotFound(new ApiMessage{Message = PersianErrorMessage.MessageNotFound});
 
             await _unitOfWork.SaveChangesAsync();
 
@@ -101,7 +98,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
                 var receiverMessage = await _unitOfWork.UserMessageService.GetReceiveMessage(User.GetUserId(), id);
 
                 if (receiverMessage == null)
-                    return NotFound(new ApiMessage {Message = PersianErrorMessage.MessageNotFound});
+                    return NotFound(new ApiMessage{Message = PersianErrorMessage.MessageNotFound});
 
                 receiverMessage.ReceiverHasDeleted = true;
                 _unitOfWork.UserMessageService.Edit(receiverMessage);
@@ -118,7 +115,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             var senderMessage = await _unitOfWork.UserMessageService.GetSendMessage(User.GetUserId(), id);
 
             if (senderMessage == null)
-                return NotFound(new ApiMessage {Message = PersianErrorMessage.MessageNotFound});
+                return NotFound(new ApiMessage{Message = PersianErrorMessage.MessageNotFound});
 
             senderMessage.SenderHasDeleted = true;
 
@@ -129,6 +126,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             return NoContent();
 
             #endregion
+
         }
 
 
@@ -149,40 +147,43 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         public async Task<IActionResult> Post([FromBody] CreateMessageDto messageDto)
         {
             #region validation
-
+            
             var result = await _unitOfWork.UserService.GetByEmail(messageDto.Email);
 
-            if (!result.Success)
-                return result.ApiResult;
             var user = result.Data;
+            
+            if (!result.Success || user==null)
+                return NotFound(new ApiMessage{Message = PersianErrorMessage.UserNotFound});
+
             if (user.Id == User.GetUserId())
-                return BadRequest(new ApiMessage {Message = PersianErrorMessage.SenderAndReceiverAreTheSame});
+                return NotFound(new ApiMessage{Message = PersianErrorMessage.SenderAndReceiverAreTheSame});
 
             if (messageDto.ParentId.HasValue)
                 if (!await _unitOfWork.MessageService.IsMessageExist(messageDto.ParentId.Value))
-                    return NotFound(new ApiMessage {Message = PersianErrorMessage.ParentMessageNotFound});
+                    return NotFound(new ApiMessage{Message = PersianErrorMessage.ParentMessageNotFound});
 
             #endregion
 
+
             var message = _mapper.Map<Message>(messageDto);
 
-            // await _unitOfWork.MessageService.AddAsync(message);
+            await _unitOfWork.MessageService.AddAsync(message);
 
             var userMessage = new UserMessage
             {
                 SenderUserId = User.GetUserId(),
                 ReceiverUserId = user.Id,
                 SendDate = DateTime.Now,
-                Message = message,
+                MessageId = message.Id,
             };
 
             await _unitOfWork.UserMessageService.AddAsync(userMessage);
 
             await _unitOfWork.SaveChangesAsync();
 
-            return Created(Url.Link("GetMessage", new {message.Id}), _mapper.Map<MessageDto>(message));
+            return Created(Url.Link("GetMessage", new { message.Id }),
+                _mapper.Map<MessageDto>(message));
         }
-
 
         /// <summary>
         /// Get Conversation
@@ -198,21 +199,17 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesErrorResponseType(typeof(ApiMessage))]
         [Produces(typeof(PagedList<UserMessageDto>))]
         [HttpGet("{id}/conversation")]
-        public async Task<IActionResult> Get([FromQuery] PagingOptions pagingOptions, int id)
+        public async Task<IActionResult> Get([FromQuery]PagingOptions pagingOptions, int id)
         {
-            #region validation
 
             if (!await _unitOfWork.MessageService.IsMessageExist(id))
                 return NotFound(new ApiMessage{Message = PersianErrorMessage.MessageNotFound});
 
-            #endregion
-
-            var conversation =
-                await _unitOfWork.UserMessageService.GetConversationListASync(id, pagingOptions.Limit,
-                    pagingOptions.Page);
+            var conversation = await _unitOfWork.UserMessageService.GetConversationListASync(id, pagingOptions.Limit, pagingOptions.Page);
 
             return Ok(conversation.MapTo<UserMessageDto>(_mapper));
         }
+
 
 
         /// <summary>
@@ -250,7 +247,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             #region validation
 
             if (userReceiverId is null)
-                return BadRequest(new ApiMessage {Message = PersianErrorMessage.ReceiverNotSet});
+                return BadRequest(new ApiMessage{Message = PersianErrorMessage.ReceiverNotSet});
 
             if (!await _unitOfWork.MessageService.IsMessageExist(id))
                 return NotFound(new ApiMessage{Message = PersianErrorMessage.MessageNotFound});
@@ -264,10 +261,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
                 if (await _unitOfWork.UserService.Get(user) is null)
                     return NotFound(new ApiMessage{Message = PersianErrorMessage.UserNotFound});
 
-                userMessages.Add(new UserMessage
-                {
-                    ReceiverUserId = user, SendDate = DateTime.Now, SenderUserId = User.GetUserId(), MessageId = id
-                });
+                userMessages.Add(new UserMessage { ReceiverUserId = user, SendDate = DateTime.Now, SenderUserId = User.GetUserId(), MessageId = id });
             }
 
             await _unitOfWork.UserMessageService.AddRange(userMessages);
@@ -289,16 +283,15 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(500)]
         [ProducesErrorResponseType(typeof(ApiMessage))]
         [HttpPost("{userMessageId}/ReplyTo")]
-        public async Task<IActionResult> Post(int userMessageId, [FromBody] CreateReplyTo createReplyTo)
+        public async Task<IActionResult> Post(int userMessageId, [FromBody]CreateReplyTo createReplyTo)
         {
             #region validation
-
+            
             var userMessage = await _unitOfWork.UserMessageService.GetMessageAsync(userMessageId);
 
             if (userMessage is null)
                 return NotFound(new ApiMessage{Message = PersianErrorMessage.MessageNotFound});
-
-
+            
             if (userMessage.ReceiverUserId != User.GetUserId() || userMessage.SenderUserId != User.GetUserId())
             {
                 if (createReplyTo.ParentId.HasValue)
@@ -326,8 +319,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
                 await _unitOfWork.UserMessageService.AddAsync(userMessages);
                 await _unitOfWork.SaveChangesAsync();
 
-                return Created(Url.Link("GetMessage", new {message.Id}),
-                    _mapper.Map<UserMessageDto>(userMessages, opt => opt.Items["lang"] = "fa-IR"));
+                return Created(Url.Link("GetMessage", new { message.Id }), _mapper.Map<UserMessageDto>(userMessages, opt => opt.Items["lang"] = "fa-IR"));
             }
 
             return BadRequest(new ApiMessage{Message = PersianErrorMessage.UnAuthorized});

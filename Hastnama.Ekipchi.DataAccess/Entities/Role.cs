@@ -21,9 +21,9 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
 
         public bool IsVital { get; set; }
 
-        public List<RolePermission> RolePermissions { get; }
+        public List<RolePermission> RolePermissions { get; set; }
 
-        public List<UserInRole> UserInRoles { get; }
+        public List<UserInRole> UserInRoles { get;set; }
 
         public static int Admin = 1;
 
