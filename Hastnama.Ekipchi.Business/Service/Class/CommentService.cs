@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using Hastnama.Ekipchi.Business.Service.Interface;
-using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Common.Result;
@@ -24,13 +23,12 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             _mapper = mapper;
         }
 
-        public async Task<Result<PagedList<CommentDto>>> List(PagingOptions pagingOptions,
-            FilterCommentQueryDto filterCommentQueryDto)
+        public async Task<Result<PagedList<CommentDto>>> List(FilterCommentQueryDto filterQueryDto)
         {
             var comments = await WhereAsyncAsNoTracking(c =>
-                    (filterCommentQueryDto.IsConfirmed == null || c.IsConfirmed == filterCommentQueryDto.IsConfirmed)
-                    && (filterCommentQueryDto.UserId == null || c.UserId == filterCommentQueryDto.UserId),
-                pagingOptions,
+                    (filterQueryDto.IsConfirmed == null || c.IsConfirmed == filterQueryDto.IsConfirmed)
+                    && (filterQueryDto.UserId == null || c.UserId == filterQueryDto.UserId),
+                filterQueryDto,
                 c => c.User, c => c.ParentComment, c => c.Children);
 
             return Result<PagedList<CommentDto>>.SuccessFull(comments.MapTo<CommentDto>(_mapper));

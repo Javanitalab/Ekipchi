@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Result;
 using Hastnama.Ekipchi.Data.Group;
@@ -11,7 +10,7 @@ namespace Hastnama.Ekipchi.Business.Service.Interface
 {
     public interface IGroupService : IRepository<Group>
     {
-        Task<Result<PagedList<GroupDto>>> List(PagingOptions pagingOptions, FilterGroupQueryDto filterQueryDto);
+        Task<Result<PagedList<GroupDto>>> List( FilterGroupQueryDto filterQueryDto);
         Task<Result> Update(UpdateGroupDto updateGroupDto);
         Task<Result<GroupDto>> Create(CreateGroupDto dto);
         Task<Result<GroupDto>> Get(Guid id);

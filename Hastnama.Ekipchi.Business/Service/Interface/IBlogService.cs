@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Result;
 using Hastnama.Ekipchi.Data.Blog;
@@ -12,7 +11,7 @@ namespace Hastnama.Ekipchi.Business.Service.Interface
 {
     public interface IBlogService : IRepository<Blog>
     {
-        Task<Result<PagedList<BlogDto>>> List(PagingOptions pagingOptions, FilterBlogQueryDto filterQueryDto);
+        Task<Result<PagedList<BlogDto>>> List(FilterBlogQueryDto filterQueryDto);
         Task<Result> Update(UpdateBlogDto updateBlogDto);
         Task<Result<BlogDto>> Create(CreateBlogDto dto,Guid userId);
         Task<Result<BlogDto>> Get(int id);

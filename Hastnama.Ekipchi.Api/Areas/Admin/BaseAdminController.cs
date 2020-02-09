@@ -14,7 +14,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ServiceFilter(typeof(AdminAuthorization))]
-    public class BaseAdminController : Controller
+    public class BaseAdminController : ControllerBase
     {
         public Guid UserId => HttpContext.User.GetUserId();
 

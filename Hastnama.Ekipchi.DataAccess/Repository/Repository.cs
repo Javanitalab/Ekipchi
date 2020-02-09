@@ -70,9 +70,12 @@ namespace Hastnama.Ekipchi.DataAccess.Repository
             for (int index = 0; index < expressionArray.Length; ++index)
             {
                 Expression<Func<TEntity, object>> include = expressionArray[index];
-                query = (IQueryable<TEntity>) EntityFrameworkQueryableExtensions.Include<TEntity>((IQueryable<TEntity>) query, include.AsPath());
+                query = (IQueryable<TEntity>) EntityFrameworkQueryableExtensions.Include<TEntity>(
+                    (IQueryable<TEntity>) query, include.AsPath());
             }
-            return await (Task<TEntity>) EntityFrameworkQueryableExtensions.FirstOrDefaultAsync<TEntity>((IQueryable<TEntity>) query, predicate, new CancellationToken());
+
+            return await (Task<TEntity>) EntityFrameworkQueryableExtensions.FirstOrDefaultAsync<TEntity>(
+                (IQueryable<TEntity>) query, predicate, new CancellationToken());
         }
 
         public async Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate,
@@ -83,22 +86,28 @@ namespace Hastnama.Ekipchi.DataAccess.Repository
             for (int index = 0; index < expressionArray.Length; ++index)
             {
                 Expression<Func<TEntity, object>> include = expressionArray[index];
-                query = (IQueryable<TEntity>) EntityFrameworkQueryableExtensions.Include<TEntity>((IQueryable<TEntity>) query, include.AsPath());
+                query = (IQueryable<TEntity>) EntityFrameworkQueryableExtensions.Include<TEntity>(
+                    (IQueryable<TEntity>) query, include.AsPath());
             }
-            return await (Task<TEntity>) EntityFrameworkQueryableExtensions.FirstOrDefaultAsync<TEntity>((IQueryable<TEntity>) query, predicate, new CancellationToken());
+
+            return await (Task<TEntity>) EntityFrameworkQueryableExtensions.FirstOrDefaultAsync<TEntity>(
+                (IQueryable<TEntity>) query, predicate, new CancellationToken());
         }
 
         public async Task<PagedList<TEntity>> WhereAsyncAsNoTracking(Expression<Func<TEntity, bool>> predicate,
             PagingOptions pagingOptions,
             params Expression<Func<TEntity, object>>[] includes)
         {
-            IQueryable<TEntity> query = ((IQueryable<TEntity>) Context.Set<TEntity>()).AsNoTracking().Where<TEntity>(predicate).AsQueryable<TEntity>();
+            IQueryable<TEntity> query = ((IQueryable<TEntity>) Context.Set<TEntity>()).AsNoTracking()
+                .Where<TEntity>(predicate).AsQueryable<TEntity>();
             Expression<Func<TEntity, object>>[] expressionArray = includes;
             for (int index = 0; index < expressionArray.Length; ++index)
             {
                 Expression<Func<TEntity, object>> include = expressionArray[index];
-                query = (IQueryable<TEntity>) EntityFrameworkQueryableExtensions.Include<TEntity>((IQueryable<TEntity>) query, include.AsPath());
+                query = (IQueryable<TEntity>) EntityFrameworkQueryableExtensions.Include<TEntity>(
+                    (IQueryable<TEntity>) query, include.AsPath());
             }
+
             return await GetPagedAsync(pagingOptions.Page, pagingOptions.Limit, query);
         }
 
@@ -106,13 +115,16 @@ namespace Hastnama.Ekipchi.DataAccess.Repository
             PagingOptions pagingOptions,
             params Expression<Func<TEntity, object>>[] includes)
         {
-            IQueryable<TEntity> query = ((IQueryable<TEntity>) Context.Set<TEntity>()).Where<TEntity>(predicate).AsQueryable<TEntity>();
+            IQueryable<TEntity> query = ((IQueryable<TEntity>) Context.Set<TEntity>()).Where<TEntity>(predicate)
+                .AsQueryable<TEntity>();
             Expression<Func<TEntity, object>>[] expressionArray = includes;
             for (int index = 0; index < expressionArray.Length; ++index)
             {
                 Expression<Func<TEntity, object>> include = expressionArray[index];
-                query = (IQueryable<TEntity>) EntityFrameworkQueryableExtensions.Include<TEntity>((IQueryable<TEntity>) query, include.AsPath());
+                query = (IQueryable<TEntity>) EntityFrameworkQueryableExtensions.Include<TEntity>(
+                    (IQueryable<TEntity>) query, include.AsPath());
             }
+
             return await GetPagedAsync(pagingOptions.Page, pagingOptions.Limit, query);
         }
 
@@ -121,8 +133,29 @@ namespace Hastnama.Ekipchi.DataAccess.Repository
             return Context.Set<TEntity>();
         }
 
+        public async Task<PagedList<TEntity>> GetPagedAsync(int? pageNumber, int? pageSize, IQueryable<TEntity> query)
+        {
+            if (pageNumber == null)
+                pageNumber = 1;
+            if (pageSize == null)
+                pageSize = 100;
+            if (pageSize <= 0)
+                pageSize = 10;
+
+            var rowsCount = query.Count();
+
+            if (rowsCount <= pageSize || pageNumber <= 1)
+                pageNumber = 1;
+
+            return await PagedList<TEntity>.CreateAsync(query, pageNumber.Value, pageSize.Value, rowsCount);
+        }
+
         public async Task<PagedList<TEntity>> GetPagedAsync(int pageNumber, int pageSize, IQueryable<TEntity> query)
         {
+            if (pageNumber == null)
+                pageNumber = 1;
+            if (pageSize == null)
+                pageSize = 100;
             if (pageSize <= 0)
                 pageSize = 10;
 
@@ -141,7 +174,6 @@ namespace Hastnama.Ekipchi.DataAccess.Repository
                 throw new ArgumentException("Expression body must be a member expression");
             return memberExpr.Member.Name;
         }
-
 
 
         public PagedList<TEntity> GetPagedAsync(int pageNumber, int pageSize, IEnumerable<TEntity> query)

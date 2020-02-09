@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
 using Hastnama.Ekipchi.Business.Service.Interface;
-using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Common.Result;
@@ -23,13 +22,12 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             _mapper = mapper;
         }
 
-        public async Task<Result<PagedList<RegionDto>>> List(PagingOptions pagingOptions,
-            FilterRegionQueryDto filterQueryDto)
+        public async Task<Result<PagedList<RegionDto>>> List(FilterRegionQueryDto filterQueryDto)
         {
             var counties = await WhereAsyncAsNoTracking(c =>
                     (string.IsNullOrEmpty(filterQueryDto.Name) ||
                      c.Name.ToLower().Contains(filterQueryDto.Name.ToLower())),
-                pagingOptions, c => c.City);
+                filterQueryDto, c => c.City);
 
 
             return Result<PagedList<RegionDto>>.SuccessFull(counties.MapTo<RegionDto>(_mapper));

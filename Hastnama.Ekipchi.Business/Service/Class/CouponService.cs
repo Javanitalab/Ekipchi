@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using Hastnama.Ekipchi.Business.Service.Interface;
-using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Common.Result;
@@ -24,15 +23,14 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             _mapper = mapper;
         }
 
-        public async Task<Result<PagedList<CouponDto>>> List(PagingOptions pagingOptions,
-            FilterCouponQueryDto filterQueryDto)
+        public async Task<Result<PagedList<CouponDto>>> List(FilterCouponQueryDto filterQueryDto)
         {
             var counties = await WhereAsyncAsNoTracking(c =>
                     (filterQueryDto.IsActive == null || c.IsActive == filterQueryDto.IsActive)
                     && (filterQueryDto.Amount == null || c.Amount < filterQueryDto.Amount)
                     && (filterQueryDto.StartDate == null || c.StartDate >= filterQueryDto.StartDate)
                     && (filterQueryDto.EndDate == null || c.EndDate <= filterQueryDto.EndDate),
-                pagingOptions);
+                filterQueryDto);
 
 
             return Result<PagedList<CouponDto>>.SuccessFull(counties.MapTo<CouponDto>(_mapper));

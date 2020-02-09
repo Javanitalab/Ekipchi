@@ -260,7 +260,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery]PagingOptions pagingOptions, string category)
         {
-            var files = await _unitOfWork.FilesService.GetList(pagingOptions.Page, pagingOptions.Limit, category);
+            var files = await _unitOfWork.FilesService.GetList(pagingOptions.Page.Value, pagingOptions.Limit.Value, category);
             if (files == null)
                 return NotFound(new ApiMessage
                 {

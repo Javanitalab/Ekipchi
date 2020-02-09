@@ -25,7 +25,6 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// BlogCategory List
         /// </summary>
         /// <param name="filterQueryDto"></param>
-        /// <param name="pagingOptions"></param>
         /// <returns>BlogCategory List</returns>
         /// <response code="200">if Get List successfully </response>
         /// <response code="400">if Param Validation Failure </response>
@@ -34,10 +33,11 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 400)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpGet]
-        public async Task<IActionResult> List([FromQuery] PagingOptions pagingOptions,
-            [FromQuery] FilterBlogCategoryQueryDto filterQueryDto)
+        public async Task<IActionResult> List([FromQuery] FilterBlogCategoryQueryDto filterQueryDto)
         {
-            var result = await _unitOfWork.BlogCategoryService.List(pagingOptions, filterQueryDto);
+            var result = await _unitOfWork.BlogCategoryService.List( filterQueryDto);
+            if (filterQueryDto.Page == null && filterQueryDto.Limit == null)
+                return Ok(result.Data.Items);
             return result.ApiResult;
         }
 

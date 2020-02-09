@@ -36,7 +36,7 @@ namespace Hastnama.Ekipchi.Api.Data
                 context.Users.Add(new User
                 {
                     Email = "mohammad.javan.t@gmail.com", Family = "javani", Name = "mohammad", IsEmailConfirmed = true,
-                    ConfirmCode = "1234", Username = "nosratiz", Password = StringUtil.HashPass("123QWE"),
+                    ConfirmCode = "1234", Username = "javani", Password = StringUtil.HashPass("123QWE"),
                     CreateDateTime = DateTime.Now, ExpiredVerificationCode = DateTime.Now.AddDays(2),
                     Mobile = "09367572636", Status = UserStatus.Active
                 });

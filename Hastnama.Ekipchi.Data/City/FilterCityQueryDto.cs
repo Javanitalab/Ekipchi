@@ -1,6 +1,8 @@
-﻿namespace Hastnama.Ekipchi.Data.City
+﻿using Hastnama.Ekipchi.Common.General;
+
+namespace Hastnama.Ekipchi.Data.City
 {
-    public class FilterCityQueryDto
+    public class FilterCityQueryDto : PagingOptions
     {
         public string CountyName { get; set; }
 

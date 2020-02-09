@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Hastnama.Ekipchi.Business.Service.Interface;
-using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Common.Result;
@@ -25,12 +24,11 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             _mapper = mapper;
         }
 
-        public async Task<Result<PagedList<GroupDto>>> List(PagingOptions pagingOptions,
-            FilterGroupQueryDto filterQueryDto)
+        public async Task<Result<PagedList<GroupDto>>> List(FilterGroupQueryDto filterQueryDto)
         {
             var groups = await WhereAsyncAsNoTracking(c =>
                     (string.IsNullOrEmpty(filterQueryDto.Name) ||
-                     c.Name.ToLower().Contains(filterQueryDto.Name.ToLower())), pagingOptions, g => g.User,
+                     c.Name.ToLower().Contains(filterQueryDto.Name.ToLower())), filterQueryDto, g => g.User,
                 g => g.UserInGroups.Select(ug => ug.User));
 
 

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Hastnama.Ekipchi.Business.Service.Interface;
-using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Common.Result;
@@ -26,12 +25,11 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             _mapper = mapper;
         }
 
-        public async Task<Result<PagedList<HostDto>>> List(PagingOptions pagingOptions,
-            FilterHostQueryDto filterQueryDto)
+        public async Task<Result<PagedList<HostDto>>> List(FilterHostQueryDto filterQueryDto)
         {
             var hosts = await WhereAsyncAsNoTracking(c =>
                     (string.IsNullOrEmpty(filterQueryDto.Name) ||
-                     c.Name.ToLower().Contains(filterQueryDto.Name.ToLower())) && c.IsDeleted == false, pagingOptions,
+                     c.Name.ToLower().Contains(filterQueryDto.Name.ToLower())) && c.IsDeleted == false, filterQueryDto,
                 g => g.HostGalleries,
                 g => g.HostCategories.Select(hc => hc.Category),
                 g => g.HostAvailableDates);

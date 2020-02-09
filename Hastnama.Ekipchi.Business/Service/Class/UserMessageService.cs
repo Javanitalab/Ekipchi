@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using Hastnama.Ekipchi.Business.Service.Interface;
 using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Helper;

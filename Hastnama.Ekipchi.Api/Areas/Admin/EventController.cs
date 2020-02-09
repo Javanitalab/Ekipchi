@@ -26,7 +26,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// <summary>
         /// Event List
         /// </summary>
-        /// <param name="filterEventQueryDto"></param>
+        /// <param name="filterQueryDto"></param>
         /// <param name="pagingOptions"></param>
         /// <returns>Event List</returns>
         /// <response code="200">if everything is ok </response>
@@ -36,11 +36,12 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 400)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] PagingOptions pagingOptions,
-            [FromQuery] FilterEventQueryDto filterEventQueryDto)
+        public async Task<IActionResult> List([FromQuery] FilterEventQueryDto filterQueryDto)
         {
-            var events = await _unitOfWork.EventService.List(pagingOptions, filterEventQueryDto);
-            return events.ApiResult;
+            var result = await _unitOfWork.EventService.List(filterQueryDto);
+            if (filterQueryDto.Page == null && filterQueryDto.Limit == null)
+                return Ok(result.Data.Items);
+            return result.ApiResult;
         }
 
         /// <summary>
@@ -94,9 +95,8 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid? id,UpdateEventDto updateEvent)
+        public async Task<IActionResult> Update(Guid? id, UpdateEventDto updateEvent)
         {
-            
             if (id != null)
                 updateEvent.Id = id.Value;
 

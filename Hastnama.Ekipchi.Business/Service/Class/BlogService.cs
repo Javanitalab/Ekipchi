@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using Hastnama.Ekipchi.Business.Service.Interface;
-using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Common.Result;
@@ -24,14 +23,13 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             _mapper = mapper;
         }
 
-        public async Task<Result<PagedList<BlogDto>>> List(PagingOptions pagingOptions,
-            FilterBlogQueryDto filterQueryDto)
+        public async Task<Result<PagedList<BlogDto>>> List(FilterBlogQueryDto filterQueryDto)
         {
             var blogList = await WhereAsyncAsNoTracking(b =>
                     (string.IsNullOrEmpty(filterQueryDto.Title) ||
                      b.Title.ToLower().Contains(filterQueryDto.Title.ToLower())
                      && (filterQueryDto.UserId == null ||
-                         b.UseId == filterQueryDto.UserId)), pagingOptions,
+                         b.UseId == filterQueryDto.UserId)), filterQueryDto,
                 b => b.BlogCategory, b => b.User);
 
             return Result<PagedList<BlogDto>>.SuccessFull(blogList.MapTo<BlogDto>(_mapper));

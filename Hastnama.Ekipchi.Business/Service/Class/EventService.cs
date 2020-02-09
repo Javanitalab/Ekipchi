@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Hastnama.Ekipchi.Business.Service.Interface;
-using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Common.Result;
 using Hastnama.Ekipchi.Data.Event;
@@ -25,15 +24,14 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             _mapper = mapper;
         }
 
-        public async Task<Result<PagedList<EventDto>>> List(PagingOptions pagingOptions,
-            FilterEventQueryDto filterQueryDto)
+        public async Task<Result<PagedList<EventDto>>> List(FilterEventQueryDto filterQueryDto)
         {
             var events = await WhereAsyncAsNoTracking(e =>
                     (string.IsNullOrEmpty(filterQueryDto.Name) ||
                      e.Name.ToLower().Contains(filterQueryDto.Name.ToLower())
                      && (string.IsNullOrEmpty(filterQueryDto.HostName) ||
                          e.Host.Name.ToLower().Contains(filterQueryDto.HostName.ToLower()))) && !e.IsDeleted,
-                pagingOptions, e => e.Category, e => e.Comment,
+                filterQueryDto, e => e.Category, e => e.Comment,
                 e => e.Host, e => e.UserInEvents.Select(ur => ur.User), e => e.EventGallery.User, e => e.EventSchedule);
             if (events.Items.Any())
             {

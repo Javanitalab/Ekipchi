@@ -28,7 +28,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// <summary>
         /// User List
         /// </summary>
-        /// <param name="queryDto"></param>
+        /// <param name="filterQueryDto"></param>
         /// <param name="pagingOptions"></param>
         /// <returns>User List</returns>
         /// <response code="200">if Get List successfully </response>
@@ -38,10 +38,11 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpGet]
-        public async Task<IActionResult> List([FromQuery] PagingOptions pagingOptions,
-            [FromQuery] FilterUserQueryDto queryDto)
+        public async Task<IActionResult> List([FromQuery] FilterUserQueryDto filterQueryDto)
         {
-            var result = await _unitOfWork.UserService.List(pagingOptions, queryDto);
+            var result = await _unitOfWork.UserService.List( filterQueryDto);
+            if (filterQueryDto.Page == null && filterQueryDto.Limit == null)
+                return Ok(result.Data.Items);
             return result.ApiResult;
         }
 

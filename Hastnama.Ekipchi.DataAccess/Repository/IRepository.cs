@@ -41,6 +41,7 @@ namespace Hastnama.Ekipchi.DataAccess.Repository
 
         void Edit(TEntity entity);
 
+        Task<PagedList<TEntity>> GetPagedAsync(int? pageNumber, int? pageSize, IQueryable<TEntity> query);
         Task<PagedList<TEntity>> GetPagedAsync(int pageNumber, int pageSize, IQueryable<TEntity> query);
     }
 }

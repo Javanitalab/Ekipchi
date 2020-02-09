@@ -1,6 +1,8 @@
-﻿namespace Hastnama.Ekipchi.Data.Region
+﻿using Hastnama.Ekipchi.Common.General;
+
+namespace Hastnama.Ekipchi.Data.Region
 {
-    public class FilterRegionQueryDto
+    public class FilterRegionQueryDto : PagingOptions
     {
         public string Name { get; set; }
 

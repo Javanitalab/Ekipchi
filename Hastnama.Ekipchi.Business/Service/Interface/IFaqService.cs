@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Result;
 using Hastnama.Ekipchi.Data.Faq;
@@ -11,7 +10,7 @@ namespace Hastnama.Ekipchi.Business.Service.Interface
 {
     public interface IFaqService : IRepository<Faq>
     {
-        Task<Result<PagedList<FaqDto>>> List(PagingOptions pagingOptions, FilterFaqQueryDto filterQueryDto);
+        Task<Result<PagedList<FaqDto>>> List( FilterFaqQueryDto filterQueryDto);
         Task<Result> Update(UpdateFaqDto updateFaqDto);
         Task<Result<FaqDto>> Create(CreateFaqDto dto);
         Task<Result<FaqDto>> Get(int id);

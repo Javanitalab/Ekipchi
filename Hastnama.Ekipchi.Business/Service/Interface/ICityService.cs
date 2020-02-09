@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Result;
 using Hastnama.Ekipchi.Data.City;
@@ -10,7 +9,7 @@ namespace Hastnama.Ekipchi.Business.Service.Interface
 {
     public interface ICityService : IRepository<City>
     {
-        Task<Result<PagedList<CityDto>>> List(PagingOptions pagingOptions, FilterCityQueryDto filterQueryDto);
+        Task<Result<PagedList<CityDto>>> List(FilterCityQueryDto filterQueryDto);
         Task<Result> Update(UpdateCityDto updateCityDto);
         Task<Result<CityDto>> Create(CreateCityDto dto);
         Task<Result<CityDto>> Get(int id);

@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Hastnama.Ekipchi.Business.Service.Interface;
 using Hastnama.Ekipchi.Common.Enum;
-using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Common.Result;
@@ -76,8 +75,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             return Result<User>.SuccessFull(user);
         }
 
-        public async Task<Result<PagedList<UserDto>>> List(PagingOptions pagingOptions,
-            FilterUserQueryDto filterQueryDto)
+        public async Task<Result<PagedList<UserDto>>> List(FilterUserQueryDto filterQueryDto)
         {
             var users = await WhereAsyncAsNoTracking(u =>
                     u.Status != UserStatus.Delete
@@ -90,7 +88,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                         || u.Email.ToLower().Contains(filterQueryDto.Keyword))
                     && (filterQueryDto.Status == null || u.Status == filterQueryDto.Status)
                     && (filterQueryDto.RoleId == null || u.UserInRoles.Any(ur => ur.RoleId == filterQueryDto.RoleId))
-                , pagingOptions,
+                , filterQueryDto,
                 u => u.UserInRoles.Select(ur => ur.Role));
             if (users == null)
                 return Result<PagedList<UserDto>>.Failed(new NotFoundObjectResult(new ApiMessage

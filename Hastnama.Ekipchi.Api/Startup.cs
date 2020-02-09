@@ -1,3 +1,4 @@
+using System.IO;
 using Hastnama.Ekipchi.Api.Core.Environment;
 using Hastnama.Ekipchi.Api.Core.Extensions;
 using Hastnama.Ekipchi.Api.Installer;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 
 namespace Hastnama.Ekipchi.Api
@@ -34,6 +36,53 @@ namespace Hastnama.Ekipchi.Api
             }
 
             applicationBootstrapper.Initial();
+            
+            #region Static files Setting
+
+            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(env.ContentRootPath, ApplicationStaticPath.Avatars)),
+                RequestPath = ApplicationStaticPath.Clients.Avatar
+            });
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(env.ContentRootPath, ApplicationStaticPath.Images)),
+                RequestPath = ApplicationStaticPath.Clients.Image
+            });
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(env.ContentRootPath, ApplicationStaticPath.Videos)),
+                RequestPath = ApplicationStaticPath.Clients.Video
+            });
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(env.ContentRootPath, ApplicationStaticPath.Musics)),
+                RequestPath = ApplicationStaticPath.Clients.Music
+            });
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(env.ContentRootPath, ApplicationStaticPath.Documents)),
+                RequestPath = ApplicationStaticPath.Clients.Document
+            });
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(env.ContentRootPath, ApplicationStaticPath.Others)),
+                RequestPath = ApplicationStaticPath.Clients.Other
+            });
+
+            #endregion Static files Setting
 
             app.UseRouting();
 

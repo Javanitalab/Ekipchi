@@ -35,10 +35,12 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 400)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpGet]
-        public async Task<IActionResult> List([FromQuery] PagingOptions pagingOptions,
+        public async Task<IActionResult> List(
             [FromQuery] FilterCouponQueryDto filterQueryDto)
         {
-            var result = await _unitOfWork.CouponService.List(pagingOptions, filterQueryDto);
+            var result = await _unitOfWork.CouponService.List( filterQueryDto);
+            if (filterQueryDto.Page == null && filterQueryDto.Limit == null)
+                return Ok(result.Data.Items);
             return result.ApiResult;
         }
 

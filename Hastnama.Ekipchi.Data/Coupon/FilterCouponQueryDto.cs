@@ -1,8 +1,9 @@
 ﻿using System;
+using Hastnama.Ekipchi.Common.General;
 
 namespace Hastnama.Ekipchi.Data.Coupon
 {
-    public class FilterCouponQueryDto
+    public class FilterCouponQueryDto : PagingOptions
     {
         
         public long? Amount { get; set; }

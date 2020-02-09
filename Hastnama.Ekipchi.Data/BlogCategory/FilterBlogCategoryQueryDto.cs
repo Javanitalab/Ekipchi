@@ -1,6 +1,8 @@
-﻿namespace Hastnama.Ekipchi.Data.BlogCategory
+﻿using Hastnama.Ekipchi.Common.General;
+
+namespace Hastnama.Ekipchi.Data.BlogCategory
 {
-    public class FilterBlogCategoryQueryDto
+    public class FilterBlogCategoryQueryDto : PagingOptions
     {
         public string Name { get; set; }
 

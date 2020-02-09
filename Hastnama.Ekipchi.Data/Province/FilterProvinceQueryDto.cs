@@ -1,6 +1,8 @@
-﻿namespace Hastnama.Ekipchi.Data.Province
+﻿using Hastnama.Ekipchi.Common.General;
+
+namespace Hastnama.Ekipchi.Data.Province
 {
-    public class FilterProvinceQueryDto
+    public class FilterProvinceQueryDto : PagingOptions
     {
         public string Name { get; set; }
     }

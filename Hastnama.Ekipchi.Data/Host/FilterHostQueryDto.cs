@@ -1,6 +1,8 @@
-﻿namespace Hastnama.Ekipchi.Data.Host
+﻿using Hastnama.Ekipchi.Common.General;
+
+namespace Hastnama.Ekipchi.Data.Host
 {
-    public class FilterHostQueryDto
+    public class FilterHostQueryDto : PagingOptions
     {
         public string Name { get; set; }
     }

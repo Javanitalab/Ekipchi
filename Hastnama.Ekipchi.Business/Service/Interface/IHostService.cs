@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Result;
 using Hastnama.Ekipchi.Data.Host;
@@ -11,7 +10,7 @@ namespace Hastnama.Ekipchi.Business.Service.Interface
 {
     public interface IHostService : IRepository<Host>
     {
-        Task<Result<PagedList<HostDto>>> List(PagingOptions pagingOptions, FilterHostQueryDto filterQueryDto);
+        Task<Result<PagedList<HostDto>>> List( FilterHostQueryDto filterQueryDto);
         Task<Result> Update(UpdateHostDto updateHostDto);
         Task<Result<HostDto>> Create(CreateHostDto dto);
         Task<Result<HostDto>> Get(Guid id);

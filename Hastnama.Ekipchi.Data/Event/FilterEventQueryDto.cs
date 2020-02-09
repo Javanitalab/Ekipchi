@@ -1,6 +1,8 @@
-﻿namespace Hastnama.Ekipchi.Data.Event
+﻿using Hastnama.Ekipchi.Common.General;
+
+namespace Hastnama.Ekipchi.Data.Event
 {
-    public class FilterEventQueryDto
+    public class FilterEventQueryDto : PagingOptions
     {
         public string HostName { get; set; }
 
