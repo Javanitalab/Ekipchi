@@ -35,11 +35,6 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result> Update(UpdateBlogCategoryDto updateBlogCategoryDto)
         {
-            var duplicateBlogCategory =
-                await FirstOrDefaultAsyncAsNoTracking(c => c.Name == updateBlogCategoryDto.Name);
-            if (duplicateBlogCategory != null)
-                return Result.Failed(new BadRequestObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.DuplicateBlogCategoryName}));
 
             var blogCategory = await FirstOrDefaultAsync(c => c.Id == updateBlogCategoryDto.Id);
             
@@ -65,12 +60,6 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result<BlogCategoryDto>> Create(CreateBlogCategoryDto createBlogCategoryDto)
         {
-            var duplicateBlogCategory =
-                await FirstOrDefaultAsyncAsNoTracking(c => c.Name == createBlogCategoryDto.Name);
-            if (duplicateBlogCategory != null)
-                return Result<BlogCategoryDto>.Failed(new BadRequestObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.DuplicateBlogCategoryName}));
-
             BlogCategory parentBlog = null;
             if (createBlogCategoryDto.ParentId != null)
             {

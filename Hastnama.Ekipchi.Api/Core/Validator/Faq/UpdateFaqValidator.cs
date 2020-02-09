@@ -12,10 +12,6 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Faq
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage(PersianErrorMessage.InvalidFaqQuestion);
 
-            RuleFor(dto => dto.Id)
-                .Cascade(CascadeMode.StopOnFirstFailure)
-                .GreaterThanOrEqualTo(1).WithMessage(PersianErrorMessage.InvalidFaqId);
-            
         }
     }
 }

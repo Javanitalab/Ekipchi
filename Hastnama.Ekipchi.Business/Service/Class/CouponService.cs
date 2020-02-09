@@ -38,10 +38,6 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result> Update(UpdateCouponDto updateCouponDto)
         {
-            var duplicateCoupon = await FirstOrDefaultAsyncAsNoTracking(c => c.Code == updateCouponDto.Code);
-            if (duplicateCoupon != null)
-                return Result.Failed(new BadRequestObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.DuplicateCouponCode}));
 
             var coupon = await FirstOrDefaultAsync(c => c.Id == updateCouponDto.Id);
             _mapper.Map(updateCouponDto, coupon);
@@ -52,11 +48,6 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result<CouponDto>> Create(CreateCouponDto createCouponDto)
         {
-            var duplicateCoupon = await FirstOrDefaultAsyncAsNoTracking(c => c.Code == createCouponDto.Code);
-            if (duplicateCoupon != null)
-                return Result<CouponDto>.Failed(new BadRequestObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.DuplicateCouponCode}));
-
             var coupon = _mapper.Map(createCouponDto, new Coupon());
             await AddAsync(coupon);
             await Context.SaveChangesAsync();

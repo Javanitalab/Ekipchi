@@ -24,10 +24,6 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.User
                 .NotEmpty().WithMessage(PersianErrorMessage.InvalidMobile)
                 .MaximumLength(16).WithMessage(PersianErrorMessage.InvalidMobile);
             
-            RuleFor(dto => dto.Id)
-                .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEqual(Guid.Empty).WithMessage(PersianErrorMessage.InvalidUserId);
-            
             RuleFor(dto => dto.Email)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .EmailAddress().WithMessage(PersianErrorMessage.InvalidEmailAddress)

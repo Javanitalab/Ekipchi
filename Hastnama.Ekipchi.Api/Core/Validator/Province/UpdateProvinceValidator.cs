@@ -12,9 +12,6 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Province
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage(PersianErrorMessage.ProvinceNameIsInvalid);
 
-            RuleFor(dto => dto.Id)
-                .Cascade(CascadeMode.StopOnFirstFailure)
-                .GreaterThanOrEqualTo(1).WithMessage(PersianErrorMessage.InvalidProvinceId);
             
         }
     }

@@ -34,10 +34,6 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result> Update(UpdateProvinceDto updateProvinceDto)
         {
-            var duplicateProvince = await FirstOrDefaultAsyncAsNoTracking(c => c.Name == updateProvinceDto.Name);
-            if (duplicateProvince != null)
-                return Result.Failed(new BadRequestObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.DuplicateProvinceName}));
 
             var province = await FirstOrDefaultAsync(c => c.Id == updateProvinceDto.Id);
             _mapper.Map(updateProvinceDto, province);
@@ -48,11 +44,6 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result<ProvinceDto>> Create(CreateProvinceDto createProvinceDto)
         {
-            var duplicateProvince = await FirstOrDefaultAsyncAsNoTracking(c => c.Name == createProvinceDto.Name);
-            if (duplicateProvince != null)
-                return Result<ProvinceDto>.Failed(new BadRequestObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.DuplicateProvinceName}));
-
             var province = _mapper.Map<Province>(createProvinceDto);
             await AddAsync(province);
             await Context.SaveChangesAsync();

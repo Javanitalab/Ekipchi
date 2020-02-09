@@ -33,10 +33,6 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result> Update(UpdateCategoryDto updateCategoryDto)
         {
-            var duplicateCategory = await FirstOrDefaultAsyncAsNoTracking(c => c.Name == updateCategoryDto.Name);
-            if (duplicateCategory != null)
-                return Result.Failed(new BadRequestObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.DuplicateCategoryName}));
 
             var category = await FirstOrDefaultAsync(c => c.Id == updateCategoryDto.Id);
             _mapper.Map(updateCategoryDto, category);
@@ -47,11 +43,6 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result<CategoryDto>> Create(CreateCategoryDto createCategoryDto)
         {
-            var duplicateCategory = await FirstOrDefaultAsyncAsNoTracking(c => c.Name == createCategoryDto.Name);
-            if (duplicateCategory != null)
-                return Result<CategoryDto>.Failed(new BadRequestObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.DuplicateCategoryName}));
-
             var category = _mapper.Map(createCategoryDto, new Category());
             await AddAsync(category);
             await Context.SaveChangesAsync();

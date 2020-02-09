@@ -121,12 +121,14 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 400)]
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
-        [HttpPut("[Action]/{id}")]
+        [HttpPut("[Action]")]
         public async Task<IActionResult> Profile(Guid? id, [FromBody] UpdateUserDto updateUserDto)
         {
-            if (id != null)
-                updateUserDto.Id = id.Value;
-            
+            if (!HttpContext.User.Claims.Any())
+                return Unauthorized(new ApiMessage {Message = PersianErrorMessage.UnAuthorized});
+
+            var userId = HttpContext.User?.GetUserId();
+            updateUserDto.Id = userId.Value;
             var result = await _unitOfWork.UserService.UpdateProfile(updateUserDto);
             if (!result.Success)
                 return result.ApiResult;

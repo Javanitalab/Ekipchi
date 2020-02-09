@@ -12,9 +12,6 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Comment
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage(PersianErrorMessage.InvalidCommentContent);
 
-            RuleFor(dto => dto.Id)
-                .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage(PersianErrorMessage.InvalidCommentId);
             
         }
     }

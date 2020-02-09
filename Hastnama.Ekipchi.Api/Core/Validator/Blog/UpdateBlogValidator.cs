@@ -11,10 +11,6 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Blog
             RuleFor(dto => dto.Title)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage(PersianErrorMessage.BlogTitleIsInvalid);
-
-            RuleFor(dto => dto.Id)
-                .Cascade(CascadeMode.StopOnFirstFailure)
-                .GreaterThanOrEqualTo(1).WithMessage(PersianErrorMessage.InvalidBlogId);
             
             RuleFor(dto => dto.BlogCategoryId)
                 .Cascade(CascadeMode.StopOnFirstFailure)

@@ -8,9 +8,6 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Host
     {
         public UpdateHostValidator()
         {
-            RuleFor(dto => dto.Id)
-                .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage(PersianErrorMessage.InvalidHostId);
 
             RuleFor(dto => dto.Name)
                 .Cascade(CascadeMode.StopOnFirstFailure)

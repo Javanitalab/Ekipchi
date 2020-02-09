@@ -12,9 +12,6 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Coupon
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage(PersianErrorMessage.InvalidCouponCode);
 
-            RuleFor(dto => dto.Id)
-                .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage(PersianErrorMessage.InvalidCouponId);
         }
     }
 }

@@ -36,11 +36,6 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result> Update(UpdateCityDto updateCityDto)
         {
-            var duplicateCity = await FirstOrDefaultAsyncAsNoTracking(c => c.Name == updateCityDto.Name);
-            if (duplicateCity != null)
-                return Result.Failed(new BadRequestObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.DuplicateCityName}));
-
             var city = await FirstOrDefaultAsync(c => c.Id == updateCityDto.Id);
 
             if (city.CountyId != updateCityDto.CountyId)
@@ -60,11 +55,6 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result<CityDto>> Create(CreateCityDto createCityDto)
         {
-            var duplicateCity = await FirstOrDefaultAsyncAsNoTracking(c => c.Name == createCityDto.Name);
-            if (duplicateCity != null)
-                return Result<CityDto>.Failed(new BadRequestObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.DuplicateCityName}));
-
             var county = await Context.Counties.FirstOrDefaultAsync(u => u.Id == createCityDto.CountyId);
             if (county == null)
                 return Result<CityDto>.Failed(new BadRequestObjectResult(new ApiMessage

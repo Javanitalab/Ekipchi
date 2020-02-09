@@ -11,10 +11,6 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.County
             RuleFor(dto => dto.Name)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage(PersianErrorMessage.CityNameIsInvalid);
-
-            RuleFor(dto => dto.Id)
-                .Cascade(CascadeMode.StopOnFirstFailure)
-                .GreaterThanOrEqualTo(1).WithMessage(PersianErrorMessage.InvalidCountyId);
             
             RuleFor(dto => dto.ProvinceId)
                 .Cascade(CascadeMode.StopOnFirstFailure)
