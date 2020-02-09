@@ -19,7 +19,8 @@ namespace Hastnama.Ekipchi.Business.Service.Interface
         Task<Result<User>> Login(LoginDto registerDto);
         Task<Result<User>> Register(RegisterDto registerDto);
         Task<Result<PagedList<UserDto>>> List( FilterUserQueryDto queryDto);
-        Task<Result> UpdateProfile(UpdateUserDto updateUserDto);
+        Task<Result> UpdateProfile(UpdateUserDto adminUpdateUserDto);
+        Task<Result> UpdateProfile(AdminUpdateUserDto adminUpdateUserDto);
         Task<Result<UserDto>> Create(CreateUserDto dto);
         Task<Result<UserDto>> Get(Guid id);
         Task<Result<UserDto>> GetByEmail(string email);

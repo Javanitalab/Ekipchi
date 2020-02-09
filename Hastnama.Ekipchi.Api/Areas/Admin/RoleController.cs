@@ -88,9 +88,11 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
                 if (!await _unitOfWork.PermissionService.HasPermissionExist(permissionId))
                     return NotFound(new ApiMessage());
 
-                await _unitOfWork.RolePermissionService.AddAsync(new RolePermission { RoleId = role.Id, PermissionId = permissionId });
+                role.RolePermissions.Add(new RolePermission { RoleId = role.Id, PermissionId = permissionId });
             }
 
+            await _unitOfWork.SaveChangesAsync();
+            
             return Created(Url.Link("GetPermission", new { id = role.Id }), _mapper.Map<RoleDto>(role));
         }
 

@@ -7,7 +7,7 @@ using Hastnama.Ekipchi.Data.User;
 
 namespace Hastnama.Ekipchi.Api.Core.Validator.User
 {
-    public class UpdateUserValidator : AbstractValidator<UpdateUserDto>
+    public class UpdateUserValidator : AbstractValidator<AdminUpdateUserDto>
     {
         public UpdateUserValidator()
         {

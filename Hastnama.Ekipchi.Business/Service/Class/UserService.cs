@@ -109,16 +109,33 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
             _mapper.Map(updateUserDto, user);
 
-            if (!user.UserInRoles.Select(g => g.RoleId).SequenceEqual(updateUserDto.Roles))
+            
+            await Context.SaveChangesAsync();
+
+            return Result.SuccessFull();
+        }
+
+        public async Task<Result> UpdateProfile(AdminUpdateUserDto adminUpdateUserDto)
+        {
+            var user = await FirstOrDefaultAsync(u => u.Id == adminUpdateUserDto.Id,
+                u => u.UserInRoles.Select(ur => ur.Role));
+
+            if (user == null)
+                return Result.Failed(new NotFoundObjectResult(new ApiMessage
+                    {Message = PersianErrorMessage.UserNotFound}));
+
+            _mapper.Map(adminUpdateUserDto, user);
+
+            if (!user.UserInRoles.Select(g => g.RoleId).SequenceEqual(adminUpdateUserDto.Roles))
             {
                 // get all roles that are removed 
                 var removeRoles = user.UserInRoles
-                    .Where(ur => !updateUserDto.Roles.Contains(ur.RoleId)).ToList();
+                    .Where(ur => !adminUpdateUserDto.Roles.Contains(ur.RoleId)).ToList();
                 if (removeRoles.Any())
                     Context.UserInRoles.RemoveRange(removeRoles);
 
                 // get all roles id that are added
-                var addedRolesId = updateUserDto.Roles.Where(roleId =>
+                var addedRolesId = adminUpdateUserDto.Roles.Where(roleId =>
                     !user.UserInRoles.Select(u => u.RoleId).Contains(roleId)).ToList();
                 var addedRoles = await Context.Roles.Where(u => addedRolesId.Contains(u.Id)).ToListAsync();
 
@@ -138,8 +155,8 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                     .ToList();
             }
 
-            if (!string.IsNullOrEmpty(updateUserDto.Password))
-                user.Password = StringUtil.HashPass(updateUserDto.Password);
+            if (!string.IsNullOrEmpty(adminUpdateUserDto.Password))
+                user.Password = StringUtil.HashPass(adminUpdateUserDto.Password);
 
             await Context.SaveChangesAsync();
 

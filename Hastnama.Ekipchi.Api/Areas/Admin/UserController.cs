@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Hastnama.Ekipchi.Api.Areas.Admin
 {
-    public class UserController : BaseAdminController
+    public class  UserController : BaseAdminController
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -68,7 +68,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// <summary>
         /// Update User 
         /// </summary>
-        /// <param name="updateUserDto"></param>
+        /// <param name="adminUpdateUserDto"></param>
         /// <returns>NoContent</returns>
         /// <response code="204">if Update successfully </response>
         /// <response code="400">If validation failure.</response>
@@ -79,12 +79,12 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid? id, [FromBody] UpdateUserDto updateUserDto)
+        public async Task<IActionResult> Update(Guid? id, [FromBody] AdminUpdateUserDto adminUpdateUserDto)
         {
             if (id != null)
-                updateUserDto.Id = id.Value;
+                adminUpdateUserDto.Id = id.Value;
             
-            var result = await _unitOfWork.UserService.UpdateProfile(updateUserDto);
+            var result = await _unitOfWork.UserService.UpdateProfile(adminUpdateUserDto);
             if (!result.Success)
                 return result.ApiResult;
             return NoContent();
