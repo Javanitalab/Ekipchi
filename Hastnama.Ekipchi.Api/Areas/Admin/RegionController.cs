@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Hastnama.Ekipchi.Business.Service;
@@ -74,9 +75,12 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 400)]
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UpdateRegionDto updateRegionDto)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int? id, [FromBody] UpdateRegionDto updateRegionDto)
         {
+            if (id != null)
+                updateRegionDto.Id = id.Value;
+
             var result = await _unitOfWork.RegionService.Update(updateRegionDto);
             if (!result.Success)
                 return result.ApiResult;

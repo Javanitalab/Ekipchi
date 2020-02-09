@@ -73,9 +73,13 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 400)]
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UpdateCouponDto updateCouponDto)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(Guid? id,[FromBody] UpdateCouponDto updateCouponDto)
         {
+            
+            if (id != null)
+                updateCouponDto.Id = id.Value;
+
             var result = await _unitOfWork.CouponService.Update(updateCouponDto);
             if (!result.Success)
                 return result.ApiResult;

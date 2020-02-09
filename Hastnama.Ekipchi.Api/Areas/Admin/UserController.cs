@@ -60,7 +60,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         public async Task<IActionResult> Get(Guid id)
         {
             var result = await _unitOfWork.UserService.Get(id);
-          
+
             return result.ApiResult;
         }
 
@@ -77,9 +77,12 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 400)]
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UpdateUserDto updateUserDto)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(Guid? id, [FromBody] UpdateUserDto updateUserDto)
         {
+            if (id != null)
+                updateUserDto.Id = id.Value;
+            
             var result = await _unitOfWork.UserService.UpdateProfile(updateUserDto);
             if (!result.Success)
                 return result.ApiResult;
@@ -126,8 +129,8 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
                 return result.ApiResult;
             return Created(Url.Link("GetUser", new {result.Data.Id}), _mapper.Map<UserDto>(result.Data));
         }
-        
-        
+
+
         /// <summary>
         /// User Groups
         /// </summary>
@@ -145,7 +148,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             var result = await _unitOfWork.UserService.UserGroups(id);
             return result.ApiResult;
         }
-        
+
         /// <summary>
         /// User Groups
         /// </summary>

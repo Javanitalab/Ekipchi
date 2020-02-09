@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Hastnama.Ekipchi.Business.Service;
@@ -74,9 +75,12 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 400)]
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UpdateFaqDto updateFaqDto)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int? id,[FromBody] UpdateFaqDto updateFaqDto)
         {
+            if (id != null)
+                updateFaqDto.Id = id.Value;
+            
             var result = await _unitOfWork.FaqService.Update(updateFaqDto);
             if (!result.Success)
                 return result.ApiResult;

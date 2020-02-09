@@ -72,9 +72,11 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 400)]
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UpdateBlogCategoryDto updateBlogCategoryDto)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int? id,[FromBody] UpdateBlogCategoryDto updateBlogCategoryDto)
         {
+            if (id != null)
+                updateBlogCategoryDto.Id = id.Value;
             var result = await _unitOfWork.BlogCategoryService.Update(updateBlogCategoryDto);
             if (!result.Success)
                 return result.ApiResult;

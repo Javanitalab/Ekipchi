@@ -72,9 +72,12 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 400)]
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UpdateCategoryDto updateCategoryDto)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int? id,[FromBody] UpdateCategoryDto updateCategoryDto)
         {
+            if (id != null)
+                updateCategoryDto.Id = id.Value;
+
             var result = await _unitOfWork.CategoryService.Update(updateCategoryDto);
             if (!result.Success)
                 return result.ApiResult;

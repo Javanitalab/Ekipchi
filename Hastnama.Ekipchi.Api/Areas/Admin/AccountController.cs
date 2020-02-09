@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Hastnama.Ekipchi.Api.Core.Extensions;
 using Hastnama.Ekipchi.Api.Core.Token;
@@ -14,12 +15,12 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
     [Route("[Controller]")]
     [EnableCors("MyPolicy")]
     [ApiController]
-    public class AuthController : Controller
+    public class AccountController : Controller
     {
         private readonly ITokenGenerator _tokenGenerator;
         private readonly IUnitOfWork _unitOfWork;
 
-        public AuthController(ITokenGenerator tokenGenerator, IUnitOfWork unitOfWork)
+        public AccountController(ITokenGenerator tokenGenerator, IUnitOfWork unitOfWork)
         {
             _tokenGenerator = tokenGenerator;
             _unitOfWork = unitOfWork;
@@ -105,6 +106,33 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             var user = await _unitOfWork.UserService.Get(userId.Value);
             return user.ApiResult;
         }
+        
+        
+        /// <summary>
+        /// Update Profile 
+        /// </summary>
+        /// <param name="updateUserDto"></param>
+        /// <returns>NoContent</returns>
+        /// <response code="204">if Update successfully </response>
+        /// <response code="400">If validation failure.</response>
+        /// <response code="404">If entity not found.</response>
+        /// <response code="500">If an unexpected error happen</response>
+        [ProducesResponseType(204)]
+        [ProducesResponseType(typeof(ApiMessage), 400)]
+        [ProducesResponseType(typeof(ApiMessage), 404)]
+        [ProducesResponseType(typeof(ApiMessage), 500)]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Profile(Guid? id, [FromBody] UpdateUserDto updateUserDto)
+        {
+            if (id != null)
+                updateUserDto.Id = id.Value;
+            
+            var result = await _unitOfWork.UserService.UpdateProfile(updateUserDto);
+            if (!result.Success)
+                return result.ApiResult;
+            return NoContent();
+        }
+
         
     }
 }

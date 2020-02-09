@@ -72,9 +72,12 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 400)]
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UpdateCityDto updateCityDto)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int? id,[FromBody] UpdateCityDto updateCityDto)
         {
+            if (id != null)
+                updateCityDto.Id = id.Value;
+
             var result = await _unitOfWork.CityService.Update(updateCityDto);
             if (!result.Success)
                 return result.ApiResult;

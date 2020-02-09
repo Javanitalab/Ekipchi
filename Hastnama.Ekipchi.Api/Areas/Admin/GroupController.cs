@@ -75,9 +75,12 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 400)]
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UpdateGroupDto updateGroupDto)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(Guid? id,[FromBody] UpdateGroupDto updateGroupDto)
         {
+            if (id != null)
+                updateGroupDto.Id = id.Value;
+
             var result = await _unitOfWork.GroupService.Update(updateGroupDto);
             if (!result.Success)
                 return result.ApiResult;

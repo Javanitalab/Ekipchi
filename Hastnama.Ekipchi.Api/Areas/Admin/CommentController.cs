@@ -71,9 +71,13 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 400)]
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UpdateCommentDto updateCommentDto)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(Guid? id,[FromBody] UpdateCommentDto updateCommentDto)
         {
+            
+            if (id != null)
+                updateCommentDto.Id = id.Value;
+
             var result = await _unitOfWork.CommentService.Update(updateCommentDto);
             if (!result.Success)
                 return result.ApiResult;

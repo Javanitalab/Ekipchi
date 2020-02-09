@@ -73,9 +73,12 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 400)]
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UpdateHostDto updateHostDto)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(Guid? id, [FromBody] UpdateHostDto updateHostDto)
         {
+            if (id != null)
+                updateHostDto.Id = id.Value;
+            
             var result = await _unitOfWork.HostService.Update(updateHostDto);
             if (!result.Success)
                 return result.ApiResult;
@@ -104,7 +107,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
                 return result.ApiResult;
             return Created(Url.Link("GetHost", new {result.Data.Id}), _mapper.Map<HostDto>(result.Data));
         }
-        
+
         /// <summary>
         /// Delete Host 
         /// </summary>
@@ -123,6 +126,5 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
                 return result.ApiResult;
             return NoContent();
         }
-
     }
 }
