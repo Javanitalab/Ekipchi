@@ -1,8 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Hastnama.Ekipchi.Api.Core.Extensions;
 using Hastnama.Ekipchi.Api.Core.Token;
 using Hastnama.Ekipchi.Business.Service;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Data.Auth;
+using Hastnama.Ekipchi.Data.User;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -76,6 +79,31 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
                 return user.ApiResult;
 
             return Ok();
+        }
+
+        /// <summary>
+        /// User Profile
+        /// </summary>
+        /// <returns>Access and refresh token.</returns>
+        /// <response code="200">if login successfully </response>
+        /// <response code="400">If validation failure.</response>
+        /// <response code="401">If user not Logined.</response>
+        /// <response code="500">If an unexpected error happen</response>
+        [ProducesResponseType(typeof(UserDto), 200)]
+        [ProducesResponseType(typeof(ApiMessage), 400)]
+        [ProducesResponseType(typeof(ApiMessage), 401)]
+        [ProducesResponseType(typeof(ApiMessage), 404)]
+        [ProducesResponseType(typeof(ApiMessage), 500)]
+        [HttpGet]
+        [Route("[Action]")]
+        public async Task<IActionResult> Profile()
+        {
+            if (!HttpContext.User.Claims.Any())
+                return Unauthorized(new ApiMessage {Message = PersianErrorMessage.UnAuthorized});
+
+            var userId = HttpContext.User?.GetUserId();
+            var user = await _unitOfWork.UserService.Get(userId.Value);
+            return user.ApiResult;
         }
     }
 }

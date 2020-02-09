@@ -6,6 +6,13 @@
 
         public const string BadRequestQuery = "ورودی های داده شده معتبر نیست";
         public const string InvalidPagingOption = "پیجینگ وارد شده معتبر نیست";
+        public const string InvalidLocalId = "ایدی وارد شده معتبر نیست";
+
+        #endregion
+
+        #region File
+
+        public const string FileNotFound = "فایل مورد نظر پیدا نشد";
 
         #endregion
 

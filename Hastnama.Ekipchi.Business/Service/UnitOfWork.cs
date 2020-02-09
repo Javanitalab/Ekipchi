@@ -15,6 +15,7 @@ namespace Hastnama.Ekipchi.Business.Service
         #region private
 
         private IUserService _userService;
+        private IUserFilesService _filesService;
         private ICityService _cityService;
         private ICountyService _countyService;
         private IProvinceService _provinceService;
@@ -71,6 +72,8 @@ namespace Hastnama.Ekipchi.Business.Service
         public IUserInRoleService UserInRoleService => _userInRoleService ??= new UserInRoleService(_context);
         public IPermissionService PermissionService => _permissionService ??= new PermissionService(_context);
         public IRoleService RoleService => _roleService ??= new RoleService(_context);
+
+        public IUserFilesService FilesService => _filesService = _filesService ?? new UserFilesService(_context);
 
         #endregion Services
 

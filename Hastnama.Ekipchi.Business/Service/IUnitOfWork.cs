@@ -9,6 +9,7 @@ namespace Hastnama.Ekipchi.Business.Service
         #region Services
 
         IUserService UserService { get; }
+        IUserFilesService FilesService { get; }
         ICityService CityService { get; }
         ICountyService CountyService { get; }
         IProvinceService ProvinceService { get; }
