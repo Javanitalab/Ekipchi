@@ -4,8 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Hastnama.Ekipchi.Api.Core.Extensions;
 using Hastnama.Ekipchi.Business.Service;
-using Hastnama.Ekipchi.Business.Service.Interface;
-using Hastnama.Ekipchi.Common.Enum;
 using Hastnama.Ekipchi.Common.Message;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -41,15 +39,15 @@ namespace Hastnama.Ekipchi.Api.Filter
 
             var id = new Guid(tokenS.Claims.First(claim => claim.Type == "Id").Value);
 
-            var user = await _unitOfWork.UserService.Get(id);
+            var roles = await _unitOfWork.UserService.UserRoles(id);
 
-            if (!user.Success)
+            if (!roles.Success)
             {
-                context.Result = user.ApiResult;
+                context.Result = roles.ApiResult;
                 return;
             }
 
-            if (!user.Data.UserInRoles.Any() || !user.Data.UserInRoles.Any(r => r.Name == "Admin"))
+            if (!roles.Data.Any() || !roles.Data.Any(r => r.Name == "Admin"))
                 context.Result =
                     new UnauthorizedObjectResult(new ApiMessage {Message = PersianErrorMessage.UnAuthorized});
         }

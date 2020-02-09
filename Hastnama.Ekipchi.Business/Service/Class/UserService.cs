@@ -12,6 +12,7 @@ using Hastnama.Ekipchi.Common.Util;
 using Hastnama.Ekipchi.Data.Auth;
 using Hastnama.Ekipchi.Data.Event;
 using Hastnama.Ekipchi.Data.Group;
+using Hastnama.Ekipchi.Data.Role;
 using Hastnama.Ekipchi.Data.User;
 using Hastnama.Ekipchi.DataAccess.Context;
 using Hastnama.Ekipchi.DataAccess.Entities;
@@ -273,6 +274,15 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 .ToListAsync();
 
             return Result<IList<EventDto>>.SuccessFull(_mapper.Map<List<EventDto>>(events));
+        }
+
+        public async Task<Result<IList<RoleDto>>> UserRoles(Guid userId)
+        {
+            var roles = await Context.UserInRoles.Where(ur => ur.UserId == userId).Include(ur => ur.Role.RolePermissions)
+                .ThenInclude(rp => rp.Permission).ThenInclude(p=>p.Parent).ToListAsync();
+            
+            return Result<IList<RoleDto>>.SuccessFull(_mapper.Map<List<RoleDto>>(roles.Select(r=>r.Role)));
+
         }
     }
 }

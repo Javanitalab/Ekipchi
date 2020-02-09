@@ -7,6 +7,7 @@ using Hastnama.Ekipchi.Common.Result;
 using Hastnama.Ekipchi.Data.Auth;
 using Hastnama.Ekipchi.Data.Event;
 using Hastnama.Ekipchi.Data.Group;
+using Hastnama.Ekipchi.Data.Role;
 using Hastnama.Ekipchi.Data.User;
 using Hastnama.Ekipchi.DataAccess.Entities;
 using Hastnama.Ekipchi.DataAccess.Repository;
@@ -25,5 +26,6 @@ namespace Hastnama.Ekipchi.Business.Service.Interface
         Task<Result> UpdateStatus(Guid id, UserStatus userStatus);
         Task<Result<IList<GroupDto>>> UserGroups(Guid id);
         Task<Result<IList<EventDto>>> UserEvents(Guid id);
+        Task<Result<IList<RoleDto>>> UserRoles(Guid userId);
     }
 }

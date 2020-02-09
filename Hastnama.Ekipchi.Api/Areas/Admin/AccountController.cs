@@ -106,8 +106,8 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             var user = await _unitOfWork.UserService.Get(userId.Value);
             return user.ApiResult;
         }
-        
-        
+
+
         /// <summary>
         /// Update Profile 
         /// </summary>
@@ -135,6 +135,24 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             return NoContent();
         }
 
-        
+        /// <summary>
+        /// User Roles 
+        /// </summary>
+        /// <returns>Ok</returns>
+        /// <response code="200">if user roles successfully returned </response>
+        /// <response code="500">If an unexpected error happen</response>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(ApiMessage), 500)]
+        [HttpPut("Role")]
+        public async Task<IActionResult> UserRoles()
+        {
+            if (!HttpContext.User.Claims.Any())
+                return Unauthorized(new ApiMessage {Message = PersianErrorMessage.UnAuthorized});
+
+            var userId = HttpContext.User?.GetUserId();
+
+            var result = await _unitOfWork.UserService.UserRoles(userId.Value);
+            return result.ApiResult;
+        }
     }
 }

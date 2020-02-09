@@ -18,7 +18,7 @@ namespace Hastnama.Ekipchi.Data.User
         public UserStatus Status { get; set; }
         public bool Gender { get; set; }
         
-        public List<RoleDto> Roles { get; set; }
+        public List<int> Roles { get; set; }
 
     }
 }

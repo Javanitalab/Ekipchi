@@ -33,15 +33,14 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
     {
         public MappingProfile()
         {
-
             #region File
 
             CreateMap<UserFile, UserFileDto>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(src => src.UniqueId))
                 .ForMember(x => x.Size, opt => opt.MapFrom(src => $"{Math.Round(src.Size / (1024))} Kb"));
 
-
             #endregion
+
             #region User
 
             CreateMap<RegisterDto, User>()
@@ -59,17 +58,9 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
                 .ForMember(x => x.Gender, opt => opt.MapFrom(des => des.Gender))
                 .ForMember(x => x.Avatar, opt => opt.MapFrom(des => des.Avatar))
                 .ForMember(x => x.Id, opt => opt.MapFrom(des => des.Id))
-                .ForMember(x => x.UserInRoles,
+                .ForMember(x => x.Roles,
                     opt => opt.MapFrom(des =>
-                        des.UserInRoles.Select(ur => new RoleDto
-                        {
-                            Id = ur.Role.Id, Name = ur.Role.Name,
-                            RolePermissions = ur.Role.RolePermissions.Select(rp => new RolePermissionDto
-                                {
-                                    Id = rp.Permission.Id, Name = rp.Permission.Name, ParentId = rp.Permission.ParentId, Parent = rp.Permission.Parent.Name
-                                })
-                                .ToList()
-                        })))
+                        des.UserInRoles.Select(ur => ur.Role.Id)))
                 .ForMember(x => x.Mobile, opt => opt.MapFrom(des => des.Mobile));
 
             CreateMap<UserDto, User>()
@@ -331,7 +322,7 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
 
             CreateMap<RoleDto, Role>();
 
-            CreateMap<Role, FaqDto>();
+            CreateMap<Role, RoleDto>();
 
             CreateMap<UpdateRoleDto, Role>();
 
