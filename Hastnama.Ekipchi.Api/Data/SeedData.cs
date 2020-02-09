@@ -56,13 +56,27 @@ namespace Hastnama.Ekipchi.Api.Data
                     {
                         Name = "Blog",
                         Description = "دسترسی های مربوط به موجودیت : بلاگ ",
-
                         Children =
                         {
-                            new Permission {Name = "Create", Description = "اضافه کردن"},
-                            new Permission {Name = "Update", Description = "تصحیح کردن"},
-                            new Permission {Name = "Delete", Description = "پاک کردن"},
-                            new Permission {Name = "Read", Description = "خواندن"}
+                            new Permission
+                            {
+                                Name = "Create", Description = "اضافه کردن"
+                            },
+                            new Permission
+                            {
+                                Name = "Update", Description = "تصحیح کردن",
+                                RolePermissions = {new RolePermission {RoleId = 1}},
+                            },
+                            new Permission
+                            {
+                                Name = "Delete", Description = "پاک کردن",
+                                RolePermissions = {new RolePermission {RoleId = 1}}
+                            },
+                            new Permission
+                            {
+                                Name = "Read", Description = "خواندن",
+                                RolePermissions = {new RolePermission {RoleId = 1}}
+                            }
                         }
                     }
                 );
@@ -72,10 +86,25 @@ namespace Hastnama.Ekipchi.Api.Data
                         Description = "دسترسی های مربوط به موجودیت : دسته بندی بلاگ ",
                         Children =
                         {
-                            new Permission {Name = "Create", Description = "اضافه کردن"},
-                            new Permission {Name = "Update", Description = "تصحیح کردن"},
-                            new Permission {Name = "Delete", Description = "پاک کردن"},
-                            new Permission {Name = "Read", Description = "خواندن"}
+                            new Permission
+                            {
+                                Name = "Create", Description = "اضافه کردن"
+                            },
+                            new Permission
+                            {
+                                Name = "Update", Description = "تصحیح کردن",
+                                RolePermissions = {new RolePermission {RoleId = 1}},
+                            },
+                            new Permission
+                            {
+                                Name = "Delete", Description = "پاک کردن",
+                                RolePermissions = {new RolePermission {RoleId = 1}}
+                            },
+                            new Permission
+                            {
+                                Name = "Read", Description = "خواندن",
+                                RolePermissions = {new RolePermission {RoleId = 1}}
+                            }
                         }
                     }
                 );
@@ -85,10 +114,25 @@ namespace Hastnama.Ekipchi.Api.Data
                     Description = "دسترسی های مربوط به موجودیت : گروه بندی ",
                     Children =
                     {
-                        new Permission {Name = "Create", Description = "اضافه کردن"},
-                        new Permission {Name = "Update", Description = "تصحیح کردن"},
-                        new Permission {Name = "Delete", Description = "پاک کردن"},
-                        new Permission {Name = "Read", Description = "خواندن"}
+                        new Permission
+                        {
+                            Name = "Create", Description = "اضافه کردن"
+                        },
+                        new Permission
+                        {
+                            Name = "Update", Description = "تصحیح کردن",
+                            RolePermissions = {new RolePermission {RoleId = 1}},
+                        },
+                        new Permission
+                        {
+                            Name = "Delete", Description = "پاک کردن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        },
+                        new Permission
+                        {
+                            Name = "Read", Description = "خواندن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        }
                     }
                 });
                 context.Permissions.Add(new Permission
@@ -97,10 +141,25 @@ namespace Hastnama.Ekipchi.Api.Data
                     Description = "دسترسی های مربوط به موجودیت : شهر ",
                     Children =
                     {
-                        new Permission {Name = "Create", Description = "اضافه کردن"},
-                        new Permission {Name = "Update", Description = "تصحیح کردن"},
-                        new Permission {Name = "Delete", Description = "پاک کردن"},
-                        new Permission {Name = "Read", Description = "خواندن"}
+                        new Permission
+                        {
+                            Name = "Create", Description = "اضافه کردن"
+                        },
+                        new Permission
+                        {
+                            Name = "Update", Description = "تصحیح کردن",
+                            RolePermissions = {new RolePermission {RoleId = 1}},
+                        },
+                        new Permission
+                        {
+                            Name = "Delete", Description = "پاک کردن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        },
+                        new Permission
+                        {
+                            Name = "Read", Description = "خواندن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        }
                     }
                 });
                 context.Permissions.Add(new Permission
@@ -109,10 +168,25 @@ namespace Hastnama.Ekipchi.Api.Data
                     Description = "دسترسی های مربوط به موجودیت : نظر ",
                     Children =
                     {
-                        new Permission {Name = "Create", Description = "اضافه کردن"},
-                        new Permission {Name = "Update", Description = "تصحیح کردن"},
-                        new Permission {Name = "Delete", Description = "پاک کردن"},
-                        new Permission {Name = "Read", Description = "خواندن"}
+                        new Permission
+                        {
+                            Name = "Create", Description = "اضافه کردن"
+                        },
+                        new Permission
+                        {
+                            Name = "Update", Description = "تصحیح کردن",
+                            RolePermissions = {new RolePermission {RoleId = 1}},
+                        },
+                        new Permission
+                        {
+                            Name = "Delete", Description = "پاک کردن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        },
+                        new Permission
+                        {
+                            Name = "Read", Description = "خواندن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        }
                     }
                 });
                 context.Permissions.Add(new Permission
@@ -121,10 +195,25 @@ namespace Hastnama.Ekipchi.Api.Data
                     Description = "دسترسی های مربوط به موجودیت : شهرستان ",
                     Children =
                     {
-                        new Permission {Name = "Create", Description = "اضافه کردن"},
-                        new Permission {Name = "Update", Description = "تصحیح کردن"},
-                        new Permission {Name = "Delete", Description = "پاک کردن"},
-                        new Permission {Name = "Read", Description = "خواندن"}
+                        new Permission
+                        {
+                            Name = "Create", Description = "اضافه کردن"
+                        },
+                        new Permission
+                        {
+                            Name = "Update", Description = "تصحیح کردن",
+                            RolePermissions = {new RolePermission {RoleId = 1}},
+                        },
+                        new Permission
+                        {
+                            Name = "Delete", Description = "پاک کردن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        },
+                        new Permission
+                        {
+                            Name = "Read", Description = "خواندن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        }
                     }
                 });
                 context.Permissions.Add(new Permission
@@ -133,10 +222,25 @@ namespace Hastnama.Ekipchi.Api.Data
                     Description = "دسترسی های مربوط به موجودیت : کد تخفیف ",
                     Children =
                     {
-                        new Permission {Name = "Create", Description = "اضافه کردن"},
-                        new Permission {Name = "Update", Description = "تصحیح کردن"},
-                        new Permission {Name = "Delete", Description = "پاک کردن"},
-                        new Permission {Name = "Read", Description = "خواندن"}
+                        new Permission
+                        {
+                            Name = "Create", Description = "اضافه کردن"
+                        },
+                        new Permission
+                        {
+                            Name = "Update", Description = "تصحیح کردن",
+                            RolePermissions = {new RolePermission {RoleId = 1}},
+                        },
+                        new Permission
+                        {
+                            Name = "Delete", Description = "پاک کردن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        },
+                        new Permission
+                        {
+                            Name = "Read", Description = "خواندن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        }
                     }
                 });
                 context.Permissions.Add(new Permission
@@ -145,10 +249,25 @@ namespace Hastnama.Ekipchi.Api.Data
                     Description = "دسترسی های مربوط به موجودیت : رویداد ",
                     Children =
                     {
-                        new Permission {Name = "Create", Description = "اضافه کردن"},
-                        new Permission {Name = "Update", Description = "تصحیح کردن"},
-                        new Permission {Name = "Delete", Description = "پاک کردن"},
-                        new Permission {Name = "Read", Description = "خواندن"}
+                        new Permission
+                        {
+                            Name = "Create", Description = "اضافه کردن"
+                        },
+                        new Permission
+                        {
+                            Name = "Update", Description = "تصحیح کردن",
+                            RolePermissions = {new RolePermission {RoleId = 1}},
+                        },
+                        new Permission
+                        {
+                            Name = "Delete", Description = "پاک کردن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        },
+                        new Permission
+                        {
+                            Name = "Read", Description = "خواندن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        }
                     }
                 });
                 context.Permissions.Add(new Permission
@@ -157,10 +276,25 @@ namespace Hastnama.Ekipchi.Api.Data
                     Description = "دسترسی های مربوط به موجودیت : گالری رویداد ",
                     Children =
                     {
-                        new Permission {Name = "Create", Description = "اضافه کردن"},
-                        new Permission {Name = "Update", Description = "تصحیح کردن"},
-                        new Permission {Name = "Delete", Description = "پاک کردن"},
-                        new Permission {Name = "Read", Description = "خواندن"}
+                        new Permission
+                        {
+                            Name = "Create", Description = "اضافه کردن"
+                        },
+                        new Permission
+                        {
+                            Name = "Update", Description = "تصحیح کردن",
+                            RolePermissions = {new RolePermission {RoleId = 1}},
+                        },
+                        new Permission
+                        {
+                            Name = "Delete", Description = "پاک کردن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        },
+                        new Permission
+                        {
+                            Name = "Read", Description = "خواندن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        }
                     }
                 });
                 context.Permissions.Add(new Permission
@@ -169,10 +303,25 @@ namespace Hastnama.Ekipchi.Api.Data
                     Description = "دسترسی های مربوط به موجودیت : تقویم رویداد ",
                     Children =
                     {
-                        new Permission {Name = "Create", Description = "اضافه کردن"},
-                        new Permission {Name = "Update", Description = "تصحیح کردن"},
-                        new Permission {Name = "Delete", Description = "پاک کردن"},
-                        new Permission {Name = "Read", Description = "خواندن"}
+                        new Permission
+                        {
+                            Name = "Create", Description = "اضافه کردن"
+                        },
+                        new Permission
+                        {
+                            Name = "Update", Description = "تصحیح کردن",
+                            RolePermissions = {new RolePermission {RoleId = 1}},
+                        },
+                        new Permission
+                        {
+                            Name = "Delete", Description = "پاک کردن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        },
+                        new Permission
+                        {
+                            Name = "Read", Description = "خواندن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        }
                     }
                 });
                 context.Permissions.Add(new Permission
@@ -181,10 +330,25 @@ namespace Hastnama.Ekipchi.Api.Data
                     Description = "دسترسی های مربوط به موجودیت : پرسش و پاسخ ",
                     Children =
                     {
-                        new Permission {Name = "Create", Description = "اضافه کردن"},
-                        new Permission {Name = "Update", Description = "تصحیح کردن"},
-                        new Permission {Name = "Delete", Description = "پاک کردن"},
-                        new Permission {Name = "Read", Description = "خواندن"}
+                        new Permission
+                        {
+                            Name = "Create", Description = "اضافه کردن"
+                        },
+                        new Permission
+                        {
+                            Name = "Update", Description = "تصحیح کردن",
+                            RolePermissions = {new RolePermission {RoleId = 1}},
+                        },
+                        new Permission
+                        {
+                            Name = "Delete", Description = "پاک کردن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        },
+                        new Permission
+                        {
+                            Name = "Read", Description = "خواندن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        }
                     }
                 });
                 context.Permissions.Add(new Permission
@@ -193,10 +357,25 @@ namespace Hastnama.Ekipchi.Api.Data
                     Description = "دسترسی های مربوط به موجودیت : گروه ",
                     Children =
                     {
-                        new Permission {Name = "Create", Description = "اضافه کردن"},
-                        new Permission {Name = "Update", Description = "تصحیح کردن"},
-                        new Permission {Name = "Delete", Description = "پاک کردن"},
-                        new Permission {Name = "Read", Description = "خواندن"}
+                        new Permission
+                        {
+                            Name = "Create", Description = "اضافه کردن"
+                        },
+                        new Permission
+                        {
+                            Name = "Update", Description = "تصحیح کردن",
+                            RolePermissions = {new RolePermission {RoleId = 1}},
+                        },
+                        new Permission
+                        {
+                            Name = "Delete", Description = "پاک کردن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        },
+                        new Permission
+                        {
+                            Name = "Read", Description = "خواندن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        }
                     }
                 });
                 context.Permissions.Add(new Permission
@@ -205,10 +384,25 @@ namespace Hastnama.Ekipchi.Api.Data
                     Description = "دسترسی های مربوط به موجودیت : میزبان ",
                     Children =
                     {
-                        new Permission {Name = "Create", Description = "اضافه کردن"},
-                        new Permission {Name = "Update", Description = "تصحیح کردن"},
-                        new Permission {Name = "Delete", Description = "پاک کردن"},
-                        new Permission {Name = "Read", Description = "خواندن"}
+                        new Permission
+                        {
+                            Name = "Create", Description = "اضافه کردن"
+                        },
+                        new Permission
+                        {
+                            Name = "Update", Description = "تصحیح کردن",
+                            RolePermissions = {new RolePermission {RoleId = 1}},
+                        },
+                        new Permission
+                        {
+                            Name = "Delete", Description = "پاک کردن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        },
+                        new Permission
+                        {
+                            Name = "Read", Description = "خواندن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        }
                     }
                 });
                 context.Permissions.Add(new Permission
@@ -217,10 +411,25 @@ namespace Hastnama.Ekipchi.Api.Data
                     Description = "دسترسی های مربوط به موجودیت : تصاویر میزبان ",
                     Children =
                     {
-                        new Permission {Name = "Create", Description = "اضافه کردن"},
-                        new Permission {Name = "Update", Description = "تصحیح کردن"},
-                        new Permission {Name = "Delete", Description = "پاک کردن"},
-                        new Permission {Name = "Read", Description = "خواندن"}
+                        new Permission
+                        {
+                            Name = "Create", Description = "اضافه کردن"
+                        },
+                        new Permission
+                        {
+                            Name = "Update", Description = "تصحیح کردن",
+                            RolePermissions = {new RolePermission {RoleId = 1}},
+                        },
+                        new Permission
+                        {
+                            Name = "Delete", Description = "پاک کردن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        },
+                        new Permission
+                        {
+                            Name = "Read", Description = "خواندن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        }
                     }
                 });
                 context.Permissions.Add(new Permission
@@ -229,10 +438,25 @@ namespace Hastnama.Ekipchi.Api.Data
                     Description = "دسترسی های مربوط به موجودیت : پیام ",
                     Children =
                     {
-                        new Permission {Name = "Create", Description = "اضافه کردن"},
-                        new Permission {Name = "Update", Description = "تصحیح کردن"},
-                        new Permission {Name = "Delete", Description = "پاک کردن"},
-                        new Permission {Name = "Read", Description = "خواندن"}
+                        new Permission
+                        {
+                            Name = "Create", Description = "اضافه کردن"
+                        },
+                        new Permission
+                        {
+                            Name = "Update", Description = "تصحیح کردن",
+                            RolePermissions = {new RolePermission {RoleId = 1}},
+                        },
+                        new Permission
+                        {
+                            Name = "Delete", Description = "پاک کردن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        },
+                        new Permission
+                        {
+                            Name = "Read", Description = "خواندن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        }
                     }
                 });
                 context.Permissions.Add(new Permission
@@ -241,7 +465,11 @@ namespace Hastnama.Ekipchi.Api.Data
                     Description = "دسترسی های مربوط به موجودیت : دسترسی ",
                     Children =
                     {
-                        new Permission {Name = "Read", Description = "خواندن"}
+                        new Permission
+                        {
+                            Name = "Read", Description = "خواندن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        }
                     }
                 });
                 context.Permissions.Add(new Permission
@@ -250,10 +478,25 @@ namespace Hastnama.Ekipchi.Api.Data
                     Description = "دسترسی های مربوط به موجودیت : استان ",
                     Children =
                     {
-                        new Permission {Name = "Create", Description = "اضافه کردن"},
-                        new Permission {Name = "Update", Description = "تصحیح کردن"},
-                        new Permission {Name = "Delete", Description = "پاک کردن"},
-                        new Permission {Name = "Read", Description = "خواندن"}
+                        new Permission
+                        {
+                            Name = "Create", Description = "اضافه کردن"
+                        },
+                        new Permission
+                        {
+                            Name = "Update", Description = "تصحیح کردن",
+                            RolePermissions = {new RolePermission {RoleId = 1}},
+                        },
+                        new Permission
+                        {
+                            Name = "Delete", Description = "پاک کردن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        },
+                        new Permission
+                        {
+                            Name = "Read", Description = "خواندن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        }
                     }
                 });
                 context.Permissions.Add(new Permission
@@ -262,10 +505,25 @@ namespace Hastnama.Ekipchi.Api.Data
                     Description = "دسترسی های مربوط به موجودیت : منطقه ",
                     Children =
                     {
-                        new Permission {Name = "Create", Description = "اضافه کردن"},
-                        new Permission {Name = "Update", Description = "تصحیح کردن"},
-                        new Permission {Name = "Delete", Description = "پاک کردن"},
-                        new Permission {Name = "Read", Description = "خواندن"}
+                        new Permission
+                        {
+                            Name = "Create", Description = "اضافه کردن"
+                        },
+                        new Permission
+                        {
+                            Name = "Update", Description = "تصحیح کردن",
+                            RolePermissions = {new RolePermission {RoleId = 1}},
+                        },
+                        new Permission
+                        {
+                            Name = "Delete", Description = "پاک کردن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        },
+                        new Permission
+                        {
+                            Name = "Read", Description = "خواندن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        }
                     }
                 });
                 context.Permissions.Add(new Permission
@@ -274,9 +532,25 @@ namespace Hastnama.Ekipchi.Api.Data
                     Description = "دسترسی های مربوط به موجودیت : نقش ",
                     Children =
                     {
-                        new Permission {Name = "Create", Description = "اضافه کردن"},
-                        new Permission {Name = "Update", Description = "تصحیح کردن"},
-                        new Permission {Name = "Read", Description = "خواندن"}
+                        new Permission
+                        {
+                            Name = "Create", Description = "اضافه کردن"
+                        },
+                        new Permission
+                        {
+                            Name = "Update", Description = "تصحیح کردن",
+                            RolePermissions = {new RolePermission {RoleId = 1}},
+                        },
+                        new Permission
+                        {
+                            Name = "Delete", Description = "پاک کردن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        },
+                        new Permission
+                        {
+                            Name = "Read", Description = "خواندن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        }
                     }
                 });
                 context.Permissions.Add(new Permission
@@ -285,10 +559,25 @@ namespace Hastnama.Ekipchi.Api.Data
                     Description = "دسترسی های مربوط به موجودیت : کاربر ",
                     Children =
                     {
-                        new Permission {Name = "Create", Description = "اضافه کردن"},
-                        new Permission {Name = "Update", Description = "تصحیح کردن"},
-                        new Permission {Name = "Delete", Description = "پاک کردن"},
-                        new Permission {Name = "Read", Description = "خواندن"}
+                        new Permission
+                        {
+                            Name = "Create", Description = "اضافه کردن"
+                        },
+                        new Permission
+                        {
+                            Name = "Update", Description = "تصحیح کردن",
+                            RolePermissions = {new RolePermission {RoleId = 1}},
+                        },
+                        new Permission
+                        {
+                            Name = "Delete", Description = "پاک کردن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        },
+                        new Permission
+                        {
+                            Name = "Read", Description = "خواندن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        }
                     }
                 });
                 context.Permissions.Add(new Permission
@@ -297,13 +586,33 @@ namespace Hastnama.Ekipchi.Api.Data
                     Description = "دسترسی های مربوط به موجودیت : آمارکاربر ",
                     Children =
                     {
-                        new Permission {Name = "Read", Description = "خواندن"}
+                        new Permission
+                        {
+                            Name = "Read", Description = "خواندن",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        }
                     }
                 });
+                context.Permissions.Add(new Permission
+                {
+                    Name = "UserType",
+                    Description = "دسترسی های مربوط به موجودیت : تنوع کاربر ",
+                    Children =
+                    {
+                        new Permission
+                        {
+                            Name = "Admin", Description = "کاربر ناظر",
+                            RolePermissions = {new RolePermission {RoleId = 1}}
+                        },
+                        new Permission
+                        {
+                            Name = "User", Description = "کاربر عادی",
+                            RolePermissions = {new RolePermission {RoleId = 2}}
+                        }
+                    }
+                });
+                context.SaveChanges();
             }
-
-
-            context.SaveChanges();
         }
     }
 }

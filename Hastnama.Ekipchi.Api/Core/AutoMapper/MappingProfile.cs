@@ -19,6 +19,7 @@ using Hastnama.Ekipchi.Data.Group;
 using Hastnama.Ekipchi.Data.Host;
 using Hastnama.Ekipchi.Data.Host.AvailableDate;
 using Hastnama.Ekipchi.Data.Message;
+using Hastnama.Ekipchi.Data.Permission;
 using Hastnama.Ekipchi.Data.Province;
 using Hastnama.Ekipchi.Data.Region;
 using Hastnama.Ekipchi.Data.Role;
@@ -55,7 +56,7 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
                             Id = ur.Role.Id, Name = ur.Role.Name,
                             RolePermissions = ur.Role.RolePermissions.Select(rp => new RolePermissionDto
                                 {
-                                    Id = rp.Permission.Id, Name = rp.Permission.Name, ParentId = rp.Permission.ParentId
+                                    Id = rp.Permission.Id, Name = rp.Permission.Name, ParentId = rp.Permission.ParentId, Parent = rp.Permission.Parent.Name
                                 })
                                 .ToList()
                         })))
@@ -333,7 +334,15 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
             CreateMap<RolePermission, RolePermissionDto>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(des => des.PermissionId))
                 .ForMember(x => x.Name, opt => opt.MapFrom(des => des.Permission.Name))
+                .ForMember(x => x.Parent,
+                    opt => opt.MapFrom(des => des.Permission.Parent == null ? "" : des.Permission.Parent.Name))
                 .ForMember(x => x.ParentId, opt => opt.MapFrom(des => des.Permission.ParentId));
+
+            #endregion
+
+            #region Permission
+
+            CreateMap<Permission, PermissionDto>();
 
             #endregion
 

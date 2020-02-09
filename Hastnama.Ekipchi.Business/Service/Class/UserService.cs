@@ -91,7 +91,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                     && (filterQueryDto.Status == null || u.Status == filterQueryDto.Status)
                     && (filterQueryDto.RoleId == null || u.UserInRoles.Any(ur => ur.RoleId == filterQueryDto.RoleId))
                 , pagingOptions,
-                u => u.UserInRoles.Select(ur => ur.Role.RolePermissions.Select(rp => rp.Permission)));
+                u => u.UserInRoles.Select(ur => ur.Role));
             if (users == null)
                 return Result<PagedList<UserDto>>.Failed(new NotFoundObjectResult(new ApiMessage
                     {Message = PersianErrorMessage.BadRequestQuery}));
@@ -102,7 +102,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         public async Task<Result> UpdateProfile(UpdateUserDto updateUserDto)
         {
             var user = await FirstOrDefaultAsync(u => u.Id == updateUserDto.Id,
-                u => u.UserInRoles.Select(ur => ur.Role.RolePermissions.Select(rp => rp.Permission)));
+                u => u.UserInRoles.Select(ur => ur.Role));
 
             if (user == null)
                 return Result.Failed(new NotFoundObjectResult(new ApiMessage
@@ -189,7 +189,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                     {Message = PersianErrorMessage.InvalidUserId}));
 
             var user = await FirstOrDefaultAsyncAsNoTracking(u => u.Id == id,
-                u => u.UserInRoles.Select(ur => ur.Role.RolePermissions.Select(rp => rp.Permission)));
+                u => u.UserInRoles.Select(ur => ur.Role.RolePermissions.Select(rp => rp.Permission.Parent)));
 
             if (user == null)
                 return Result<UserDto>.Failed(new NotFoundObjectResult(new ApiMessage

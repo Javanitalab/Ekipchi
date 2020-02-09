@@ -6,7 +6,6 @@ using Hastnama.Ekipchi.DataAccess.Context;
 
 namespace Hastnama.Ekipchi.Business.Service
 {
-
     public class UnitOfWork : IUnitOfWork
     {
         private readonly EkipchiDbContext _context;
@@ -36,7 +35,6 @@ namespace Hastnama.Ekipchi.Business.Service
         private IUserInRoleService _userInRoleService;
         private IHostService _hostService;
 
-
         #endregion
 
         public UnitOfWork(EkipchiDbContext context, IMapper mapper)
@@ -54,18 +52,25 @@ namespace Hastnama.Ekipchi.Business.Service
         public IProvinceService ProvinceService => _provinceService ??= new ProvinceService(_context, _mapper);
         public IRegionService RegionService => _regionService ??= new RegionService(_context, _mapper);
         public IBlogService BlogService => _blogService ??= new BlogService(_context, _mapper);
-        public IBlogCategoryService BlogCategoryService => _blogCategoryService ??= new BlogCategoryService(_context, _mapper);
+
+        public IBlogCategoryService BlogCategoryService =>
+            _blogCategoryService ??= new BlogCategoryService(_context, _mapper);
+
         public ICategoryService CategoryService => _categoryService ??= new CategoryService(_context, _mapper);
         public ICommentService CommentService => _commentService ??= new CommentService(_context, _mapper);
         public IFaqService FaqService => _faqServicee ??= new FaqService(_context, _mapper);
         public ICouponService CouponService => _couponService ??= new CouponService(_context, _mapper);
         public IEventService EventService => _eventService ??= new EventService(_context, _mapper);
-        public IGroupService GroupService => _groupService ??= new GroupService(_context, _mapper); public IUserMessageService UserMessageService => _userMessageService ??= new UserMessageService(_context);
+        public IGroupService GroupService => _groupService ??= new GroupService(_context, _mapper);
+        public IUserMessageService UserMessageService => _userMessageService ??= new UserMessageService(_context);
         public IMessageService MessageService => _messageService ??= new MessageService(_context);
-        public IRolePermissionService RolePermissionService => new RolePermissionService(_context); 
-        public IUserInRoleService UserInRoleService { get; }
-        public IPermissionService PermissionService { get; }
-        public IRoleService RoleService { get; }
+
+        public IRolePermissionService RolePermissionService =>
+            _rolePermissionService ??= new RolePermissionService(_context);
+
+        public IUserInRoleService UserInRoleService => _userInRoleService ??= new UserInRoleService(_context);
+        public IPermissionService PermissionService => _permissionService ??= new PermissionService(_context);
+        public IRoleService RoleService => _roleService ??= new RoleService(_context);
 
         #endregion Services
 
@@ -84,6 +89,7 @@ namespace Hastnama.Ekipchi.Business.Service
                     _context.Dispose();
                 }
             }
+
             _disposed = true;
         }
 
