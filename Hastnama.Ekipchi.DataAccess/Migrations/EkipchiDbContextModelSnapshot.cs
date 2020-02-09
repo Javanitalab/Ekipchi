@@ -351,7 +351,8 @@ namespace Hastnama.Ekipchi.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EventId");
+                    b.HasIndex("EventId")
+                        .IsUnique();
 
                     b.HasIndex("UserId");
 
@@ -388,7 +389,8 @@ namespace Hastnama.Ekipchi.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EventId");
+                    b.HasIndex("EventId")
+                        .IsUnique();
 
                     b.ToTable("EventSchedules");
                 });
@@ -753,6 +755,45 @@ namespace Hastnama.Ekipchi.DataAccess.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Hastnama.Ekipchi.DataAccess.Entities.UserFile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("IsPrivate")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LocalId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MediaType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Path")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Size")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UniqueId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Files");
+                });
+
             modelBuilder.Entity("Hastnama.Ekipchi.DataAccess.Entities.UserInEvent", b =>
                 {
                     b.Property<Guid>("Guid")
@@ -1019,8 +1060,8 @@ namespace Hastnama.Ekipchi.DataAccess.Migrations
             modelBuilder.Entity("Hastnama.Ekipchi.DataAccess.Entities.EventGallery", b =>
                 {
                     b.HasOne("Hastnama.Ekipchi.DataAccess.Entities.Event", "Event")
-                        .WithMany()
-                        .HasForeignKey("EventId")
+                        .WithOne("EventGallery")
+                        .HasForeignKey("Hastnama.Ekipchi.DataAccess.Entities.EventGallery", "EventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1034,8 +1075,8 @@ namespace Hastnama.Ekipchi.DataAccess.Migrations
             modelBuilder.Entity("Hastnama.Ekipchi.DataAccess.Entities.EventSchedule", b =>
                 {
                     b.HasOne("Hastnama.Ekipchi.DataAccess.Entities.Event", "Event")
-                        .WithMany()
-                        .HasForeignKey("EventId")
+                        .WithOne("EventSchedule")
+                        .HasForeignKey("Hastnama.Ekipchi.DataAccess.Entities.EventSchedule", "EventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -1123,7 +1164,7 @@ namespace Hastnama.Ekipchi.DataAccess.Migrations
             modelBuilder.Entity("Hastnama.Ekipchi.DataAccess.Entities.UserInEvent", b =>
                 {
                     b.HasOne("Hastnama.Ekipchi.DataAccess.Entities.Event", "Event")
-                        .WithMany()
+                        .WithMany("UserInEvents")
                         .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

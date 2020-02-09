@@ -72,6 +72,27 @@ namespace Hastnama.Ekipchi.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Files",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    Size = table.Column<double>(nullable: false),
+                    Url = table.Column<string>(nullable: true),
+                    LocalId = table.Column<string>(nullable: true),
+                    Path = table.Column<string>(nullable: true),
+                    Type = table.Column<string>(nullable: true),
+                    MediaType = table.Column<string>(nullable: true),
+                    UniqueId = table.Column<string>(nullable: true),
+                    IsPrivate = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Files", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Hosts",
                 columns: table => new
                 {
@@ -757,7 +778,8 @@ namespace Hastnama.Ekipchi.DataAccess.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_EventGalleries_EventGallery_EventId",
                 table: "EventGalleries",
-                column: "EventGallery_EventId");
+                column: "EventGallery_EventId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_EventGalleries_UserId",
@@ -777,7 +799,8 @@ namespace Hastnama.Ekipchi.DataAccess.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_EventSchedules_EventId",
                 table: "EventSchedules",
-                column: "EventId");
+                column: "EventId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Groups_OwnerId",
@@ -901,6 +924,9 @@ namespace Hastnama.Ekipchi.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Faqs");
+
+            migrationBuilder.DropTable(
+                name: "Files");
 
             migrationBuilder.DropTable(
                 name: "HostAvailableDates");

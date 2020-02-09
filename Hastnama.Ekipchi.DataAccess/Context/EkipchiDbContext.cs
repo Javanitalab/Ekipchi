@@ -50,6 +50,8 @@ namespace Hastnama.Ekipchi.DataAccess.Context
         public virtual DbSet<BlogCategory> BlogCategories { get; set; }
 
         public virtual DbSet<Faq> Faqs { get; set; }
+        
+        public virtual DbSet<UserFile> Files { get; set; }
 
         public virtual DbSet<EventSchedule> EventSchedules { get; set; }
 
