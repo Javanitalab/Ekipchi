@@ -22,7 +22,8 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<bool> HasPermissionExist(int permissionId)
         {
-            return await GetAll().AnyAsync(x => x.Id == permissionId);
+            var permission = await GetAll().AnyAsync(x => x.Id == permissionId);
+            return permission;
         }
     }
 }

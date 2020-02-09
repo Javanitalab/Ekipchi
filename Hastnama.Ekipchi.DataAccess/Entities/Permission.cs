@@ -26,8 +26,8 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
         [ForeignKey(nameof(ParentId))]
         public virtual Permission Parent { get; set; }
 
-        public virtual List<Permission> Children { get; }
+        public virtual List<Permission> Children { get; set;}
 
-        public virtual List<RolePermission> RolePermissions { get; }
+        public virtual List<RolePermission> RolePermissions { get; set; }
     }
 }

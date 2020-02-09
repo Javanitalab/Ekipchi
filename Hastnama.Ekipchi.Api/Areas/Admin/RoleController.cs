@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Hastnama.Ekipchi.Business.Service;
 using Hastnama.Ekipchi.Common.General;
@@ -25,7 +27,20 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         public async Task<IActionResult> Get([FromQuery]PagingOptions pagingOptions, string query)
         {
             var role = await _unitOfWork.RoleService.GetRoleAsync(pagingOptions, query);
-
+            if (!role.Items.Any())
+                return Ok(new List<RoleDto>());
+            role.Items.ForEach(role=>
+            {
+                role.UserInRoles = null;
+                role.RolePermissions.ForEach(ur=>
+                {
+                    ur.Role = null;
+                    ur.Permission.RolePermissions = null;
+                    ur.Permission.Parent.Children = null;
+                });
+            });
+            if (pagingOptions.Limit == null && pagingOptions.Page == null)
+                return Ok(role.Items);
             return Ok(role.MapTo<RoleDto>(_mapper));
         }
 
@@ -70,7 +85,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
 
             foreach (var permissionId in createRole.PermissionId)
             {
-                if (await _unitOfWork.PermissionService.HasPermissionExist(permissionId))
+                if (!await _unitOfWork.PermissionService.HasPermissionExist(permissionId))
                     return NotFound(new ApiMessage());
 
                 await _unitOfWork.RolePermissionService.AddAsync(new RolePermission { RoleId = role.Id, PermissionId = permissionId });
