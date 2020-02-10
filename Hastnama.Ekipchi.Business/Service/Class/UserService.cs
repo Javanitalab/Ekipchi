@@ -98,13 +98,13 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             return Result<PagedList<UserDto>>.SuccessFull(users.MapTo<UserDto>(_mapper));
         }
 
-        public async Task<Result> UpdateProfile(UpdateUserDto updateUserDto)
+        public async Task<Result<UserDto>> UpdateProfile(UpdateUserDto updateUserDto)
         {
             var user = await FirstOrDefaultAsync(u => u.Id == updateUserDto.Id,
                 u => u.UserInRoles.Select(ur => ur.Role));
 
             if (user == null)
-                return Result.Failed(new NotFoundObjectResult(new ApiMessage
+                return Result<UserDto>.Failed(new NotFoundObjectResult(new ApiMessage
                     {Message = PersianErrorMessage.UserNotFound}));
 
             _mapper.Map(updateUserDto, user);
@@ -112,7 +112,8 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
             await Context.SaveChangesAsync();
 
-            return Result.SuccessFull();
+            var result = await Get(user.Id);
+            return Result<UserDto>.SuccessFull(result.Data);
         }
 
         public async Task<Result> UpdateProfile(AdminUpdateUserDto adminUpdateUserDto)
@@ -167,7 +168,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         {
             if (string.IsNullOrEmpty(dto.Username))
                 dto.Username = $"{dto.Name} {dto.Family}";
-            
+
             var user = _mapper.Map<User>(dto);
 
             if (user.Email != null)
@@ -200,6 +201,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             user.UserInRoles = dto.Roles.Select(r => new UserInRole {RoleId = r}).ToList();
             await AddAsync(user);
             await Context.SaveChangesAsync();
+            user.UserInRoles = new List<UserInRole>();
             return Result<UserDto>.SuccessFull(_mapper.Map<UserDto>(user));
         }
 
@@ -220,22 +222,24 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
             return Result<UserDto>.SuccessFull(dto);
         }
+        public async Task<User> GetUserWithActivationCode(string activationCode)
+        {
+            return await GetAll().FirstOrDefaultAsync(x => x.ConfirmCode == activationCode);
+        }
 
-        public async Task<Result<UserDto>> GetByEmail(string email)
+        public async Task<Result<User>> GetByEmail(string email)
         {
             if (string.IsNullOrEmpty(email))
-                return Result<UserDto>.Failed(new BadRequestObjectResult(new ApiMessage
+                return Result<User>.Failed(new BadRequestObjectResult(new ApiMessage
                     {Message = PersianErrorMessage.InvalidEmailAddress}));
 
             var user = await FirstOrDefaultAsyncAsNoTracking(u => u.Email == email);
 
             if (user == null)
-                return Result<UserDto>.Failed(new NotFoundObjectResult(new ApiMessage
+                return Result<User>.Failed(new NotFoundObjectResult(new ApiMessage
                     {Message = PersianErrorMessage.UserNotFound}));
-
-            var dto = _mapper.Map<UserDto>(user);
-
-            return Result<UserDto>.SuccessFull(dto);
+            
+            return Result<User>.SuccessFull(user);
         }
 
         public async Task<Result> UpdateStatus(Guid id, UserStatus userStatus)
@@ -305,6 +309,21 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 .ThenInclude(rp => rp.Permission).ThenInclude(p => p.Parent).ToListAsync();
 
             return Result<IList<RoleDto>>.SuccessFull(_mapper.Map<List<RoleDto>>(roles.Select(r => r.Role)));
+        }
+
+        public async Task<Result> ChangePassword(ChangePasswordDto changePasswordDto, Guid userId)
+        {
+            var user = await FirstOrDefaultAsync(u => u.Id == userId);
+
+            if (!StringUtil.CheckPassword(changePasswordDto.OldPassword, user.Password))
+                return Result.Failed(new BadRequestObjectResult(new ApiMessage{Message = PersianErrorMessage.WrongPassword}));
+
+
+            user.Password = StringUtil.HashPass(changePasswordDto.NewPassword);
+
+            
+            await Context.SaveChangesAsync();
+            return Result.SuccessFull();    
         }
     }
 }

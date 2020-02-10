@@ -7,6 +7,8 @@
         public const string BadRequestQuery = "ورودی های داده شده معتبر نیست";
         public const string InvalidPagingOption = "پیجینگ وارد شده معتبر نیست";
         public const string InvalidLocalId = "ایدی وارد شده معتبر نیست";
+        public const string TokenNotFound = "توکن پیدا نشد";
+        public const string InvalidActiveCode = "کد فعالسازی معتبر نمیباشد";
 
         #endregion
 
@@ -31,6 +33,7 @@
         public const string EmailAddressAlreadyExist = "آدرس ایمیل در سیستم موجود میباشد";
         public const string MobileAlreadyExist = "شماره موبایل در سیستم موجود میباشد";
         public const string UsernameAlreadyExist = "نام کاربری در سیستم موجود میباشد";
+        public const string WrongPassword = "گذرواژه صحیح نمیباشد";
 
         #endregion
 

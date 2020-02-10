@@ -63,7 +63,8 @@ namespace Hastnama.Ekipchi.Api.Installer
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSetting.Secret)),
                 ValidateIssuer = false,
                 ValidIssuer = jwtSetting.ValidIssuer,
-                ValidateAudience = false,
+
+                
                 ValidAudience = jwtSetting.ValidAudience,
                 ValidateLifetime = true,
                 RequireExpirationTime = false

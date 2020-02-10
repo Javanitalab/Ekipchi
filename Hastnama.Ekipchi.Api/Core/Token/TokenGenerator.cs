@@ -4,6 +4,9 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Hastnama.Ekipchi.Api.Core.Environment;
+using Hastnama.Ekipchi.Business.Service;
+using Hastnama.Ekipchi.Business.Service.Interface;
 using Hastnama.Ekipchi.Common.Result;
 using Hastnama.Ekipchi.Data;
 using Hastnama.Ekipchi.Data.Auth;
@@ -17,9 +20,14 @@ namespace Hastnama.Ekipchi.Api.Core.Token
     {
         private readonly JwtSettings _jwtSettings;
         private readonly TokenValidationParameters _tokenValidationParameters;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IRequestMeta _requestMeta;
 
-        public TokenGenerator(IOptions<JwtSettings> jwtSettings, TokenValidationParameters tokenValidationParameters)
+        public TokenGenerator(IOptions<JwtSettings> jwtSettings, TokenValidationParameters tokenValidationParameters,
+            IUnitOfWork unitOfWork,IRequestMeta requestMeta)
         {
+            _requestMeta = requestMeta;
+            _unitOfWork = unitOfWork;
             _tokenValidationParameters = tokenValidationParameters;
 
             _jwtSettings = jwtSettings.Value;
@@ -51,11 +59,26 @@ namespace Hastnama.Ekipchi.Api.Core.Token
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
 
+            var userToken = new UserToken
+            {
+                Token = tokenHandler.WriteToken(token),
+                UserId = user.Id,
+                CreateDateTime = DateTime.UtcNow,
+                ExpiredDate = DateTime.UtcNow.AddDays(11),
+                Browser = _requestMeta.Browser,
+                Device = _requestMeta.Device,
+                Ip = _requestMeta.Ip,
+                UserAgent = _requestMeta.UserAgent,
+
+            };
+
+            await _unitOfWork.UserTokenService.Add(userToken);
+            await _unitOfWork.SaveChangesAsync();
+
             return Result<AuthenticateResult>.SuccessFull(new AuthenticateResult
             {
                 IsSuccess = true,
-                AccessToken = tokenHandler.WriteToken(token),
-                RefreshToken = token.Id
+                AccessToken = userToken.Token,
             });
         }
     }

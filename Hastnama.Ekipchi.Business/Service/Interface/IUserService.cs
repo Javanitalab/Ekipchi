@@ -19,14 +19,16 @@ namespace Hastnama.Ekipchi.Business.Service.Interface
         Task<Result<User>> Login(LoginDto registerDto);
         Task<Result<User>> Register(RegisterDto registerDto);
         Task<Result<PagedList<UserDto>>> List( FilterUserQueryDto queryDto);
-        Task<Result> UpdateProfile(UpdateUserDto adminUpdateUserDto);
+        Task<Result<UserDto>> UpdateProfile(UpdateUserDto updateUserDto);
         Task<Result> UpdateProfile(AdminUpdateUserDto adminUpdateUserDto);
         Task<Result<UserDto>> Create(CreateUserDto dto);
         Task<Result<UserDto>> Get(Guid id);
-        Task<Result<UserDto>> GetByEmail(string email);
+        Task<User> GetUserWithActivationCode(string activationCode);
+        Task<Result<User>> GetByEmail(string email);
         Task<Result> UpdateStatus(Guid id, UserStatus userStatus);
         Task<Result<IList<GroupDto>>> UserGroups(Guid id);
         Task<Result<IList<EventDto>>> UserEvents(Guid id);
-        Task<Result<IList<RoleDto>>> UserRoles(Guid userId);
+        Task<Result<IList<RoleDto>>> UserRoles(Guid userId); 
+        Task<Result> ChangePassword(ChangePasswordDto changePasswordDto,Guid userId);
     }
 }

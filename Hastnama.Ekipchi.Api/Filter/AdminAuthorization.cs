@@ -38,6 +38,12 @@ namespace Hastnama.Ekipchi.Api.Filter
             var tokenS = handler.ReadToken(token) as JwtSecurityToken;
 
             var id = new Guid(tokenS.Claims.First(claim => claim.Type == "Id").Value);
+            
+            var userToken = await _unitOfWork.UserTokenService.GetUserTokenAsync(id);
+            if (userToken == null || userToken.IsUsed || userToken.ExpiredDate < DateTime.Now)
+                context.Result =
+                    new UnauthorizedObjectResult(new ApiMessage {Message = PersianErrorMessage.UnAuthorized});
+
 
             var roles = await _unitOfWork.UserService.UserRoles(id);
 

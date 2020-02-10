@@ -116,12 +116,13 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
 
             foreach (var permissionId in updateRoleDto.PermissionId)
             {
-                if (await _unitOfWork.PermissionService.HasPermissionExist(permissionId))
+                if (!await _unitOfWork.PermissionService.HasPermissionExist(permissionId))
                     return NotFound(new ApiMessage());
 
                 await _unitOfWork.RolePermissionService.AddAsync(new RolePermission { RoleId = role.Id, PermissionId = permissionId });
             }
 
+            await _unitOfWork.SaveChangesAsync();
             return NoContent();
         }
     }

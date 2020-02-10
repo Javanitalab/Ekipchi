@@ -15,6 +15,7 @@ namespace Hastnama.Ekipchi.Business.Service
         #region private
 
         private IUserService _userService;
+        private IUserTokenService _userTokenService;
         private IUserFilesService _filesService;
         private ICityService _cityService;
         private ICountyService _countyService;
@@ -47,6 +48,7 @@ namespace Hastnama.Ekipchi.Business.Service
         #region Services
 
         public IUserService UserService => _userService ??= new UserService(_context, _mapper);
+        public IUserTokenService UserTokenService => _userTokenService = _userTokenService ?? new UserTokenService(_context);
         public IHostService HostService => _hostService ??= new HostService(_context, _mapper);
         public ICityService CityService => _cityService ??= new CityService(_context, _mapper);
         public ICountyService CountyService => _countyService ??= new CountyService(_context, _mapper);
