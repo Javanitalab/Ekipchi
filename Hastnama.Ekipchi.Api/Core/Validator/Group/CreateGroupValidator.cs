@@ -11,11 +11,7 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Group
             RuleFor(dto => dto.Name)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage(PersianErrorMessage.GroupNameIsInvalid);
-
-            RuleFor(dto => dto.OwnerId)
-                .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage(PersianErrorMessage.GroupOwnerIsInvalid);
-
+            
         }
     }
 }
