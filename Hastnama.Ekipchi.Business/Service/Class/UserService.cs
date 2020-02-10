@@ -53,7 +53,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
             return Result<User>.SuccessFull(user);
         }
-        
+
 
         public async Task<Result<User>> Register(RegisterDto registerDto)
         {
@@ -109,7 +109,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
             _mapper.Map(updateUserDto, user);
 
-            
+
             await Context.SaveChangesAsync();
 
             return Result.SuccessFull();
@@ -149,7 +149,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
                 if (addedUserRoles.Any())
                     await Context.UserInRoles.AddRangeAsync(addedUserRoles);
-                
+
                 user.UserInRoles = addedUserRoles.Union(user.UserInRoles.Where(ur =>
                         !addedRolesId.Contains(ur.RoleId) && !removeRoles.Select(rr => rr.RoleId).Contains(ur.RoleId)))
                     .ToList();
@@ -165,7 +165,11 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result<UserDto>> Create(CreateUserDto dto)
         {
+            if (string.IsNullOrEmpty(dto.Username))
+                dto.Username = $"{dto.Name} {dto.Family}";
+            
             var user = _mapper.Map<User>(dto);
+
             if (user.Email != null)
             {
                 var duplicateUser = (await FirstOrDefaultAsyncAsNoTracking(u => u.Email == user.Email));
@@ -296,11 +300,11 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result<IList<RoleDto>>> UserRoles(Guid userId)
         {
-            var roles = await Context.UserInRoles.Where(ur => ur.UserId == userId).Include(ur => ur.Role.RolePermissions)
-                .ThenInclude(rp => rp.Permission).ThenInclude(p=>p.Parent).ToListAsync();
-            
-            return Result<IList<RoleDto>>.SuccessFull(_mapper.Map<List<RoleDto>>(roles.Select(r=>r.Role)));
+            var roles = await Context.UserInRoles.Where(ur => ur.UserId == userId)
+                .Include(ur => ur.Role.RolePermissions)
+                .ThenInclude(rp => rp.Permission).ThenInclude(p => p.Parent).ToListAsync();
 
+            return Result<IList<RoleDto>>.SuccessFull(_mapper.Map<List<RoleDto>>(roles.Select(r => r.Role)));
         }
     }
 }
