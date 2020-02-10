@@ -193,6 +193,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                         {Message = PersianErrorMessage.UsernameAlreadyExist}));
             }
 
+            user.UserInRoles = dto.Roles.Select(r => new UserInRole {RoleId = r}).ToList();
             await AddAsync(user);
             await Context.SaveChangesAsync();
             return Result<UserDto>.SuccessFull(_mapper.Map<UserDto>(user));
