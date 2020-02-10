@@ -22,7 +22,7 @@ namespace Hastnama.Ekipchi.Data.Event
 
         public EventAccessibility EventAccessibility { get; set; }
 
-        public string Image { get; set; }
+        public string Logo { get; set; }
 
         public string CoverPhoto { get; set; }
 
@@ -36,7 +36,7 @@ namespace Hastnama.Ekipchi.Data.Event
 
         public string Tags { get; set; }
         
-        public string EventGallery { get; set; }
+        public List<string> EventGallery { get; set; }
 
         public EventScheduleDto EventSchedule { get; set; }
     }

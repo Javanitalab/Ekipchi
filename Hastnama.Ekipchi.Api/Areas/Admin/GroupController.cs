@@ -106,6 +106,8 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateGroupDto createGroupDto)
         {
+
+            createGroupDto.OwnerId = UserId;
             var result = await _unitOfWork.GroupService.Create(createGroupDto);
             if (!result.Success)
                 return result.ApiResult;

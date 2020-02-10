@@ -11,7 +11,7 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
         public Event()
         {
             EventSchedule = new EventSchedule();
-            EventGallery = new EventGallery();
+            EventGallery = new List<EventGallery>();
         }
 
         [Key]
@@ -67,7 +67,7 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
 
         public virtual EventSchedule EventSchedule { get; set; }
 
-        public virtual EventGallery EventGallery { get; set; }
+        public virtual List<EventGallery> EventGallery { get; set; }
 
         public virtual List<Comment> Comment { get; set; }
         public virtual List<UserInEvent> UserInEvents { get; set; }

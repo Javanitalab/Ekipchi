@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Hastnama.Ekipchi.Common.Helper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Hastnama.Ekipchi.Business.Service.Class
 {
@@ -32,7 +33,8 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                      && (string.IsNullOrEmpty(filterQueryDto.HostName) ||
                          e.Host.Name.ToLower().Contains(filterQueryDto.HostName.ToLower()))) && !e.IsDeleted,
                 filterQueryDto, e => e.Category, e => e.Comment,
-                e => e.Host, e => e.UserInEvents.Select(ur => ur.User), e => e.EventGallery.User, e => e.EventSchedule);
+                e => e.Host, e => e.UserInEvents.Select(ur => ur.User), e => e.EventGallery.Select(rg => rg.User),
+                e => e.EventSchedule);
             if (events.Items.Any())
             {
                 events.Items.ForEach(eventDetail =>
@@ -52,7 +54,8 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         {
             var eventDetail = await FirstOrDefaultAsyncAsNoTracking(x => x.Id == id && !x.IsDeleted, e => e.Category,
                 e => e.Comment,
-                e => e.Host, e => e.UserInEvents.Select(ur => ur.User), e => e.EventGallery, e => e.EventSchedule);
+                e => e.Host, e => e.UserInEvents.Select(ur => ur.User), e => e.EventGallery.Select(ug => ug.User),
+                e => e.EventSchedule);
             if (eventDetail == null)
                 return Result<EventDto>.Failed(new NotFoundObjectResult(
                     new ApiMessage
@@ -61,7 +64,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             return Result<EventDto>.SuccessFull(_mapper.Map<EventDto>(eventDetail));
         }
 
-        public async Task<Result<EventDto>> Create(CreateEventDto createEventDto,Guid userId)
+        public async Task<Result<EventDto>> Create(CreateEventDto createEventDto, Guid userId)
         {
             var category = await Context.Categories.FirstOrDefaultAsync(c => c.Id == createEventDto.CategoryId);
             if (category == null)
@@ -76,14 +79,21 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
             var newEvent = _mapper.Map<Event>(createEventDto);
             if (newEvent.EventGallery != null)
-                newEvent.EventGallery.UserId = userId;
+                newEvent.EventGallery.ForEach(e =>
+                {
+                    e.UserId = userId;
+                    e.Id = Guid.NewGuid();
+                });
+            newEvent.EventGallery =
+                newEvent.EventGallery.Take(1)
+                    .ToList(); // todooooo Bayad unique bodane eventid to table event gallery fix beshe
             await AddAsync(newEvent);
             await Context.SaveChangesAsync();
 
             return Result<EventDto>.SuccessFull(_mapper.Map<EventDto>(newEvent));
         }
 
-        public async Task<Result> Update(UpdateEventDto updateEventDto,Guid userId)
+        public async Task<Result> Update(UpdateEventDto updateEventDto, Guid userId)
         {
             var category = await Context.Categories.FirstOrDefaultAsync(c => c.Id == updateEventDto.CategoryId);
             if (category == null)
@@ -144,8 +154,13 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             _mapper.Map(updateEventDto, eventDetail);
             eventDetail.Category = category;
             eventDetail.Host = host;
-            if (eventDetail.EventGallery != null && eventDetail.EventGallery.UserId != Guid.Empty)
-                eventDetail.EventGallery.UserId = userId;
+            if (eventDetail.EventGallery != null && eventDetail.EventGallery.Any(e => e.UserId != Guid.Empty))
+            {
+                eventDetail.EventGallery =
+                    eventDetail.EventGallery.Take(1)
+                        .ToList(); // todooooo Bayad unique bodane eventid to table event gallery fix beshe
+                eventDetail.EventGallery.Where(e => e.UserId != Guid.Empty).ToList().ForEach(eg => eg.UserId = userId);
+            }
 
             await Context.SaveChangesAsync();
 

@@ -230,14 +230,18 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
 
             CreateMap<CreateEventDto, Event>()
                 .ForMember(x => x.EventGallery,
-                    opt => opt.MapFrom(x => new EventGallery
-                        {Image = x.EventGallery}));
+                    opt => opt.MapFrom(x => x.EventGallery.Select(gallery => new EventGallery
+                        {Image = gallery})))
+                .ForMember(x => x.Image, opt => opt.MapFrom(o => o.Logo));
 
-            CreateMap<UpdateEventDto, Event>();
+
+            CreateMap<UpdateEventDto, Event>()
+                .ForMember(x => x.Image, opt => opt.MapFrom(o => o.Logo));
 
             CreateMap<Event, EventDto>()
                 .ForMember(x => x.UserInEvents,
-                    opt => opt.MapFrom(x => x.UserInEvents.Select(ur => ur.User)));
+                    opt => opt.MapFrom(x => x.UserInEvents.Select(ur => ur.User)))
+                .ForMember(x => x.Logo, opt => opt.MapFrom(o => o.Image));
 
 
             CreateMap<EventSchedule, EventScheduleDto>();
