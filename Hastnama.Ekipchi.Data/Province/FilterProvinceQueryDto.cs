@@ -4,6 +4,6 @@ namespace Hastnama.Ekipchi.Data.Province
 {
     public class FilterProvinceQueryDto : PagingOptions
     {
-        public string Name { get; set; }
+        public string Keyword { get; set; }
     }
 }

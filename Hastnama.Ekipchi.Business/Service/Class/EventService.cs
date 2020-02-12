@@ -28,10 +28,9 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         public async Task<Result<PagedList<EventDto>>> List(FilterEventQueryDto filterQueryDto)
         {
             var events = await WhereAsyncAsNoTracking(e =>
-                    (string.IsNullOrEmpty(filterQueryDto.Name) ||
-                     e.Name.ToLower().Contains(filterQueryDto.Name.ToLower())
-                     && (string.IsNullOrEmpty(filterQueryDto.HostName) ||
-                         e.Host.Name.ToLower().Contains(filterQueryDto.HostName.ToLower()))) && !e.IsDeleted,
+                    (string.IsNullOrEmpty(filterQueryDto.Keyword) ||
+                     (string.IsNullOrEmpty(e.Name) || e.Name.ToLower().Contains(filterQueryDto.Keyword))
+                     || (string.IsNullOrEmpty(e.Host.Name) || e.Host.Name.ToLower().Contains(filterQueryDto.Keyword))) && !e.IsDeleted,
                 filterQueryDto, e => e.Category, e => e.Comment,
                 e => e.Host, e => e.UserInEvents.Select(ur => ur.User), e => e.EventGallery.Select(rg => rg.User),
                 e => e.EventSchedule);

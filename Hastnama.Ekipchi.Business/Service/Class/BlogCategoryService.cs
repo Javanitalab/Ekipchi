@@ -24,10 +24,10 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         public async Task<Result<PagedList<BlogCategoryDto>>> List(FilterBlogCategoryQueryDto filterQueryDto)
         {
             var blogCategoryList = await WhereAsyncAsNoTracking(b =>
-                    (string.IsNullOrEmpty(filterQueryDto.Name) ||
-                     b.Name.ToLower().Contains(filterQueryDto.Name.ToLower())
-                     && (string.IsNullOrEmpty(filterQueryDto.Slug) ||
-                         b.Slug.ToLower().Contains(filterQueryDto.Slug))), filterQueryDto,
+                    (string.IsNullOrEmpty(filterQueryDto.Keyword) ||
+                     b.Name.ToLower().Contains(filterQueryDto.Keyword.ToLower())
+                     && (string.IsNullOrEmpty(filterQueryDto.Keyword.ToLower()) ||
+                         b.Slug.ToLower().Contains(filterQueryDto.Keyword.ToLower()))), filterQueryDto,
                 b => b.ParentCategory);
 
             return Result<PagedList<BlogCategoryDto>>.SuccessFull(blogCategoryList.MapTo<BlogCategoryDto>(_mapper));

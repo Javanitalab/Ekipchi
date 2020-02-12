@@ -81,12 +81,12 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             var users = await WhereAsyncAsNoTracking(u =>
                     u.Status != UserStatus.Delete
                     && (
-                        filterQueryDto.Keyword == null
-                        || u.Name.ToLower().Contains(filterQueryDto.Keyword)
-                        || u.Family.ToLower().Contains(filterQueryDto.Keyword)
-                        || u.Username.ToLower().Contains(filterQueryDto.Keyword)
-                        || u.Mobile.ToLower().Contains(filterQueryDto.Keyword)
-                        || u.Email.ToLower().Contains(filterQueryDto.Keyword))
+                        string.IsNullOrEmpty(filterQueryDto.Keyword)
+                        || u.Name.ToLower().Contains(filterQueryDto.Keyword.ToLower())
+                        || u.Family.ToLower().Contains(filterQueryDto.Keyword.ToLower())
+                        || u.Username.ToLower().Contains(filterQueryDto.Keyword.ToLower())
+                        || u.Mobile.ToLower().Contains(filterQueryDto.Keyword.ToLower())
+                        || u.Email.ToLower().Contains(filterQueryDto.Keyword.ToLower()))
                     && (filterQueryDto.Status == null || u.Status == filterQueryDto.Status)
                     && (filterQueryDto.RoleId == null || u.UserInRoles.Any(ur => ur.RoleId == filterQueryDto.RoleId))
                 , filterQueryDto,
@@ -222,6 +222,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
             return Result<UserDto>.SuccessFull(dto);
         }
+
         public async Task<User> GetUserWithActivationCode(string activationCode)
         {
             return await GetAll().FirstOrDefaultAsync(x => x.ConfirmCode == activationCode);
@@ -238,7 +239,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             if (user == null)
                 return Result<User>.Failed(new NotFoundObjectResult(new ApiMessage
                     {Message = PersianErrorMessage.UserNotFound}));
-            
+
             return Result<User>.SuccessFull(user);
         }
 
@@ -316,14 +317,15 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             var user = await FirstOrDefaultAsync(u => u.Id == userId);
 
             if (!StringUtil.CheckPassword(changePasswordDto.OldPassword, user.Password))
-                return Result.Failed(new BadRequestObjectResult(new ApiMessage{Message = PersianErrorMessage.WrongPassword}));
+                return Result.Failed(new BadRequestObjectResult(new ApiMessage
+                    {Message = PersianErrorMessage.WrongPassword}));
 
 
             user.Password = StringUtil.HashPass(changePasswordDto.NewPassword);
 
-            
+
             await Context.SaveChangesAsync();
-            return Result.SuccessFull();    
+            return Result.SuccessFull();
         }
     }
 }

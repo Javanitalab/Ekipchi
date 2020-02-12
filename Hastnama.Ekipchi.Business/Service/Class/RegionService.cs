@@ -24,22 +24,17 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result<PagedList<RegionDto>>> List(FilterRegionQueryDto filterQueryDto)
         {
-            var counties = await WhereAsyncAsNoTracking(c =>
-                    (string.IsNullOrEmpty(filterQueryDto.Name) ||
-                     c.Name.ToLower().Contains(filterQueryDto.Name.ToLower())),
+            var regions = await WhereAsyncAsNoTracking(c =>
+                    (string.IsNullOrEmpty(filterQueryDto.Keyword) ||
+                     c.Name.ToLower().Contains(filterQueryDto.Keyword.ToLower())),
                 filterQueryDto, c => c.City);
 
 
-            return Result<PagedList<RegionDto>>.SuccessFull(counties.MapTo<RegionDto>(_mapper));
+            return Result<PagedList<RegionDto>>.SuccessFull(regions.MapTo<RegionDto>(_mapper));
         }
 
         public async Task<Result> Update(UpdateRegionDto updateRegionDto)
         {
-            var duplicateRegion = await FirstOrDefaultAsyncAsNoTracking(c => c.Name == updateRegionDto.Name);
-            if (duplicateRegion != null)
-                return Result.Failed(new BadRequestObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.DuplicateRegionName}));
-
             var region = await FirstOrDefaultAsync(c => c.Id == updateRegionDto.Id);
 
             if (region.CityId != updateRegionDto.CityId)

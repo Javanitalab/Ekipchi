@@ -26,8 +26,8 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         public async Task<Result<PagedList<BlogDto>>> List(FilterBlogQueryDto filterQueryDto)
         {
             var blogList = await WhereAsyncAsNoTracking(b =>
-                    (string.IsNullOrEmpty(filterQueryDto.Title) ||
-                     b.Title.ToLower().Contains(filterQueryDto.Title.ToLower())
+                    (string.IsNullOrEmpty(filterQueryDto.Keyword) ||
+                     b.Title.ToLower().Contains(filterQueryDto.Keyword.ToLower())
                      && (filterQueryDto.UserId == null ||
                          b.UseId == filterQueryDto.UserId)), filterQueryDto,
                 b => b.BlogCategory, b => b.User);

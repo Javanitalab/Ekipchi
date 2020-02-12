@@ -28,8 +28,8 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         public async Task<Result<PagedList<HostDto>>> List(FilterHostQueryDto filterQueryDto)
         {
             var hosts = await WhereAsyncAsNoTracking(c =>
-                    (string.IsNullOrEmpty(filterQueryDto.Name) ||
-                     c.Name.ToLower().Contains(filterQueryDto.Name.ToLower())) && c.IsDeleted == false, filterQueryDto,
+                    (string.IsNullOrEmpty(filterQueryDto.Keyword) ||
+                     c.Name.ToLower().Contains(filterQueryDto.Keyword.ToLower())) && c.IsDeleted == false, filterQueryDto,
                 g => g.HostGalleries,
                 g => g.HostCategories.Select(hc => hc.Category),
                 g => g.HostAvailableDates);

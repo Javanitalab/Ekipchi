@@ -4,6 +4,6 @@ namespace Hastnama.Ekipchi.Data.Group
 {
     public class FilterGroupQueryDto : PagingOptions
     {
-        public string Name { get; set; }
+        public string Keyword { get; set; }
     }
 }

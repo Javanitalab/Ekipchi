@@ -25,10 +25,10 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         public async Task<Result<PagedList<CityDto>>> List(FilterCityQueryDto filterQueryDto)
         {
             var cities = await WhereAsyncAsNoTracking(c =>
-                    (string.IsNullOrEmpty(filterQueryDto.Name) ||
-                     c.Name.ToLower().Contains(filterQueryDto.Name.ToLower())
-                     && (string.IsNullOrEmpty(filterQueryDto.CountyName) ||
-                         c.County.Name.ToLower().Contains(filterQueryDto.CountyName.ToLower()))), filterQueryDto,
+                    (string.IsNullOrEmpty(filterQueryDto.Keyword) ||
+                     c.Name.ToLower().Contains(filterQueryDto.Keyword.ToLower())
+                     && (string.IsNullOrEmpty(filterQueryDto.Keyword.ToLower()) ||
+                         c.County.Name.ToLower().Contains(filterQueryDto.Keyword.ToLower()))), filterQueryDto,
                 c => c.County, c => c.Regions);
 
             return Result<PagedList<CityDto>>.SuccessFull(cities.MapTo<CityDto>(_mapper));

@@ -4,6 +4,6 @@ namespace Hastnama.Ekipchi.Data.Host
 {
     public class FilterHostQueryDto : PagingOptions
     {
-        public string Name { get; set; }
+        public string Keyword { get; set; }
     }
 }

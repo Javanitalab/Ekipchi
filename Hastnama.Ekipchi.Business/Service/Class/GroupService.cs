@@ -27,8 +27,8 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         public async Task<Result<PagedList<GroupDto>>> List(FilterGroupQueryDto filterQueryDto)
         {
             var groups = await WhereAsyncAsNoTracking(c =>
-                    (string.IsNullOrEmpty(filterQueryDto.Name) ||
-                     c.Name.ToLower().Contains(filterQueryDto.Name.ToLower())), filterQueryDto, g => g.User,
+                    (string.IsNullOrEmpty(filterQueryDto.Keyword) ||
+                     c.Name.ToLower().Contains(filterQueryDto.Keyword.ToLower())), filterQueryDto, g => g.User,
                 g => g.UserInGroups.Select(ug => ug.User));
 
 

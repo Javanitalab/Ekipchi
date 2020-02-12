@@ -4,6 +4,6 @@ namespace Hastnama.Ekipchi.Data.Category
 {
     public class FilterCategoryQueryDto : PagingOptions
     {
-        public string Name { get; set; }
+        public string Keyword { get; set; }
     }
 }

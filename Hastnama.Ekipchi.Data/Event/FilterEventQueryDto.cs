@@ -4,8 +4,6 @@ namespace Hastnama.Ekipchi.Data.Event
 {
     public class FilterEventQueryDto : PagingOptions
     {
-        public string HostName { get; set; }
-
-        public string Name { get; set; }
+        public string Keyword { get; set; }
     }
 }
