@@ -18,7 +18,8 @@ namespace Hastnama.Ekipchi.Api.Installer
             services.Configure<HostAddress>(configuration.GetSection("HostAddress"));
             services.Configure<EmailSetting>(configuration.GetSection("EmailSetting"));
 
-            
+            services.AddTransient<IRequestMeta, RequestMeta>();
+
             services.AddTransient<ITokenGenerator, TokenGenerator>();
             services.AddTransient<AdminAuthorization>();
 
@@ -26,7 +27,6 @@ namespace Hastnama.Ekipchi.Api.Installer
             services.AddTransient<IImageProcessingService, ImageProcessingService>();
             services.AddTransient<IEmailServices, EmailServices>();
 
-            services.AddSingleton<IRequestMeta, RequestMeta>();
 
 
         }

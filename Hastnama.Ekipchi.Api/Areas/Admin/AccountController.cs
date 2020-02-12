@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
 namespace Hastnama.Ekipchi.Api.Areas.Admin
@@ -28,13 +29,13 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         private readonly IEmailServices _emailServices;
         private readonly HostAddress _hostAddress;
 
-        public AccountController(ITokenGenerator tokenGenerator, IUnitOfWork unitOfWork, IEmailServices emailServices,IOptions<HostAddress> hostAddress)
+        public AccountController(ITokenGenerator tokenGenerator, IUnitOfWork unitOfWork, IEmailServices emailServices,
+            IOptions<HostAddress> hostAddress)
         {
             _emailServices = emailServices;
             _tokenGenerator = tokenGenerator;
             _unitOfWork = unitOfWork;
             _hostAddress = hostAddress.Value;
-
         }
 
 
@@ -163,6 +164,14 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             if (!result.Success)
                 return result.ApiResult;
 
+            var userTokens = await _unitOfWork.UserTokenService.GetAllByUser(userId.Value);
+
+            if (!userTokens.Success || userTokens.Data == null)
+                return BadRequest(new ApiMessage {Message = PersianErrorMessage.TokenNotFound});
+
+            userTokens.Data.ToList().ForEach(userToken => userToken.IsUsed = true);
+            await _unitOfWork.SaveChangesAsync();
+
             return Ok(new ApiMessage {Message = "پسورد با موفقیت تقییر کرد"});
         }
 
@@ -204,7 +213,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             await _emailServices.SendMessage(forgotPasswordDto.Email, "فراموشی رمز عبور",
                 $"{_hostAddress.ForgotPassword}{user.Data.ConfirmCode}");
 
-            return Ok(new ApiMessage{Message = "درخواست تقییر رمز عبور مورد قبول است"});
+            return Ok(new ApiMessage {Message = "درخواست تقییر رمز عبور مورد قبول است"});
         }
 
         /// <summary>
@@ -232,20 +241,27 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             var user = await _unitOfWork.UserService.GetUserWithActivationCode(resetPasswordDto.ActiveCode);
 
             if (user is null)
-                return BadRequest(new ApiMessage{Message = PersianErrorMessage.InvalidActiveCode});
+                return BadRequest(new ApiMessage {Message = PersianErrorMessage.InvalidActiveCode});
 
-            // if (user.ExpiredVerification < DateTime.Today)
-            //     return BadRequest(
-            //         new ApiMessage(_localizationDescriptor.GetText(_languageInfo.LanguageCode, "ExpiredCode", null)));
+            if (user.ExpiredVerificationCode < DateTime.Today)
+                return BadRequest(
+                    new ApiMessage {Message = PersianErrorMessage.InvalidActiveCode});
 
             #endregion Validation
 
             user.Password = StringUtil.HashPass(resetPasswordDto.Password);
 
             _unitOfWork.UserService.Edit(user);
+
+            var userTokens = await _unitOfWork.UserTokenService.GetAllByUser(user.Id);
+
+            if (!userTokens.Success || userTokens.Data == null)
+                return BadRequest(new ApiMessage {Message = PersianErrorMessage.TokenNotFound});
+
+            userTokens.Data.ToList().ForEach(userToken => userToken.IsUsed = true);
             await _unitOfWork.SaveChangesAsync();
 
-            return Ok(new ApiMessage{Message = "پسورد با موفقیت تقییر کرد"});
+            return Ok(new ApiMessage {Message = "پسورد با موفقیت تقییر کرد"});
         }
 
         #endregion

@@ -8,12 +8,12 @@ namespace Hastnama.Ekipchi.Business.Service
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly EkipchiDbContext _context;
-        private readonly IMapper _mapper;
-        private bool _disposed;
 
         #region private
 
+        private readonly EkipchiDbContext _context;
+        private readonly IMapper _mapper;
+        private bool _disposed;
         private IUserService _userService;
         private IUserTokenService _userTokenService;
         private IUserFilesService _filesService;
@@ -48,7 +48,10 @@ namespace Hastnama.Ekipchi.Business.Service
         #region Services
 
         public IUserService UserService => _userService ??= new UserService(_context, _mapper);
-        public IUserTokenService UserTokenService => _userTokenService = _userTokenService ?? new UserTokenService(_context);
+
+        public IUserTokenService UserTokenService =>
+            _userTokenService ??= new UserTokenService(_context);
+
         public IHostService HostService => _hostService ??= new HostService(_context, _mapper);
         public ICityService CityService => _cityService ??= new CityService(_context, _mapper);
         public ICountyService CountyService => _countyService ??= new CountyService(_context, _mapper);
