@@ -108,7 +108,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             var eventDetail =
                 await FirstOrDefaultAsync(x => x.Id == updateEventDto.Id && !x.IsDeleted
                     , e => e.Category,
-                    e => e.Host, e => e.UserInEvents.Select(ur => ur.User), e => e.EventGallery, e => e.EventSchedule,
+                    e => e.Host, e => e.UserInEvents.Select(ur => ur.User), e => e.EventGallery.Select(gallery=>gallery.User), e => e.EventSchedule,
                     e => e.Comment.Select(c => c.ParentComment), e => e.Comment.Select(c => c.Children));
 
             if (eventDetail is null)
