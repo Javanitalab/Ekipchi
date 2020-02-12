@@ -236,6 +236,7 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
 
 
             CreateMap<UpdateEventDto, Event>()
+                .ForMember(x => x.EventGallery, opt => opt.Ignore())
                 .ForMember(x => x.Image, opt => opt.MapFrom(o => o.Logo));
 
             CreateMap<Event, EventDto>()
