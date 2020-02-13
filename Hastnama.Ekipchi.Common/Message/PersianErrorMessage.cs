@@ -9,6 +9,8 @@
         public const string InvalidLocalId = "ایدی وارد شده معتبر نیست";
         public const string TokenNotFound = "توکن پیدا نشد";
         public const string InvalidActiveCode = "کد فعالسازی معتبر نمیباشد";
+        public const string SendMessageFailed = "ارسال پیامک با مشکل برخورد کرد";
+
 
         #endregion
 

@@ -6,6 +6,7 @@ using Hastnama.Ekipchi.Api.Core.Environment;
 using Hastnama.Ekipchi.Api.Core.Extensions;
 using Hastnama.Ekipchi.Api.Core.Token;
 using Hastnama.Ekipchi.Business.Service;
+using Hastnama.Ekipchi.Business.Service.Interface;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Common.Util;
 using Hastnama.Ekipchi.Data.Auth;
@@ -27,11 +28,14 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         private readonly ITokenGenerator _tokenGenerator;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IEmailServices _emailServices;
+        private readonly ISmsService _smsService;
         private readonly HostAddress _hostAddress;
 
         public AccountController(ITokenGenerator tokenGenerator, IUnitOfWork unitOfWork, IEmailServices emailServices,
+            ISmsService smsService,
             IOptions<HostAddress> hostAddress)
         {
+            _smsService = smsService;
             _emailServices = emailServices;
             _tokenGenerator = tokenGenerator;
             _unitOfWork = unitOfWork;
@@ -212,6 +216,8 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
 
             await _emailServices.SendMessage(forgotPasswordDto.Email, "فراموشی رمز عبور",
                 $"{_hostAddress.ForgotPassword}{user.Data.ConfirmCode}");
+
+            await _smsService.SendMessage(user.Data.Mobile, "کد تقییر رمز عبور شما : " + user.Data.ConfirmCode);
 
             return Ok(new ApiMessage {Message = "درخواست تقییر رمز عبور مورد قبول است"});
         }
