@@ -555,7 +555,7 @@ namespace Hastnama.Ekipchi.Api.Data
                 });
                 context.Permissions.Add(new Permission
                 {
-                    Name = "User",
+                    Name = "UserProfile",
                     Description = "دسترسی های مربوط به موجودیت : کاربر ",
                     Children =
                     {
