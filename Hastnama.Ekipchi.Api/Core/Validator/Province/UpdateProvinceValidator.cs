@@ -10,7 +10,7 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Province
         {
             RuleFor(dto => dto.Name)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage(PersianErrorMessage.ProvinceNameIsInvalid);
+                .NotEmpty().WithMessage(ResponseMessage.ProvinceNameIsInvalid);
 
             
         }

@@ -70,7 +70,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         public async Task<IActionResult> Upload([FromForm]FilesUploadDto model)
         {
             if (model.Files.Count != model.LocalId.Count)
-                return BadRequest(new ApiMessage{Message = PersianErrorMessage.InvalidLocalId});
+                return BadRequest(new ApiMessage{Message = ResponseMessage.InvalidLocalId});
 
             var validateModelResult = ValidateModel(model);
 
@@ -194,7 +194,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             if (file == null)
                 return NotFound(new ApiMessage
                 {
-                    Message = PersianErrorMessage.FileNotFound
+                    Message = ResponseMessage.FileNotFound
                 });
 
             var contentType = file.MediaType;
@@ -229,7 +229,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             if (file == null)
                 return NotFound(new ApiMessage
                 {
-                    Message = PersianErrorMessage.FileNotFound
+                    Message = ResponseMessage.FileNotFound
                 });
 
             var result = _mapper.Map<UserFileDto>(file);
@@ -264,7 +264,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             if (files == null)
                 return NotFound(new ApiMessage
                 {
-                    Message = PersianErrorMessage.FileNotFound
+                    Message = ResponseMessage.FileNotFound
                 });
 
             return Json(files.MapTo<UserFileDto>(_mapper));
@@ -286,7 +286,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             if (file == null)
                 return NotFound(new ApiMessage
                 {
-                    Message = PersianErrorMessage.FileNotFound
+                    Message = ResponseMessage.FileNotFound
                 });
 
             if (System.IO.File.Exists(file.Path))

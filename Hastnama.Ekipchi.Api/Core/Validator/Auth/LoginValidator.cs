@@ -13,12 +13,12 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Auth
             RuleFor(dto => dto.Username)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty()
-                .WithMessage(PersianErrorMessage.InvalidUserCredential);
+                .WithMessage(ResponseMessage.InvalidUserCredential);
 
             RuleFor(dto => dto.Password)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage(PersianErrorMessage.InvalidUserCredential)
-                .MaximumLength(16).WithMessage(PersianErrorMessage.InvalidUserCredential);
+                .NotEmpty().WithMessage(ResponseMessage.InvalidUserCredential)
+                .MaximumLength(16).WithMessage(ResponseMessage.InvalidUserCredential);
         }
     }
 }

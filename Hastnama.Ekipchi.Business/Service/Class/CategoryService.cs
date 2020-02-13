@@ -57,7 +57,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             if (category == null)
                 return Result<CategoryDto>.Failed(new NotFoundObjectResult(
                     new ApiMessage
-                        {Message = PersianErrorMessage.CategoryNotFound}));
+                        {Message = ResponseMessage.CategoryNotFound}));
 
             return Result<CategoryDto>.SuccessFull(_mapper.Map<CategoryDto>(category));
         }
@@ -69,7 +69,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             if (category == null)
                 return Result.Failed(new NotFoundObjectResult(
                     new ApiMessage
-                        {Message = PersianErrorMessage.CategoryNotFound}));
+                        {Message = ResponseMessage.CategoryNotFound}));
 
             category.IsDeleted = true;
             await Context.SaveChangesAsync();

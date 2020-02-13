@@ -44,7 +44,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 if (user == null)
                     return Result.Failed(new NotFoundObjectResult(
                         new ApiMessage
-                            {Message = PersianErrorMessage.UserNotFound}));
+                            {Message = ResponseMessage.UserNotFound}));
                 group.User = user;
             }
 
@@ -67,7 +67,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 // if invalid user id sent 
                 if (addedUsers.Count != addedUsersId.Count)
                     return Result.Failed(new BadRequestObjectResult(new ApiMessage
-                        {Message = PersianErrorMessage.UserNotFound}));
+                        {Message = ResponseMessage.UserNotFound}));
 
                 var addedUserInGroups = addedUsers.Select(user => new UserInGroup
                         {Id = Guid.NewGuid(), Groups = group, JoinGroupDate = DateTime.Now, User = user})
@@ -94,7 +94,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             if (owner == null)
                 return Result<GroupDto>.Failed(new NotFoundObjectResult(
                     new ApiMessage
-                        {Message = PersianErrorMessage.UserNotFound}));
+                        {Message = ResponseMessage.UserNotFound}));
 
             var group = _mapper.Map<Group>(createGroupDto);
             group.User = owner;
@@ -114,7 +114,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             if (group == null)
                 return Result<GroupDto>.Failed(new NotFoundObjectResult(
                     new ApiMessage
-                        {Message = PersianErrorMessage.GroupNotFound}));
+                        {Message = ResponseMessage.GroupNotFound}));
 
             return Result<GroupDto>.SuccessFull(_mapper.Map<GroupDto>(group));
         }
@@ -125,7 +125,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             if (group == null)
                 return Result.Failed(new NotFoundObjectResult(
                     new ApiMessage
-                        {Message = PersianErrorMessage.GroupNotFound}));
+                        {Message = ResponseMessage.GroupNotFound}));
 
             Context.UserInGroups.RemoveRange(group.UserInGroups);
             Delete(group);

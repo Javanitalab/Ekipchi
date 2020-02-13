@@ -11,15 +11,15 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Host
 
             RuleFor(dto => dto.Name)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage(PersianErrorMessage.InvalidHostName);
+                .NotEmpty().WithMessage(ResponseMessage.InvalidHostName);
 
             RuleFor(dto => dto.Categories)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage(PersianErrorMessage.InvalidCategoryId);
+                .NotEmpty().WithMessage(ResponseMessage.InvalidCategoryId);
 
             RuleFor(dto => dto.HostAvailableDates)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage(PersianErrorMessage.InvalidHostAvailableDates);
+                .NotEmpty().WithMessage(ResponseMessage.InvalidHostAvailableDates);
         }
     }
 }

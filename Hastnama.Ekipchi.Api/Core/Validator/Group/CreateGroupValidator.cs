@@ -10,7 +10,7 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Group
         {
             RuleFor(dto => dto.Name)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage(PersianErrorMessage.GroupNameIsInvalid);
+                .NotEmpty().WithMessage(ResponseMessage.GroupNameIsInvalid);
             
         }
     }

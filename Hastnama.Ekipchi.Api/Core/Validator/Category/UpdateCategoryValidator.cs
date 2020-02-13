@@ -10,7 +10,7 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Category
         {
             RuleFor(dto => dto.Name)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage(PersianErrorMessage.DuplicateCategoryName);
+                .NotEmpty().WithMessage(ResponseMessage.DuplicateCategoryName);
             
         }
     }

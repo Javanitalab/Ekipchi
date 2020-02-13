@@ -127,7 +127,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             var userToken = await _unitOfWork.UserTokenService.GetUserTokenAsync(token);
 
             if (userToken is null)
-                return BadRequest(new ApiMessage {Message = PersianErrorMessage.TokenNotFound});
+                return BadRequest(new ApiMessage {Message = ResponseMessage.TokenNotFound});
 
             userToken.IsUsed = true;
 
@@ -159,7 +159,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto changePasswordDto)
         {
             if (!HttpContext.User.Claims.Any())
-                return Unauthorized(new ApiMessage {Message = PersianErrorMessage.UnAuthorized});
+                return Unauthorized(new ApiMessage {Message = ResponseMessage.UnAuthorized});
 
             var userId = HttpContext.User?.GetUserId();
 
@@ -171,7 +171,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             var userTokens = await _unitOfWork.UserTokenService.GetAllByUser(userId.Value);
 
             if (!userTokens.Success || userTokens.Data == null)
-                return BadRequest(new ApiMessage {Message = PersianErrorMessage.TokenNotFound});
+                return BadRequest(new ApiMessage {Message = ResponseMessage.TokenNotFound});
 
             userTokens.Data.ToList().ForEach(userToken => userToken.IsUsed = true);
             await _unitOfWork.SaveChangesAsync();
@@ -205,7 +205,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             var user = await _unitOfWork.UserService.GetByEmail(forgotPasswordDto.Email);
 
             if (user is null)
-                return Ok(new ApiMessage {Message = "درخواست تقییر رمز عبور مورد قبول است"});
+                return Ok(new ApiMessage {Message = ResponseMessage.ForgotPasswordNotAccepted});
 
             #endregion Validation
 
@@ -219,7 +219,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
 
             await _smsService.SendMessage(user.Data.Mobile, "کد تقییر رمز عبور شما : " + user.Data.ConfirmCode);
 
-            return Ok(new ApiMessage {Message = "درخواست تقییر رمز عبور مورد قبول است"});
+            return Ok(new ApiMessage {Message = ResponseMessage.ForgotPasswordAccepted});
         }
 
         /// <summary>
@@ -247,11 +247,11 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             var user = await _unitOfWork.UserService.GetUserWithActivationCode(resetPasswordDto.ActiveCode);
 
             if (user is null)
-                return BadRequest(new ApiMessage {Message = PersianErrorMessage.InvalidActiveCode});
+                return BadRequest(new ApiMessage {Message = ResponseMessage.InvalidActiveCode});
 
             if (user.ExpiredVerificationCode < DateTime.Today)
                 return BadRequest(
-                    new ApiMessage {Message = PersianErrorMessage.InvalidActiveCode});
+                    new ApiMessage {Message = ResponseMessage.InvalidActiveCode});
 
             #endregion Validation
 
@@ -262,12 +262,12 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             var userTokens = await _unitOfWork.UserTokenService.GetAllByUser(user.Id);
 
             if (!userTokens.Success || userTokens.Data == null)
-                return BadRequest(new ApiMessage {Message = PersianErrorMessage.TokenNotFound});
+                return BadRequest(new ApiMessage {Message = ResponseMessage.TokenNotFound});
 
             userTokens.Data.ToList().ForEach(userToken => userToken.IsUsed = true);
             await _unitOfWork.SaveChangesAsync();
 
-            return Ok(new ApiMessage {Message = "پسورد با موفقیت تقییر کرد"});
+            return Ok(new ApiMessage {Message = ResponseMessage.PasswordSuccessfullyChanged});
         }
 
         #endregion
@@ -293,7 +293,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         public async Task<IActionResult> Profile()
         {
             if (!HttpContext.User.Claims.Any())
-                return Unauthorized(new ApiMessage {Message = PersianErrorMessage.UnAuthorized});
+                return Unauthorized(new ApiMessage {Message = ResponseMessage.UnAuthorized});
 
             var userId = HttpContext.User?.GetUserId();
             var user = await _unitOfWork.UserService.Get(userId.Value);
@@ -318,7 +318,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         public async Task<IActionResult> Profile([FromBody] UpdateUserDto updateUserDto)
         {
             if (!HttpContext.User.Claims.Any())
-                return Unauthorized(new ApiMessage {Message = PersianErrorMessage.UnAuthorized});
+                return Unauthorized(new ApiMessage {Message = ResponseMessage.UnAuthorized});
 
             var userId = HttpContext.User?.GetUserId();
             updateUserDto.Id = userId.Value;
@@ -340,7 +340,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         public async Task<IActionResult> UserRoles()
         {
             if (!HttpContext.User.Claims.Any())
-                return Unauthorized(new ApiMessage {Message = PersianErrorMessage.UnAuthorized});
+                return Unauthorized(new ApiMessage {Message = ResponseMessage.UnAuthorized});
 
             var userId = HttpContext.User?.GetUserId();
 

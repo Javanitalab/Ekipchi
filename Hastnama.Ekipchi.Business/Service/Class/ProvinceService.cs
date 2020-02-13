@@ -57,7 +57,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             if (province == null)
                 return Result<ProvinceDto>.Failed(new NotFoundObjectResult(
                     new ApiMessage
-                        {Message = PersianErrorMessage.ProvinceNotFound}));
+                        {Message = ResponseMessage.ProvinceNotFound}));
 
             return Result<ProvinceDto>.SuccessFull(_mapper.Map<ProvinceDto>(province));
         }

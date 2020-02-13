@@ -30,7 +30,7 @@ namespace Hastnama.Ekipchi.Api.Filter
             if (string.IsNullOrWhiteSpace(token))
             {
                 context.Result =
-                    new UnauthorizedObjectResult(new ApiMessage {Message = PersianErrorMessage.UnAuthorized});
+                    new UnauthorizedObjectResult(new ApiMessage {Message = ResponseMessage.UnAuthorized});
                 return;
             }
 
@@ -43,7 +43,7 @@ namespace Hastnama.Ekipchi.Api.Filter
             var userToken = await _unitOfWork.UserTokenService.GetUserTokenAsync(id);
             if (userToken == null || userToken.IsUsed || userToken.ExpiredDate < DateTime.Now)
                 context.Result =
-                    new UnauthorizedObjectResult(new ApiMessage {Message = PersianErrorMessage.UnAuthorized});
+                    new UnauthorizedObjectResult(new ApiMessage {Message = ResponseMessage.UnAuthorized});
 
 
             var roles = await _unitOfWork.UserService.UserRoles(id);
@@ -56,7 +56,7 @@ namespace Hastnama.Ekipchi.Api.Filter
 
             if (!roles.Data.Any() || !roles.Data.Any(r => r.Name == StaticPermissions.Admin))
                 context.Result =
-                    new UnauthorizedObjectResult(new ApiMessage {Message = PersianErrorMessage.UnAuthorized});
+                    new UnauthorizedObjectResult(new ApiMessage {Message = ResponseMessage.UnAuthorized});
         }
     }
 }

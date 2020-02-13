@@ -40,7 +40,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             
             if (blogCategory == null)
                 return Result.Failed(new NotFoundObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.BlogCategoryNotFound}));
+                    {Message = ResponseMessage.BlogCategoryNotFound}));
 
             if (blogCategory.ParentId != updateBlogCategoryDto.ParentId)
             {
@@ -48,7 +48,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
                 if (parentBlog == null)
                     return Result.Failed(new BadRequestObjectResult(new ApiMessage
-                        {Message = PersianErrorMessage.InvalidBlogCategoryId}));
+                        {Message = ResponseMessage.InvalidBlogCategoryId}));
                 blogCategory.ParentCategory = parentBlog;
             }
 
@@ -67,7 +67,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
                 if (parentBlog == null)
                     return Result<BlogCategoryDto>.Failed(new BadRequestObjectResult(new ApiMessage
-                        {Message = PersianErrorMessage.InvalidBlogCategoryId}));
+                        {Message = ResponseMessage.InvalidBlogCategoryId}));
             }
 
             var blogCategory = _mapper.Map(createBlogCategoryDto, new BlogCategory());
@@ -85,7 +85,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             if (blogCategory == null)
                 return Result<BlogCategoryDto>.Failed(new NotFoundObjectResult(
                     new ApiMessage
-                        {Message = PersianErrorMessage.BlogCategoryNotFound}));
+                        {Message = ResponseMessage.BlogCategoryNotFound}));
 
             return Result<BlogCategoryDto>.SuccessFull(_mapper.Map<BlogCategoryDto>(blogCategory));
         }
@@ -96,7 +96,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             if (blogCategory == null)
                 return Result.Failed(new NotFoundObjectResult(
                     new ApiMessage
-                        {Message = PersianErrorMessage.BlogCategoryNotFound}));
+                        {Message = ResponseMessage.BlogCategoryNotFound}));
 
             blogCategory.Children.ForEach(child =>
             {

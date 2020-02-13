@@ -1,7 +1,10 @@
-﻿namespace Hastnama.Ekipchi.Data.BlogCategory
+﻿using System.Text.Json.Serialization;
+
+namespace Hastnama.Ekipchi.Data.BlogCategory
 {
     public class UpdateBlogCategoryDto
     {
+        [JsonIgnore]
         public int Id { get; set; }
 
         public int? ParentId { get; set; }

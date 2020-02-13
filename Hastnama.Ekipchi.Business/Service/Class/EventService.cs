@@ -58,7 +58,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             if (eventDetail == null)
                 return Result<EventDto>.Failed(new NotFoundObjectResult(
                     new ApiMessage
-                        {Message = PersianErrorMessage.EventNotFound}));
+                        {Message = ResponseMessage.EventNotFound}));
 
             return Result<EventDto>.SuccessFull(_mapper.Map<EventDto>(eventDetail));
         }
@@ -68,12 +68,12 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             var category = await Context.Categories.FirstOrDefaultAsync(c => c.Id == createEventDto.CategoryId);
             if (category == null)
                 return Result<EventDto>.Failed(new NotFoundObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.CategoryNotFound}));
+                    {Message = ResponseMessage.CategoryNotFound}));
 
             var host = await Context.Hosts.FirstOrDefaultAsync(c => c.Id == createEventDto.HostId);
             if (host == null)
                 return Result<EventDto>.Failed(new NotFoundObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.HostNotFound}));
+                    {Message = ResponseMessage.HostNotFound}));
 
 
             var newEvent = _mapper.Map<Event>(createEventDto);
@@ -97,12 +97,12 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             var category = await Context.Categories.FirstOrDefaultAsync(c => c.Id == updateEventDto.CategoryId);
             if (category == null)
                 return Result.Failed(new NotFoundObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.CategoryNotFound}));
+                    {Message = ResponseMessage.CategoryNotFound}));
 
             var host = await Context.Hosts.FirstOrDefaultAsync(c => c.Id == updateEventDto.HostId);
             if (host == null)
                 return Result.Failed(new NotFoundObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.HostNotFound}));
+                    {Message = ResponseMessage.HostNotFound}));
 
 
             var eventDetail =
@@ -113,7 +113,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
             if (eventDetail is null)
                 return Result.Failed(new NotFoundObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.EventNotFound}));
+                    {Message = ResponseMessage.EventNotFound}));
 
             #region Update UserInEvents
 
@@ -134,7 +134,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 // if invalid user id sent 
                 if (addedUsers.Count != addedUsersId.Count())
                     return Result.Failed(new BadRequestObjectResult(new ApiMessage
-                        {Message = PersianErrorMessage.UserNotFound}));
+                        {Message = ResponseMessage.UserNotFound}));
 
                 var addedUserInEvents = addedUsers.Select(user => new UserInEvent
                         {Guid = Guid.NewGuid(), Event = eventDetail, User = user})
@@ -172,7 +172,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
             if (eventDetail is null)
                 return Result.Failed(new NotFoundObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.EventNotFound}));
+                    {Message = ResponseMessage.EventNotFound}));
 
             eventDetail.IsDeleted = true;
             await Context.SaveChangesAsync();

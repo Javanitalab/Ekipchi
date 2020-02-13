@@ -6,6 +6,7 @@ using Hastnama.Ekipchi.Api.Filter;
 using Hastnama.Ekipchi.Business.Service;
 using Hastnama.Ekipchi.Business.Service.Class;
 using Hastnama.Ekipchi.Business.Service.Interface;
+using Hastnama.Ekipchi.Common.Sms;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,6 +20,7 @@ namespace Hastnama.Ekipchi.Api.Installer
             services.Configure<FileProvider>(configuration.GetSection("FileProvider"));
             services.Configure<HostAddress>(configuration.GetSection("HostAddress"));
             services.Configure<EmailSetting>(configuration.GetSection("EmailSetting"));
+            services.Configure<KavenegarSetting>(configuration.GetSection("KavenegarSetting"));
 
             services.AddTransient<IRequestMeta, RequestMeta>();
 

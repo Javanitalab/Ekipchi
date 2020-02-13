@@ -46,7 +46,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
                 if (province == null)
                     return Result.Failed(new BadRequestObjectResult(new ApiMessage
-                        {Message = PersianErrorMessage.InvalidProvinceId}));
+                        {Message = ResponseMessage.InvalidProvinceId}));
                 
                 county.Province = province;
             }
@@ -64,7 +64,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
             if (province == null)
                 return Result<CountyDto>.Failed(new BadRequestObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.InvalidProvinceId}));
+                    {Message = ResponseMessage.InvalidProvinceId}));
 
             var county = _mapper.Map<County>(createCountyDto);
             county.Province = province;
@@ -81,7 +81,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             if (county == null)
                 return Result<CountyDto>.Failed(new NotFoundObjectResult(
                     new ApiMessage
-                        {Message = PersianErrorMessage.CountyNotFound}));
+                        {Message = ResponseMessage.CountyNotFound}));
 
             return Result<CountyDto>.SuccessFull(_mapper.Map<CountyDto>(county));
         }

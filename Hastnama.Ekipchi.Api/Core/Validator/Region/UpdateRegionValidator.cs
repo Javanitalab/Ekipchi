@@ -10,11 +10,11 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Region
         {
             RuleFor(dto => dto.Name)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage(PersianErrorMessage.RegionNameIsInvalid);
+                .NotEmpty().WithMessage(ResponseMessage.RegionNameIsInvalid);
 
             RuleFor(dto => dto.CityId)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .GreaterThanOrEqualTo(0).WithMessage(PersianErrorMessage.InvalidCityId);
+                .GreaterThanOrEqualTo(0).WithMessage(ResponseMessage.InvalidCityId);
 
 
         }

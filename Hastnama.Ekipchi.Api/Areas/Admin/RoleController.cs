@@ -50,7 +50,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             var role = await _unitOfWork.RoleService.GetRoleAsync(id);
 
             if (role is null)
-                return NotFound(new ApiMessage{Message = PersianErrorMessage.RoleNotFound});
+                return NotFound(new ApiMessage{Message = ResponseMessage.RoleNotFound});
 
             return Ok(_mapper.Map<RoleDto>(role));
         }
@@ -61,13 +61,13 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             var role = await _unitOfWork.RoleService.GetRoleAsync(id);
 
             if (role is null)
-                return NotFound(new ApiMessage{Message = PersianErrorMessage.RoleNotFound});
+                return NotFound(new ApiMessage{Message = ResponseMessage.RoleNotFound});
 
             if (role.IsVital)
-                return BadRequest(new ApiMessage{Message = PersianErrorMessage.RoleIsVitual});
+                return BadRequest(new ApiMessage{Message = ResponseMessage.RoleIsVitual});
 
             if (await _unitOfWork.UserInRoleService.IsRoleExistInUser(id))
-                return NotFound(new ApiMessage{Message = PersianErrorMessage.RoleNotFound});
+                return NotFound(new ApiMessage{Message = ResponseMessage.RoleNotFound});
 
             _unitOfWork.RoleService.Delete(role);
             await _unitOfWork.SaveChangesAsync();
@@ -103,7 +103,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             var role = await _unitOfWork.RoleService.GetRoleAsync(id);
 
             if (role is null)
-                return NotFound(new ApiMessage{Message = PersianErrorMessage.RoleNotFound});
+                return NotFound(new ApiMessage{Message = ResponseMessage.RoleNotFound});
 
             role.Name = updateRoleDto.Name;
 

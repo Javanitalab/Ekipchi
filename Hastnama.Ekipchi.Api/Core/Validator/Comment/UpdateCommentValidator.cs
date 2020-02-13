@@ -10,7 +10,7 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Comment
         {
             RuleFor(dto => dto.Content)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage(PersianErrorMessage.InvalidCommentContent);
+                .NotEmpty().WithMessage(ResponseMessage.InvalidCommentContent);
 
             
         }

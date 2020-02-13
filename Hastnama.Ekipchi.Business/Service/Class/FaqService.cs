@@ -56,7 +56,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             if (faq == null)
                 return Result<FaqDto>.Failed(new NotFoundObjectResult(
                     new ApiMessage
-                        {Message = PersianErrorMessage.FaqNotFound}));
+                        {Message = ResponseMessage.FaqNotFound}));
 
             return Result<FaqDto>.SuccessFull(_mapper.Map<FaqDto>(faq));
         }
@@ -67,7 +67,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             if (faq == null)
                 return Result.Failed(new NotFoundObjectResult(
                     new ApiMessage
-                        {Message = PersianErrorMessage.FaqNotFound}));
+                        {Message = ResponseMessage.FaqNotFound}));
 
             Delete(faq);
             await Context.SaveChangesAsync();

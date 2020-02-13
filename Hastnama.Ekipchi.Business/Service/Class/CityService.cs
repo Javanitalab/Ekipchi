@@ -43,7 +43,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 var county = await Context.Counties.FirstOrDefaultAsync(u => u.Id == updateCityDto.CountyId);
                 if (county == null)
                     return Result.Failed(new BadRequestObjectResult(new ApiMessage
-                        {Message = PersianErrorMessage.InvalidCountyId}));
+                        {Message = ResponseMessage.InvalidCountyId}));
                 city.County = county;
             }
 
@@ -58,7 +58,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             var county = await Context.Counties.FirstOrDefaultAsync(u => u.Id == createCityDto.CountyId);
             if (county == null)
                 return Result<CityDto>.Failed(new BadRequestObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.InvalidCountyId}));
+                    {Message = ResponseMessage.InvalidCountyId}));
 
             var city = _mapper.Map<City>(createCityDto);
             city.County = county;
@@ -75,7 +75,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             if (city == null)
                 return Result<CityDto>.Failed(new NotFoundObjectResult(
                     new ApiMessage
-                        {Message = PersianErrorMessage.CityNotFound}));
+                        {Message = ResponseMessage.CityNotFound}));
 
             return Result<CityDto>.SuccessFull(_mapper.Map<CityDto>(city));
         }

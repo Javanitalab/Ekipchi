@@ -1,6 +1,7 @@
 ﻿using Hastnama.Ekipchi.Common.Enum;
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using Hastnama.Ekipchi.Data.Comment;
 using Hastnama.Ekipchi.Data.Event.Gallery;
 using Hastnama.Ekipchi.Data.Event.Schedule;
@@ -9,6 +10,8 @@ namespace Hastnama.Ekipchi.Data.Event
 {
     public class UpdateEventDto
     {
+        
+        [JsonIgnore]
         public Guid? Id { get; set; }
 
         public int CategoryId { get; set; }

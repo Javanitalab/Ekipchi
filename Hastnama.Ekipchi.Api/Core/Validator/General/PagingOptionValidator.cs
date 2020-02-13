@@ -13,13 +13,13 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.General
         {
             RuleFor(dto => dto.Page)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .LessThanOrEqualTo(500).WithMessage(PersianErrorMessage.InvalidPagingOption)
-                .GreaterThanOrEqualTo(0).WithMessage(PersianErrorMessage.InvalidPagingOption);
+                .LessThanOrEqualTo(500).WithMessage(ResponseMessage.InvalidPagingOption)
+                .GreaterThanOrEqualTo(0).WithMessage(ResponseMessage.InvalidPagingOption);
 
             RuleFor(dto => dto.Limit)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .LessThanOrEqualTo(100).WithMessage(PersianErrorMessage.InvalidPagingOption)
-                .GreaterThanOrEqualTo(1).WithMessage(PersianErrorMessage.InvalidPagingOption);
+                .LessThanOrEqualTo(100).WithMessage(ResponseMessage.InvalidPagingOption)
+                .GreaterThanOrEqualTo(1).WithMessage(ResponseMessage.InvalidPagingOption);
 
         }
     }

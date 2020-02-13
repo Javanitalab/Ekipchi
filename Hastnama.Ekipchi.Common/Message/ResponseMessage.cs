@@ -1,6 +1,6 @@
 ﻿namespace Hastnama.Ekipchi.Common.Message
 {
-    public static class PersianErrorMessage
+    public static class ResponseMessage
     {
         #region Common
 
@@ -168,5 +168,14 @@
         public const string InvalidEventSchedule = " زمانبندیه رویداد معتبر نیست";
 
         #endregion
+
+        #region Password
+
+        public const string ForgotPasswordNotAccepted = " درخواست تقییر رمز عبور مورد قبول نیست";
+        public const string ForgotPasswordAccepted = "درخواست تقییر رمز عبور مورد قبول است";
+        public const string PasswordSuccessfullyChanged = "پسورد با موفقیت تقییر کرد";
+        
+        #endregion
+
     }
 }

@@ -48,12 +48,12 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             var user = await Context.Users.FirstOrDefaultAsync(u => u.Id == userId);
             if (user == null)
                 return Result<CommentDto>.Failed(new NotFoundObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.UserNotFound}));
+                    {Message = ResponseMessage.UserNotFound}));
 
             var eEvent = await Context.Events.FirstOrDefaultAsync(u => u.Id == createCommentDto.EventId);
             if (eEvent == null)
                 return Result<CommentDto>.Failed(new NotFoundObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.UserNotFound}));
+                    {Message = ResponseMessage.UserNotFound}));
 
             var comment = _mapper.Map<Comment>(createCommentDto);
             comment.User = user;
@@ -72,7 +72,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             if (comment == null)
                 return Result<CommentDto>.Failed(new NotFoundObjectResult(
                     new ApiMessage
-                        {Message = PersianErrorMessage.CommentNotFound}));
+                        {Message = ResponseMessage.CommentNotFound}));
 
             return Result<CommentDto>.SuccessFull(_mapper.Map<CommentDto>(comment));
         }
@@ -84,7 +84,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             if (comment == null)
                 return Result.Failed(new NotFoundObjectResult(
                     new ApiMessage
-                        {Message = PersianErrorMessage.CommentNotFound}));
+                        {Message = ResponseMessage.CommentNotFound}));
 
             RemoveRange(comment.Children);
             Delete(comment);

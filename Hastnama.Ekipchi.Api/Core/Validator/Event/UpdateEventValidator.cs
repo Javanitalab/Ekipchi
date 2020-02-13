@@ -10,19 +10,19 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Event
         {
             RuleFor(dto => dto.CategoryId)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage(PersianErrorMessage.InvalidCategoryId);
+                .NotEmpty().WithMessage(ResponseMessage.InvalidCategoryId);
 
             RuleFor(dto => dto.Name)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage(PersianErrorMessage.InvalidEventName);
+                .NotEmpty().WithMessage(ResponseMessage.InvalidEventName);
 
             RuleFor(dto => dto.HostId)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage(PersianErrorMessage.InvalidHostId);
+                .NotEmpty().WithMessage(ResponseMessage.InvalidHostId);
 
             RuleFor(dto => dto.EventSchedule)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage(PersianErrorMessage.InvalidEventSchedule);
+                .NotEmpty().WithMessage(ResponseMessage.InvalidEventSchedule);
         }
     }
 }

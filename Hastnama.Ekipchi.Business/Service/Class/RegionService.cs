@@ -42,7 +42,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 var city = await Context.Cities.FirstOrDefaultAsync(u => u.Id == updateRegionDto.CityId);
                 if (city == null)
                     return Result.Failed(new BadRequestObjectResult(new ApiMessage
-                        {Message = PersianErrorMessage.InvalidCityId}));
+                        {Message = ResponseMessage.InvalidCityId}));
 
                 region.City = city;
             }
@@ -58,13 +58,13 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             var duplicateRegion = await FirstOrDefaultAsyncAsNoTracking(c => c.Name == createRegionDto.Name);
             if (duplicateRegion != null)
                 return Result<RegionDto>.Failed(new BadRequestObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.DuplicateRegionName}));
+                    {Message = ResponseMessage.DuplicateRegionName}));
 
             var city = await Context.Cities.FirstOrDefaultAsync(u => u.Id == createRegionDto.CityId);
 
             if (city == null)
                 return Result<RegionDto>.Failed(new BadRequestObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.InvalidCityId}));
+                    {Message = ResponseMessage.InvalidCityId}));
 
             var region = _mapper.Map(createRegionDto, new Region());
             region.City = city;
@@ -81,7 +81,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             if (region == null)
                 return Result<RegionDto>.Failed(new NotFoundObjectResult(
                     new ApiMessage
-                        {Message = PersianErrorMessage.RegionNotFound}));
+                        {Message = ResponseMessage.RegionNotFound}));
 
             return Result<RegionDto>.SuccessFull(_mapper.Map<RegionDto>(region));
         }

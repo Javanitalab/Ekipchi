@@ -61,7 +61,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             if (coupon == null)
                 return Result<CouponDto>.Failed(new NotFoundObjectResult(
                     new ApiMessage
-                        {Message = PersianErrorMessage.CouponNotFound}));
+                        {Message = ResponseMessage.CouponNotFound}));
 
             return Result<CouponDto>.SuccessFull(_mapper.Map<CouponDto>(coupon));
         }
@@ -72,7 +72,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             if (coupon == null)
                 return Result.Failed(new NotFoundObjectResult(
                     new ApiMessage
-                        {Message = PersianErrorMessage.CouponNotFound}));
+                        {Message = ResponseMessage.CouponNotFound}));
 
             Delete(coupon);
             await Context.SaveChangesAsync();

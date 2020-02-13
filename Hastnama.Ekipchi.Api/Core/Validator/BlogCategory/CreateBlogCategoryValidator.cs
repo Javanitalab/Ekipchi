@@ -10,11 +10,11 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.BlogCategory
         {
             RuleFor(dto => dto.Name)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage(PersianErrorMessage.DuplicateBlogCategoryName);
+                .NotEmpty().WithMessage(ResponseMessage.DuplicateBlogCategoryName);
 
             RuleFor(dto => dto.Slug)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage(PersianErrorMessage.InvalidBlogCategorySlug);
+                .NotEmpty().WithMessage(ResponseMessage.InvalidBlogCategorySlug);
         }
     }
 }

@@ -69,7 +69,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             var message = await _unitOfWork.MessageService.GetMessageAsync(User.GetUserId(), id);
 
             if (message == null)
-                return NotFound(new ApiMessage {Message = PersianErrorMessage.MessageNotFound});
+                return NotFound(new ApiMessage {Message = ResponseMessage.MessageNotFound});
 
             await _unitOfWork.SaveChangesAsync();
 
@@ -98,7 +98,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
                 var receiverMessage = await _unitOfWork.UserMessageService.GetReceiveMessage(User.GetUserId(), id);
 
                 if (receiverMessage == null)
-                    return NotFound(new ApiMessage {Message = PersianErrorMessage.MessageNotFound});
+                    return NotFound(new ApiMessage {Message = ResponseMessage.MessageNotFound});
 
                 receiverMessage.ReceiverHasDeleted = true;
                 _unitOfWork.UserMessageService.Edit(receiverMessage);
@@ -115,7 +115,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             var senderMessage = await _unitOfWork.UserMessageService.GetSendMessage(User.GetUserId(), id);
 
             if (senderMessage == null)
-                return NotFound(new ApiMessage {Message = PersianErrorMessage.MessageNotFound});
+                return NotFound(new ApiMessage {Message = ResponseMessage.MessageNotFound});
 
             senderMessage.SenderHasDeleted = true;
 
@@ -152,14 +152,14 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             var user = result.Data;
 
             if (!result.Success || user == null)
-                return NotFound(new ApiMessage {Message = PersianErrorMessage.UserNotFound});
+                return NotFound(new ApiMessage {Message = ResponseMessage.UserNotFound});
 
             if (user.Id == User.GetUserId())
-                return NotFound(new ApiMessage {Message = PersianErrorMessage.SenderAndReceiverAreTheSame});
+                return NotFound(new ApiMessage {Message = ResponseMessage.SenderAndReceiverAreTheSame});
 
             if (messageDto.ParentId.HasValue)
                 if (!await _unitOfWork.MessageService.IsMessageExist(messageDto.ParentId.Value))
-                    return NotFound(new ApiMessage {Message = PersianErrorMessage.ParentMessageNotFound});
+                    return NotFound(new ApiMessage {Message = ResponseMessage.ParentMessageNotFound});
 
             #endregion
 
@@ -201,7 +201,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         public async Task<IActionResult> Get([FromQuery] PagingOptions pagingOptions, int id)
         {
             if (!await _unitOfWork.MessageService.IsMessageExist(id))
-                return NotFound(new ApiMessage {Message = PersianErrorMessage.MessageNotFound});
+                return NotFound(new ApiMessage {Message = ResponseMessage.MessageNotFound});
 
             var conversation =
                 await _unitOfWork.UserMessageService.GetConversationListASync(id, pagingOptions.Limit.Value,
@@ -228,7 +228,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             var message = await _unitOfWork.UserMessageService.GetReceiveMessage(User.GetUserId(), id);
 
             if (message == null)
-                return NotFound(new ApiMessage {Message = PersianErrorMessage.MessageNotFound});
+                return NotFound(new ApiMessage {Message = ResponseMessage.MessageNotFound});
 
             message.SeenDate = DateTime.Now;
 
@@ -246,10 +246,10 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             #region validation
 
             if (userReceiverId is null)
-                return BadRequest(new ApiMessage {Message = PersianErrorMessage.ReceiverNotSet});
+                return BadRequest(new ApiMessage {Message = ResponseMessage.ReceiverNotSet});
 
             if (!await _unitOfWork.MessageService.IsMessageExist(id))
-                return NotFound(new ApiMessage {Message = PersianErrorMessage.MessageNotFound});
+                return NotFound(new ApiMessage {Message = ResponseMessage.MessageNotFound});
 
             #endregion
 
@@ -258,7 +258,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             foreach (var user in userReceiverId)
             {
                 if (await _unitOfWork.UserService.Get(user) is null)
-                    return NotFound(new ApiMessage {Message = PersianErrorMessage.UserNotFound});
+                    return NotFound(new ApiMessage {Message = ResponseMessage.UserNotFound});
 
                 userMessages.Add(new UserMessage
                     {ReceiverUserId = user, SendDate = DateTime.Now, SenderUserId = User.GetUserId(), MessageId = id});
@@ -290,13 +290,13 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             var userMessage = await _unitOfWork.UserMessageService.GetMessageAsync(userMessageId);
 
             if (userMessage is null)
-                return NotFound(new ApiMessage {Message = PersianErrorMessage.MessageNotFound});
+                return NotFound(new ApiMessage {Message = ResponseMessage.MessageNotFound});
 
             if (userMessage.ReceiverUserId != User.GetUserId() || userMessage.SenderUserId != User.GetUserId())
             {
                 if (createReplyTo.ParentId.HasValue)
                     if (!await _unitOfWork.MessageService.IsMessageExist(createReplyTo.ParentId.Value))
-                        return NotFound(new ApiMessage {Message = PersianErrorMessage.ParentMessageNotFound});
+                        return NotFound(new ApiMessage {Message = ResponseMessage.ParentMessageNotFound});
 
                 #endregion
 
@@ -323,7 +323,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
                     _mapper.Map<UserMessageDto>(userMessages, opt => opt.Items["lang"] = "fa-IR"));
             }
 
-            return BadRequest(new ApiMessage {Message = PersianErrorMessage.UnAuthorized});
+            return BadRequest(new ApiMessage {Message = ResponseMessage.UnAuthorized});
         }
     }
 }

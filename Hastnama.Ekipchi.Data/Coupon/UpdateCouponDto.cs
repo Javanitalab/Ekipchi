@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
 namespace Hastnama.Ekipchi.Data.Coupon
 {
     public class UpdateCouponDto
     {
+        
+        [JsonIgnore]
         public Guid? Id { get; set; }
 
         public string Code { get; set; }

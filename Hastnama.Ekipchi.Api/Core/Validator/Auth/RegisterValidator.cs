@@ -12,8 +12,8 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Auth
         {
             RuleFor(dto => dto.Password)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage(PersianErrorMessage.InvalidUserCredential)
-                .Must(dto => dto.Length >= 4).WithMessage(PersianErrorMessage.InvalidUserCredential);
+                .NotEmpty().WithMessage(ResponseMessage.InvalidUserCredential)
+                .Must(dto => dto.Length >= 4).WithMessage(ResponseMessage.InvalidUserCredential);
             
             RuleFor(dto => dto)
                 .Cascade(CascadeMode.StopOnFirstFailure)
@@ -21,7 +21,7 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Auth
                              || (!string.IsNullOrEmpty(dto.Email) && new EmailAddressAttribute().IsValid(dto.Email))
                              || (!string.IsNullOrEmpty(dto.Mobile) && dto.Mobile.Length <= 11 &&
                                  Regex.IsMatch(dto.Mobile, "^[0-9 ]+$")))
-                .WithMessage(PersianErrorMessage.InvalidUserCredential);
+                .WithMessage(ResponseMessage.InvalidUserCredential);
             
         }
     }

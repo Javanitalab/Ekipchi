@@ -49,7 +49,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 if (categories.Count != updateHostDto.Categories.Count)
                     return Result.Failed(new NotFoundObjectResult(
                         new ApiMessage
-                            {Message = PersianErrorMessage.CategoryNotFound}));
+                            {Message = ResponseMessage.CategoryNotFound}));
             }
 
             var host = await FirstOrDefaultAsync(c => c.Id == updateHostDto.Id, g => g.HostGalleries,
@@ -78,7 +78,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 if (categories.Count != createHostDto.Categories.Count)
                     return Result<HostDto>.Failed(new NotFoundObjectResult(
                         new ApiMessage
-                            {Message = PersianErrorMessage.CategoryNotFound}));
+                            {Message = ResponseMessage.CategoryNotFound}));
             }
 
 
@@ -107,7 +107,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             if (host == null)
                 return Result<HostDto>.Failed(new NotFoundObjectResult(
                     new ApiMessage
-                        {Message = PersianErrorMessage.HostNotFound}));
+                        {Message = ResponseMessage.HostNotFound}));
 
             return Result<HostDto>.SuccessFull(_mapper.Map<HostDto>(host));
         }
@@ -118,7 +118,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             if (host == null)
                 return Result.Failed(new NotFoundObjectResult(
                     new ApiMessage
-                        {Message = PersianErrorMessage.HostNotFound}));
+                        {Message = ResponseMessage.HostNotFound}));
 
             host.IsDeleted = true;
             await Context.SaveChangesAsync();

@@ -17,17 +17,17 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.User
                              || (!string.IsNullOrEmpty(dto.Email) && new EmailAddressAttribute().IsValid(dto.Email))
                              || (!string.IsNullOrEmpty(dto.Mobile) && dto.Mobile.Length <= 11 &&
                                  Regex.IsMatch(dto.Mobile, "^[0-9 ]+$")))
-                .WithMessage(PersianErrorMessage.InvalidUserCredential);
+                .WithMessage(ResponseMessage.InvalidUserCredential);
 
             RuleFor(dto => dto.Mobile)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage(PersianErrorMessage.InvalidMobile)
-                .MaximumLength(16).WithMessage(PersianErrorMessage.InvalidMobile);
+                .NotEmpty().WithMessage(ResponseMessage.InvalidMobile)
+                .MaximumLength(16).WithMessage(ResponseMessage.InvalidMobile);
             
             RuleFor(dto => dto.Email)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .EmailAddress().WithMessage(PersianErrorMessage.InvalidEmailAddress)
-                .MaximumLength(32).WithMessage(PersianErrorMessage.InvalidEmailAddress);
+                .EmailAddress().WithMessage(ResponseMessage.InvalidEmailAddress)
+                .MaximumLength(32).WithMessage(ResponseMessage.InvalidEmailAddress);
             
             // RuleFor(dto => dto.RoleId)
                 // .Cascade(CascadeMode.StopOnFirstFailure)
@@ -35,13 +35,13 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.User
             
             RuleFor(dto => dto.Name)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage(PersianErrorMessage.InvalidNameOrFamily)
-                .MaximumLength(16).WithMessage(PersianErrorMessage.InvalidNameOrFamily);
+                .NotEmpty().WithMessage(ResponseMessage.InvalidNameOrFamily)
+                .MaximumLength(16).WithMessage(ResponseMessage.InvalidNameOrFamily);
             
             RuleFor(dto => dto.Family)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage(PersianErrorMessage.InvalidNameOrFamily)
-                .MaximumLength(16).WithMessage(PersianErrorMessage.InvalidNameOrFamily);
+                .NotEmpty().WithMessage(ResponseMessage.InvalidNameOrFamily)
+                .MaximumLength(16).WithMessage(ResponseMessage.InvalidNameOrFamily);
             
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using Hastnama.Ekipchi.Common.Enum;
 using Hastnama.Ekipchi.Data.Category;
 using Hastnama.Ekipchi.Data.Event;
@@ -9,6 +10,8 @@ namespace Hastnama.Ekipchi.Data.Host
 {
     public class UpdateHostDto
     {
+        
+        [JsonIgnore]
         public Guid? Id { get; set; }
 
         public string Name { get; set; }

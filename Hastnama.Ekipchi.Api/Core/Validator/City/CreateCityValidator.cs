@@ -10,11 +10,11 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.City
         {
             RuleFor(dto => dto.Name)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage(PersianErrorMessage.CityNameIsInvalid);
+                .NotEmpty().WithMessage(ResponseMessage.CityNameIsInvalid);
 
             RuleFor(dto => dto.CountyId)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .GreaterThanOrEqualTo(1).WithMessage(PersianErrorMessage.InvalidCountyId);
+                .GreaterThanOrEqualTo(1).WithMessage(ResponseMessage.InvalidCountyId);
         }
     }
 }

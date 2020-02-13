@@ -45,7 +45,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                     await Context.BlogCategories.FirstOrDefaultAsync(u => u.Id == updateBlogDto.BlogCategoryId);
                 if (blogCategory == null)
                     return Result.Failed(new BadRequestObjectResult(new ApiMessage
-                        {Message = PersianErrorMessage.InvalidBlogCategoryId}));
+                        {Message = ResponseMessage.InvalidBlogCategoryId}));
                 blog.BlogCategory = blogCategory;
             }
 
@@ -62,7 +62,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 await Context.BlogCategories.FirstOrDefaultAsync(u => u.Id == createBlogDto.BlogCategoryId);
             if (blogCategory == null)
                 return Result<BlogDto>.Failed(new BadRequestObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.InvalidBlogCategoryId}));
+                    {Message = ResponseMessage.InvalidBlogCategoryId}));
 
 
             var blog = _mapper.Map(createBlogDto, new Blog());
@@ -81,7 +81,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             if (blog == null)
                 return Result<BlogDto>.Failed(new NotFoundObjectResult(
                     new ApiMessage
-                        {Message = PersianErrorMessage.BlogNotFound}));
+                        {Message = ResponseMessage.BlogNotFound}));
 
             return Result<BlogDto>.SuccessFull(_mapper.Map<BlogDto>(blog));
         }
@@ -92,7 +92,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             if (blog == null)
                 return Result.Failed(new NotFoundObjectResult(
                     new ApiMessage
-                        {Message = PersianErrorMessage.BlogNotFound}));
+                        {Message = ResponseMessage.BlogNotFound}));
 
             Delete(blog);
             await Context.SaveChangesAsync();

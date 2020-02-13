@@ -40,16 +40,16 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 u => u.UserInRoles.Select(ur => ur.Role.RolePermissions.Select(rp => rp.Permission)));
             if (user == null)
                 return Result<User>.Failed(new NotFoundObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.UserNotFound}));
+                    {Message = ResponseMessage.UserNotFound}));
 
             if (!StringUtil.CheckPassword(loginDto.Password, user.Password))
 
                 return Result<User>.Failed(new BadRequestObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.InvalidUserCredential}));
+                    {Message = ResponseMessage.InvalidUserCredential}));
 
             if (user.Status != UserStatus.Active)
                 return Result<User>.Failed(new BadRequestObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.UserIsDeActive}));
+                    {Message = ResponseMessage.UserIsDeActive}));
 
             return Result<User>.SuccessFull(user);
         }
@@ -64,7 +64,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
             if (user != null)
                 return Result<User>.Failed(new BadRequestObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.UserAlreadyExist}));
+                    {Message = ResponseMessage.UserAlreadyExist}));
 
             user = _mapper.Map<User>(registerDto);
             var role = await Context.Roles.FirstOrDefaultAsync(r => r.Name == "User");
@@ -93,7 +93,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 u => u.UserInRoles.Select(ur => ur.Role));
             if (users == null)
                 return Result<PagedList<UserDto>>.Failed(new NotFoundObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.BadRequestQuery}));
+                    {Message = ResponseMessage.BadRequestQuery}));
 
             return Result<PagedList<UserDto>>.SuccessFull(users.MapTo<UserDto>(_mapper));
         }
@@ -105,7 +105,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
             if (user == null)
                 return Result<UserDto>.Failed(new NotFoundObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.UserNotFound}));
+                    {Message = ResponseMessage.UserNotFound}));
 
             _mapper.Map(updateUserDto, user);
 
@@ -123,7 +123,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
             if (user == null)
                 return Result.Failed(new NotFoundObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.UserNotFound}));
+                    {Message = ResponseMessage.UserNotFound}));
 
             _mapper.Map(adminUpdateUserDto, user);
 
@@ -143,7 +143,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 // if invalid role id sent 
                 if (addedRoles.Count != addedRolesId.Count)
                     return Result.Failed(new BadRequestObjectResult(new ApiMessage
-                        {Message = PersianErrorMessage.RoleNotFound}));
+                        {Message = ResponseMessage.RoleNotFound}));
 
                 var addedUserRoles = addedRoles.Select(role => new UserInRole
                     {Id = Guid.NewGuid(), Role = role, User = user}).ToList();
@@ -177,7 +177,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
                 if (duplicateUser != null)
                     return Result<UserDto>.Failed(new BadRequestObjectResult(new ApiMessage
-                        {Message = PersianErrorMessage.EmailAddressAlreadyExist}));
+                        {Message = ResponseMessage.EmailAddressAlreadyExist}));
             }
 
             if (user.Mobile != null)
@@ -186,7 +186,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
                 if (duplicateUser != null)
                     return Result<UserDto>.Failed(new BadRequestObjectResult(new ApiMessage
-                        {Message = PersianErrorMessage.MobileAlreadyExist}));
+                        {Message = ResponseMessage.MobileAlreadyExist}));
             }
 
             if (user.Username != null)
@@ -195,7 +195,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
                 if (duplicateUser != null)
                     return Result<UserDto>.Failed(new BadRequestObjectResult(new ApiMessage
-                        {Message = PersianErrorMessage.UsernameAlreadyExist}));
+                        {Message = ResponseMessage.UsernameAlreadyExist}));
             }
 
             user.UserInRoles = dto.Roles.Select(r => new UserInRole {RoleId = r}).ToList();
@@ -209,14 +209,14 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         {
             if (id == Guid.Empty)
                 return Result<UserDto>.Failed(new BadRequestObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.InvalidUserId}));
+                    {Message = ResponseMessage.InvalidUserId}));
 
             var user = await FirstOrDefaultAsyncAsNoTracking(u => u.Id == id,
                 u => u.UserInRoles.Select(ur => ur.Role.RolePermissions.Select(rp => rp.Permission.Parent)));
 
             if (user == null)
                 return Result<UserDto>.Failed(new NotFoundObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.UserNotFound}));
+                    {Message = ResponseMessage.UserNotFound}));
 
             var dto = _mapper.Map<UserDto>(user);
 
@@ -232,13 +232,13 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         {
             if (string.IsNullOrEmpty(email))
                 return Result<User>.Failed(new BadRequestObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.InvalidEmailAddress}));
+                    {Message = ResponseMessage.InvalidEmailAddress}));
 
             var user = await FirstOrDefaultAsyncAsNoTracking(u => u.Email == email);
 
             if (user == null)
                 return Result<User>.Failed(new NotFoundObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.UserNotFound}));
+                    {Message = ResponseMessage.UserNotFound}));
 
             return Result<User>.SuccessFull(user);
         }
@@ -247,13 +247,13 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         {
             if (id == Guid.Empty)
                 return Result.Failed(new BadRequestObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.InvalidUserId}));
+                    {Message = ResponseMessage.InvalidUserId}));
 
             var user = await FirstOrDefaultAsync(u => u.Id == id);
 
             if (user == null)
                 return Result.Failed(new NotFoundObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.UserNotFound}));
+                    {Message = ResponseMessage.UserNotFound}));
 
             user.Status = userStatus;
             await Context.SaveChangesAsync();
@@ -265,12 +265,12 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         {
             if (id == Guid.Empty)
                 return Result<IList<GroupDto>>.Failed(new BadRequestObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.InvalidUserId}));
+                    {Message = ResponseMessage.InvalidUserId}));
             var user = await FirstOrDefaultAsync(u => u.Id == id);
 
             if (user == null)
                 return Result<IList<GroupDto>>.Failed(new NotFoundObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.UserNotFound}));
+                    {Message = ResponseMessage.UserNotFound}));
 
             // groups that created by user
             var groups = await Context.Groups.Where(ug => ug.OwnerId == id).ToListAsync();
@@ -287,12 +287,12 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         {
             if (id == Guid.Empty)
                 return Result<IList<EventDto>>.Failed(new BadRequestObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.InvalidUserId}));
+                    {Message = ResponseMessage.InvalidUserId}));
             var user = await FirstOrDefaultAsync(u => u.Id == id);
 
             if (user == null)
                 return Result<IList<EventDto>>.Failed(new NotFoundObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.UserNotFound}));
+                    {Message = ResponseMessage.UserNotFound}));
 
             var events = await Context.UserInEvents.Where(ug => ug.UserId == id)
                 .Include(ug => ug.Event.Category)
@@ -318,7 +318,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
             if (!StringUtil.CheckPassword(changePasswordDto.OldPassword, user.Password))
                 return Result.Failed(new BadRequestObjectResult(new ApiMessage
-                    {Message = PersianErrorMessage.WrongPassword}));
+                    {Message = ResponseMessage.WrongPassword}));
 
 
             user.Password = StringUtil.HashPass(changePasswordDto.NewPassword);
