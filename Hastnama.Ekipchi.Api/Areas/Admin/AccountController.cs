@@ -209,7 +209,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
 
             #endregion Validation
 
-            user.Data.ConfirmCode = Guid.NewGuid().ToString();
+            user.Data.ConfirmCode = new Random(999999).ToString();
 
             _unitOfWork.UserService.Edit(user.Data);
             await _unitOfWork.SaveChangesAsync();
