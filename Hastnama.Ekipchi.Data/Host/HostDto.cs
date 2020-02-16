@@ -22,6 +22,8 @@ namespace Hastnama.Ekipchi.Data.Host
         public string ContactPerson { get; set; }
 
         public string CallNumber { get; set; }
+        
+        public string CoverPhoto { get; set; }
 
         public string Email { get; set; }
 

@@ -4,14 +4,16 @@ using Hastnama.Ekipchi.DataAccess.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Hastnama.Ekipchi.DataAccess.Migrations
 {
     [DbContext(typeof(EkipchiDbContext))]
-    partial class EkipchiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200216083912_UpdateHost")]
+    partial class UpdateHost
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

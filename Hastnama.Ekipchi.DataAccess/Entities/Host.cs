@@ -33,6 +33,8 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
 
         public string CallNumber { get; set; }
 
+        public string CoverPhoto { get; set; }
+
         public string Email { get; set; }
 
         public string WebSite { get; set; }
