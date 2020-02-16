@@ -35,9 +35,8 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result> Update(UpdateBlogCategoryDto updateBlogCategoryDto)
         {
-
             var blogCategory = await FirstOrDefaultAsync(c => c.Id == updateBlogCategoryDto.Id);
-            
+
             if (blogCategory == null)
                 return Result.Failed(new NotFoundObjectResult(new ApiMessage
                     {Message = ResponseMessage.BlogCategoryNotFound}));

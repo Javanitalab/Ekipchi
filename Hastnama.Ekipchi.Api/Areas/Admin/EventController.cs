@@ -95,11 +95,9 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid? id, UpdateEventDto updateEvent)
+        public async Task<IActionResult> Update(Guid id, UpdateEventDto updateEvent)
         {
-            if (id != null)
-                updateEvent.Id = id.Value;
-
+            updateEvent.Id = id;
             var result = await _unitOfWork.EventService.Update(updateEvent, UserId);
 
             if (!result.Success)

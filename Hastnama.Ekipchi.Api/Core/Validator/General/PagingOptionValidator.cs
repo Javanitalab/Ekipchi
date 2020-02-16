@@ -20,7 +20,6 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.General
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .LessThanOrEqualTo(100).WithMessage(ResponseMessage.InvalidPagingOption)
                 .GreaterThanOrEqualTo(1).WithMessage(ResponseMessage.InvalidPagingOption);
-
         }
     }
 }

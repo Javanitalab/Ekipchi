@@ -39,7 +39,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         public async Task<IActionResult> List(
             [FromQuery] FilterProvinceQueryDto filterQueryDto)
         {
-            var result = await _unitOfWork.ProvinceService.List( filterQueryDto);
+            var result = await _unitOfWork.ProvinceService.List(filterQueryDto);
             if (filterQueryDto.Page == null && filterQueryDto.Limit == null)
                 return Ok(result.Data.Items);
             return result.ApiResult;
@@ -78,12 +78,11 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int? id,[FromBody] UpdateProvinceDto updateProvinceDto)
+        public async Task<IActionResult> Update(int id, [FromBody] UpdateProvinceDto updateProvinceDto)
         {
-            if (id != null)
-                updateProvinceDto.Id = id.Value;
-
+            updateProvinceDto.Id = id;
             var result = await _unitOfWork.ProvinceService.Update(updateProvinceDto);
+
             if (!result.Success)
                 return result.ApiResult;
             return NoContent();

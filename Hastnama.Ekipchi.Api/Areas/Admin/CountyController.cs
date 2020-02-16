@@ -38,7 +38,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         public async Task<IActionResult> List(
             [FromQuery] FilterCountyQueryDto filterQueryDto)
         {
-            var result = await _unitOfWork.CountyService.List( filterQueryDto);
+            var result = await _unitOfWork.CountyService.List(filterQueryDto);
             if (filterQueryDto.Page == null && filterQueryDto.Limit == null)
                 return Ok(result.Data.Items);
             return result.ApiResult;
@@ -77,11 +77,9 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int? id, [FromBody] UpdateCountyDto updateCountyDto)
+        public async Task<IActionResult> Update(int id, [FromBody] UpdateCountyDto updateCountyDto)
         {
-            if (id != null)
-                updateCountyDto.Id = id.Value;
-
+            updateCountyDto.Id = id;
             var result = await _unitOfWork.CountyService.Update(updateCountyDto);
 
             if (!result.Success)

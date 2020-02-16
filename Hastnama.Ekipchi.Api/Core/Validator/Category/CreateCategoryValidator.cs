@@ -11,7 +11,6 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Category
             RuleFor(dto => dto.Name)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage(ResponseMessage.InvalidCategoryName);
-
         }
     }
 }

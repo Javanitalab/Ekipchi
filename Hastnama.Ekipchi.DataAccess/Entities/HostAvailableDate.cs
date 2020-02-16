@@ -15,15 +15,12 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
 
         public Guid HostId { get; set; }
 
-        [ForeignKey(nameof(HostId))]
-        public virtual Host Host { get; set; }
+        [ForeignKey(nameof(HostId))] public virtual Host Host { get; set; }
 
         public TimeSpan ToHour { get; set; }
 
         public Days Days { get; set; }
 
         public DateTime DateTime { get; set; }
-
-
     }
 }

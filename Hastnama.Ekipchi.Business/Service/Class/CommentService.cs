@@ -43,7 +43,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             return Result.SuccessFull();
         }
 
-        public async Task<Result<CommentDto>> Create(CreateCommentDto createCommentDto,Guid userId)
+        public async Task<Result<CommentDto>> Create(CreateCommentDto createCommentDto, Guid userId)
         {
             var user = await Context.Users.FirstOrDefaultAsync(u => u.Id == userId);
             if (user == null)

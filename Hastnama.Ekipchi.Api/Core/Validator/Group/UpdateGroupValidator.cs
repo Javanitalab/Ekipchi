@@ -11,11 +11,10 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Group
             RuleFor(dto => dto.Name)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage(ResponseMessage.GroupNameIsInvalid);
-            
+
             RuleFor(dto => dto.UsersInGroups)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage(ResponseMessage.GroupOwnerIsInvalid);
-            
         }
     }
 }

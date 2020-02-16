@@ -26,7 +26,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             var counties = await WhereAsyncAsNoTracking(c =>
                     (string.IsNullOrEmpty(filterQueryDto.Keyword) ||
                      c.Name.ToLower().Contains(filterQueryDto.Keyword.ToLower())),
-                filterQueryDto,c=>c.Counties);
+                filterQueryDto, c => c.Counties);
 
 
             return Result<PagedList<ProvinceDto>>.SuccessFull(counties.MapTo<ProvinceDto>(_mapper));
@@ -34,7 +34,6 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result> Update(UpdateProvinceDto updateProvinceDto)
         {
-
             var province = await FirstOrDefaultAsync(c => c.Id == updateProvinceDto.Id);
             _mapper.Map(updateProvinceDto, province);
             await Context.SaveChangesAsync();

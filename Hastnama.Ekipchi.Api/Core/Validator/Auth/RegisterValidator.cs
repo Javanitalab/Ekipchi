@@ -14,7 +14,7 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Auth
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage(ResponseMessage.InvalidUserCredential)
                 .Must(dto => dto.Length >= 4).WithMessage(ResponseMessage.InvalidUserCredential);
-            
+
             RuleFor(dto => dto)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .Must(dto => (!string.IsNullOrEmpty(dto.Username) && dto.Username.Length < 16)
@@ -22,7 +22,6 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Auth
                              || (!string.IsNullOrEmpty(dto.Mobile) && dto.Mobile.Length <= 11 &&
                                  Regex.IsMatch(dto.Mobile, "^[0-9 ]+$")))
                 .WithMessage(ResponseMessage.InvalidUserCredential);
-            
         }
     }
 }

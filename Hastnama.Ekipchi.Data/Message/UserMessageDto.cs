@@ -1,5 +1,4 @@
-﻿
-namespace Hastnama.Ekipchi.Data.Message
+﻿namespace Hastnama.Ekipchi.Data.Message
 {
     public class UserMessageDto
     {
@@ -12,7 +11,7 @@ namespace Hastnama.Ekipchi.Data.Message
         public string ReceiverUserId { get; set; }
 
         public string ReceiverName { get; set; }
-        
+
         public string SendDate { get; set; }
 
         public string SeenDate { get; set; }

@@ -9,7 +9,7 @@ namespace Hastnama.Ekipchi.Business.Service.Interface
 {
     public interface ICountyService : IRepository<County>
     {
-        Task<Result<PagedList<CountyDto>>> List( FilterCountyQueryDto filterQueryDto);
+        Task<Result<PagedList<CountyDto>>> List(FilterCountyQueryDto filterQueryDto);
         Task<Result> Update(UpdateCountyDto updateCountyDto);
         Task<Result<CountyDto>> Create(CreateCountyDto dto);
         Task<Result<CountyDto>> Get(int id);

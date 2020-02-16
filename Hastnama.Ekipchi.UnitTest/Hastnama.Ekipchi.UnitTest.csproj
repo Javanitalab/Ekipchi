@@ -14,15 +14,15 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Hastnama.Ekipchi.Api\Hastnama.Ekipchi.Api.csproj" />
-      <ProjectReference Include="..\Hastnama.Ekipchi.Business\Hastnama.Ekipchi.Business.csproj" />
-      <ProjectReference Include="..\Hastnama.Ekipchi.Common\Hastnama.Ekipchi.Common.csproj" />
-      <ProjectReference Include="..\Hastnama.Ekipchi.Data\Hastnama.Ekipchi.Data.csproj" />
+        <ProjectReference Include="..\Hastnama.Ekipchi.Api\Hastnama.Ekipchi.Api.csproj" />
+        <ProjectReference Include="..\Hastnama.Ekipchi.Business\Hastnama.Ekipchi.Business.csproj" />
+        <ProjectReference Include="..\Hastnama.Ekipchi.Common\Hastnama.Ekipchi.Common.csproj" />
+        <ProjectReference Include="..\Hastnama.Ekipchi.Data\Hastnama.Ekipchi.Data.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="ControllerTest\Admin" />
-      <Folder Include="ControllerTest\Base" />
+        <Folder Include="ControllerTest\Admin" />
+        <Folder Include="ControllerTest\Base" />
     </ItemGroup>
 
 </Project>

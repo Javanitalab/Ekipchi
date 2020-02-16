@@ -34,7 +34,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 400)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpGet]
-        public async Task<IActionResult> List([FromQuery]FilterCommentQueryDto filterQueryDto)
+        public async Task<IActionResult> List([FromQuery] FilterCommentQueryDto filterQueryDto)
         {
             var result = await _unitOfWork.CommentService.List(filterQueryDto);
             if (filterQueryDto.Page == null && filterQueryDto.Limit == null)
@@ -74,13 +74,11 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid? id,[FromBody] UpdateCommentDto updateCommentDto)
+        public async Task<IActionResult> Update(Guid id, [FromBody] UpdateCommentDto updateCommentDto)
         {
-            
-            if (id != null)
-                updateCommentDto.Id = id.Value;
-
+            updateCommentDto.Id = id;
             var result = await _unitOfWork.CommentService.Update(updateCommentDto);
+
             if (!result.Success)
                 return result.ApiResult;
             return NoContent();
@@ -103,12 +101,12 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateCommentDto createCommentDto)
         {
-            var result = await _unitOfWork.CommentService.Create(createCommentDto,UserId);
+            var result = await _unitOfWork.CommentService.Create(createCommentDto, UserId);
             if (!result.Success)
                 return result.ApiResult;
             return Created(Url.Link("GetCounty", new {result.Data.Id}), _mapper.Map<CommentDto>(result.Data));
         }
-        
+
         /// <summary>
         /// Delete Comment 
         /// </summary>

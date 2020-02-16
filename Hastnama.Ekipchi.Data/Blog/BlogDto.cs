@@ -8,11 +8,11 @@ namespace Hastnama.Ekipchi.Data.Blog
     public class BlogDto
     {
         public int Id { get; set; }
-        
+
         public UserDto User { get; set; }
-        
+
         public int BlogCategoryId { get; set; }
-        
+
         public string BlogCategoryName { get; set; }
 
         public string Title { get; set; }
@@ -20,7 +20,7 @@ namespace Hastnama.Ekipchi.Data.Blog
         public string Content { get; set; }
 
         public string MetaKeyWord { get; set; }
-        
+
         public string Slug { get; set; }
 
         public string ShortDescription { get; set; }

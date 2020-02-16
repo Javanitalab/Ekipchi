@@ -1,4 +1,4 @@
-﻿﻿namespace Hastnama.Ekipchi.Common.Helper
+﻿namespace Hastnama.Ekipchi.Common.Helper
 {
     public interface IValueValidator<in TValue>
     {

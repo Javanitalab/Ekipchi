@@ -7,7 +7,8 @@ namespace Hastnama.Ekipchi.Api.Core.Extensions
 {
     public static class ReflectionExtensions
     {
-        public static IEnumerable<string> GetPublicPropertiesNames(this Type type, Func<PropertyInfo, bool> filterBy = null)
+        public static IEnumerable<string> GetPublicPropertiesNames(this Type type,
+            Func<PropertyInfo, bool> filterBy = null)
         {
             var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
                 .Where(x => type.Name.Contains("AnonymousType") ? x.CanRead : x.CanWrite && x.CanRead)
@@ -20,7 +21,8 @@ namespace Hastnama.Ekipchi.Api.Core.Extensions
                 .OrderBy(x => x);
         }
 
-        public static IEnumerable<PropertyInfo> GetPublicProperties(this Type type, Func<PropertyInfo, bool> filterBy = null)
+        public static IEnumerable<PropertyInfo> GetPublicProperties(this Type type,
+            Func<PropertyInfo, bool> filterBy = null)
         {
             var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
                 .Where(x => type.Name.Contains("AnonymousType") ? x.CanRead : x.CanWrite && x.CanRead)
@@ -33,10 +35,13 @@ namespace Hastnama.Ekipchi.Api.Core.Extensions
                 .OrderBy(x => x.Name);
         }
 
-        public static IEnumerable<PropertyInfo> GetStringTypeProperties(this Type type, Func<PropertyInfo, bool> filterBy = null)
+        public static IEnumerable<PropertyInfo> GetStringTypeProperties(this Type type,
+            Func<PropertyInfo, bool> filterBy = null)
         {
             var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                .Where(x => type.Name.Contains("AnonymousType") ? x.CanRead && x.PropertyType == typeof(string) : x.CanWrite && x.CanRead && x.PropertyType == typeof(string))
+                .Where(x => type.Name.Contains("AnonymousType")
+                    ? x.CanRead && x.PropertyType == typeof(string)
+                    : x.CanWrite && x.CanRead && x.PropertyType == typeof(string))
                 .AsEnumerable();
 
             if (filterBy != null)

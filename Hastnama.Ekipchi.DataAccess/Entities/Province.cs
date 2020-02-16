@@ -18,6 +18,5 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
         public string Name { get; set; }
 
         public virtual List<County> Counties { get; }
-
     }
 }

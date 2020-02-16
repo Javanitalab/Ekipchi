@@ -17,6 +17,5 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
     public class BaseAdminController : ControllerBase
     {
         public Guid UserId => HttpContext.User.GetUserId();
-
     }
 }

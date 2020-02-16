@@ -1,4 +1,4 @@
-﻿﻿ namespace Hastnama.Ekipchi.Data.Message
+﻿namespace Hastnama.Ekipchi.Data.Message
 {
     public class CreateMessageDto
     {

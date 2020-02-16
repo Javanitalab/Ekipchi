@@ -10,7 +10,7 @@ namespace Hastnama.Ekipchi.Business.Service.Interface
 {
     public interface IRegionService : IRepository<Region>
     {
-        Task<Result<PagedList<RegionDto>>> List( FilterRegionQueryDto filterQueryDto);
+        Task<Result<PagedList<RegionDto>>> List(FilterRegionQueryDto filterQueryDto);
         Task<Result> Update(UpdateRegionDto updateRegionDto);
         Task<Result<RegionDto>> Create(CreateRegionDto dto);
         Task<Result<RegionDto>> Get(int id);

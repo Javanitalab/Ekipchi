@@ -9,7 +9,6 @@ using Hastnama.Ekipchi.Data.Coupon;
 using Hastnama.Ekipchi.DataAccess.Context;
 using Hastnama.Ekipchi.DataAccess.Entities;
 using Hastnama.Ekipchi.DataAccess.Repository;
-
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hastnama.Ekipchi.Business.Service.Class
@@ -38,7 +37,6 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result> Update(UpdateCouponDto updateCouponDto)
         {
-
             var coupon = await FirstOrDefaultAsync(c => c.Id == updateCouponDto.Id);
             _mapper.Map(updateCouponDto, coupon);
             await Context.SaveChangesAsync();
@@ -65,7 +63,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
             return Result<CouponDto>.SuccessFull(_mapper.Map<CouponDto>(coupon));
         }
-        
+
         public async Task<Result> Delete(Guid id)
         {
             var coupon = await FirstOrDefaultAsyncAsNoTracking(c => c.Id == id);
@@ -79,6 +77,5 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
             return Result.SuccessFull();
         }
-
     }
 }

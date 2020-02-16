@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Hastnama.Ekipchi.Api.Areas.Admin
 {
-    public class  UserController : BaseAdminController
+    public class UserController : BaseAdminController
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -40,7 +40,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [HttpGet]
         public async Task<IActionResult> List([FromQuery] FilterUserQueryDto filterQueryDto)
         {
-            var result = await _unitOfWork.UserService.List( filterQueryDto);
+            var result = await _unitOfWork.UserService.List(filterQueryDto);
             if (filterQueryDto.Page == null && filterQueryDto.Limit == null)
                 return Ok(result.Data.Items);
             return result.ApiResult;
@@ -79,12 +79,11 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid? id, [FromBody] AdminUpdateUserDto adminUpdateUserDto)
+        public async Task<IActionResult> Update(Guid id, [FromBody] AdminUpdateUserDto adminUpdateUserDto)
         {
-            if (id != null)
-                adminUpdateUserDto.Id = id.Value;
-            
+            adminUpdateUserDto.Id = id;
             var result = await _unitOfWork.UserService.UpdateProfile(adminUpdateUserDto);
+
             if (!result.Success)
                 return result.ApiResult;
             return NoContent();

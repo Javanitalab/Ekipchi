@@ -1,16 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <LangVersion>8</LangVersion>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <LangVersion>8</LangVersion>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Auth\" />
-  </ItemGroup>
+    <ItemGroup>
+        <Folder Include="Auth\" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Hastnama.Ekipchi.Common\Hastnama.Ekipchi.Common.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Hastnama.Ekipchi.Common\Hastnama.Ekipchi.Common.csproj" />
+    </ItemGroup>
 
 </Project>

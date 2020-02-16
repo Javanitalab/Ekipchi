@@ -30,7 +30,8 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             var events = await WhereAsyncAsNoTracking(e =>
                     (string.IsNullOrEmpty(filterQueryDto.Keyword) ||
                      (string.IsNullOrEmpty(e.Name) || e.Name.ToLower().Contains(filterQueryDto.Keyword))
-                     || (string.IsNullOrEmpty(e.Host.Name) || e.Host.Name.ToLower().Contains(filterQueryDto.Keyword))) && !e.IsDeleted,
+                     || (string.IsNullOrEmpty(e.Host.Name) || e.Host.Name.ToLower().Contains(filterQueryDto.Keyword))
+                    ) && !e.IsDeleted,
                 filterQueryDto, e => e.Category, e => e.Comment,
                 e => e.Host, e => e.UserInEvents.Select(ur => ur.User), e => e.EventGallery.Select(rg => rg.User),
                 e => e.EventSchedule);
@@ -108,7 +109,8 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             var eventDetail =
                 await FirstOrDefaultAsync(x => x.Id == updateEventDto.Id && !x.IsDeleted
                     , e => e.Category,
-                    e => e.Host, e => e.UserInEvents.Select(ur => ur.User), e => e.EventGallery.Select(gallery=>gallery.User), e => e.EventSchedule,
+                    e => e.Host, e => e.UserInEvents.Select(ur => ur.User),
+                    e => e.EventGallery.Select(gallery => gallery.User), e => e.EventSchedule,
                     e => e.Comment.Select(c => c.ParentComment), e => e.Comment.Select(c => c.Children));
 
             if (eventDetail is null)

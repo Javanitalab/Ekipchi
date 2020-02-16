@@ -10,7 +10,7 @@ namespace Hastnama.Ekipchi.Business.Service.Interface
 {
     public interface IBlogCategoryService : IRepository<BlogCategory>
     {
-        Task<Result<PagedList<BlogCategoryDto>>> List( FilterBlogCategoryQueryDto filterQueryDto);
+        Task<Result<PagedList<BlogCategoryDto>>> List(FilterBlogCategoryQueryDto filterQueryDto);
         Task<Result> Update(UpdateBlogCategoryDto updateBlogCategoryDto);
         Task<Result<BlogCategoryDto>> Create(CreateBlogCategoryDto dto);
         Task<Result<BlogCategoryDto>> Get(int id);

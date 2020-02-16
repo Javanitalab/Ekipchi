@@ -10,7 +10,7 @@ namespace Hastnama.Ekipchi.Business.Service.Interface
 {
     public interface IGroupService : IRepository<Group>
     {
-        Task<Result<PagedList<GroupDto>>> List( FilterGroupQueryDto filterQueryDto);
+        Task<Result<PagedList<GroupDto>>> List(FilterGroupQueryDto filterQueryDto);
         Task<Result> Update(UpdateGroupDto updateGroupDto);
         Task<Result<GroupDto>> Create(CreateGroupDto dto);
         Task<Result<GroupDto>> Get(Guid id);

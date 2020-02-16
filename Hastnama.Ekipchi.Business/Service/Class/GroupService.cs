@@ -72,7 +72,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 var addedUserInGroups = addedUsers.Select(user => new UserInGroup
                         {Id = Guid.NewGuid(), Groups = group, JoinGroupDate = DateTime.Now, User = user})
                     .ToList();
-                
+
                 if (addedUserInGroups.Any())
                     await Context.UserInGroups.AddRangeAsync(addedUserInGroups);
 

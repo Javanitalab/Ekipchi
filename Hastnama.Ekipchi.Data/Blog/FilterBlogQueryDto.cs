@@ -8,6 +8,5 @@ namespace Hastnama.Ekipchi.Data.Blog
         public string Keyword { get; set; }
 
         public Guid? UserId { get; set; }
-
     }
 }

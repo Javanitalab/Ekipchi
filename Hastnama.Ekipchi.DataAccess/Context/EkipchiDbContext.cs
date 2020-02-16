@@ -7,19 +7,18 @@ namespace Hastnama.Ekipchi.DataAccess.Context
     {
         public EkipchiDbContext()
         {
-
         }
 
         public EkipchiDbContext(DbContextOptions<EkipchiDbContext> options) : base(options)
         {
-
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"Server=185.88.132.154;Initial Catalog =EkipchiDb;MultipleActiveResultSets=true;User ID=sa;Password=123qwe!@#QWE");
+                optionsBuilder.UseSqlServer(
+                    @"Server=185.88.132.154;Initial Catalog =EkipchiDb;MultipleActiveResultSets=true;User ID=sa;Password=123qwe!@#QWE");
             }
         }
 
@@ -50,7 +49,7 @@ namespace Hastnama.Ekipchi.DataAccess.Context
         public virtual DbSet<BlogCategory> BlogCategories { get; set; }
 
         public virtual DbSet<Faq> Faqs { get; set; }
-        
+
         public virtual DbSet<UserFile> Files { get; set; }
 
         public virtual DbSet<EventSchedule> EventSchedules { get; set; }

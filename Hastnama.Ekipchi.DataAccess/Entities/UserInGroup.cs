@@ -12,13 +12,11 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
 
         public Guid UserId { get; set; }
 
-        [ForeignKey(nameof(UserId))]
-        public virtual User User { get; set; }
+        [ForeignKey(nameof(UserId))] public virtual User User { get; set; }
 
         public Guid GroupId { get; set; }
 
-        [ForeignKey(nameof(GroupId))]
-        public virtual Group Groups { get; set; }
+        [ForeignKey(nameof(GroupId))] public virtual Group Groups { get; set; }
 
         public DateTime JoinGroupDate { get; set; }
     }

@@ -19,7 +19,7 @@ namespace Hastnama.Ekipchi.DataAccess.Repository
 
         Task<PagedList<TEntity>> WhereAsyncAsNoTracking(Expression<Func<TEntity, bool>> predicate,
             PagingOptions pagingOptions,
-            params  Expression<Func<TEntity, object>> [] include);
+            params Expression<Func<TEntity, object>>[] include);
 
         Task<PagedList<TEntity>> WhereAsync(Expression<Func<TEntity, bool>> predicate,
             PagingOptions pagingOptions,

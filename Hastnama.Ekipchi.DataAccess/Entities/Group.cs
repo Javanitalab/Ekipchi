@@ -20,8 +20,7 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
 
         public Guid OwnerId { get; set; }
 
-        [ForeignKey(nameof(OwnerId))]
-        public virtual User User { get; set; }
+        [ForeignKey(nameof(OwnerId))] public virtual User User { get; set; }
 
         public DateTime CreateDate { get; set; }
 
@@ -31,6 +30,6 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
 
         public bool IsPublic { get; set; }
 
-        public virtual List<UserInGroup> UserInGroups { get; set;}
+        public virtual List<UserInGroup> UserInGroups { get; set; }
     }
 }

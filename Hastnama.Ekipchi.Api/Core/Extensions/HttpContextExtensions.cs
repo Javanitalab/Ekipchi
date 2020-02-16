@@ -114,6 +114,7 @@ namespace Hastnama.Ekipchi.Api.Core.Extensions
             {
                 return false;
             }
+
             return true;
         }
 

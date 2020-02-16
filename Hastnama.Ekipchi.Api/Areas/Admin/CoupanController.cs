@@ -38,7 +38,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         public async Task<IActionResult> List(
             [FromQuery] FilterCouponQueryDto filterQueryDto)
         {
-            var result = await _unitOfWork.CouponService.List( filterQueryDto);
+            var result = await _unitOfWork.CouponService.List(filterQueryDto);
             if (filterQueryDto.Page == null && filterQueryDto.Limit == null)
                 return Ok(result.Data.Items);
             return result.ApiResult;
@@ -76,13 +76,11 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid? id,[FromBody] UpdateCouponDto updateCouponDto)
+        public async Task<IActionResult> Update(Guid id, [FromBody] UpdateCouponDto updateCouponDto)
         {
-            
-            if (id != null)
-                updateCouponDto.Id = id.Value;
-
+            updateCouponDto.Id = id;
             var result = await _unitOfWork.CouponService.Update(updateCouponDto);
+
             if (!result.Success)
                 return result.ApiResult;
             return NoContent();
@@ -108,7 +106,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
                 return result.ApiResult;
             return Created(Url.Link("GetCoupon", new {result.Data.Id}), _mapper.Map<CouponDto>(result.Data));
         }
-        
+
         /// <summary>
         /// Delete Coupon 
         /// </summary>
@@ -127,6 +125,5 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
                 return result.ApiResult;
             return NoContent();
         }
-
     }
 }

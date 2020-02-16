@@ -10,7 +10,7 @@ namespace Hastnama.Ekipchi.Business.Service.Interface
 {
     public interface IHostService : IRepository<Host>
     {
-        Task<Result<PagedList<HostDto>>> List( FilterHostQueryDto filterQueryDto);
+        Task<Result<PagedList<HostDto>>> List(FilterHostQueryDto filterQueryDto);
         Task<Result> Update(UpdateHostDto updateHostDto);
         Task<Result<HostDto>> Create(CreateHostDto dto);
         Task<Result<HostDto>> Get(Guid id);

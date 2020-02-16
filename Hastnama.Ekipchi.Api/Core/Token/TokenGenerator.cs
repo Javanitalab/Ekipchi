@@ -24,7 +24,7 @@ namespace Hastnama.Ekipchi.Api.Core.Token
         private readonly IRequestMeta _requestMeta;
 
         public TokenGenerator(IOptions<JwtSettings> jwtSettings, TokenValidationParameters tokenValidationParameters,
-            IUnitOfWork unitOfWork,IRequestMeta requestMeta)
+            IUnitOfWork unitOfWork, IRequestMeta requestMeta)
         {
             _requestMeta = requestMeta;
             _unitOfWork = unitOfWork;
@@ -69,7 +69,6 @@ namespace Hastnama.Ekipchi.Api.Core.Token
                 Device = _requestMeta.Device,
                 Ip = _requestMeta.Ip,
                 UserAgent = _requestMeta.UserAgent,
-
             };
 
             await _unitOfWork.UserTokenService.Add(userToken);

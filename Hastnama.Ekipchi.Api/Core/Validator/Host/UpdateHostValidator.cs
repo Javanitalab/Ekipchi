@@ -8,7 +8,6 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Host
     {
         public UpdateHostValidator()
         {
-
             RuleFor(dto => dto.Name)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage(ResponseMessage.InvalidHostName);

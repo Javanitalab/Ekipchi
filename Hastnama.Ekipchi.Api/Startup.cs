@@ -28,7 +28,8 @@ namespace Hastnama.Ekipchi.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,IApplicationBootstrapper applicationBootstrapper)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
+            IApplicationBootstrapper applicationBootstrapper)
         {
             if (env.IsDevelopment())
             {
@@ -36,7 +37,7 @@ namespace Hastnama.Ekipchi.Api
             }
 
             applicationBootstrapper.Initial();
-            
+
             #region Static files Setting
 
             app.UseStaticFiles();
@@ -92,12 +93,11 @@ namespace Hastnama.Ekipchi.Api
             app.UseMiddleware<ApplicationMetaMiddleware>();
             app.UseMiddleware<MembershipMiddleware>();
             app.UseAuthorization();
-            
+
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
             app.UseSwagger();
             app.UseSwaggerUI(options => { options.SwaggerEndpoint("/swagger/v1/swagger.json", "Ekipchi  API V1"); });
-            
         }
     }
 }

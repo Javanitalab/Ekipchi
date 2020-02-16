@@ -30,6 +30,5 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
         public bool IsActive { get; set; }
 
         public bool IsDeleted { get; set; }
-
     }
 }

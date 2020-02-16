@@ -23,26 +23,25 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.User
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage(ResponseMessage.InvalidMobile)
                 .MaximumLength(16).WithMessage(ResponseMessage.InvalidMobile);
-            
+
             RuleFor(dto => dto.Email)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .EmailAddress().WithMessage(ResponseMessage.InvalidEmailAddress)
                 .MaximumLength(32).WithMessage(ResponseMessage.InvalidEmailAddress);
-            
+
             // RuleFor(dto => dto.RoleId)
-                // .Cascade(CascadeMode.StopOnFirstFailure)
-                // .GreaterThanOrEqualTo(1).WithMessage(PersianErrorMessage.InvalidUserRole);
-            
+            // .Cascade(CascadeMode.StopOnFirstFailure)
+            // .GreaterThanOrEqualTo(1).WithMessage(PersianErrorMessage.InvalidUserRole);
+
             RuleFor(dto => dto.Name)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage(ResponseMessage.InvalidNameOrFamily)
                 .MaximumLength(16).WithMessage(ResponseMessage.InvalidNameOrFamily);
-            
+
             RuleFor(dto => dto.Family)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage(ResponseMessage.InvalidNameOrFamily)
                 .MaximumLength(16).WithMessage(ResponseMessage.InvalidNameOrFamily);
-            
         }
     }
 }

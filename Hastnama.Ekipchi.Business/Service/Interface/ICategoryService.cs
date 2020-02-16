@@ -10,11 +10,10 @@ namespace Hastnama.Ekipchi.Business.Service.Interface
 {
     public interface ICategoryService : IRepository<Category>
     {
-        Task<Result<PagedList<CategoryDto>>> List( FilterCategoryQueryDto filterQueryDto);
+        Task<Result<PagedList<CategoryDto>>> List(FilterCategoryQueryDto filterQueryDto);
         Task<Result> Update(UpdateCategoryDto updateCategoryDto);
         Task<Result<CategoryDto>> Create(CreateCategoryDto dto);
         Task<Result<CategoryDto>> Get(int id);
         Task<Result> Delete(int id);
-
     }
 }

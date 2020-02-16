@@ -47,6 +47,5 @@ namespace Hastnama.Ekipchi.Common.Util
         {
             return dateTime.GetPersianYearStartAndEndDates();
         }
-
     }
 }

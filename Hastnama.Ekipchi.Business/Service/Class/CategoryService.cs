@@ -33,7 +33,6 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result> Update(UpdateCategoryDto updateCategoryDto)
         {
-
             var category = await FirstOrDefaultAsync(c => c.Id == updateCategoryDto.Id);
             _mapper.Map(updateCategoryDto, category);
             await Context.SaveChangesAsync();

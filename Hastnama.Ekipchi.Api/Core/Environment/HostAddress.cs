@@ -1,4 +1,4 @@
-﻿﻿namespace Hastnama.Ekipchi.Api.Core.Environment
+﻿namespace Hastnama.Ekipchi.Api.Core.Environment
 {
     public class HostAddress
     {

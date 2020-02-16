@@ -15,8 +15,6 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Region
             RuleFor(dto => dto.CityId)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .GreaterThanOrEqualTo(0).WithMessage(ResponseMessage.InvalidCityId);
-
-
         }
     }
 }

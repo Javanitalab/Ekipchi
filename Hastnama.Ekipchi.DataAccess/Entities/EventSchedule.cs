@@ -13,8 +13,7 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
 
         public Guid EventId { get; set; }
 
-        [ForeignKey(nameof(EventId))]
-        public virtual Event Event { get; set; }
+        [ForeignKey(nameof(EventId))] public virtual Event Event { get; set; }
 
         public DateTime RegistrationDate { get; set; }
 

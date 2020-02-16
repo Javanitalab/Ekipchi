@@ -15,13 +15,11 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
 
         public Guid EventId { get; set; }
 
-        [ForeignKey(nameof(EventId))]
-        public virtual Event Event { get; set; }
+        [ForeignKey(nameof(EventId))] public virtual Event Event { get; set; }
 
         public Guid UserId { get; set; }
 
-        [ForeignKey(nameof(UserId))]
-        public virtual User User { get; set; }
+        [ForeignKey(nameof(UserId))] public virtual User User { get; set; }
 
         public bool IsConfirmed { get; set; }
     }

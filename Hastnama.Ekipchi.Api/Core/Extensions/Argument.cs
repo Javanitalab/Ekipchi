@@ -65,7 +65,8 @@ namespace Hastnama.Ekipchi.Api.Core.Extensions
             }
         }
 
-        public static void IsNotOutOfRange<T>(string paramName, T paramValue, T minimumValue, T maximumValue, Func<T, T, T, bool> validation)
+        public static void IsNotOutOfRange<T>(string paramName, T paramValue, T minimumValue, T maximumValue,
+            Func<T, T, T, bool> validation)
         {
             IsNotNull("validation", validation);
 
@@ -77,10 +78,12 @@ namespace Hastnama.Ekipchi.Api.Core.Extensions
         }
 
         public static void IsNotOutOfRange<T>(string paramName, T paramValue, T minimumValue, T maximumValue)
-           where T : IComparable
+            where T : IComparable
         {
             IsNotOutOfRange(paramName, paramValue, minimumValue, maximumValue,
-                (innerParamValue, innerMinimumValue, innerMaximumValue) => innerParamValue.CompareTo(innerMinimumValue) >= 0 && innerParamValue.CompareTo(innerMaximumValue) <= 0);
+                (innerParamValue, innerMinimumValue, innerMaximumValue) =>
+                    innerParamValue.CompareTo(innerMinimumValue) >= 0 &&
+                    innerParamValue.CompareTo(innerMaximumValue) <= 0);
         }
 
         public static void IsMinimal<T>(string paramName, T paramValue, T minimumValue, Func<T, T, bool> validation)
@@ -95,7 +98,7 @@ namespace Hastnama.Ekipchi.Api.Core.Extensions
         }
 
         public static void IsMinimal<T>(string paramName, T paramValue, T minimumValue)
-           where T : IComparable
+            where T : IComparable
         {
             IsMinimal(paramName, paramValue, minimumValue,
                 (innerParamValue, innerMinimumValue) => innerParamValue.CompareTo(innerMinimumValue) >= 0);
@@ -111,7 +114,7 @@ namespace Hastnama.Ekipchi.Api.Core.Extensions
         }
 
         public static void IsMaximum<T>(string paramName, T paramValue, T maximumValue)
-           where T : IComparable
+            where T : IComparable
         {
             IsMaximum(paramName, paramValue, maximumValue,
                 (innerParamValue, innerMaximumValue) => innerParamValue.CompareTo(innerMaximumValue) <= 0);
@@ -210,7 +213,8 @@ namespace Hastnama.Ekipchi.Api.Core.Extensions
             }
 
             var errorBuilder = new StringBuilder();
-            errorBuilder.AppendLine("Type '{0}' should implement at least one of the following interfaces, but does not:");
+            errorBuilder.AppendLine(
+                "Type '{0}' should implement at least one of the following interfaces, but does not:");
             foreach (var interfaceType in interfaceTypes)
             {
                 errorBuilder.AppendLine("  * " + interfaceType.FullName);
@@ -335,7 +339,8 @@ namespace Hastnama.Ekipchi.Api.Core.Extensions
             }
         }
 
-        public static void IsNotMatch(string paramName, string paramValue, string pattern, RegexOptions regexOptions = RegexOptions.None)
+        public static void IsNotMatch(string paramName, string paramValue, string pattern,
+            RegexOptions regexOptions = RegexOptions.None)
         {
             Argument.IsNotNull("paramValue", paramValue);
             Argument.IsNotNull("pattern", pattern);
@@ -347,7 +352,8 @@ namespace Hastnama.Ekipchi.Api.Core.Extensions
             }
         }
 
-        public static void IsMatch(string paramName, string paramValue, string pattern, RegexOptions regexOptions = RegexOptions.None)
+        public static void IsMatch(string paramName, string paramValue, string pattern,
+            RegexOptions regexOptions = RegexOptions.None)
         {
             Argument.IsNotNull("paramValue", paramValue);
             Argument.IsNotNull("pattern", pattern);
@@ -404,7 +410,7 @@ namespace Hastnama.Ekipchi.Api.Core.Extensions
         {
             IsNotNull("expression", expression);
 
-            var parameterExpression = (MemberExpression)expression.Body;
+            var parameterExpression = (MemberExpression) expression.Body;
             var parameterInfo = new ParameterInfo<T>(parameterExpression.Member.Name, expression.Compile().Invoke());
 
             return parameterInfo;
@@ -420,70 +426,71 @@ namespace Hastnama.Ekipchi.Api.Core.Extensions
         public static void IsNotNullOrEmpty(Expression<Func<string>> expression)
         {
             var parameterInfo = GetParameterInfo(expression);
-            IsNotNullOrEmpty(parameterInfo.Name, (string)parameterInfo.Value);
+            IsNotNullOrEmpty(parameterInfo.Name, (string) parameterInfo.Value);
         }
 
         public static void IsNotEmpty(Expression<Func<Guid>> expression)
         {
             var parameterInfo = GetParameterInfo(expression);
-            IsNotEmpty(parameterInfo.Name, (Guid)parameterInfo.Value);
+            IsNotEmpty(parameterInfo.Name, (Guid) parameterInfo.Value);
         }
 
         public static void IsNotNullOrEmpty(Expression<Func<Guid?>> expression)
         {
             var parameterInfo = GetParameterInfo(expression);
-            IsNotNullOrEmpty(parameterInfo.Name, (Guid?)parameterInfo.Value);
+            IsNotNullOrEmpty(parameterInfo.Name, (Guid?) parameterInfo.Value);
         }
 
         public static void IsNotNullOrWhitespace(Expression<Func<string>> expression)
         {
             var parameterInfo = GetParameterInfo(expression);
-            IsNotNullOrWhitespace(parameterInfo.Name, (string)parameterInfo.Value);
+            IsNotNullOrWhitespace(parameterInfo.Name, (string) parameterInfo.Value);
         }
 
         public static void IsNotNullOrEmptyArray(Expression<Func<Array>> expression)
         {
             var parameterInfo = GetParameterInfo(expression);
-            IsNotNullOrEmptyArray(parameterInfo.Name, (Array)parameterInfo.Value);
+            IsNotNullOrEmptyArray(parameterInfo.Name, (Array) parameterInfo.Value);
         }
 
-        public static void IsNotOutOfRange<T>(Expression<Func<T>> expression, T minimumValue, T maximumValue, Func<T, T, T, bool> validation)
+        public static void IsNotOutOfRange<T>(Expression<Func<T>> expression, T minimumValue, T maximumValue,
+            Func<T, T, T, bool> validation)
         {
             var parameterInfo = GetParameterInfo(expression);
-            IsNotOutOfRange(parameterInfo.Name, (T)parameterInfo.Value, minimumValue, maximumValue, validation);
+            IsNotOutOfRange(parameterInfo.Name, (T) parameterInfo.Value, minimumValue, maximumValue, validation);
         }
 
         public static void IsNotOutOfRange<T>(Expression<Func<T>> expression, T minimumValue, T maximumValue)
             where T : IComparable
         {
             var parameterInfo = GetParameterInfo(expression);
-            IsNotOutOfRange(parameterInfo.Name, (T)parameterInfo.Value, minimumValue, maximumValue);
+            IsNotOutOfRange(parameterInfo.Name, (T) parameterInfo.Value, minimumValue, maximumValue);
         }
 
         public static void IsMinimal<T>(Expression<Func<T>> expression, T minimumValue, Func<T, T, bool> validation)
         {
             var parameterInfo = GetParameterInfo(expression);
-            IsMinimal(parameterInfo.Name, (T)parameterInfo.Value, minimumValue, validation);
+            IsMinimal(parameterInfo.Name, (T) parameterInfo.Value, minimumValue, validation);
         }
 
         public static void IsMinimal<T>(Expression<Func<T>> expression, T minimumValue)
             where T : IComparable
         {
             var parameterInfo = GetParameterInfo(expression);
-            IsMinimal(parameterInfo.Name, (T)parameterInfo.Value, minimumValue);
+            IsMinimal(parameterInfo.Name, (T) parameterInfo.Value, minimumValue);
         }
 
         public static void IsMaximum<T>(Expression<Func<T>> expression, T maximumValue, Func<T, T, bool> validation)
         {
             var parameterInfo = GetParameterInfo(expression);
-            IsMaximum(parameterInfo.Name, (T)parameterInfo.Value, maximumValue, validation);
+            IsMaximum(parameterInfo.Name, (T) parameterInfo.Value, maximumValue, validation);
         }
 
         public static void IsMaximum<T>(Expression<Func<T>> expression, T maximumValue)
             where T : IComparable
         {
             var parameterInfo = GetParameterInfo(expression);
-            IsMaximum(parameterInfo.Name, (T)parameterInfo.Value, maximumValue);
+            IsMaximum(parameterInfo.Name, (T) parameterInfo.Value, maximumValue);
         }
 
         public static void ImplementsInterface<T>(Expression<Func<T>> expression, Type interfaceType)
@@ -492,7 +499,7 @@ namespace Hastnama.Ekipchi.Api.Core.Extensions
             var parameterInfo = GetParameterInfo(expression);
             if (parameterInfo.Value is Type)
             {
-                ImplementsInterface(parameterInfo.Name, (T)parameterInfo.Value as Type, interfaceType);
+                ImplementsInterface(parameterInfo.Name, (T) parameterInfo.Value as Type, interfaceType);
             }
             else
             {
@@ -506,7 +513,7 @@ namespace Hastnama.Ekipchi.Api.Core.Extensions
             var parameterInfo = GetParameterInfo(expression);
             if (parameterInfo.Value is Type)
             {
-                ImplementsOneOfTheInterfaces(parameterInfo.Name, (T)parameterInfo.Value as Type, interfaceTypes);
+                ImplementsOneOfTheInterfaces(parameterInfo.Name, (T) parameterInfo.Value as Type, interfaceTypes);
             }
             else
             {
@@ -520,7 +527,7 @@ namespace Hastnama.Ekipchi.Api.Core.Extensions
             var parameterInfo = GetParameterInfo(expression);
             if (parameterInfo.Value is Type)
             {
-                IsOfType(parameterInfo.Name, (T)parameterInfo.Value as Type, requiredType);
+                IsOfType(parameterInfo.Name, (T) parameterInfo.Value as Type, requiredType);
             }
             else
             {
@@ -534,7 +541,7 @@ namespace Hastnama.Ekipchi.Api.Core.Extensions
             var parameterInfo = GetParameterInfo(expression);
             if (parameterInfo.Value is Type)
             {
-                IsOfOneOfTheTypes(parameterInfo.Name, (T)parameterInfo.Value as Type, requiredTypes);
+                IsOfOneOfTheTypes(parameterInfo.Name, (T) parameterInfo.Value as Type, requiredTypes);
             }
             else
             {
@@ -548,7 +555,7 @@ namespace Hastnama.Ekipchi.Api.Core.Extensions
             var parameterInfo = GetParameterInfo(expression);
             if (parameterInfo.Value is Type)
             {
-                IsNotOfType(parameterInfo.Name, (T)parameterInfo.Value as Type, notRequiredType);
+                IsNotOfType(parameterInfo.Name, (T) parameterInfo.Value as Type, notRequiredType);
             }
             else
             {
@@ -562,7 +569,7 @@ namespace Hastnama.Ekipchi.Api.Core.Extensions
             var parameterInfo = GetParameterInfo(expression);
             if (parameterInfo.Value is Type)
             {
-                IsNotOfOneOfTheTypes(parameterInfo.Name, (T)parameterInfo.Value as Type, notRequiredTypes);
+                IsNotOfOneOfTheTypes(parameterInfo.Name, (T) parameterInfo.Value as Type, notRequiredTypes);
             }
             else
             {
@@ -570,40 +577,42 @@ namespace Hastnama.Ekipchi.Api.Core.Extensions
             }
         }
 
-        public static void IsNotMatch(Expression<Func<string>> expression, string pattern, RegexOptions regexOptions = RegexOptions.None)
+        public static void IsNotMatch(Expression<Func<string>> expression, string pattern,
+            RegexOptions regexOptions = RegexOptions.None)
         {
             var parameterInfo = GetParameterInfo(expression);
-            IsNotMatch(parameterInfo.Name, (string)parameterInfo.Value, pattern, regexOptions);
+            IsNotMatch(parameterInfo.Name, (string) parameterInfo.Value, pattern, regexOptions);
         }
 
-        public static void IsMatch(Expression<Func<string>> expression, string pattern, RegexOptions regexOptions = RegexOptions.None)
+        public static void IsMatch(Expression<Func<string>> expression, string pattern,
+            RegexOptions regexOptions = RegexOptions.None)
         {
             var parameterInfo = GetParameterInfo(expression);
-            IsMatch(parameterInfo.Name, (string)parameterInfo.Value, pattern, regexOptions);
+            IsMatch(parameterInfo.Name, (string) parameterInfo.Value, pattern, regexOptions);
         }
 
         public static void IsValid<T>(Expression<Func<T>> expression, Func<T, bool> validation)
         {
             var parameterInfo = GetParameterInfo(expression);
-            IsValid(parameterInfo.Name, (T)parameterInfo.Value, validation);
+            IsValid(parameterInfo.Name, (T) parameterInfo.Value, validation);
         }
 
         public static void IsValid<T>(Expression<Func<T>> expression, Func<bool> validation)
         {
             var parameterInfo = GetParameterInfo(expression);
-            IsValid(parameterInfo.Name, (T)parameterInfo.Value, validation);
+            IsValid(parameterInfo.Name, (T) parameterInfo.Value, validation);
         }
 
         public static void IsValid<T>(Expression<Func<T>> expression, bool validation)
         {
             var parameterInfo = GetParameterInfo(expression);
-            IsValid(parameterInfo.Name, (T)parameterInfo.Value, validation);
+            IsValid(parameterInfo.Name, (T) parameterInfo.Value, validation);
         }
 
         public static void IsValid<T>(Expression<Func<T>> expression, IValueValidator<T> validator)
         {
             var parameterInfo = GetParameterInfo(expression);
-            IsValid(parameterInfo.Name, (T)parameterInfo.Value, validator);
+            IsValid(parameterInfo.Name, (T) parameterInfo.Value, validator);
         }
 
         /// <summary>

@@ -13,15 +13,12 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
 
         public int Id { get; set; }
 
-        [Required]
-        public string Name { get; set; }
+        [Required] public string Name { get; set; }
 
         public int CountyId { get; set; }
 
-        [ForeignKey(nameof(CountyId))]
-        public virtual County County { get; set; }
+        [ForeignKey(nameof(CountyId))] public virtual County County { get; set; }
 
         public virtual List<Region> Regions { get; set; }
-
     }
 }

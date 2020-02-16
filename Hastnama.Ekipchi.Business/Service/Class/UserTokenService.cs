@@ -13,7 +13,6 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 {
     public class UserTokenService : Repository<EkipchiDbContext, UserToken>, IUserTokenService
     {
-
         public UserTokenService(EkipchiDbContext context) : base(context)
         {
         }

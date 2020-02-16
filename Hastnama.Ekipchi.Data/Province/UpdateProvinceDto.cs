@@ -6,14 +6,10 @@ namespace Hastnama.Ekipchi.Data.Province
 {
     public class UpdateProvinceDto
     {
-        
-        [JsonIgnore]
-        public int Id { get; set; }
+        [JsonIgnore] public int Id { get; set; }
 
         public string Name { get; set; }
-        
-        public IList<CountyDto> Counties { get; set; }
 
-        
+        public IList<CountyDto> Counties { get; set; }
     }
 }

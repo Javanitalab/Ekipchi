@@ -14,7 +14,5 @@ namespace Hastnama.Ekipchi.Api.Core.Extensions
 
         public static string GetEmail(this ClaimsPrincipal claimsPrincipal)
             => claimsPrincipal.Claims.FirstOrDefault(x => x.Type == "Email")?.Value;
-
-
     }
 }

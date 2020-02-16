@@ -6,11 +6,10 @@
         {
             return BCrypt.Net.BCrypt.HashPassword(pass);
         }
-        
+
         public static bool CheckPassword(string enterPassword, string password)
         {
             return BCrypt.Net.BCrypt.Verify(enterPassword, password);
         }
-
     }
 }

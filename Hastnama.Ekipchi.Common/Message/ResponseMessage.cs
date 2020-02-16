@@ -11,7 +11,6 @@
         public const string InvalidActiveCode = "کد فعالسازی معتبر نمیباشد";
         public const string SendMessageFailed = "ارسال پیامک با مشکل برخورد کرد";
 
-
         #endregion
 
         #region File
@@ -174,8 +173,7 @@
         public const string ForgotPasswordNotAccepted = " درخواست تقییر رمز عبور مورد قبول نیست";
         public const string ForgotPasswordAccepted = "درخواست تقییر رمز عبور مورد قبول است";
         public const string PasswordSuccessfullyChanged = "پسورد با موفقیت تقییر کرد";
-        
-        #endregion
 
+        #endregion
     }
 }

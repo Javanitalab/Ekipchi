@@ -67,10 +67,10 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [HttpPost]
         [Consumes("multipart/form-data")]
         [Route("[Action]")]
-        public async Task<IActionResult> Upload([FromForm]FilesUploadDto model)
+        public async Task<IActionResult> Upload([FromForm] FilesUploadDto model)
         {
             if (model.Files.Count != model.LocalId.Count)
-                return BadRequest(new ApiMessage{Message = ResponseMessage.InvalidLocalId});
+                return BadRequest(new ApiMessage {Message = ResponseMessage.InvalidLocalId});
 
             var validateModelResult = ValidateModel(model);
 
@@ -206,6 +206,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             {
                 await stream.CopyToAsync(memory);
             }
+
             memory.Position = 0;
 
             return File(memory, contentType, fileName, true);
@@ -258,9 +259,10 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [Produces(typeof(PagedList<UserFileDto>))]
         [ProducesErrorResponseType(typeof(ApiMessage))]
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery]PagingOptions pagingOptions, string category)
+        public async Task<IActionResult> Get([FromQuery] PagingOptions pagingOptions, string category)
         {
-            var files = await _unitOfWork.FilesService.GetList(pagingOptions.Page.Value, pagingOptions.Limit.Value, category);
+            var files = await _unitOfWork.FilesService.GetList(pagingOptions.Page.Value, pagingOptions.Limit.Value,
+                category);
             if (files == null)
                 return NotFound(new ApiMessage
                 {
@@ -303,6 +305,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
                     var thumb = new FileInfo(path);
                     thumb.Delete();
                 }
+
                 fileInfo.Delete();
             }
 
@@ -336,36 +339,42 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
                 case "Avatar":
                     foreach (var file in model.Files)
                     {
-                        isValid = IsValidFile(file, new List<string> { ".jpg", ".jpeg", ".png", ".gif", ".svg" });
+                        isValid = IsValidFile(file, new List<string> {".jpg", ".jpeg", ".png", ".gif", ".svg"});
                     }
+
                     break;
 
                 case "Image":
                     foreach (var file in model.Files)
                     {
-                        isValid = IsValidFile(file, new List<string> { ".jpg", ".jpeg", ".png", ".gif", ".svg" });
+                        isValid = IsValidFile(file, new List<string> {".jpg", ".jpeg", ".png", ".gif", ".svg"});
                     }
+
                     break;
 
                 case "Video":
                     foreach (var file in model.Files)
                     {
-                        isValid = IsValidFile(file, new List<string> { ".mp4", ".wmv", ".mkv", ".mov" });
+                        isValid = IsValidFile(file, new List<string> {".mp4", ".wmv", ".mkv", ".mov"});
                     }
+
                     break;
 
                 case "Music":
                     foreach (var file in model.Files)
                     {
-                        isValid = IsValidFile(file, new List<string> { ".mp3", ".m4a", ".wave", ".wma" });
+                        isValid = IsValidFile(file, new List<string> {".mp3", ".m4a", ".wave", ".wma"});
                     }
+
                     break;
 
                 case "Document":
                     foreach (var file in model.Files)
                     {
-                        isValid = IsValidFile(file, new List<string> { ".doc", ".docx", ".xls", ".xlsx", ".pdf", ".ppt", ".pptx" });
+                        isValid = IsValidFile(file,
+                            new List<string> {".doc", ".docx", ".xls", ".xlsx", ".pdf", ".ppt", ".pptx"});
                     }
+
                     break;
 
                 case "Other":

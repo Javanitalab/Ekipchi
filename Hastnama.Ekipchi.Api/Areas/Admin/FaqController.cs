@@ -40,7 +40,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         public async Task<IActionResult> List(
             [FromQuery] FilterFaqQueryDto filterQueryDto)
         {
-            var result = await _unitOfWork.FaqService.List( filterQueryDto);
+            var result = await _unitOfWork.FaqService.List(filterQueryDto);
             if (filterQueryDto.Page == null && filterQueryDto.Limit == null)
                 return Ok(result.Data.Items);
             return result.ApiResult;
@@ -78,11 +78,9 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int? id,[FromBody] UpdateFaqDto updateFaqDto)
+        public async Task<IActionResult> Update(int id, [FromBody] UpdateFaqDto updateFaqDto)
         {
-            if (id != null)
-                updateFaqDto.Id = id.Value;
-            
+            updateFaqDto.Id = id;
             var result = await _unitOfWork.FaqService.Update(updateFaqDto);
             if (!result.Success)
                 return result.ApiResult;
@@ -111,7 +109,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
                 return result.ApiResult;
             return Created(Url.Link("GetFaq", new {result.Data.Id}), _mapper.Map<FaqDto>(result.Data));
         }
-        
+
         /// <summary>
         /// Delete Faq 
         /// </summary>
@@ -130,6 +128,5 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
                 return result.ApiResult;
             return NoContent();
         }
-
     }
 }

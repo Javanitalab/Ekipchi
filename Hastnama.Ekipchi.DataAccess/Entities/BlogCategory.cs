@@ -24,7 +24,7 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
 
         public string Slug { get; set; }
 
-        public string Cover{ get; set; }
+        public string Cover { get; set; }
 
         public string SlugPath { get; set; }
 
@@ -34,14 +34,13 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
 
         public string LongDescription { get; set; }
 
-        public string Logo  { get; set; }
+        public string Logo { get; set; }
 
         public int SortOrder { get; set; }
 
         public bool IsDeleted { get; set; }
 
-        [ForeignKey(nameof(ParentId))]
-        public virtual BlogCategory ParentCategory { get; set; }
+        [ForeignKey(nameof(ParentId))] public virtual BlogCategory ParentCategory { get; set; }
 
         public virtual List<BlogCategory> Children { get; }
 

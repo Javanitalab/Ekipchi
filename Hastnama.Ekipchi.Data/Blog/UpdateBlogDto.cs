@@ -7,10 +7,8 @@ namespace Hastnama.Ekipchi.Data.Blog
 {
     public class UpdateBlogDto
     {
-        
-        [JsonIgnore]
-        public int Id { get; set; }
-        
+        [JsonIgnore] public int Id { get; set; }
+
         public int BlogCategoryId { get; set; }
 
         public string BlogCategoryName { get; set; }

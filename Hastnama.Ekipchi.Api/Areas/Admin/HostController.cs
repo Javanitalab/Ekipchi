@@ -38,7 +38,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         public async Task<IActionResult> List(
             [FromQuery] FilterHostQueryDto filterQueryDto)
         {
-            var result = await _unitOfWork.HostService.List( filterQueryDto);
+            var result = await _unitOfWork.HostService.List(filterQueryDto);
             if (filterQueryDto.Page == null && filterQueryDto.Limit == null)
                 return Ok(result.Data.Items);
             return result.ApiResult;
@@ -76,12 +76,11 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid? id, [FromBody] UpdateHostDto updateHostDto)
+        public async Task<IActionResult> Update(Guid id, [FromBody] UpdateHostDto updateHostDto)
         {
-            if (id != null)
-                updateHostDto.Id = id.Value;
-            
+            updateHostDto.Id = id;
             var result = await _unitOfWork.HostService.Update(updateHostDto);
+
             if (!result.Success)
                 return result.ApiResult;
             return NoContent();

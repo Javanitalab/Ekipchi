@@ -10,9 +10,7 @@ namespace Hastnama.Ekipchi.Data.Host
 {
     public class UpdateHostDto
     {
-        
-        [JsonIgnore]
-        public Guid? Id { get; set; }
+        [JsonIgnore] public Guid? Id { get; set; }
 
         public string Name { get; set; }
 
@@ -41,12 +39,11 @@ namespace Hastnama.Ekipchi.Data.Host
         public string TermsAndCondition { get; set; }
 
         public bool IsDeleted { get; set; }
-        
+
         public virtual List<string> Galleries { get; set; }
 
         public virtual List<int> Categories { get; set; }
-        
-        public virtual List<HostAvailableDateDto> HostAvailableDates { get; set; }
 
+        public virtual List<HostAvailableDateDto> HostAvailableDates { get; set; }
     }
 }

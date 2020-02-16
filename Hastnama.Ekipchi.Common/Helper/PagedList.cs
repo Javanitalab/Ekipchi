@@ -20,7 +20,7 @@ namespace Hastnama.Ekipchi.Common.Helper
                 TotalCount = meta.TotalCount,
                 PageSize = meta.PageSize,
                 CurrentPage = meta.CurrentPage,
-                TotalPages = (int)Math.Ceiling(meta.TotalCount / (double)meta.TotalPages),
+                TotalPages = (int) Math.Ceiling(meta.TotalCount / (double) meta.TotalPages),
                 ObjectInPage = meta.ObjectInPage
             };
 
@@ -31,18 +31,29 @@ namespace Hastnama.Ekipchi.Common.Helper
         {
             var items = mapper.Map<List<TDest>>(Items, opt => opt.Items["lang"] = lang);
 
-            return new PagedList<TDest>(items, new Meta { TotalCount = Meta.TotalCount, CurrentPage = Meta.CurrentPage, PageSize = Meta.PageSize, TotalPages = Meta.TotalPages, ObjectInPage = Meta.ObjectInPage });
+            return new PagedList<TDest>(items,
+                new Meta
+                {
+                    TotalCount = Meta.TotalCount, CurrentPage = Meta.CurrentPage, PageSize = Meta.PageSize,
+                    TotalPages = Meta.TotalPages, ObjectInPage = Meta.ObjectInPage
+                });
         }
 
         public static async Task<PagedList<T>> CreateAsync(IQueryable<T> query, int pageNumber, int pageSize, int count)
         {
             var items = await query.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
 
-            int totalPages = (int)Math.Ceiling((decimal)count / pageSize);
+            int totalPages = (int) Math.Ceiling((decimal) count / pageSize);
 
-            int objectInPage = (pageNumber < totalPages) ? pageSize : pageNumber == 1 ? count : (count - (pageNumber * pageSize));
+            int objectInPage = (pageNumber < totalPages) ? pageSize :
+                pageNumber == 1 ? count : (count - (pageNumber * pageSize));
 
-            return new PagedList<T>(items, new Meta { TotalCount = count, CurrentPage = pageNumber, PageSize = pageSize, TotalPages = totalPages, ObjectInPage = objectInPage });
+            return new PagedList<T>(items,
+                new Meta
+                {
+                    TotalCount = count, CurrentPage = pageNumber, PageSize = pageSize, TotalPages = totalPages,
+                    ObjectInPage = objectInPage
+                });
         }
 
         public static PagedList<T> CreateAsync(IEnumerable<T> query, int pageNumber, int pageSize, int count)
@@ -55,7 +66,12 @@ namespace Hastnama.Ekipchi.Common.Helper
             if (rowsCount <= pageSize || pageNumber <= 1)
                 pageNumber = 1;
 
-            return new PagedList<T>(query, new Meta { TotalCount = count, CurrentPage = pageNumber, PageSize = pageSize, TotalPages = (int)Math.Ceiling((decimal)count / pageSize) });
+            return new PagedList<T>(query,
+                new Meta
+                {
+                    TotalCount = count, CurrentPage = pageNumber, PageSize = pageSize,
+                    TotalPages = (int) Math.Ceiling((decimal) count / pageSize)
+                });
         }
     }
 }

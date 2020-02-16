@@ -1,4 +1,4 @@
-﻿﻿namespace Hastnama.Ekipchi.Api.Core.FileProcessor
+﻿namespace Hastnama.Ekipchi.Api.Core.FileProcessor
 {
     public class FileProvider
     {

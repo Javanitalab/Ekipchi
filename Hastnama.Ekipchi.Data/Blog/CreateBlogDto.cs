@@ -12,7 +12,7 @@ namespace Hastnama.Ekipchi.Data.Blog
         public string Content { get; set; }
 
         public string MetaKeyWord { get; set; }
-        
+
         public string Slug { get; set; }
 
         public string ShortDescription { get; set; }
@@ -28,10 +28,9 @@ namespace Hastnama.Ekipchi.Data.Blog
         public ContentType ContentType { get; set; }
 
         public VideoType? VideoType { get; set; }
-        
+
         public DateTime? PublishDate { get; set; }
-        
+
         public bool IsSpecial { get; set; }
-        
     }
 }

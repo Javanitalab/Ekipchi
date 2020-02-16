@@ -29,7 +29,8 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         {
             var hosts = await WhereAsyncAsNoTracking(c =>
                     (string.IsNullOrEmpty(filterQueryDto.Keyword) ||
-                     c.Name.ToLower().Contains(filterQueryDto.Keyword.ToLower())) && c.IsDeleted == false, filterQueryDto,
+                     c.Name.ToLower().Contains(filterQueryDto.Keyword.ToLower())) && c.IsDeleted == false,
+                filterQueryDto,
                 g => g.HostGalleries,
                 g => g.HostCategories.Select(hc => hc.Category),
                 g => g.HostAvailableDates);

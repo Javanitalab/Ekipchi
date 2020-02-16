@@ -23,10 +23,9 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
 
         public string Description { get; set; }
 
-        [ForeignKey(nameof(ParentId))]
-        public virtual Permission Parent { get; set; }
+        [ForeignKey(nameof(ParentId))] public virtual Permission Parent { get; set; }
 
-        public virtual List<Permission> Children { get; set;}
+        public virtual List<Permission> Children { get; set; }
 
         public virtual List<RolePermission> RolePermissions { get; set; }
     }

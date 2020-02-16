@@ -1,10 +1,12 @@
 <?xml version="1.0"?>
+
 <doc>
     <assembly>
         <name>Hastnama.GuitarIranShop.Api</name>
     </assembly>
     <members>
-        <member name="M:Hastnama.GuitarIranShop.Api.Controllers.AccountController.Login(Hastnama.GuitarIranShop.Data.UserManagement.Account.LoginDto)">
+        <member
+            name="M:Hastnama.GuitarIranShop.Api.Controllers.AccountController.Login(Hastnama.GuitarIranShop.Data.UserManagement.Account.LoginDto)">
             <summary>
                 login to
             </summary>

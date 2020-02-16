@@ -7,10 +7,10 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
 {
     public class HostGallery
     {
-
         public HostGallery()
         {
         }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
@@ -19,7 +19,6 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
 
         public Guid HostId { get; set; }
 
-        [ForeignKey(nameof(HostId))]
-        public virtual Host Host { get; set; }
+        [ForeignKey(nameof(HostId))] public virtual Host Host { get; set; }
     }
 }

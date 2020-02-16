@@ -8,7 +8,6 @@ using Hastnama.Ekipchi.Data.Faq;
 using Hastnama.Ekipchi.DataAccess.Context;
 using Hastnama.Ekipchi.DataAccess.Entities;
 using Hastnama.Ekipchi.DataAccess.Repository;
-
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hastnama.Ekipchi.Business.Service.Class
@@ -60,7 +59,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
             return Result<FaqDto>.SuccessFull(_mapper.Map<FaqDto>(faq));
         }
-        
+
         public async Task<Result> Delete(int id)
         {
             var faq = await FirstOrDefaultAsyncAsNoTracking(c => c.Id == id);
@@ -74,6 +73,5 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
             return Result.SuccessFull();
         }
-
     }
 }

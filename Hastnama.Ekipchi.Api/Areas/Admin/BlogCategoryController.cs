@@ -35,7 +35,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [HttpGet]
         public async Task<IActionResult> List([FromQuery] FilterBlogCategoryQueryDto filterQueryDto)
         {
-            var result = await _unitOfWork.BlogCategoryService.List( filterQueryDto);
+            var result = await _unitOfWork.BlogCategoryService.List(filterQueryDto);
             if (filterQueryDto.Page == null && filterQueryDto.Limit == null)
                 return Ok(result.Data.Items);
             return result.ApiResult;
@@ -73,11 +73,11 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int? id,[FromBody] UpdateBlogCategoryDto updateBlogCategoryDto)
+        public async Task<IActionResult> Update(int id, [FromBody] UpdateBlogCategoryDto updateBlogCategoryDto)
         {
-            if (id != null)
-                updateBlogCategoryDto.Id = id.Value;
+            updateBlogCategoryDto.Id = id;
             var result = await _unitOfWork.BlogCategoryService.Update(updateBlogCategoryDto);
+
             if (!result.Success)
                 return result.ApiResult;
             return NoContent();
@@ -105,7 +105,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
                 return result.ApiResult;
             return Created(Url.Link("GetCounty", new {result.Data.Id}), _mapper.Map<BlogCategoryDto>(result.Data));
         }
-        
+
         /// <summary>
         /// Delete BlogCategory 
         /// </summary>
@@ -124,6 +124,5 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
                 return result.ApiResult;
             return NoContent();
         }
-
     }
 }

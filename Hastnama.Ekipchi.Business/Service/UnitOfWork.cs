@@ -8,7 +8,6 @@ namespace Hastnama.Ekipchi.Business.Service
 {
     public class UnitOfWork : IUnitOfWork
     {
-
         #region private
 
         private readonly EkipchiDbContext _context;

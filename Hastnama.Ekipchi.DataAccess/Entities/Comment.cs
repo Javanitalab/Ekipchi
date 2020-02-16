@@ -7,11 +7,11 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
 {
     public class Comment
     {
-
         public Comment()
         {
             Children = new List<Comment>();
         }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("CommentId")]
@@ -19,20 +19,17 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
 
         public Guid? ParentId { get; set; }
 
-        [ForeignKey(nameof(ParentId))]
-        public virtual Comment ParentComment { get; set; }
+        [ForeignKey(nameof(ParentId))] public virtual Comment ParentComment { get; set; }
 
         public string Content { get; set; }
 
         public Guid UserId { get; set; }
 
-        [ForeignKey(nameof(UserId))]
-        public virtual User User { get; set; }
-        
+        [ForeignKey(nameof(UserId))] public virtual User User { get; set; }
+
         public Guid EventId { get; set; }
 
-        [ForeignKey(nameof(EventId))]
-        public virtual Event Event { get; set; }
+        [ForeignKey(nameof(EventId))] public virtual Event Event { get; set; }
 
 
         public bool IsConfirmed { get; set; }

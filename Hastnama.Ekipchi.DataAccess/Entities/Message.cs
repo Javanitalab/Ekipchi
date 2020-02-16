@@ -25,8 +25,7 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
 
         public DateTime CreateDate { get; set; }
 
-        [ForeignKey(nameof(ParentId))]
-        public virtual Message ReplayToMessage { get; set; }
+        [ForeignKey(nameof(ParentId))] public virtual Message ReplayToMessage { get; set; }
 
         public virtual List<UserMessage> UserMessages { get; }
     }

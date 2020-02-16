@@ -17,9 +17,10 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Message> GetMessageAsync(Guid userId, int messageId)
         {
-            return await GetAll().Include(x => x.UserMessages).Include(x => x.ReplayToMessage).FirstOrDefaultAsync(x => x.Id == messageId && x.UserMessages.Any(m =>
-                                                                                                                            (m.ReceiverHasDeleted == false && m.ReceiverUserId == userId) ||
-                                                                                                                            (m.SenderHasDeleted == false && m.SenderUserId == userId)));
+            return await GetAll().Include(x => x.UserMessages).Include(x => x.ReplayToMessage).FirstOrDefaultAsync(x =>
+                x.Id == messageId && x.UserMessages.Any(m =>
+                    (m.ReceiverHasDeleted == false && m.ReceiverUserId == userId) ||
+                    (m.SenderHasDeleted == false && m.SenderUserId == userId)));
         }
 
         public async Task<bool> IsMessageExist(int parentId)

@@ -1,6 +1,6 @@
-﻿﻿using System;
+﻿using System;
 
- namespace Hastnama.Ekipchi.Data.Message
+namespace Hastnama.Ekipchi.Data.Message
 {
     public class MessageDto
     {

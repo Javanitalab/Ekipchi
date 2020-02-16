@@ -1,6 +1,6 @@
-﻿﻿using System.IO;
+﻿using System.IO;
 
- namespace Hastnama.Ekipchi.Api.Core.FileProcessor
+namespace Hastnama.Ekipchi.Api.Core.FileProcessor
 {
     public interface IImageProcessingService
     {

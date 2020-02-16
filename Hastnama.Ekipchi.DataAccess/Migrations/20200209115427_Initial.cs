@@ -66,10 +66,7 @@ namespace Hastnama.Ekipchi.DataAccess.Migrations
                     Question = table.Column<string>(nullable: true),
                     Answer = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Faqs", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Faqs", x => x.Id); });
 
             migrationBuilder.CreateTable(
                 name: "Files",
@@ -87,10 +84,7 @@ namespace Hastnama.Ekipchi.DataAccess.Migrations
                     UniqueId = table.Column<string>(nullable: true),
                     IsPrivate = table.Column<bool>(nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Files", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Files", x => x.Id); });
 
             migrationBuilder.CreateTable(
                 name: "Hosts",
@@ -114,10 +108,7 @@ namespace Hastnama.Ekipchi.DataAccess.Migrations
                     CreateDateTime = table.Column<DateTime>(nullable: false),
                     EventCount = table.Column<int>(nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Hosts", x => x.HostId);
-                });
+                constraints: table => { table.PrimaryKey("PK_Hosts", x => x.HostId); });
 
             migrationBuilder.CreateTable(
                 name: "Messages",
@@ -170,10 +161,7 @@ namespace Hastnama.Ekipchi.DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Provinces", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Provinces", x => x.Id); });
 
             migrationBuilder.CreateTable(
                 name: "Roles",
@@ -184,10 +172,7 @@ namespace Hastnama.Ekipchi.DataAccess.Migrations
                     Name = table.Column<string>(nullable: true),
                     IsVital = table.Column<bool>(nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Roles", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Roles", x => x.Id); });
 
             migrationBuilder.CreateTable(
                 name: "Users",
@@ -209,10 +194,7 @@ namespace Hastnama.Ekipchi.DataAccess.Migrations
                     ExpiredVerificationCode = table.Column<DateTime>(nullable: false),
                     Gender = table.Column<bool>(nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.UserId);
-                });
+                constraints: table => { table.PrimaryKey("PK_Users", x => x.UserId); });
 
             migrationBuilder.CreateTable(
                 name: "Events",

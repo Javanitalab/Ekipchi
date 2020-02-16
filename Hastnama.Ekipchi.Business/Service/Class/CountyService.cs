@@ -37,7 +37,6 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result> Update(UpdateCountyDto updateCountyDto)
         {
-
             var county = await FirstOrDefaultAsync(c => c.Id == updateCountyDto.Id);
 
             if (county.ProvinceId != updateCountyDto.ProvinceId)
@@ -47,7 +46,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 if (province == null)
                     return Result.Failed(new BadRequestObjectResult(new ApiMessage
                         {Message = ResponseMessage.InvalidProvinceId}));
-                
+
                 county.Province = province;
             }
 
@@ -59,7 +58,6 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result<CountyDto>> Create(CreateCountyDto createCountyDto)
         {
-
             var province = await Context.Provinces.FirstOrDefaultAsync(u => u.Id == createCountyDto.ProvinceId);
 
             if (province == null)
@@ -68,7 +66,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
             var county = _mapper.Map<County>(createCountyDto);
             county.Province = province;
-            
+
             await AddAsync(county);
             await Context.SaveChangesAsync();
 

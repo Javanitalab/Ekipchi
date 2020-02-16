@@ -21,6 +21,5 @@ namespace Hastnama.Ekipchi.Data.Group
         public bool IsPublic { get; set; }
 
         public List<UserDto> UsersInGroups { get; set; }
-
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using  System;
+using System;
 
 namespace Hastnama.Ekipchi.DataAccess.Entities
 {
@@ -30,7 +30,6 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
         [ForeignKey("ReceiverUserId"), Column(Order = 1)]
         public virtual User ReceiverUser { get; set; }
 
-        [ForeignKey(nameof(MessageId))]
-        public virtual Message Message { get; set; }
+        [ForeignKey(nameof(MessageId))] public virtual Message Message { get; set; }
     }
 }

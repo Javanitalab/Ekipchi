@@ -32,9 +32,6 @@ namespace Hastnama.Ekipchi.Api.Installer
             services.AddTransient<IImageProcessingService, ImageProcessingService>();
             services.AddTransient<IEmailServices, EmailServices>();
             services.AddTransient<ISmsService, SmsService>();
-
-
-
         }
     }
 }

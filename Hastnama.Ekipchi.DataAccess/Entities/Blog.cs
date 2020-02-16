@@ -16,19 +16,15 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
 
         public Guid UseId { get; set; }
 
-        [ForeignKey(nameof(UseId))]
-        public virtual User User { get; set; }
+        [ForeignKey(nameof(UseId))] public virtual User User { get; set; }
 
         public int? BlogCategoryId { get; set; }
 
-        [ForeignKey(nameof(BlogCategoryId))]
-        public virtual BlogCategory BlogCategory { get; set; }
+        [ForeignKey(nameof(BlogCategoryId))] public virtual BlogCategory BlogCategory { get; set; }
 
-        [Required]
-        public string Title { get; set; }
+        [Required] public string Title { get; set; }
 
-        [Required]
-        public string Content { get; set; }
+        [Required] public string Content { get; set; }
 
         public string MetaKeyWord { get; set; }
 

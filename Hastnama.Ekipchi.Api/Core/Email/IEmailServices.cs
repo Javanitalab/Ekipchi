@@ -1,6 +1,6 @@
-﻿﻿using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
- namespace Hastnama.Ekipchi.Api.Core.Email
+namespace Hastnama.Ekipchi.Api.Core.Email
 {
     public interface IEmailServices
     {

@@ -16,7 +16,6 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
 
         public int CityId { get; set; }
 
-        [ForeignKey(nameof(CityId))]
-        public virtual City City { get; set; }
+        [ForeignKey(nameof(CityId))] public virtual City City { get; set; }
     }
 }

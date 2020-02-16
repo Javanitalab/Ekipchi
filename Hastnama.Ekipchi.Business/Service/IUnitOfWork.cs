@@ -23,7 +23,7 @@ namespace Hastnama.Ekipchi.Business.Service
         ICouponService CouponService { get; }
         IEventService EventService { get; }
         IHostService HostService { get; }
-        IGroupService GroupService { get; } 
+        IGroupService GroupService { get; }
         IUserMessageService UserMessageService { get; }
         IMessageService MessageService { get; }
 

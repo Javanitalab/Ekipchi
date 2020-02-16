@@ -46,8 +46,7 @@ namespace Hastnama.Ekipchi.Data.Host
         public virtual List<string> Galleries { get; set; }
 
         public virtual List<CategoryDto> Categories { get; set; }
-        
-        public virtual List<HostAvailableDateDto> HostAvailableDates { get; set; }
 
+        public virtual List<HostAvailableDateDto> HostAvailableDates { get; set; }
     }
 }

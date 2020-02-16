@@ -13,9 +13,8 @@ namespace Hastnama.Ekipchi.Business.Service.Interface
     {
         Task<Result<PagedList<BlogDto>>> List(FilterBlogQueryDto filterQueryDto);
         Task<Result> Update(UpdateBlogDto updateBlogDto);
-        Task<Result<BlogDto>> Create(CreateBlogDto dto,Guid userId);
+        Task<Result<BlogDto>> Create(CreateBlogDto dto, Guid userId);
         Task<Result<BlogDto>> Get(int id);
         Task<Result> Delete(int id);
-
     }
 }

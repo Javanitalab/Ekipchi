@@ -37,7 +37,6 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result> Update(UpdateBlogDto updateBlogDto)
         {
-
             var blog = await FirstOrDefaultAsync(c => c.Id == updateBlogDto.Id);
             if (blog.BlogCategoryId != updateBlogDto.BlogCategoryId)
             {
@@ -57,7 +56,6 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result<BlogDto>> Create(CreateBlogDto createBlogDto, Guid userId)
         {
-
             var blogCategory =
                 await Context.BlogCategories.FirstOrDefaultAsync(u => u.Id == createBlogDto.BlogCategoryId);
             if (blogCategory == null)
@@ -68,7 +66,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             var blog = _mapper.Map(createBlogDto, new Blog());
             blog.BlogCategory = blogCategory;
             blog.UseId = userId;
-            
+
             await AddAsync(blog);
             await Context.SaveChangesAsync();
 
@@ -88,7 +86,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result> Delete(int id)
         {
-            var blog = await FirstOrDefaultAsyncAsNoTracking(b => b.Id == id,b=>b.User);
+            var blog = await FirstOrDefaultAsyncAsNoTracking(b => b.Id == id, b => b.User);
             if (blog == null)
                 return Result.Failed(new NotFoundObjectResult(
                     new ApiMessage

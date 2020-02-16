@@ -11,7 +11,7 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.BlogCategory
             RuleFor(dto => dto.Name)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage(ResponseMessage.DuplicateBlogCategoryName);
-            
+
             RuleFor(dto => dto.Slug)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage(ResponseMessage.InvalidBlogCategorySlug);

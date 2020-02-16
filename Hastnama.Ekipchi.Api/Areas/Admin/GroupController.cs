@@ -40,7 +40,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         public async Task<IActionResult> List(
             [FromQuery] FilterGroupQueryDto filterQueryDto)
         {
-            var result = await _unitOfWork.GroupService.List( filterQueryDto);
+            var result = await _unitOfWork.GroupService.List(filterQueryDto);
             if (filterQueryDto.Page == null && filterQueryDto.Limit == null)
                 return Ok(result.Data.Items);
             return result.ApiResult;
@@ -78,12 +78,11 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid? id,[FromBody] UpdateGroupDto updateGroupDto)
+        public async Task<IActionResult> Update(Guid id, [FromBody] UpdateGroupDto updateGroupDto)
         {
-            if (id != null)
-                updateGroupDto.Id = id.Value;
-
+            updateGroupDto.Id = id;
             var result = await _unitOfWork.GroupService.Update(updateGroupDto);
+
             if (!result.Success)
                 return result.ApiResult;
             return NoContent();
@@ -106,14 +105,13 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateGroupDto createGroupDto)
         {
-
             createGroupDto.OwnerId = UserId;
             var result = await _unitOfWork.GroupService.Create(createGroupDto);
             if (!result.Success)
                 return result.ApiResult;
             return Created(Url.Link("GetGroup", new {result.Data.Id}), _mapper.Map<GroupDto>(result.Data));
         }
-        
+
         /// <summary>
         /// Delete Group 
         /// </summary>
@@ -132,6 +130,5 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
                 return result.ApiResult;
             return NoContent();
         }
-
     }
 }

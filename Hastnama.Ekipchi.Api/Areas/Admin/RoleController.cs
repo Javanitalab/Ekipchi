@@ -21,18 +21,18 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        
-        
+
+
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery]PagingOptions pagingOptions, string query)
+        public async Task<IActionResult> Get([FromQuery] PagingOptions pagingOptions, string query)
         {
             var role = await _unitOfWork.RoleService.GetRoleAsync(pagingOptions, query);
             if (!role.Items.Any())
                 return Ok(new List<RoleDto>());
-            role.Items.ForEach(role=>
+            role.Items.ForEach(role =>
             {
                 role.UserInRoles = null;
-                role.RolePermissions.ForEach(ur=>
+                role.RolePermissions.ForEach(ur =>
                 {
                     ur.Role = null;
                     ur.Permission.RolePermissions = null;
@@ -50,7 +50,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             var role = await _unitOfWork.RoleService.GetRoleAsync(id);
 
             if (role is null)
-                return NotFound(new ApiMessage{Message = ResponseMessage.RoleNotFound});
+                return NotFound(new ApiMessage {Message = ResponseMessage.RoleNotFound});
 
             return Ok(_mapper.Map<RoleDto>(role));
         }
@@ -61,13 +61,13 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             var role = await _unitOfWork.RoleService.GetRoleAsync(id);
 
             if (role is null)
-                return NotFound(new ApiMessage{Message = ResponseMessage.RoleNotFound});
+                return NotFound(new ApiMessage {Message = ResponseMessage.RoleNotFound});
 
             if (role.IsVital)
-                return BadRequest(new ApiMessage{Message = ResponseMessage.RoleIsVitual});
+                return BadRequest(new ApiMessage {Message = ResponseMessage.RoleIsVitual});
 
             if (await _unitOfWork.UserInRoleService.IsRoleExistInUser(id))
-                return NotFound(new ApiMessage{Message = ResponseMessage.RoleNotFound});
+                return NotFound(new ApiMessage {Message = ResponseMessage.RoleNotFound});
 
             _unitOfWork.RoleService.Delete(role);
             await _unitOfWork.SaveChangesAsync();
@@ -76,10 +76,9 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]CreateRoleDto createRole)
+        public async Task<IActionResult> Post([FromBody] CreateRoleDto createRole)
         {
-
-            var role = new Role { Name = createRole.Name };
+            var role = new Role {Name = createRole.Name};
 
             await _unitOfWork.RoleService.AddAsync(role);
 
@@ -88,22 +87,21 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
                 if (!await _unitOfWork.PermissionService.HasPermissionExist(permissionId))
                     return NotFound(new ApiMessage());
 
-                role.RolePermissions.Add(new RolePermission { RoleId = role.Id, PermissionId = permissionId });
+                role.RolePermissions.Add(new RolePermission {RoleId = role.Id, PermissionId = permissionId});
             }
 
             await _unitOfWork.SaveChangesAsync();
-            
-            return Created(Url.Link("GetPermission", new { id = role.Id }), _mapper.Map<RoleDto>(role));
+
+            return Created(Url.Link("GetPermission", new {id = role.Id}), _mapper.Map<RoleDto>(role));
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, UpdateRoleDto updateRoleDto)
         {
-
             var role = await _unitOfWork.RoleService.GetRoleAsync(id);
 
             if (role is null)
-                return NotFound(new ApiMessage{Message = ResponseMessage.RoleNotFound});
+                return NotFound(new ApiMessage {Message = ResponseMessage.RoleNotFound});
 
             role.Name = updateRoleDto.Name;
 
@@ -119,7 +117,8 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
                 if (!await _unitOfWork.PermissionService.HasPermissionExist(permissionId))
                     return NotFound(new ApiMessage());
 
-                await _unitOfWork.RolePermissionService.AddAsync(new RolePermission { RoleId = role.Id, PermissionId = permissionId });
+                await _unitOfWork.RolePermissionService.AddAsync(new RolePermission
+                    {RoleId = role.Id, PermissionId = permissionId});
             }
 
             await _unitOfWork.SaveChangesAsync();

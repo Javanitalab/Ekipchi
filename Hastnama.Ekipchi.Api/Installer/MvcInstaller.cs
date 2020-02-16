@@ -29,10 +29,11 @@ namespace Hastnama.Ekipchi.Api.Installer
                     builder => { builder.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod(); });
             });
 
-            services.AddControllers(opt=> { opt.Filters.Add<OnExceptionMiddleware>(); }) .AddFluentValidation(mvcConfiguration =>
-                mvcConfiguration.RegisterValidatorsFromAssemblyContaining<Startup>());;
+            services.AddControllers(opt => { opt.Filters.Add<OnExceptionMiddleware>(); }).AddFluentValidation(
+                mvcConfiguration =>
+                    mvcConfiguration.RegisterValidatorsFromAssemblyContaining<Startup>());
+            ;
 
-          
 
             services.Configure<ApiBehaviorOptions>(options =>
             {
@@ -64,7 +65,7 @@ namespace Hastnama.Ekipchi.Api.Installer
                 ValidateIssuer = false,
                 ValidIssuer = jwtSetting.ValidIssuer,
 
-                
+
                 ValidAudience = jwtSetting.ValidAudience,
                 ValidateLifetime = true,
                 RequireExpirationTime = false

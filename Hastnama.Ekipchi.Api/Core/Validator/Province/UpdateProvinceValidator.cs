@@ -11,8 +11,6 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Province
             RuleFor(dto => dto.Name)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage(ResponseMessage.ProvinceNameIsInvalid);
-
-            
         }
     }
 }

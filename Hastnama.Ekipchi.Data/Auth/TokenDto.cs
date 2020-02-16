@@ -1,8 +1,7 @@
-﻿﻿namespace Hastnama.Ekipchi.Data.Auth
+﻿namespace Hastnama.Ekipchi.Data.Auth
 {
     public class TokenDto
     {
         public string AccessToken { get; set; }
-
     }
 }

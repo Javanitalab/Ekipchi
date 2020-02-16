@@ -11,7 +11,6 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Coupon
             RuleFor(dto => dto.Code)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage(ResponseMessage.InvalidCouponCode);
-
         }
     }
 }

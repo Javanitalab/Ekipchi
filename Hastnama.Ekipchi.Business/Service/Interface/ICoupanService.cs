@@ -11,11 +11,10 @@ namespace Hastnama.Ekipchi.Business.Service.Interface
 {
     public interface ICouponService : IRepository<Coupon>
     {
-        Task<Result<PagedList<CouponDto>>> List( FilterCouponQueryDto filterQueryDto);
+        Task<Result<PagedList<CouponDto>>> List(FilterCouponQueryDto filterQueryDto);
         Task<Result> Update(UpdateCouponDto updateCouponDto);
         Task<Result<CouponDto>> Create(CreateCouponDto dto);
         Task<Result<CouponDto>> Get(Guid id);
         Task<Result> Delete(Guid id);
-
     }
 }

@@ -17,7 +17,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             var response = await httpClient.GetAsync(
                 $"https://api.kavenegar.com/v1/{ApiKey}/sms/send?sender={sender}&receptor={receiver}&message={message}");
             var stringResponse = await response.Content.ReadAsStringAsync();
-            
+
             return Result<JObject>.SuccessFull(new JObject());
         }
     }

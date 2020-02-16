@@ -33,12 +33,11 @@ namespace Hastnama.Ekipchi.Data.Host
         public string Logo { get; set; }
 
         public string TermsAndCondition { get; set; }
-        
+
         public virtual List<string> Galleries { get; set; }
 
         public virtual List<int> Categories { get; set; }
-        
+
         public virtual List<HostAvailableDateDto> HostAvailableDates { get; set; }
-        
     }
 }

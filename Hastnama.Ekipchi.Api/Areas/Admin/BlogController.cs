@@ -37,7 +37,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         public async Task<IActionResult> List(
             [FromQuery] FilterBlogQueryDto filterQueryDto)
         {
-            var result = await _unitOfWork.BlogService.List( filterQueryDto);
+            var result = await _unitOfWork.BlogService.List(filterQueryDto);
             if (filterQueryDto.Page == null && filterQueryDto.Limit == null)
                 return Ok(result.Data.Items);
             return result.ApiResult;
@@ -75,12 +75,11 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int? id,[FromBody] UpdateBlogDto updateBlogDto)
+        public async Task<IActionResult> Update(int id, [FromBody] UpdateBlogDto updateBlogDto)
         {
-            if (id != null)
-                updateBlogDto.Id = id.Value;
-
+            updateBlogDto.Id = id;
             var result = await _unitOfWork.BlogService.Update(updateBlogDto);
+
             if (!result.Success)
                 return result.ApiResult;
             return NoContent();
@@ -103,13 +102,13 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateBlogDto createBlogDto)
         {
-            var result = await _unitOfWork.BlogService.Create(createBlogDto,UserId);
+            var result = await _unitOfWork.BlogService.Create(createBlogDto, UserId);
             if (!result.Success)
                 return result.ApiResult;
             return Created(Url.Link("GetCounty", new {result.Data.Id}), _mapper.Map<BlogDto>(result.Data));
         }
-        
-        
+
+
         /// <summary>
         /// Delete Blog 
         /// </summary>
@@ -128,6 +127,5 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
                 return result.ApiResult;
             return NoContent();
         }
-
     }
 }

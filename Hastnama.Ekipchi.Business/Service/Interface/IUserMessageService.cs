@@ -7,11 +7,13 @@ using Hastnama.Ekipchi.DataAccess.Repository;
 
 namespace Hastnama.Ekipchi.Business.Service.Interface
 {
-    public interface IUserMessageService  : IRepository<UserMessage>
+    public interface IUserMessageService : IRepository<UserMessage>
     {
-        Task<PagedList<UserMessage>> GetSendMessageListAsync(PagingOptions pagingOptions, Guid senderUserId, string search);
+        Task<PagedList<UserMessage>> GetSendMessageListAsync(PagingOptions pagingOptions, Guid senderUserId,
+            string search);
 
-        Task<PagedList<UserMessage>> GetReceiveMessageListAsync(PagingOptions pagingOptions, Guid userId, string search);
+        Task<PagedList<UserMessage>>
+            GetReceiveMessageListAsync(PagingOptions pagingOptions, Guid userId, string search);
 
         Task<PagedList<UserMessage>> GetConversationListASync(int parentId, int objectPerPage, int pageNumber);
 

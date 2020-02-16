@@ -10,9 +10,7 @@ namespace Hastnama.Ekipchi.Data.Event
 {
     public class UpdateEventDto
     {
-        
-        [JsonIgnore]
-        public Guid? Id { get; set; }
+        [JsonIgnore] public Guid? Id { get; set; }
 
         public int CategoryId { get; set; }
 

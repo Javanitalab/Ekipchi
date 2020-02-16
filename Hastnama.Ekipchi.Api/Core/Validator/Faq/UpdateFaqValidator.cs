@@ -11,7 +11,6 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Faq
             RuleFor(dto => dto.Question)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage(ResponseMessage.InvalidFaqQuestion);
-
         }
     }
 }

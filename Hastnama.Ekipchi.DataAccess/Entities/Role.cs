@@ -23,7 +23,7 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
 
         public List<RolePermission> RolePermissions { get; set; }
 
-        public List<UserInRole> UserInRoles { get;set; }
+        public List<UserInRole> UserInRoles { get; set; }
 
         public static int Admin = 1;
 

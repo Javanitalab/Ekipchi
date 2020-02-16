@@ -1,11 +1,9 @@
-﻿﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
- namespace Hastnama.Ekipchi.Data.Auth
+namespace Hastnama.Ekipchi.Data.Auth
 {
     public class ForgotPasswordDto
     {
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Required] [EmailAddress] public string Email { get; set; }
     }
 }
