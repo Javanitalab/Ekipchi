@@ -1,0 +1,24 @@
+﻿# docker-compose.yml
+version: "3.3"
+services:
+  seq:
+    image: datalust/seq:latest
+    ports:
+      - 5341
+    environment:
+      ACCEPT_EULA: Y
+    restart: unless-stopped
+    volumes:
+        - ./seq-data:/data
+  ekipchi:
+    build: .
+    hostname: ekipchi
+    depends_on:
+      - seq
+    links:
+      - seq
+    ports:
+      - 80
+      - 443
+    environment:
+      WAIT_HOSTS: seq:5341
