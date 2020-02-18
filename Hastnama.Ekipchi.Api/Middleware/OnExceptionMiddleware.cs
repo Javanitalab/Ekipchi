@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 
 namespace Hastnama.Ekipchi.Api.Middleware
 {
@@ -37,6 +38,7 @@ namespace Hastnama.Ekipchi.Api.Middleware
                 error.Message = "A server error occurred";
                 error.Detail = context.Exception.Message;
             }
+            Log.Error(context.Exception,context.Exception.Message,context.Exception.StackTrace);
 
             context.Result = new ObjectResult(error)
             {
