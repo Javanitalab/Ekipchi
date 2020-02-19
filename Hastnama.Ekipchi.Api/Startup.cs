@@ -1,4 +1,6 @@
+using System;
 using System.IO;
+using Hangfire;
 using Hastnama.Ekipchi.Api.Core.Environment;
 using Hastnama.Ekipchi.Api.Core.Extensions;
 using Hastnama.Ekipchi.Api.Installer;
@@ -28,7 +30,7 @@ namespace Hastnama.Ekipchi.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IBackgroundJobClient backgroundJobs,
             IApplicationBootstrapper applicationBootstrapper)
         {
             if (env.IsDevelopment())
@@ -85,6 +87,9 @@ namespace Hastnama.Ekipchi.Api
 
             #endregion Static files Setting
 
+            app.UseHangfireDashboard();
+
+
             app.UseRouting();
 
             app.UseCors("MyPolicy");
@@ -98,6 +103,7 @@ namespace Hastnama.Ekipchi.Api
 
             app.UseSwagger();
             app.UseSwaggerUI(options => { options.SwaggerEndpoint("/swagger/v1/swagger.json", "Ekipchi  API V1"); });
+
         }
     }
 }

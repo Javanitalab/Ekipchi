@@ -5,6 +5,8 @@ using System.Reflection;
 using System.Text;
 using AutoMapper;
 using FluentValidation.AspNetCore;
+using Hangfire;
+using Hangfire.SqlServer;
 using Hastnama.Ekipchi.Api.Core.AutoMapper;
 using Hastnama.Ekipchi.Api.Core.Environment;
 using Hastnama.Ekipchi.Api.Middleware;
@@ -49,6 +51,27 @@ namespace Hastnama.Ekipchi.Api.Installer
                     return new BadRequestObjectResult(errors);
                 };
             });
+
+            #region HangFire
+
+            services.AddHangfire(conf => conf
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UseSqlServerStorage(configuration.GetConnectionString("HangFireConnection"), new SqlServerStorageOptions
+                {
+                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                    QueuePollInterval = TimeSpan.Zero,
+                    UseRecommendedIsolationLevel = true,
+                    UsePageLocksOnDequeue = true,
+                    DisableGlobalLocks = true
+                }));
+
+            // Add the processing server as IHostedService
+            services.AddHangfireServer();
+
+            #endregion
 
             #region AuthToken
 
