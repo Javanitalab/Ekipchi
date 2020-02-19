@@ -14,6 +14,7 @@ using Hastnama.Ekipchi.Data.Event;
 using Hastnama.Ekipchi.Data.Group;
 using Hastnama.Ekipchi.Data.Role;
 using Hastnama.Ekipchi.Data.User;
+using Hastnama.Ekipchi.Data.User.Wallet;
 using Hastnama.Ekipchi.DataAccess.Context;
 using Hastnama.Ekipchi.DataAccess.Entities;
 using Hastnama.Ekipchi.DataAccess.Repository;
@@ -118,7 +119,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result> UpdateProfile(AdminUpdateUserDto adminUpdateUserDto)
         {
-            var user = await FirstOrDefaultAsync(u => u.Id == adminUpdateUserDto.Id,
+            var user = await FirstOrDefaultAsync(u => u.Id == adminUpdateUserDto.Id,u=>u.UserWallet,
                 u => u.UserInRoles.Select(ur => ur.Role));
 
             if (user == null)
@@ -211,7 +212,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 return Result<UserDto>.Failed(new BadRequestObjectResult(new ApiMessage
                     {Message = ResponseMessage.InvalidUserId}));
 
-            var user = await FirstOrDefaultAsyncAsNoTracking(u => u.Id == id,
+            var user = await FirstOrDefaultAsyncAsNoTracking(u => u.Id == id,u=>u.UserWallet,
                 u => u.UserInRoles.Select(ur => ur.Role.RolePermissions.Select(rp => rp.Permission.Parent)));
 
             if (user == null)
@@ -327,5 +328,6 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             await Context.SaveChangesAsync();
             return Result.SuccessFull();
         }
+
     }
 }

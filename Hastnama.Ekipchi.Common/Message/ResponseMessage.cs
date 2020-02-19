@@ -13,9 +13,16 @@
 
         #endregion
 
+        
         #region File
 
         public const string FileNotFound = "فایل مورد نظر پیدا نشد";
+
+        #endregion
+
+        #region Transaction
+
+        public const string TransactionNotFound = "تراکنش پیدا نشد";
 
         #endregion
 

@@ -1,5 +1,5 @@
 using System.Linq;
-using Hastnama.Ekipchi.Api.Core.Log;
+using Hastnama.Ekipchi.Api.Core.Logger;
 using Hastnama.Ekipchi.Api.Data;
 using Hastnama.Ekipchi.DataAccess.Context;
 using Microsoft.AspNetCore.Hosting;

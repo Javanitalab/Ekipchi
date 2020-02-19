@@ -7,8 +7,10 @@ using Hastnama.Ekipchi.Common.Enum;
 using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Message;
+using Hastnama.Ekipchi.Data.Event;
 using Hastnama.Ekipchi.Data.Group;
 using Hastnama.Ekipchi.Data.User;
+using Hastnama.Ekipchi.Data.User.Wallet;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hastnama.Ekipchi.Api.Areas.Admin
@@ -150,14 +152,14 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         }
 
         /// <summary>
-        /// User Groups
+        /// User Events
         /// </summary>
         /// <param name="userId"></param>
         /// <returns>Group List</returns>
         /// <response code="200">if Get List successfully </response>
         /// <response code="404">If entity not found.</response>
         /// <response code="500">If an unexpected error happen</response>
-        [ProducesResponseType(typeof(List<GroupDto>), 200)]
+        [ProducesResponseType(typeof(List<EventDto>), 200)]
         [ProducesResponseType(typeof(ApiMessage), 404)]
         [ProducesResponseType(typeof(ApiMessage), 500)]
         [HttpGet("{id}/Events")]

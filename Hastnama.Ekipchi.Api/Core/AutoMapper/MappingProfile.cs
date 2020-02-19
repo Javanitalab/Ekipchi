@@ -25,6 +25,7 @@ using Hastnama.Ekipchi.Data.Province;
 using Hastnama.Ekipchi.Data.Region;
 using Hastnama.Ekipchi.Data.Role;
 using Hastnama.Ekipchi.Data.User;
+using Hastnama.Ekipchi.Data.User.Wallet;
 using Hastnama.Ekipchi.DataAccess.Entities;
 
 namespace Hastnama.Ekipchi.Api.Core.AutoMapper
@@ -74,6 +75,7 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
 
             CreateMap<AdminUpdateUserDto, User>()
                 .ForMember(x => x.Password, opt => opt.Ignore())
+                .ForMember(x => x.UserWallet, opt => opt.Ignore())
                 .ForMember(x => x.Status, opt => opt.MapFrom(des => des.Status))
                 .ForMember(x => x.Username, opt => opt.MapFrom(des => des.Username))
                 .ForMember(x => x.Email, opt => opt.MapFrom(des => des.Email))
@@ -89,8 +91,11 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
                 .ForMember(x => x.Id, opt => opt.MapFrom(des => des.Id))
                 .ForMember(x => x.Mobile, opt => opt.MapFrom(des => des.Mobile));
 
+            CreateMap<UserWallet, UserWalletDto>();
+
             CreateMap<CreateUserDto, User>()
                 .ForMember(x => x.Status, opt => opt.MapFrom(des => des.Status))
+                .ForMember(x => x.UserWallet, opt => opt.Ignore())
                 .ForMember(x => x.Username, opt => opt.MapFrom(des => des.Username))
                 .ForMember(x => x.Password, opt => opt.MapFrom(des => StringUtil.HashPass(des.Password)))
                 .ForMember(x => x.Email, opt => opt.MapFrom(des => des.Email))

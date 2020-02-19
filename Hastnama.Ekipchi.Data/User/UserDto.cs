@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Hastnama.Ekipchi.Common.Enum;
 using Hastnama.Ekipchi.Data.Role;
+using Hastnama.Ekipchi.Data.User.Wallet;
 
 namespace Hastnama.Ekipchi.Data.User
 {
@@ -18,6 +19,7 @@ namespace Hastnama.Ekipchi.Data.User
         public UserStatus Status { get; set; }
         public bool Gender { get; set; }
 
+        public UserWalletDto UserWallet { get; set; }
         public List<int> Roles { get; set; }
     }
 }

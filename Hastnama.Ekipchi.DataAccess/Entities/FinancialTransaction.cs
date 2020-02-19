@@ -37,19 +37,14 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
         public TransactionStatus TeTransactionStatus { get; set; }
 
         public TransactionType TransactionType { get; set; }
-
         public Guid? PayerId { get; set; }
 
         [ForeignKey(nameof(PayerId))]
         public virtual User Payer { get; set; }
-
-
         public Guid? ReceiverId { get; set; }
 
         [ForeignKey(nameof(ReceiverId))]
         public virtual User Receiver { get; set; }
-
-
         public Guid? AuthorId { get; set; }
 
         [ForeignKey(nameof(AuthorId))]

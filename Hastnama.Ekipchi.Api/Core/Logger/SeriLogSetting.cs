@@ -1,4 +1,4 @@
-﻿namespace Hastnama.Ekipchi.Api.Core.Log
+﻿namespace Hastnama.Ekipchi.Api.Core.Logger
 {
     public class SeriLogSetting
     {

@@ -64,6 +64,8 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
         public DateTime ExpiredVerificationCode { get; set; }
 
         public bool Gender { get; set; }
+        
+        public virtual UserWallet UserWallet { get; set; }
 
         public virtual List<UserToken> UserTokens { get; }
 
