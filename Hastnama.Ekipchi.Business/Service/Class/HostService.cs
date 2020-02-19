@@ -60,10 +60,28 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
             _mapper.Map(updateHostDto, host);
             Context.HostGalleries.RemoveRange(host.HostGalleries);
+            Context.HostAvailableDates.RemoveRange(host.HostAvailableDates);
 
             host.HostCategories = categories;
             host.HostGalleries = updateHostDto.Galleries.Select(g => new HostGallery {Image = g, Host = host}).ToList();
-
+            host.HostAvailableDates = updateHostDto.HostAvailableDates.Select(date =>
+            {
+                var dateFromHour = date.FromHour;
+                var dateToHour = date.ToHour;
+                TimeSpan fromHour;
+                TimeSpan toHour;
+                if (TimeSpan.TryParse(dateFromHour, out fromHour))
+                    if (TimeSpan.TryParse(dateToHour, out toHour))
+                        return new HostAvailableDate
+                        {
+                            Days = date.Days,
+                            DateTime = date.DateTime,
+                            FromHour = fromHour,
+                            ToHour = toHour,
+                            Id = Guid.NewGuid()
+                        };
+                return null;
+            }).Where(a=>a!=null).ToList();
             await Context.SaveChangesAsync();
 
             return Result.SuccessFull();
@@ -92,6 +110,24 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 Image = image,
                 Host = host
             }).ToList();
+            host.HostAvailableDates = createHostDto.HostAvailableDates.Select(date =>
+            {
+                var dateFromHour = date.FromHour;
+                var dateToHour = date.ToHour;
+                TimeSpan fromHour;
+                TimeSpan toHour;
+                if (TimeSpan.TryParse(dateFromHour, out fromHour))
+                    if (TimeSpan.TryParse(dateToHour, out toHour))
+                        return new HostAvailableDate
+                        {
+                            Days = date.Days,
+                            DateTime = date.DateTime,
+                            FromHour = fromHour,
+                            ToHour = toHour,
+                            Id = Guid.NewGuid()
+                        };
+                return null;
+            }).Where(a=>a!=null).ToList();
 
             await AddAsync(host);
             await Context.SaveChangesAsync();
