@@ -80,6 +80,12 @@ namespace Hastnama.Ekipchi.DataAccess.Context
 
         public virtual DbSet<RolePermission> RolePermissions { get; set; }
 
+        public virtual DbSet<UserWallet> UserWallets { get; set; }
+
+        public virtual DbSet<Payment> Payments { get; set; }
+
+        public virtual DbSet<FinancialTransaction> FinancialTransactions { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserMessage>()
@@ -88,6 +94,18 @@ namespace Hastnama.Ekipchi.DataAccess.Context
 
             modelBuilder.Entity<UserInGroup>().HasOne(u => u.User)
                 .WithMany(u => u.UserInGroups).IsRequired().OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<FinancialTransaction>().HasOne(u => u.Payer).WithMany(u => u.PayerTransactions)
+                .IsRequired().OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<FinancialTransaction>().HasOne(u => u.Receiver).WithMany(u => u.ReceiverTransactions)
+                .IsRequired().OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<FinancialTransaction>().HasOne(u => u.Author).WithMany(u => u.AuthorTransactions)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+
         }
     }
 }

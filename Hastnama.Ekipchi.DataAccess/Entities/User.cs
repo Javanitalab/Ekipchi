@@ -23,6 +23,12 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
             ReceiverMessages = new List<UserMessage>();
 
             SenderMessage = new List<UserMessage>();
+
+            PayerTransactions = new List<FinancialTransaction>();
+
+            ReceiverTransactions = new List<FinancialTransaction>();
+
+            AuthorTransactions = new List<FinancialTransaction>();
         }
 
         [Key]
@@ -74,5 +80,11 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
         public virtual List<UserMessage> SenderMessage { get; }
 
         public virtual List<UserInRole> UserInRoles { get; set; }
+
+        public virtual List<FinancialTransaction> PayerTransactions { get; }
+
+        public virtual List<FinancialTransaction> ReceiverTransactions { get; }
+
+        public virtual List<FinancialTransaction> AuthorTransactions { get; }
     }
 }
