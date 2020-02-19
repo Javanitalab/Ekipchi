@@ -89,7 +89,6 @@ namespace Hastnama.Ekipchi.Api
 
             app.UseHangfireDashboard();
 
-
             app.UseRouting();
 
             app.UseCors("MyPolicy");
