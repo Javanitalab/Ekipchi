@@ -67,6 +67,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// <summary>
         /// Update Group 
         /// </summary>
+        /// <param name="id"></param>
         /// <param name="updateGroupDto"></param>
         /// <returns>NoContent</returns>
         /// <response code="204">if Update successfully </response>

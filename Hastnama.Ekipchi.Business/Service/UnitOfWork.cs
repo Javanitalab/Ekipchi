@@ -17,6 +17,7 @@ namespace Hastnama.Ekipchi.Business.Service
         private IUserTokenService _userTokenService;
         private IUserFilesService _filesService;
         private ICityService _cityService;
+        private IUserWalletService _userWalletService;
         private ICountyService _countyService;
         private IProvinceService _provinceService;
         private IFinancialTransactionService _financialTransactionService;
@@ -49,6 +50,7 @@ namespace Hastnama.Ekipchi.Business.Service
 
         public IFinancialTransactionService FinancialTransactionService => _financialTransactionService ??= new FinancialTransactionService(_context, _mapper);
         public IUserService UserService => _userService ??= new UserService(_context, _mapper);
+        public IUserWalletService UserWalletService => _userWalletService ??= new UserWalletService(_context, _mapper);
 
         public IUserTokenService UserTokenService =>
             _userTokenService ??= new UserTokenService(_context);
