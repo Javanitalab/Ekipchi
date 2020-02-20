@@ -94,7 +94,7 @@ namespace Hastnama.Ekipchi.Api
 
             app.UseCors("MyPolicy");
 
-            // app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseMiddleware<ApplicationMetaMiddleware>();
             app.UseMiddleware<MembershipMiddleware>();
             app.UseAuthorization();
