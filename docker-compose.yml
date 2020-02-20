@@ -1,4 +1,4 @@
-﻿# docker-compose.yml
+﻿﻿# docker-compose.yml
 version: "3.3"
 services:
   seq:
@@ -11,15 +11,15 @@ services:
     volumes:
         - ./seq-data:/data
   ekipchi:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     hostname: ekipchi
     depends_on:
       - seq
-    links:
-      - seq
     ports:
-      - 80
-      - 443
+      - "5000:5050"
+      - "5001:6060"
     environment:
       WAIT_HOSTS: seq:5341
 #

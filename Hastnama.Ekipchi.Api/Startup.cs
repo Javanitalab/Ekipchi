@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 
 namespace Hastnama.Ekipchi.Api
 {
@@ -93,7 +94,7 @@ namespace Hastnama.Ekipchi.Api
 
             app.UseCors("MyPolicy");
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
             app.UseMiddleware<ApplicationMetaMiddleware>();
             app.UseMiddleware<MembershipMiddleware>();
             app.UseAuthorization();
@@ -102,7 +103,6 @@ namespace Hastnama.Ekipchi.Api
 
             app.UseSwagger();
             app.UseSwaggerUI(options => { options.SwaggerEndpoint("/swagger/v1/swagger.json", "Ekipchi  API V1"); });
-
         }
     }
 }

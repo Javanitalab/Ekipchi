@@ -57,5 +57,9 @@
         <ProjectReference Include="..\Hastnama.Ekipchi.Common\Hastnama.Ekipchi.Common.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="..\.dockerignore" />
+    </ItemGroup>
+
 
 </Project>
