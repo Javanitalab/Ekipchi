@@ -16,6 +16,7 @@ using Hastnama.Ekipchi.Data.Event.Gallery;
 using Hastnama.Ekipchi.Data.Event.Schedule;
 using Hastnama.Ekipchi.Data.Faq;
 using Hastnama.Ekipchi.Data.File;
+using Hastnama.Ekipchi.Data.Financial;
 using Hastnama.Ekipchi.Data.Group;
 using Hastnama.Ekipchi.Data.Host;
 using Hastnama.Ekipchi.Data.Host.AvailableDate;
@@ -103,6 +104,18 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
                 .ForMember(x => x.Avatar, opt => opt.MapFrom(des => des.Avatar))
                 .ForMember(x => x.Id, opt => Guid.NewGuid())
                 .ForMember(x => x.Mobile, opt => opt.MapFrom(des => des.Mobile));
+
+            #endregion
+
+            #region Payment
+
+            CreateMap<PaymentDto, Payment>();
+
+            CreateMap<Payment, PaymentDto>();
+
+            CreateMap<FinancialTransactionDto, FinancialTransaction>();
+
+            CreateMap<FinancialTransaction, FinancialTransactionDto>();
 
             #endregion
 

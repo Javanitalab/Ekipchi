@@ -9,6 +9,7 @@ namespace Hastnama.Ekipchi.Business.Service
         #region Services
 
         IUserService UserService { get; }
+        IPaymentService PaymentService { get; }
         IUserWalletService UserWalletService { get; }
         IUserTokenService UserTokenService { get; }
         IUserFilesService FilesService { get; }
