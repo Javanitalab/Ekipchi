@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Hastnama.Ekipchi.Common.Enum;
-using Hastnama.Ekipchi.Data.Role;
 using Hastnama.Ekipchi.Data.User.Wallet;
 
 namespace Hastnama.Ekipchi.Data.User

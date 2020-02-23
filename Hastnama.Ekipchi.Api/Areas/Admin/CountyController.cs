@@ -1,8 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
 using Hastnama.Ekipchi.Business.Service;
-using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Data.Country;
@@ -26,7 +24,6 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// County List
         /// </summary>
         /// <param name="filterQueryDto"></param>
-        /// <param name="pagingOptions"></param>
         /// <returns>County List</returns>
         /// <response code="200">if Get List successfully </response>
         /// <response code="404">If entity not found.</response>
@@ -67,6 +64,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// Update County 
         /// </summary>
         /// <param name="updateCountyDto"></param>
+        /// <param name="id"></param>
         /// <returns>NoContent</returns>
         /// <response code="204">if Update successfully </response>
         /// <response code="400">If validation failure.</response>

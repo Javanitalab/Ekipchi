@@ -1,7 +1,4 @@
-﻿using System;
-using Hastnama.Ekipchi.Data.User;
-
-namespace Hastnama.Ekipchi.Data.Event.Gallery
+﻿namespace Hastnama.Ekipchi.Data.Event.Gallery
 {
     public class UpdateEventGalleryDto
     {

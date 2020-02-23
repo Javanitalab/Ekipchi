@@ -1,0 +1,14 @@
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build-env
+WORKDIR /app/ekipchi
+
+# Copy csproj and restore
+COPY . ./
+RUN dotnet restore "Hastnama.Ekipchi.sln"
+RUN dotnet publish "Hastnama.Ekipchi.Api/Hastnama.Ekipchi.Api.csproj" -c Release -o out
+
+# Generate runtime image
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
+WORKDIR /app/ekipchi
+EXPOSE 80
+COPY --from=build-env /app/ekipchi/out .
+ENTRYPOINT ["dotnet", "Hastnama.Ekipchi.Api.dll"]

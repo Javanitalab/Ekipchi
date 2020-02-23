@@ -34,7 +34,7 @@ namespace Hastnama.Ekipchi.Api.Installer
             services.AddControllers(opt => { opt.Filters.Add<OnExceptionMiddleware>(); }).AddFluentValidation(
                 mvcConfiguration =>
                     mvcConfiguration.RegisterValidatorsFromAssemblyContaining<Startup>());
-            ;
+            
 
 
             services.Configure<ApiBehaviorOptions>(options =>

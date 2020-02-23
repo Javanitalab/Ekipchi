@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
 using Hastnama.Ekipchi.Business.Service;
-using Hastnama.Ekipchi.Business.Service.Interface;
-using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Data.Region;
@@ -28,7 +24,6 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// Region List
         /// </summary>
         /// <param name="filterQueryDto"></param>
-        /// <param name="pagingOptions"></param>
         /// <returns>Region List</returns>
         /// <response code="200">if login successfully </response>
         /// <response code="400">If validation failure.</response>
@@ -69,6 +64,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// Update Region 
         /// </summary>
         /// <param name="updateRegionDto"></param>
+        /// <param name="id"></param>
         /// <returns>NoContent</returns>
         /// <response code="200">if login successfully </response>
         /// <response code="400">If validation failure.</response>

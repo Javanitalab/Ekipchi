@@ -12,7 +12,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Hastnama.Ekipchi.Common.Helper;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Hastnama.Ekipchi.Business.Service.Class
 {
@@ -78,15 +77,14 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
 
             var newEvent = _mapper.Map<Event>(createEventDto);
-            if (newEvent.EventGallery != null)
-                newEvent.EventGallery.ForEach(e =>
-                {
-                    e.UserId = userId;
-                    e.Id = Guid.NewGuid();
-                });
+            newEvent.EventGallery?.ForEach(e =>
+            {
+                e.UserId = userId;
+                e.Id = Guid.NewGuid();
+            });
             newEvent.EventGallery =
-                newEvent.EventGallery.Take(1)
-                    .ToList(); // todooooo Bayad unique bodane eventid to table event gallery fix beshe
+                newEvent.EventGallery?.Take(1)
+                    .ToList();
             await AddAsync(newEvent);
             await Context.SaveChangesAsync();
 
@@ -128,13 +126,13 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                     Context.UserInEvents.RemoveRange(removedUsers);
 
                 // get all users id that are added
-                var addedUsersId = updateEventDto.Users.Where(userId =>
-                    !eventDetail.UserInEvents.Select(u => u.UserId).Contains(userId)).ToList();
+                var addedUsersId = updateEventDto.Users.Where(uId =>
+                    !eventDetail.UserInEvents.Select(u => u.UserId).Contains(uId)).ToList();
 
                 var addedUsers = await Context.Users.Where(u => addedUsersId.Contains(u.Id)).ToListAsync();
 
                 // if invalid user id sent 
-                if (addedUsers.Count != addedUsersId.Count())
+                if (addedUsers.Count != addedUsersId.Count)
                     return Result.Failed(new BadRequestObjectResult(new ApiMessage
                         {Message = ResponseMessage.UserNotFound}));
 
@@ -159,7 +157,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             {
                 eventDetail.EventGallery =
                     eventDetail.EventGallery.Take(1)
-                        .ToList(); // todooooo Bayad unique bodane eventid to table event gallery fix beshe
+                        .ToList();
                 eventDetail.EventGallery.Where(e => e.UserId != Guid.Empty).ToList().ForEach(eg => eg.UserId = userId);
             }
 

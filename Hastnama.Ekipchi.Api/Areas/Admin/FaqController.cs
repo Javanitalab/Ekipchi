@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
 using Hastnama.Ekipchi.Business.Service;
-using Hastnama.Ekipchi.Business.Service.Interface;
-using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Data.Faq;
@@ -28,7 +24,6 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// Faq List
         /// </summary>
         /// <param name="filterQueryDto"></param>
-        /// <param name="pagingOptions"></param>
         /// <returns>Faq List</returns>
         /// <response code="200">if Get List successfully </response>
         /// <response code="404">If entity not found.</response>
@@ -68,6 +63,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// Update Faq 
         /// </summary>
         /// <param name="updateFaqDto"></param>
+        /// <param name="id"></param>
         /// <returns>NoContent</returns>
         /// <response code="204">if Update successfully </response>
         /// <response code="400">If validation failure.</response>

@@ -14,7 +14,6 @@ using Hastnama.Ekipchi.Data.Event;
 using Hastnama.Ekipchi.Data.Group;
 using Hastnama.Ekipchi.Data.Role;
 using Hastnama.Ekipchi.Data.User;
-using Hastnama.Ekipchi.Data.User.Wallet;
 using Hastnama.Ekipchi.DataAccess.Context;
 using Hastnama.Ekipchi.DataAccess.Entities;
 using Hastnama.Ekipchi.DataAccess.Repository;

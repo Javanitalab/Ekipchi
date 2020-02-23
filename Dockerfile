@@ -1,24 +1,26 @@
+#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
+WORKDIR /src
+COPY ["Hastnama.Ekipchi.Api/Hastnama.Ekipchi.Api.csproj", "Hastnama.Ekipchi.Api/"]
+COPY ["Hastnama.Ekipchi.Common/Hastnama.Ekipchi.Common.csproj", "Hastnama.Ekipchi.Common/"]
+COPY ["Hastnama.Ekipchi.Business/Hastnama.Ekipchi.Business.csproj", "Hastnama.Ekipchi.Business/"]
+COPY ["Hastnama.Ekipchi.DataAccess/Hastnama.Ekipchi.DataAccess.csproj", "Hastnama.Ekipchi.DataAccess/"]
+COPY ["Hastnama.Ekipchi.Data/Hastnama.Ekipchi.Data.csproj", "Hastnama.Ekipchi.Data/"]
+RUN dotnet restore "Hastnama.Ekipchi.Api/Hastnama.Ekipchi.Api.csproj"
+COPY . .
+WORKDIR "/src/Hastnama.Ekipchi.Api"
+RUN dotnet build "Hastnama.Ekipchi.Api.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "Hastnama.Ekipchi.Api.csproj" -c Release -o /app/publish
+
+FROM base AS final
 WORKDIR /app
-EXPOSE 5001
-
-# copy csproj and restore as distinct layers
-COPY *.sln .
-COPY Hastnama.Ekipchi.Api/Hastnama.Ekipchi.Api.csproj /app/Hastnama.Ekipchi.Api/
-COPY Hastnama.Ekipchi.DataAccess/Hastnama.Ekipchi.DataAccess.csproj /app/Hastnama.Ekipchi.DataAccess/
-COPY Hastnama.Ekipchi.Data/Hastnama.Ekipchi.Data.csproj /app/Hastnama.Ekipchi.Data/
-COPY Hastnama.Ekipchi.Business/Hastnama.Ekipchi.Business.csproj /app/Hastnama.Ekipchi.Business/
-COPY Hastnama.Ekipchi.Common/Hastnama.Ekipchi.Common.csproj /app/Hastnama.Ekipchi.Common/
-RUN dotnet restore
-
-# copy everything else and build app
-COPY . ./
-WORKDIR /app/Hastnama.Ekipchi.Api
-RUN dotnet publish  -c Release -o out
-
-
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS runtime
-WORKDIR /app
-COPY --from=build /app/Hastnama.Ekipchi.Api/out ./
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "Hastnama.Ekipchi.Api.dll"]

@@ -8,6 +8,7 @@ using Hastnama.Ekipchi.DataAccess.Context;
 using Hastnama.Ekipchi.DataAccess.Entities;
 using Hastnama.Ekipchi.DataAccess.Repository;
 using Microsoft.EntityFrameworkCore;
+#pragma warning disable 108,114
 
 namespace Hastnama.Ekipchi.Business.Service.Class
 {

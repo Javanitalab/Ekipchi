@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
 using Hastnama.Ekipchi.Business.Service;
-using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Data.Blog;
@@ -25,7 +24,6 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// Blog List
         /// </summary>
         /// <param name="filterQueryDto"></param>
-        /// <param name="pagingOptions"></param>
         /// <returns>Blog List</returns>
         /// <response code="200">if Get successfully </response>
         /// <response code="404">If entity not found.</response>
@@ -65,6 +63,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// Update Blog 
         /// </summary>
         /// <param name="updateBlogDto"></param>
+        /// <param name="id"></param>
         /// <returns>NoContent</returns>
         /// <response code="204">if Update successfully </response>
         /// <response code="400">If validation failure.</response>

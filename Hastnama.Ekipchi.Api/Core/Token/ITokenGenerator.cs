@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Hastnama.Ekipchi.Common.Result;
-using Hastnama.Ekipchi.Data;
 using Hastnama.Ekipchi.Data.Auth;
 using Hastnama.Ekipchi.DataAccess.Entities;
 

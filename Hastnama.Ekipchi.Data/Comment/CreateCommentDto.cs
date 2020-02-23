@@ -1,5 +1,4 @@
 ﻿using System;
-using Hastnama.Ekipchi.Data.User;
 
 namespace Hastnama.Ekipchi.Data.Comment
 {

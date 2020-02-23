@@ -6,10 +6,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Helper;
-using Hastnama.Ekipchi.Common.Result;
 using Hastnama.Ekipchi.DataAccess.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+#pragma warning disable 693
 
 namespace Hastnama.Ekipchi.DataAccess.Repository
 {
@@ -152,10 +152,6 @@ namespace Hastnama.Ekipchi.DataAccess.Repository
 
         public async Task<PagedList<TEntity>> GetPagedAsync(int pageNumber, int pageSize, IQueryable<TEntity> query)
         {
-            if (pageNumber == null)
-                pageNumber = 1;
-            if (pageSize == null)
-                pageSize = 100;
             if (pageSize <= 0)
                 pageSize = 10;
 

@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using Hastnama.Ekipchi.Business.Service;
-using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Data.Comment;
@@ -25,7 +24,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// <summary>
         /// Comment List
         /// </summary>
-        /// <param name="pagingOptions"></param>
+        /// <param name="filterQueryDto"></param>
         /// <returns>Comment List</returns>
         /// <response code="200">if Get List successfully </response>
         /// <response code="404">If entity not found.</response>
@@ -64,6 +63,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// Update Comment 
         /// </summary>
         /// <param name="updateCommentDto"></param>
+        /// <param name="id"></param>
         /// <returns>NoContent</returns>
         /// <response code="204">if Update successfully </response>
         /// <response code="400">If validation failure.</response>

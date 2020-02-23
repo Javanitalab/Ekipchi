@@ -179,6 +179,8 @@
 
         public const string ForgotPasswordNotAccepted = " درخواست تقییر رمز عبور مورد قبول نیست";
         public const string ForgotPasswordAccepted = "درخواست تقییر رمز عبور مورد قبول است";
+        public const string ForgotPassword = "فراموشی رمز عبور";
+        public const string ChangePasswordCodeIs = "کد تقییر رمز عبور شما : ";
         public const string PasswordSuccessfullyChanged = "پسورد با موفقیت تقییر کرد";
 
         #endregion

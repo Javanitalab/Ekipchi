@@ -1,7 +1,6 @@
 ﻿using Hastnama.Ekipchi.Common.Enum;
 using System;
 using System.Collections.Generic;
-using Hastnama.Ekipchi.Data.Event.Gallery;
 using Hastnama.Ekipchi.Data.Event.Schedule;
 
 namespace Hastnama.Ekipchi.Data.Event

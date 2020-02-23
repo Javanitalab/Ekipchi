@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+#pragma warning disable 618
 
 namespace Hastnama.Ekipchi.Api.Areas.Admin
 {

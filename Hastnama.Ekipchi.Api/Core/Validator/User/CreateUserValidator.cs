@@ -1,9 +1,7 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 using FluentValidation;
 using Hastnama.Ekipchi.Common.Message;
-using Hastnama.Ekipchi.Data.Auth;
 using Hastnama.Ekipchi.Data.User;
 
 namespace Hastnama.Ekipchi.Api.Core.Validator.User

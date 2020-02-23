@@ -26,10 +26,10 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] PagingOptions pagingOptions, string query)
         {
-            var role = await _unitOfWork.RoleService.GetRoleAsync(pagingOptions, query);
-            if (!role.Items.Any())
+            var roles = await _unitOfWork.RoleService.GetRoleAsync(pagingOptions, query);
+            if (!roles.Items.Any())
                 return Ok(new List<RoleDto>());
-            role.Items.ForEach(role =>
+            roles.Items.ForEach(role =>
             {
                 role.UserInRoles = null;
                 role.RolePermissions.ForEach(ur =>
@@ -40,8 +40,8 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
                 });
             });
             if (pagingOptions.Limit == null && pagingOptions.Page == null)
-                return Ok(role.Items);
-            return Ok(role.MapTo<RoleDto>(_mapper));
+                return Ok(roles.Items);
+            return Ok(roles.MapTo<RoleDto>(_mapper));
         }
 
         [HttpGet("{id}", Name = "GetPermission")]

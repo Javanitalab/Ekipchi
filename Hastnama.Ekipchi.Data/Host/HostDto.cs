@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Hastnama.Ekipchi.Common.Enum;
 using Hastnama.Ekipchi.Data.Category;
-using Hastnama.Ekipchi.Data.Event;
 using Hastnama.Ekipchi.Data.Host.AvailableDate;
 
 namespace Hastnama.Ekipchi.Data.Host

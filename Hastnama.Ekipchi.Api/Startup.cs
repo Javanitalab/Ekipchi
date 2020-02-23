@@ -1,8 +1,6 @@
-using System;
 using System.IO;
 using Hangfire;
 using Hastnama.Ekipchi.Api.Core.Environment;
-using Hastnama.Ekipchi.Api.Core.Extensions;
 using Hastnama.Ekipchi.Api.Installer;
 using Hastnama.Ekipchi.Api.Middleware;
 using Microsoft.AspNetCore.Builder;
@@ -11,7 +9,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
-using Serilog;
 
 namespace Hastnama.Ekipchi.Api
 {

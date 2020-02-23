@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Text.Json.Serialization;
 using Hastnama.Ekipchi.Common.Enum;
-using Hastnama.Ekipchi.Data.BlogCategory;
 
 namespace Hastnama.Ekipchi.Data.Blog
 {

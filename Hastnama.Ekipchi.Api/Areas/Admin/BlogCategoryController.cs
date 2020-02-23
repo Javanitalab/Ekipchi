@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
 using Hastnama.Ekipchi.Business.Service;
-using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Data.BlogCategory;
@@ -63,6 +62,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// Update BlogCategory 
         /// </summary>
         /// <param name="updateBlogCategoryDto"></param>
+        /// <param name="id"></param>
         /// <returns>NoContent</returns>
         /// <response code="204">if Update successfully </response>
         /// <response code="400">If validation failure.</response>

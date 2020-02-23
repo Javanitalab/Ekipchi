@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using Hastnama.Ekipchi.Data.Comment;
 using Hastnama.Ekipchi.Data.Event.Gallery;
 using Hastnama.Ekipchi.Data.Event.Schedule;
 

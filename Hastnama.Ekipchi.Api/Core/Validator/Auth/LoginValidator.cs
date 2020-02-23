@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Text.RegularExpressions;
-using FluentValidation;
+﻿using FluentValidation;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Data.Auth;
 

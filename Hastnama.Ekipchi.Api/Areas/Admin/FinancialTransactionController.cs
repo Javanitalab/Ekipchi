@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using AutoMapper;
 using Hastnama.Ekipchi.Business.Service;
 using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Data.Financial;
-using Hastnama.Ekipchi.Data.Host;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hastnama.Ekipchi.Api.Areas.Admin
@@ -13,12 +11,10 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
     public class FinancialTransactionController : BaseAdminController
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
 
-        public FinancialTransactionController(IUnitOfWork unitOfWork,IMapper mapper)
+        public FinancialTransactionController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _mapper = mapper;
         }
         
         
@@ -26,7 +22,6 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// FinancialTransaction List
         /// </summary>
         /// <param name="filterQueryDto"></param>
-        /// <param name="pagingOptions"></param>
         /// <returns>FinancialTransaction List</returns>
         /// <response code="200">if Get List successfully </response>
         /// <response code="404">If entity not found.</response>

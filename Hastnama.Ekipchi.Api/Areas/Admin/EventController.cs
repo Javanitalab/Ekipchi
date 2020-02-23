@@ -1,6 +1,5 @@
 ﻿using System;
 using AutoMapper;
-using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Data.Event;
 using Microsoft.AspNetCore.Mvc;
@@ -27,7 +26,6 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// Event List
         /// </summary>
         /// <param name="filterQueryDto"></param>
-        /// <param name="pagingOptions"></param>
         /// <returns>Event List</returns>
         /// <response code="200">if everything is ok </response>
         /// <response code="400">If validation failure.</response>
@@ -86,6 +84,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// Update Event 
         /// </summary>
         /// <param name="updateEvent"></param>
+        /// <param name="id"></param>
         /// <returns>NoContent</returns>
         /// <response code="204">if updated successfully </response>
         /// <response code="400">If validation failure.</response>

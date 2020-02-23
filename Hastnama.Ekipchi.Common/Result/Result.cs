@@ -1,13 +1,11 @@
-﻿using System;
-using Hastnama.Ekipchi.Common.Enum;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Hastnama.Ekipchi.Common.Result
 {
     public class Result<T>
     {
-        public T Data { get; set; }
-        public string Message { get; set; }
+        public T Data { get; private set; }
+        private string Message { get; set; }
 
         public ObjectResult ApiResult { get; set; }
         public bool Success { get; set; }
@@ -25,7 +23,7 @@ namespace Hastnama.Ekipchi.Common.Result
 
     public class Result
     {
-        public string Message { get; set; }
+        private string Message { get; set; }
 
         public ObjectResult ApiResult { get; set; }
         public bool Success { get; set; }

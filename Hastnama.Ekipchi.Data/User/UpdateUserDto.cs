@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using Hastnama.Ekipchi.Common.Enum;
-using Hastnama.Ekipchi.Data.Role;
 
 namespace Hastnama.Ekipchi.Data.User
 {

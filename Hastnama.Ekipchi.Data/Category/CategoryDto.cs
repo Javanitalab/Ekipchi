@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using Hastnama.Ekipchi.Data.Host;
-
-namespace Hastnama.Ekipchi.Data.Category
+﻿namespace Hastnama.Ekipchi.Data.Category
 {
     public class CategoryDto
     {

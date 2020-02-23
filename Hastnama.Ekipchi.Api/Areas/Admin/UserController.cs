@@ -4,13 +4,11 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Hastnama.Ekipchi.Business.Service;
 using Hastnama.Ekipchi.Common.Enum;
-using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Data.Event;
 using Hastnama.Ekipchi.Data.Group;
 using Hastnama.Ekipchi.Data.User;
-using Hastnama.Ekipchi.Data.User.Wallet;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hastnama.Ekipchi.Api.Areas.Admin
@@ -31,7 +29,6 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// User List
         /// </summary>
         /// <param name="filterQueryDto"></param>
-        /// <param name="pagingOptions"></param>
         /// <returns>User List</returns>
         /// <response code="200">if Get List successfully </response>
         /// <response code="404">If entity not found.</response>
@@ -71,6 +68,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// Update User 
         /// </summary>
         /// <param name="adminUpdateUserDto"></param>
+        /// <param name="id"></param>
         /// <returns>NoContent</returns>
         /// <response code="204">if Update successfully </response>
         /// <response code="400">If validation failure.</response>
@@ -127,16 +125,14 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         public async Task<IActionResult> Create([FromBody] CreateUserDto createUserDto)
         {
             var result = await _unitOfWork.UserService.Create(createUserDto);
-            if (!result.Success)
-                return result.ApiResult;
-            return Created(Url.Link("GetUser", new {result.Data.Id}), _mapper.Map<UserDto>(result.Data));
+            return !result.Success ? result.ApiResult : Created(Url.Link("GetUser", new {result.Data.Id}), _mapper.Map<UserDto>(result.Data));
         }
 
 
         /// <summary>
         /// User Groups
         /// </summary>
-        /// <param name="userId"></param>
+        /// <param name="id"></param>
         /// <returns>Group List</returns>
         /// <response code="200">if Get List successfully </response>
         /// <response code="404">If entity not found.</response>
@@ -154,7 +150,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// <summary>
         /// User Events
         /// </summary>
-        /// <param name="userId"></param>
+        /// <param name="id"></param>
         /// <returns>Group List</returns>
         /// <response code="200">if Get List successfully </response>
         /// <response code="404">If entity not found.</response>

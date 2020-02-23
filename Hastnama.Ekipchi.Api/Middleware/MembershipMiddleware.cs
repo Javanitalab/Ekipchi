@@ -3,7 +3,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using System.Threading.Tasks;
 using Hastnama.Ekipchi.Api.Core.Extensions;
-using Hastnama.Ekipchi.Business.Service;
 using Hastnama.Ekipchi.Data.Auth;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;

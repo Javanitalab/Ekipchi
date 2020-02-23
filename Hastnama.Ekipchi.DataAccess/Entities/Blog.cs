@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Net.Mime;
 using Hastnama.Ekipchi.Common.Enum;
 using ContentType = Hastnama.Ekipchi.Common.Enum.ContentType;
 

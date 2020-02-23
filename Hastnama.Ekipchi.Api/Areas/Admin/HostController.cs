@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using Hastnama.Ekipchi.Business.Service;
-using Hastnama.Ekipchi.Common.General;
 using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Data.Host;
@@ -26,7 +25,6 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// Host List
         /// </summary>
         /// <param name="filterQueryDto"></param>
-        /// <param name="pagingOptions"></param>
         /// <returns>Host List</returns>
         /// <response code="200">if Get List successfully </response>
         /// <response code="404">If entity not found.</response>
@@ -66,6 +64,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// Update Host 
         /// </summary>
         /// <param name="updateHostDto"></param>
+        /// <param name="id"></param>
         /// <returns>NoContent</returns>
         /// <response code="204">if Update successfully </response>
         /// <response code="400">If validation failure.</response>

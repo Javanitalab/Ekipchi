@@ -15,7 +15,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
 namespace Hastnama.Ekipchi.Api.Areas.Admin
@@ -176,7 +175,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             userTokens.Data.ToList().ForEach(userToken => userToken.IsUsed = true);
             await _unitOfWork.SaveChangesAsync();
 
-            return Ok(new ApiMessage {Message = "پسورد با موفقیت تقییر کرد"});
+            return Ok(new ApiMessage {Message = ResponseMessage.PasswordSuccessfullyChanged});
         }
 
 
@@ -214,10 +213,10 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             _unitOfWork.UserService.Edit(user.Data);
             await _unitOfWork.SaveChangesAsync();
 
-            await _emailServices.SendMessage(forgotPasswordDto.Email, "فراموشی رمز عبور",
+            await _emailServices.SendMessage(forgotPasswordDto.Email, ResponseMessage.ForgotPassword,
                 $"{_hostAddress.ForgotPassword}{user.Data.ConfirmCode}");
 
-            await _smsService.SendMessage(user.Data.Mobile, "کد تقییر رمز عبور شما : " + user.Data.ConfirmCode);
+            await _smsService.SendMessage(user.Data.Mobile, ResponseMessage.ChangePasswordCodeIs + user.Data.ConfirmCode);
 
             return Ok(new ApiMessage {Message = ResponseMessage.ForgotPasswordAccepted});
         }
@@ -281,7 +280,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         /// <returns>Access and refresh token.</returns>
         /// <response code="200">if login successfully </response>
         /// <response code="400">If validation failure.</response>
-        /// <response code="401">If user not Logined.</response>
+        /// <response code="401">If user not Login.</response>
         /// <response code="500">If an unexpected error happen</response>
         [ProducesResponseType(typeof(UserDto), 200)]
         [ProducesResponseType(typeof(ApiMessage), 400)]
