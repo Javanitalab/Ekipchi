@@ -69,7 +69,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             //if token of user Is Already valid and exist in token pol use that token
             var userToken = await _unitOfWork.UserTokenService.GetUserTokenAsync(user.Data.Id);
 
-            if (userToken != null)
+            if (userToken != null && userToken.ExpiredDate > DateTime.Now)
                 return Ok(new TokenDto {AccessToken = userToken.Token});
 
 

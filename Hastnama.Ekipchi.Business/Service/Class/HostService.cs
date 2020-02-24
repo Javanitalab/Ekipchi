@@ -105,12 +105,12 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             host.EventCount = 0;
             host.Id = Guid.NewGuid();
             host.HostCategories = categories.Select(c => new HostCategory { Category = c, Host = host }).ToList();
-            host.HostGalleries = createHostDto.Galleries.Select(image => new HostGallery
+            host.HostGalleries = createHostDto.Galleries?.Select(image => new HostGallery
             {
                 Image = image,
                 Host = host
             }).ToList();
-            host.HostAvailableDates = createHostDto.HostAvailableDates.Select(date =>
+            host.HostAvailableDates = createHostDto.HostAvailableDates?.Select(date =>
             {
                 var dateFromHour = date.FromHour;
                 var dateToHour = date.ToHour;
