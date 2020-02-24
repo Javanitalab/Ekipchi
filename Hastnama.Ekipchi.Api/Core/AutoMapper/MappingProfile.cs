@@ -408,7 +408,10 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
                     opt => opt.MapFrom(x => x.HostCategories.Select(c => new CategoryDto
                         {Id = c.Category.Id, IsDeleted = c.Category.IsDeleted, Name = c.Category.Name})));
 
-            CreateMap<UpdateHostDto, Host>();
+            CreateMap<UpdateHostDto, Host>()
+                .ForMember(x => x.HostGalleries, opt => opt.Ignore())
+                .ForMember(x => x.HostCategories, opt => opt.Ignore())
+                .ForMember(x => x.HostAvailableDates, opt => opt.Ignore());
 
             CreateMap<CreateHostDto, Host>();
 

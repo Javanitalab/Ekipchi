@@ -13,6 +13,7 @@ using Hastnama.Ekipchi.DataAccess.Entities;
 using Hastnama.Ekipchi.DataAccess.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Hastnama.Ekipchi.Business.Service.Class
 {
@@ -41,47 +42,64 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result> Update(UpdateHostDto updateHostDto)
         {
-            var categories = new List<HostCategory>();
+            var categories = new List<Category>();
             if (updateHostDto.Categories != null && updateHostDto.Categories.Any())
             {
-                categories = await Context.HostCategories.Where(c =>
-                        updateHostDto.Categories.Contains(c.CategoryId) && c.HostId == updateHostDto.Id)
+                categories = await Context.Categories.AsNoTracking().Where(c =>
+                        updateHostDto.Categories.Contains(c.Id))
                     .ToListAsync();
                 if (categories.Count != updateHostDto.Categories.Count)
                     return Result.Failed(new NotFoundObjectResult(
                         new ApiMessage
-                        { Message = ResponseMessage.CategoryNotFound }));
+                            {Message = ResponseMessage.CategoryNotFound}));
             }
 
-            var host = await FirstOrDefaultAsync(c => c.Id == updateHostDto.Id, g => g.HostGalleries,
+            var host = await FirstOrDefaultAsync(c => c.Id == updateHostDto.Id,
+                g => g.HostGalleries,
                 g => g.HostCategories,
                 g => g.HostAvailableDates);
 
 
             _mapper.Map(updateHostDto, host);
-            Context.HostGalleries.RemoveRange(host.HostGalleries);
-            Context.HostAvailableDates.RemoveRange(host.HostAvailableDates);
 
-            host.HostCategories = categories;
-            host.HostGalleries = updateHostDto.Galleries.Select(g => new HostGallery { Image = g, Host = host }).ToList();
-            host.HostAvailableDates = updateHostDto.HostAvailableDates.Select(date =>
-            {
-                var dateFromHour = date.FromHour;
-                var dateToHour = date.ToHour;
-                TimeSpan fromHour;
-                TimeSpan toHour;
-                if (TimeSpan.TryParse(dateFromHour, out fromHour))
-                    if (TimeSpan.TryParse(dateToHour, out toHour))
-                        return new HostAvailableDate
-                        {
-                            Days = date.Days,
-                            DateTime = date.DateTime,
-                            FromHour = fromHour,
-                            ToHour = toHour,
-                            Id = Guid.NewGuid()
-                        };
-                return null;
-            }).Where(a => a != null).ToList();
+            Context.RemoveRange(host.HostCategories);
+            Context.RemoveRange(host.HostGalleries);
+            Context.RemoveRange(host.HostAvailableDates);
+            host.HostCategories = categories.Any()
+                ? categories.Select(c => new HostCategory
+                    {CategoryId = c.Id, Host = host, HostId = host.Id, Id = Guid.NewGuid()}).ToList()
+                : new List<HostCategory>();
+            host.HostGalleries = updateHostDto.Galleries.Any()
+                ? updateHostDto.Galleries.Select(g => new HostGallery {Image = g, Host = host,HostId = host.Id, Id = Guid.NewGuid()})
+                    .ToList()
+                : new List<HostGallery>();
+            host.HostAvailableDates = updateHostDto.HostAvailableDates.Any()
+                ? updateHostDto.HostAvailableDates.Select(date =>
+                {
+                    var dateFromHour = date.FromHour;
+                    var dateToHour = date.ToHour;
+                    TimeSpan fromHour;
+                    TimeSpan toHour;
+                    if (TimeSpan.TryParse(dateFromHour, out fromHour))
+                        if (TimeSpan.TryParse(dateToHour, out toHour))
+                            return new HostAvailableDate
+                            {
+                                Days = date.Days,
+                                DateTime = date.DateTime,
+                                FromHour = fromHour,
+                                Host = host,
+                                HostId = host.Id,
+                                ToHour = toHour,
+                                Id = Guid.NewGuid()
+                            };
+                    return null;
+                }).Where(a => a != null).ToList()
+                : new List<HostAvailableDate>();
+        
+            Context.AddRange(host.HostCategories);
+            Context.AddRange(host.HostGalleries);
+            Context.AddRange(host.HostAvailableDates);
+
             await Context.SaveChangesAsync();
 
             return Result.SuccessFull();
@@ -97,14 +115,14 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 if (categories.Count != createHostDto.Categories.Count)
                     return Result<HostDto>.Failed(new NotFoundObjectResult(
                         new ApiMessage
-                        { Message = ResponseMessage.CategoryNotFound }));
+                            {Message = ResponseMessage.CategoryNotFound}));
             }
 
 
             var host = _mapper.Map<Host>(createHostDto);
             host.EventCount = 0;
             host.Id = Guid.NewGuid();
-            host.HostCategories = categories.Select(c => new HostCategory { Category = c, Host = host }).ToList();
+            host.HostCategories = categories.Select(c => new HostCategory {Category = c, Host = host}).ToList();
             host.HostGalleries = createHostDto.Galleries?.Select(image => new HostGallery
             {
                 Image = image,
@@ -144,7 +162,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             if (host == null)
                 return Result<HostDto>.Failed(new NotFoundObjectResult(
                     new ApiMessage
-                    { Message = ResponseMessage.HostNotFound }));
+                        {Message = ResponseMessage.HostNotFound}));
 
             return Result<HostDto>.SuccessFull(_mapper.Map<HostDto>(host));
         }
@@ -155,7 +173,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             if (host == null)
                 return Result.Failed(new NotFoundObjectResult(
                     new ApiMessage
-                    { Message = ResponseMessage.HostNotFound }));
+                        {Message = ResponseMessage.HostNotFound}));
 
             host.IsDeleted = true;
             await Context.SaveChangesAsync();
