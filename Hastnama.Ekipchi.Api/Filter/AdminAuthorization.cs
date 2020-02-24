@@ -41,10 +41,13 @@ namespace Hastnama.Ekipchi.Api.Filter
             var id = new Guid(tokenS.Claims.First(claim => claim.Type == "Id").Value);
 
             var userToken = await _unitOfWork.UserTokenService.GetUserTokenAsync(id);
-            if (userToken == null || userToken.IsUsed || userToken.ExpiredDate < DateTime.Now)
+            if (userToken == null )
                 context.Result =
                     new UnauthorizedObjectResult(new ApiMessage {Message = ResponseMessage.UnAuthorized});
 
+            if(userToken.IsUsed || userToken.ExpiredDate < DateTime.Now)
+                context.Result =
+                    new UnauthorizedObjectResult(new ApiMessage {Message = ResponseMessage.TokenExpired});
 
             var roles = await _unitOfWork.UserService.UserRoles(id);
 

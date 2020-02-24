@@ -33,6 +33,7 @@
         public const string UserNotFound = "کاربر مورد نظر پیدا نشد";
         public const string UserAlreadyExist = "کاربری با واژه کاربری داده شده در سیستم موجئد است";
         public const string UnAuthorized = "شما دسترسی استفاده از این سرویس را ندارید";
+        public const string TokenExpired = "توکن شما منقضی شده است";
         public const string InvalidEmailAddress = "ایمیل نامعتبر است";
         public const string InvalidMobile = "شماره موبایل نامعتبر است";
         public const string InvalidNameOrFamily = "نام یا نام خانوادگی معتبر نیست";
