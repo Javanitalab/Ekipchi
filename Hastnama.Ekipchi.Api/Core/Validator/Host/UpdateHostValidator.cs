@@ -18,7 +18,7 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Host
 
             RuleFor(dto => dto.HostAvailableDates)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage(ResponseMessage.InvalidHostAvailableDates);
+                .NotEmpty().WithMessage(ResponseMessage.InvalidHostAvailableDate);
         }
     }
 }

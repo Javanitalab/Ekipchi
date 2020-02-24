@@ -1,6 +1,8 @@
-﻿using FluentValidation;
+﻿using System.Linq;
+using FluentValidation;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Data.Host;
+using Hastnama.Ekipchi.Data.Host.AvailableDate;
 
 namespace Hastnama.Ekipchi.Api.Core.Validator.Host
 {
@@ -18,7 +20,8 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Host
 
             RuleFor(dto => dto.HostAvailableDates)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage(ResponseMessage.InvalidHostAvailableDates);
+                .NotEmpty().WithMessage(ResponseMessage.InvalidHostAvailableDate)
+                .Must(dto => dto.All(d => new CreateHostAvailableDateValidator().Validate(d).IsValid)).WithMessage(ResponseMessage.InvalidHostAvailableDate);
         }
     }
 }

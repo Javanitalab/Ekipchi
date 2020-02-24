@@ -164,7 +164,7 @@
         public const string HostNotFound = "میزبان مورد نظر پیدا نشد";
         public const string InvalidHostId = "آیدی میزبان معتبر نیست";
         public const string InvalidHostName = "نام میزبان معتبر نیست";
-        public const string InvalidHostAvailableDates = "روزهای دردسترس میزبان معتبر نیست";
+        public const string InvalidHostAvailableDate = "تاریخ در درسترس بودن  میزبان معتبر نیست";
 
         #endregion
 
