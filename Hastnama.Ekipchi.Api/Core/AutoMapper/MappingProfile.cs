@@ -416,12 +416,12 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
             CreateMap<CreateHostDto, Host>();
 
             CreateMap<HostAvailableDateDto, HostAvailableDate>()
-                .ForMember(x => x.FromHour, opt => opt.Ignore())
-                .ForMember(x => x.ToHour, opt => opt.Ignore());
+                .ForMember(x => x.FromHour, opt => opt.MapFrom(x => x.FromHour.Value.TimeOfDay))
+                .ForMember(x => x.ToHour, opt => opt.MapFrom(x => x.ToHour.Value.TimeOfDay));
 
             CreateMap<HostAvailableDate, HostAvailableDateDto>()
-                .ForMember(x => x.FromHour, opt => opt.MapFrom(x => x.FromHour.ToString(@"hh\:mm\:ss")))
-                .ForMember(x => x.ToHour, opt => opt.MapFrom(x => x.FromHour.ToString(@"hh\:mm\:ss")));
+                .ForMember(x => x.FromHour, opt => opt.MapFrom(x => DateTime.Now.Date + x.FromHour))
+                .ForMember(x => x.ToHour, opt => opt.MapFrom(x => DateTime.Now.Date + x.ToHour));
 
             #endregion
         }

@@ -5,9 +5,9 @@ namespace Hastnama.Ekipchi.Data.Host.AvailableDate
 {
     public class HostAvailableDateDto
     {
-        public string FromHour { get; set; }
+        public DateTime? FromHour { get; set; }
 
-        public string ToHour { get; set; }
+        public DateTime? ToHour { get; set; }
 
         public Days Days { get; set; }
 

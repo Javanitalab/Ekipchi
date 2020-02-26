@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
-namespace Hastnama.Ekipchi.Api.Areas.Admin
+namespace Hastnama.Ekipchi.Api.Areas.Common
 {
     [Route("[Controller]")]
     [EnableCors("MyPolicy")]

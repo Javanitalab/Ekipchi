@@ -70,32 +70,26 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                     {CategoryId = c.Id, Host = host, HostId = host.Id, Id = Guid.NewGuid()}).ToList()
                 : new List<HostCategory>();
             host.HostGalleries = updateHostDto.Galleries.Any()
-                ? updateHostDto.Galleries.Select(g => new HostGallery {Image = g, Host = host,HostId = host.Id, Id = Guid.NewGuid()})
+                ? updateHostDto.Galleries.Select(g => new HostGallery
+                        {Image = g, Host = host, HostId = host.Id, Id = Guid.NewGuid()})
                     .ToList()
                 : new List<HostGallery>();
             host.HostAvailableDates = updateHostDto.HostAvailableDates.Any()
                 ? updateHostDto.HostAvailableDates.Select(date =>
                 {
-                    var dateFromHour = date.FromHour;
-                    var dateToHour = date.ToHour;
-                    TimeSpan fromHour;
-                    TimeSpan toHour;
-                    if (TimeSpan.TryParse(dateFromHour, out fromHour))
-                        if (TimeSpan.TryParse(dateToHour, out toHour))
-                            return new HostAvailableDate
-                            {
-                                Days = date.Days,
-                                DateTime = date.DateTime,
-                                FromHour = fromHour,
-                                Host = host,
-                                HostId = host.Id,
-                                ToHour = toHour,
-                                Id = Guid.NewGuid()
-                            };
-                    return null;
+                    return new HostAvailableDate
+                    {
+                        Days = date.Days,
+                        DateTime = date.DateTime,
+                        Host = host,
+                        HostId = host.Id,
+                        FromHour = date.FromHour.Value.TimeOfDay,
+                        ToHour = date.ToHour.Value.TimeOfDay,
+                        Id = Guid.NewGuid()
+                    };
                 }).Where(a => a != null).ToList()
                 : new List<HostAvailableDate>();
-        
+
             Context.AddRange(host.HostCategories);
             Context.AddRange(host.HostGalleries);
             Context.AddRange(host.HostAvailableDates);
@@ -130,21 +124,14 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             }).ToList();
             host.HostAvailableDates = createHostDto.HostAvailableDates?.Select(date =>
             {
-                var dateFromHour = date.FromHour;
-                var dateToHour = date.ToHour;
-                TimeSpan fromHour;
-                TimeSpan toHour;
-                if (TimeSpan.TryParse(dateFromHour, out fromHour))
-                    if (TimeSpan.TryParse(dateToHour, out toHour))
-                        return new HostAvailableDate
-                        {
-                            Days = date.Days,
-                            DateTime = date.DateTime,
-                            FromHour = fromHour,
-                            ToHour = toHour,
-                            Id = Guid.NewGuid()
-                        };
-                return null;
+                return new HostAvailableDate
+                {
+                    Days = date.Days,
+                    DateTime = date.DateTime,
+                    FromHour = date.FromHour.Value.TimeOfDay,
+                    ToHour = date.ToHour.Value.TimeOfDay,
+                    Id = Guid.NewGuid()
+                };
             }).Where(a => a != null).ToList();
 
             await AddAsync(host);
