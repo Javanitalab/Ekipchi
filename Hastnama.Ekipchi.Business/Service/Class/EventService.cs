@@ -71,7 +71,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 return Result.Failed(new NotFoundObjectResult(
                     new ApiMessage
                         {Message = ResponseMessage.EventNotFound}));
-            
+
             eventGallery.IsConfirmed = updateEventGalleryDto.IsConfirmed;
 
             if (string.IsNullOrEmpty(updateEventGalleryDto.Image))
@@ -93,16 +93,18 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 return Result<EventDto>.Failed(new NotFoundObjectResult(new ApiMessage
                     {Message = ResponseMessage.HostNotFound}));
 
+            var user = await Context.Users.FirstOrDefaultAsync(c => c.Id == userId);
+            if (user == null)
+                return Result<EventDto>.Failed(new NotFoundObjectResult(new ApiMessage
+                    {Message = ResponseMessage.UserNotFound}));
+
 
             var newEvent = _mapper.Map<Event>(createEventDto);
             newEvent.EventGallery?.ForEach(e =>
             {
-                e.UserId = userId;
+                e.User = user;
                 e.Id = Guid.NewGuid();
             });
-            newEvent.EventGallery =
-                newEvent.EventGallery?.Take(1)
-                    .ToList();
             await AddAsync(newEvent);
             await Context.SaveChangesAsync();
 
@@ -136,25 +138,27 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
             if (eventDetail.UserInEvents != null && eventDetail.UserInEvents.Any())
                 Context.RemoveRange(eventDetail.UserInEvents);
+            if (eventDetail.EventGallery != null && eventDetail.EventGallery.Any())
+                Context.RemoveRange(eventDetail.EventGallery);
 
             eventDetail.UserInEvents = updateEventDto.Users?
                 .Select(uId => new UserInEvent {Guid = Guid.NewGuid(), EventId = eventDetail.Id, UserId = uId})
                 .ToList();
 
+            eventDetail.EventGallery = updateEventDto.EventGallery?
+                .Select(gallery => new EventGallery
+                    {Id = Guid.NewGuid(), EventId = eventDetail.Id, UserId = userId, Image = gallery})
+                .ToList();
+
             if (eventDetail.UserInEvents != null && eventDetail.UserInEvents.Any())
                 Context.AddRange(eventDetail.UserInEvents);
+            if (eventDetail.EventGallery != null && eventDetail.EventGallery.Any())
+                Context.AddRange(eventDetail.EventGallery);
 
 
             _mapper.Map(updateEventDto, eventDetail);
             eventDetail.Category = category;
             eventDetail.Host = host;
-            if (eventDetail.EventGallery != null && eventDetail.EventGallery.Any(e => e.UserId != Guid.Empty))
-            {
-                eventDetail.EventGallery =
-                    eventDetail.EventGallery.Take(1)
-                        .ToList();
-                eventDetail.EventGallery.Where(e => e.UserId != Guid.Empty).ToList().ForEach(eg => eg.UserId = userId);
-            }
 
             await Context.SaveChangesAsync();
 
