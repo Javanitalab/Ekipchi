@@ -70,6 +70,7 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
             CreateMap<UserWallet, UserWalletDto>();
 
             CreateMap<CreateUserDto, User>()
+                .ForMember(x => x.CreateDateTime, opt => opt.MapFrom(o => DateTime.Now))
                 .ForMember(x => x.UserWallet, opt => opt.Ignore())
                 .ForMember(x => x.Password, opt => opt.MapFrom(des => StringUtil.HashPass(des.Password)))
                 .ForMember(x => x.Id, opt => Guid.NewGuid());
@@ -197,7 +198,8 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
 
             CreateMap<UpdateBlogDto, Blog>();
 
-            CreateMap<CreateBlogDto, Blog>();
+            CreateMap<CreateBlogDto, Blog>()
+                .ForMember(x => x.CreateDate, opt => opt.MapFrom(o => DateTime.Now));
 
             #endregion
 
@@ -216,6 +218,7 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
             #region Event
 
             CreateMap<CreateEventDto, Event>()
+                .ForMember(x => x.CreateDate, opt => opt.MapFrom(o => DateTime.Now))
                 .ForMember(x => x.EventGallery,
                     opt => opt.MapFrom(x => x.EventGallery.Select(gallery => new EventGallery
                         {Image = gallery})))
@@ -321,6 +324,7 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
 
 
             CreateMap<CreateGroupDto, Group>()
+                .ForMember(x => x.CreateDate, opt => opt.MapFrom(o => DateTime.Now))
                 .ForMember(x => x.OwnerId, opt => opt.MapFrom(o => o.OwnerId));
 
             #endregion
@@ -369,7 +373,9 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
 
             CreateMap<CreateMessageDto, MessageDto>();
 
-            CreateMap<CreateMessageDto, Message>().ForMember(x => x.CreateDate, opt => opt.MapFrom(o => DateTime.Now));
+            CreateMap<CreateMessageDto, Message>()
+                .ForMember(x => x.CreateDate, opt => opt.MapFrom(o => DateTime.Now))
+                .ForMember(x => x.CreateDate, opt => opt.MapFrom(o => DateTime.Now));
 
             CreateMap<CreateReplyTo, Message>().ForMember(x => x.CreateDate, opt => opt.MapFrom(des => DateTime.Now));
 
@@ -390,7 +396,8 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
                 .ForMember(x => x.HostCategories, opt => opt.Ignore())
                 .ForMember(x => x.HostAvailableDates, opt => opt.Ignore());
 
-            CreateMap<CreateHostDto, Host>();
+            CreateMap<CreateHostDto, Host>()
+                .ForMember(x => x.CreateDateTime, opt => opt.MapFrom(o => DateTime.Now));
 
             CreateMap<HostAvailableDateDto, HostAvailableDate>()
                 .ForMember(x => x.FromHour, opt => opt.MapFrom(x => x.FromHour.Value.TimeOfDay))

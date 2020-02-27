@@ -110,7 +110,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         public async Task<Result<GroupDto>> Get(Guid id)
         {
             var group = await FirstOrDefaultAsyncAsNoTracking(c => c.Id == id,
-                g => g.UserInGroups.Select(ug => ug.User));
+                g => g.UserInGroups.Select(ug => ug.User),g=>g.User);
             if (group == null)
                 return Result<GroupDto>.Failed(new NotFoundObjectResult(
                     new ApiMessage
