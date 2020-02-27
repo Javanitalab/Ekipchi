@@ -6,11 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Hastnama.Ekipchi.Business.Service;
+using Hastnama.Ekipchi.Data.Event.Gallery;
 
 namespace Hastnama.Ekipchi.Api.Areas.Admin
 {
-    [Route("[controller]")]
-    [ApiController]
     public class EventController : BaseAdminController
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -98,6 +97,31 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         {
             updateEvent.Id = id;
             var result = await _unitOfWork.EventService.Update(updateEvent, UserId);
+
+            if (!result.Success)
+                return result.ApiResult;
+
+            return NoContent();
+        }
+
+        /// <summary>
+        /// Update Event 
+        /// </summary>
+        /// <param name="UpdateEventGalleryDto"></param>
+        /// <param name="id"></param>
+        /// <returns>NoContent</returns>
+        /// <response code="204">if updated successfully </response>
+        /// <response code="400">If validation failure.</response>
+        /// <response code="404">If item not found.</response>
+        /// <response code="500">If an unexpected error happen</response>
+        [ProducesResponseType(typeof(ApiMessage), 400)]
+        [ProducesResponseType(typeof(ApiMessage), 404)]
+        [ProducesResponseType(typeof(ApiMessage), 500)]
+        [HttpPut("{id}/gallery")]
+        public async Task<IActionResult> UpdateGallery(Guid id, UpdateEventGalleryDto UpdateEventGalleryDto)
+        {
+            UpdateEventGalleryDto.Id = id;
+            var result = await _unitOfWork.EventService.UpdateGallery(UpdateEventGalleryDto);
 
             if (!result.Success)
                 return result.ApiResult;

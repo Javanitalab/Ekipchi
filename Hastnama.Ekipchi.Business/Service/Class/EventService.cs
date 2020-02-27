@@ -11,6 +11,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Hastnama.Ekipchi.Common.Helper;
+using Hastnama.Ekipchi.Data.Event.Gallery;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hastnama.Ekipchi.Business.Service.Class
@@ -61,6 +62,23 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                         {Message = ResponseMessage.EventNotFound}));
 
             return Result<EventDto>.SuccessFull(_mapper.Map<EventDto>(eventDetail));
+        }
+
+        public async Task<Result> UpdateGallery(UpdateEventGalleryDto updateEventGalleryDto)
+        {
+            var eventGallery = await Context.EventGalleries.FirstOrDefaultAsync(x => x.Id == updateEventGalleryDto.Id);
+            if (eventGallery == null)
+                return Result.Failed(new NotFoundObjectResult(
+                    new ApiMessage
+                        {Message = ResponseMessage.EventNotFound}));
+            
+            eventGallery.IsConfirmed = updateEventGalleryDto.IsConfirmed;
+
+            if (string.IsNullOrEmpty(updateEventGalleryDto.Image))
+                eventGallery.Image = updateEventGalleryDto.Image;
+
+            await Context.SaveChangesAsync();
+            return Result.SuccessFull();
         }
 
         public async Task<Result<EventDto>> Create(CreateEventDto createEventDto, Guid userId)
@@ -115,40 +133,17 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 return Result.Failed(new NotFoundObjectResult(new ApiMessage
                     {Message = ResponseMessage.EventNotFound}));
 
-            #region Update UserInEvents
 
-            if (!eventDetail.UserInEvents.Select(g => g.UserId).SequenceEqual(updateEventDto.Users))
-            {
-                // get all users that are removed 
-                var removedUsers = eventDetail.UserInEvents
-                    .Where(user => !updateEventDto.Users.Contains(user.UserId)).ToList();
-                if (removedUsers.Any())
-                    Context.UserInEvents.RemoveRange(removedUsers);
+            if (eventDetail.UserInEvents != null && eventDetail.UserInEvents.Any())
+                Context.RemoveRange(eventDetail.UserInEvents);
 
-                // get all users id that are added
-                var addedUsersId = updateEventDto.Users.Where(uId =>
-                    !eventDetail.UserInEvents.Select(u => u.UserId).Contains(uId)).ToList();
+            eventDetail.UserInEvents = updateEventDto.Users?
+                .Select(uId => new UserInEvent {Guid = Guid.NewGuid(), EventId = eventDetail.Id, UserId = uId})
+                .ToList();
 
-                var addedUsers = await Context.Users.Where(u => addedUsersId.Contains(u.Id)).ToListAsync();
+            if (eventDetail.UserInEvents != null && eventDetail.UserInEvents.Any())
+                Context.AddRange(eventDetail.UserInEvents);
 
-                // if invalid user id sent 
-                if (addedUsers.Count != addedUsersId.Count)
-                    return Result.Failed(new BadRequestObjectResult(new ApiMessage
-                        {Message = ResponseMessage.UserNotFound}));
-
-                var addedUserInEvents = addedUsers.Select(user => new UserInEvent
-                        {Guid = Guid.NewGuid(), Event = eventDetail, User = user})
-                    .ToList();
-
-                if (addedUserInEvents.Any())
-                    await Context.UserInEvents.AddRangeAsync(addedUserInEvents);
-
-                eventDetail.UserInEvents = addedUserInEvents.Union(eventDetail.UserInEvents.Where(ur =>
-                        !addedUsersId.Contains(ur.UserId) && !removedUsers.Select(rr => rr.UserId).Contains(ur.UserId)))
-                    .ToList();
-            }
-
-            #endregion
 
             _mapper.Map(updateEventDto, eventDetail);
             eventDetail.Category = category;

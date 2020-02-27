@@ -10,11 +10,8 @@ namespace Hastnama.Ekipchi.Data.Event
     public class UpdateEventDto
     {
         [JsonIgnore] public Guid? Id { get; set; }
-
         public int CategoryId { get; set; }
-
         public string Name { get; set; }
-
         public Guid? HostId { get; set; }
 
         public string Description { get; set; }
@@ -24,7 +21,6 @@ namespace Hastnama.Ekipchi.Data.Event
         public string Slug { get; set; }
 
         public EventAccessibility EventAccessibility { get; set; }
-
         public string Logo { get; set; }
 
         public string CoverPhoto { get; set; }
@@ -39,10 +35,8 @@ namespace Hastnama.Ekipchi.Data.Event
 
         public string Tags { get; set; }
 
-        public List<UpdateEventGalleryDto> EventGallery { get; set; }
-
+        public List<string> EventGallery { get; set; }
         public EventScheduleDto EventSchedule { get; set; }
-
         public List<Guid> Users { get; set; }
     }
 }

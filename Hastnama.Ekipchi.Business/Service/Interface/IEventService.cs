@@ -5,6 +5,7 @@ using Hastnama.Ekipchi.DataAccess.Repository;
 using System;
 using System.Threading.Tasks;
 using Hastnama.Ekipchi.Common.Helper;
+using Hastnama.Ekipchi.Data.Event.Gallery;
 
 namespace Hastnama.Ekipchi.Business.Service.Interface
 {
@@ -17,6 +18,8 @@ namespace Hastnama.Ekipchi.Business.Service.Interface
         Task<Result<EventDto>> Create(CreateEventDto createEventDto, Guid userId);
 
         Task<Result> Update(UpdateEventDto updateEvent, Guid userId);
+
+        Task<Result> UpdateGallery(UpdateEventGalleryDto updateEventGalleryDto);
 
         Task<Result> Delete(Guid id);
     }

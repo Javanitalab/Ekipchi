@@ -41,11 +41,11 @@ namespace Hastnama.Ekipchi.Api.Filter
             var id = new Guid(tokenS.Claims.First(claim => claim.Type == "Id").Value);
 
             var userToken = await _unitOfWork.UserTokenService.GetUserTokenAsync(id);
-            if (userToken == null )
+            if (userToken == null)
                 context.Result =
                     new UnauthorizedObjectResult(new ApiMessage {Message = ResponseMessage.UnAuthorized});
 
-            if(userToken.IsUsed || userToken.ExpiredDate < DateTime.Now)
+            if (userToken.IsUsed || userToken.ExpiredDate < DateTime.Now)
                 context.Result =
                     new UnauthorizedObjectResult(new ApiMessage {Message = ResponseMessage.TokenExpired});
 
@@ -57,7 +57,7 @@ namespace Hastnama.Ekipchi.Api.Filter
                 return;
             }
 
-            if (!roles.Data.Any() || !roles.Data.Any(r => r.Name == StaticPermissions.Admin))
+            if (roles.Data != null || roles.Data.Any(r => r.Name == StaticPermissions.Admin))
                 context.Result =
                     new UnauthorizedObjectResult(new ApiMessage {Message = ResponseMessage.UnAuthorized});
         }

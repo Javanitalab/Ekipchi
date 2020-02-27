@@ -43,6 +43,7 @@
         public const string MobileAlreadyExist = "شماره موبایل در سیستم موجود میباشد";
         public const string UsernameAlreadyExist = "نام کاربری در سیستم موجود میباشد";
         public const string WrongPassword = "گذرواژه صحیح نمیباشد";
+        public const string InvalidUserStatus = "وضعیت ورودی کاربر معتبر نمیباشد";
 
         #endregion
 
