@@ -50,7 +50,8 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
             _mapper.Map(updateGroupDto, group);
 
-            if (!group.UserInGroups.Select(g => g.UserId).SequenceEqual(updateGroupDto.UsersInGroups))
+            if (group.UserInGroups != null && group.UserInGroups.Any() &&
+                !group.UserInGroups.Select(g => g.UserId).SequenceEqual(updateGroupDto.UsersInGroups))
             {
                 // get all users that are removed 
                 var removedUsers = group.UserInGroups
@@ -81,7 +82,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                     .ToList();
             }
 
-            group.Members = group.UserInGroups.Count + 1;
+            group.Members = group.UserInGroups != null && group.UserInGroups.Any() ? group.UserInGroups.Count + 1 : 1;
 
             await Context.SaveChangesAsync();
 
@@ -110,7 +111,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
         public async Task<Result<GroupDto>> Get(Guid id)
         {
             var group = await FirstOrDefaultAsyncAsNoTracking(c => c.Id == id,
-                g => g.UserInGroups.Select(ug => ug.User),g=>g.User);
+                g => g.UserInGroups.Select(ug => ug.User), g => g.User);
             if (group == null)
                 return Result<GroupDto>.Failed(new NotFoundObjectResult(
                     new ApiMessage

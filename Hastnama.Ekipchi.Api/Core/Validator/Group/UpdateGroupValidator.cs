@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using System;
+using FluentValidation;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Data.Group;
 
@@ -12,9 +13,9 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Group
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage(ResponseMessage.GroupNameIsInvalid);
 
-            RuleFor(dto => dto.UsersInGroups)
+            RuleFor(dto => dto.OwnerId)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage(ResponseMessage.GroupOwnerIsInvalid);
+                .NotEqual(Guid.Empty).WithMessage(ResponseMessage.GroupOwnerIsInvalid);
         }
     }
 }
