@@ -57,7 +57,7 @@ namespace Hastnama.Ekipchi.Api.Filter
                 return;
             }
 
-            if (roles.Data != null || roles.Data.Any(r => r.Name == StaticPermissions.Admin))
+            if (roles.Data == null || !roles.Data.Any(r => r.Name == StaticPermissions.Admin))
                 context.Result =
                     new UnauthorizedObjectResult(new ApiMessage {Message = ResponseMessage.UnAuthorized});
         }
