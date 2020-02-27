@@ -263,9 +263,15 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
                 .ForMember(x => x.Logo, opt => opt.MapFrom(o => o.Image));
 
 
-            CreateMap<EventSchedule, EventScheduleDto>();
+            CreateMap<EventSchedule, EventScheduleDto>()
+                .ForMember(x => x.StartHour, opt => opt.MapFrom(x => DateTime.Now.Date + x.StartHour))
+                .ForMember(x => x.EndHour, opt => opt.MapFrom(x => DateTime.Now.Date + x.EndHour));
 
-            CreateMap<EventScheduleDto, EventSchedule>();
+
+            CreateMap<EventScheduleDto, EventSchedule>()
+                .ForMember(x => x.StartHour, opt => opt.MapFrom(x => x.StartHour.Value.TimeOfDay))
+                .ForMember(x => x.EndHour, opt => opt.MapFrom(x => x.EndHour.Value.TimeOfDay));
+
 
             CreateMap<EventGallery, EventGalleryDto>()
                 .ForMember(x => x.UserId, opt => opt.MapFrom(x => x.User.Id))

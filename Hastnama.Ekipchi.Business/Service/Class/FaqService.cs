@@ -62,7 +62,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result> Delete(int id)
         {
-            var faq = await FirstOrDefaultAsyncAsNoTracking(c => c.Id == id);
+            var faq = await FirstOrDefaultAsync(c => c.Id == id);
             if (faq == null)
                 return Result.Failed(new NotFoundObjectResult(
                     new ApiMessage

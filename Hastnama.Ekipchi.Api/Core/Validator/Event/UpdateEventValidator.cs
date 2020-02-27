@@ -22,7 +22,11 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Event
 
             RuleFor(dto => dto.EventSchedule)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage(ResponseMessage.InvalidEventSchedule);
+                .NotEmpty().WithMessage(ResponseMessage.InvalidEventSchedule)
+                .Must(dto =>
+                    dto.StartHour != null && dto.EndHour != null && dto.EventDate != null &&
+                    dto.RegistrationDate != null && dto.EndRegistrationDate != null)
+                .WithMessage(ResponseMessage.InvalidEventSchedule);
         }
     }
 }

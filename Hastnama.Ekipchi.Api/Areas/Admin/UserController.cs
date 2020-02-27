@@ -90,6 +90,30 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
         }
 
         /// <summary>
+        /// Update User 
+        /// </summary>
+        /// <param name="adminUpdateUserStatusDto"></param>
+        /// <param name="id"></param>
+        /// <returns>NoContent</returns>
+        /// <response code="204">if Update successfully </response>
+        /// <response code="400">If validation failure.</response>
+        /// <response code="404">If entity not found.</response>
+        /// <response code="500">If an unexpected error happen</response>
+        [ProducesResponseType(204)]
+        [ProducesResponseType(typeof(ApiMessage), 400)]
+        [ProducesResponseType(typeof(ApiMessage), 404)]
+        [ProducesResponseType(typeof(ApiMessage), 500)]
+        [HttpPut("{id}/status")]
+        public async Task<IActionResult> UpdateStatus(Guid id, [FromBody] AdminUpdateUserStatusDto adminUpdateUserStatusDto)
+        {
+            var result = await _unitOfWork.UserService.UpdateStatus(id,adminUpdateUserStatusDto.Status);
+
+            if (!result.Success)
+                return result.ApiResult;
+            return NoContent();
+        }
+
+        /// <summary>
         /// Delete User 
         /// </summary>
         /// <param name="id"></param>

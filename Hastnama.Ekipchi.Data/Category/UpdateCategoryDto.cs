@@ -8,6 +8,5 @@ namespace Hastnama.Ekipchi.Data.Category
 
         public string Name { get; set; }
 
-        public bool IsDeleted { get; set; }
     }
 }

@@ -121,7 +121,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result> Delete(Guid id)
         {
-            var group = await FirstOrDefaultAsyncAsNoTracking(c => c.Id == id, g => g.UserInGroups);
+            var group = await FirstOrDefaultAsync(c => c.Id == id, g => g.UserInGroups);
             if (group == null)
                 return Result.Failed(new NotFoundObjectResult(
                     new ApiMessage
