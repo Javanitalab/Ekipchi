@@ -26,7 +26,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             _mapper = mapper;
         }
 
-        
+
         public async Task<Result<PagedList<FinancialTransactionDto>>> List(
             FilterFinancialTransactionQueryDto filterQueryDto)
         {
@@ -47,7 +47,8 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result<FinancialTransactionDto>> Get(Guid id)
         {
-            var transaction = await FirstOrDefaultAsyncAsNoTracking(c => c.Id == id, t => t.Payments);
+            var transaction = await FirstOrDefaultAsyncAsNoTracking(c => c.Id == id, t => t.Payments, t => t.Payer,
+                t => t.Author, t => t.Receiver);
 
             if (transaction == null)
                 return Result<FinancialTransactionDto>.Failed(new NotFoundObjectResult(new ApiMessage
