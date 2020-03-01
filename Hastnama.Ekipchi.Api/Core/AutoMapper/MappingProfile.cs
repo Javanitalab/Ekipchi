@@ -54,6 +54,8 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
                 .ForMember(x => x.Mobile, opt => opt.MapFrom(des => des.Mobile));
 
             CreateMap<User, UserDto>()
+                .ForMember(x => x.UserWallet, opt => opt.MapFrom(o => o.UserWallet ?? new UserWallet()  ))
+
                 .ForMember(x => x.Roles,
                     opt => opt.MapFrom(des =>
                         des.UserInRoles.Select(ur => ur.Role.Id)));
