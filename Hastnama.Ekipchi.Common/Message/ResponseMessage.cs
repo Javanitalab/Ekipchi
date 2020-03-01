@@ -38,6 +38,7 @@
         public const string InvalidMobile = "شماره موبایل نامعتبر است";
         public const string InvalidNameOrFamily = "نام یا نام خانوادگی معتبر نیست";
         public const string InvalidUserRole = "نقش کاربر نامعتبر است";
+        public const string invalidUsername = "نام کاربری نامعتبر است";
         public const string InvalidUserId = "ایدی کاربر معتبر نمیباشد";
         public const string EmailAddressAlreadyExist = "آدرس ایمیل در سیستم موجود میباشد";
         public const string MobileAlreadyExist = "شماره موبایل در سیستم موجود میباشد";

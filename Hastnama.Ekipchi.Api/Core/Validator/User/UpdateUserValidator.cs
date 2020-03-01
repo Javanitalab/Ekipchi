@@ -12,10 +12,10 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.User
         {
             RuleFor(dto => dto)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .Must(dto => (!string.IsNullOrEmpty(dto.Username) && dto.Username.Length < 16)
-                             || (!string.IsNullOrEmpty(dto.Email) && new EmailAddressAttribute().IsValid(dto.Email))
-                             || (!string.IsNullOrEmpty(dto.Mobile) && dto.Mobile.Length <= 11 &&
-                                 Regex.IsMatch(dto.Mobile, "^[0-9 ]+$")))
+                .Must(dto =>
+                    (!string.IsNullOrEmpty(dto.Email) && new EmailAddressAttribute().IsValid(dto.Email))
+                    || (!string.IsNullOrEmpty(dto.Mobile) && dto.Mobile.Length <= 11 &&
+                        Regex.IsMatch(dto.Mobile, "^[0-9 ]+$")))
                 .WithMessage(ResponseMessage.InvalidUserCredential);
 
             RuleFor(dto => dto.Mobile)
@@ -28,9 +28,9 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.User
                 .EmailAddress().WithMessage(ResponseMessage.InvalidEmailAddress)
                 .MaximumLength(32).WithMessage(ResponseMessage.InvalidEmailAddress);
 
-            // RuleFor(dto => dto.RoleId)
-            // .Cascade(CascadeMode.StopOnFirstFailure)
-            // .GreaterThanOrEqualTo(1).WithMessage(PersianErrorMessage.InvalidUserRole);
+            RuleFor(dto => dto.Roles)
+                .Cascade(CascadeMode.StopOnFirstFailure)
+                .NotEmpty().WithMessage(ResponseMessage.InvalidUserRole);
 
             RuleFor(dto => dto.Name)
                 .Cascade(CascadeMode.StopOnFirstFailure)

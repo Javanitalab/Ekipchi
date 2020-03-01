@@ -156,8 +156,8 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                     .ToList();
             }
 
-            if (!string.IsNullOrEmpty(adminUpdateUserDto.Password))
-                user.Password = StringUtil.HashPass(adminUpdateUserDto.Password);
+            // if (!string.IsNullOrEmpty(adminUpdateUserDto.Password))
+                // user.Password = StringUtil.HashPass(adminUpdateUserDto.Password);
 
             await Context.SaveChangesAsync();
 
