@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using FluentValidation;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Data.Host;
@@ -21,7 +22,21 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Host
             RuleFor(dto => dto.HostAvailableDates)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage(ResponseMessage.InvalidHostAvailableDate)
-                .Must(dto => dto.All(d => new CreateHostAvailableDateValidator().Validate(d).IsValid)).WithMessage(ResponseMessage.InvalidHostAvailableDate);
+                .Must(dto => dto.All(ValidateEventSchedule))
+                .WithMessage(ResponseMessage.InvalidHostAvailableDate);
+        }
+
+        private bool ValidateEventSchedule(HostAvailableDateDto dto)
+        {
+            var dateFromHour = dto.FromHour;
+            var dateToHour = dto.ToHour;
+            TimeSpan fromHour;
+            TimeSpan toHour;
+            if (TimeSpan.TryParse(dateFromHour, out fromHour))
+                if (TimeSpan.TryParse(dateToHour, out toHour))
+                    return true;
+
+            return false;
         }
     }
 }

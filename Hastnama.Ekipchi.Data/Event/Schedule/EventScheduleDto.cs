@@ -11,9 +11,9 @@ namespace Hastnama.Ekipchi.Data.Event.Schedule
 
         public DateTime EventDate { get; set; }
 
-        public DateTime? StartHour { get; set; }
+        public string StartHour { get; set; }
 
-        public DateTime? EndHour { get; set; }
+        public string EndHour { get; set; }
 
         public DateTime? RemoveEventInfoDate { get; set; }
     }

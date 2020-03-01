@@ -238,13 +238,13 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
 
 
             CreateMap<EventSchedule, EventScheduleDto>()
-                .ForMember(x => x.StartHour, opt => opt.MapFrom(x => DateTime.Now.Date + x.StartHour))
-                .ForMember(x => x.EndHour, opt => opt.MapFrom(x => DateTime.Now.Date + x.EndHour));
+                .ForMember(x => x.StartHour, opt => opt.MapFrom(x => x.StartHour.ToString(@"hh\:mm\:ss")))
+                .ForMember(x => x.EndHour, opt => opt.MapFrom(x => x.EndHour.ToString(@"hh\:mm\:ss")));
 
 
             CreateMap<EventScheduleDto, EventSchedule>()
-                .ForMember(x => x.StartHour, opt => opt.MapFrom(x => x.StartHour.Value.TimeOfDay))
-                .ForMember(x => x.EndHour, opt => opt.MapFrom(x => x.EndHour.Value.TimeOfDay));
+                .ForMember(x => x.StartHour, opt => opt.Ignore())
+                .ForMember(x => x.EndHour, opt => opt.Ignore());
 
 
             CreateMap<EventGallery, EventGalleryDto>()
@@ -400,12 +400,12 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
                 .ForMember(x => x.CreateDateTime, opt => opt.MapFrom(o => DateTime.Now));
 
             CreateMap<HostAvailableDateDto, HostAvailableDate>()
-                .ForMember(x => x.FromHour, opt => opt.MapFrom(x => x.FromHour.Value.TimeOfDay))
-                .ForMember(x => x.ToHour, opt => opt.MapFrom(x => x.ToHour.Value.TimeOfDay));
+                .ForMember(x => x.FromHour, opt => opt.Ignore())
+                .ForMember(x => x.ToHour, opt => opt.Ignore());
 
             CreateMap<HostAvailableDate, HostAvailableDateDto>()
-                .ForMember(x => x.FromHour, opt => opt.MapFrom(x => DateTime.Now.Date + x.FromHour))
-                .ForMember(x => x.ToHour, opt => opt.MapFrom(x => DateTime.Now.Date + x.ToHour));
+                .ForMember(x => x.FromHour, opt => opt.MapFrom(x => x.FromHour.ToString(@"hh\:mm\:ss")))
+                .ForMember(x => x.ToHour, opt => opt.MapFrom(x => x.FromHour.ToString(@"hh\:mm\:ss")));
 
             #endregion
         }

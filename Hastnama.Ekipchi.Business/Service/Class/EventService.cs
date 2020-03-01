@@ -100,6 +100,18 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
 
             var newEvent = _mapper.Map<Event>(createEventDto);
+
+            var dateFromHour = createEventDto.EventSchedule.StartHour;
+            var dateToHour = createEventDto.EventSchedule.EndHour;
+            TimeSpan fromHour;
+            TimeSpan toHour;
+            if (TimeSpan.TryParse(dateFromHour, out fromHour))
+                if (TimeSpan.TryParse(dateToHour, out toHour))
+                {
+                    newEvent.EventSchedule.StartHour = fromHour;
+                    newEvent.EventSchedule.EndHour = toHour;
+                }
+
             newEvent.EventGallery?.ForEach(e =>
             {
                 e.User = user;
@@ -157,6 +169,18 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
 
             _mapper.Map(updateEventDto, eventDetail);
+
+            var dateFromHour = updateEventDto.EventSchedule.StartHour;
+            var dateToHour = updateEventDto.EventSchedule.EndHour;
+            TimeSpan fromHour;
+            TimeSpan toHour;
+            if (TimeSpan.TryParse(dateFromHour, out fromHour))
+                if (TimeSpan.TryParse(dateToHour, out toHour))
+                {
+                    eventDetail.EventSchedule.StartHour = fromHour;
+                    eventDetail.EventSchedule.EndHour = toHour;
+                }
+
             eventDetail.Category = category;
             eventDetail.Host = host;
 

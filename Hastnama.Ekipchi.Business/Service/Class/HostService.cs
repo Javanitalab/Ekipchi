@@ -77,16 +77,23 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             host.HostAvailableDates = updateHostDto.HostAvailableDates.Any()
                 ? updateHostDto.HostAvailableDates.Select(date =>
                 {
-                    return new HostAvailableDate
-                    {
-                        Days = date.Days,
-                        DateTime = date.DateTime,
-                        Host = host,
-                        HostId = host.Id,
-                        FromHour = date.FromHour.Value.TimeOfDay,
-                        ToHour = date.ToHour.Value.TimeOfDay,
-                        Id = Guid.NewGuid()
-                    };
+                    var dateFromHour = date.FromHour;
+                    var dateToHour = date.ToHour;
+                    TimeSpan fromHour;
+                    TimeSpan toHour;
+                    if (TimeSpan.TryParse(dateFromHour, out fromHour))
+                        if (TimeSpan.TryParse(dateToHour, out toHour))
+                            return new HostAvailableDate
+                            {
+                                Days = date.Days,
+                                DateTime = date.DateTime,
+                                FromHour = fromHour,
+                                Host = host,
+                                HostId = host.Id,
+                                ToHour = toHour,
+                                Id = Guid.NewGuid()
+                            };
+                    return null;
                 }).Where(a => a != null).ToList()
                 : new List<HostAvailableDate>();
 
@@ -122,17 +129,28 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                 Image = image,
                 Host = host
             }).ToList();
-            host.HostAvailableDates = createHostDto.HostAvailableDates?.Select(date =>
-            {
-                return new HostAvailableDate
+            host.HostAvailableDates = createHostDto.HostAvailableDates.Any()
+                ? createHostDto.HostAvailableDates.Select(date =>
                 {
-                    Days = date.Days,
-                    DateTime = date.DateTime,
-                    FromHour = date.FromHour.Value.TimeOfDay,
-                    ToHour = date.ToHour.Value.TimeOfDay,
-                    Id = Guid.NewGuid()
-                };
-            }).Where(a => a != null).ToList();
+                    var dateFromHour = date.FromHour;
+                    var dateToHour = date.ToHour;
+                    TimeSpan fromHour;
+                    TimeSpan toHour;
+                    if (TimeSpan.TryParse(dateFromHour, out fromHour))
+                        if (TimeSpan.TryParse(dateToHour, out toHour))
+                            return new HostAvailableDate
+                            {
+                                Days = date.Days,
+                                DateTime = date.DateTime,
+                                FromHour = fromHour,
+                                Host = host,
+                                HostId = host.Id,
+                                ToHour = toHour,
+                                Id = Guid.NewGuid()
+                            };
+                    return null;
+                }).Where(a => a != null).ToList()
+                : new List<HostAvailableDate>();
 
             await AddAsync(host);
             await Context.SaveChangesAsync();
