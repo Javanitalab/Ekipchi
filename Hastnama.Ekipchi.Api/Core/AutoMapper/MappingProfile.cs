@@ -405,7 +405,7 @@ namespace Hastnama.Ekipchi.Api.Core.AutoMapper
 
             CreateMap<HostAvailableDate, HostAvailableDateDto>()
                 .ForMember(x => x.FromHour, opt => opt.MapFrom(x => x.FromHour.ToString(@"hh\:mm\:ss")))
-                .ForMember(x => x.ToHour, opt => opt.MapFrom(x => x.FromHour.ToString(@"hh\:mm\:ss")));
+                .ForMember(x => x.ToHour, opt => opt.MapFrom(x => x.ToHour.ToString(@"hh\:mm\:ss")));
 
             #endregion
         }
