@@ -1,3 +1,4 @@
+using System.Linq;
 using Hastnama.Ekipchi.Api.Core.Logger;
 using Hastnama.Ekipchi.Api.Data;
 using Hastnama.Ekipchi.DataAccess.Context;
@@ -45,6 +46,6 @@ namespace Hastnama.Ekipchi.Api
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseUrls("http://localhost:80").UseStartup<Startup>(); });
+                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
     }
 }

@@ -17,7 +17,6 @@ namespace Hastnama.Ekipchi.Data.User
         public string Username { get; set; }
         public string Password { get; set; }
         public string Avatar { get; set; }
-        public UserStatus Status { get; set; }
         public bool Gender { get; set; }
         public List<int> Roles { get; set; }
     }

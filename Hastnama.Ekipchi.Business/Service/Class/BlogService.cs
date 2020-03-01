@@ -75,13 +75,27 @@ namespace Hastnama.Ekipchi.Business.Service.Class
 
         public async Task<Result<BlogDto>> Get(int id)
         {
-            var blog = await FirstOrDefaultAsyncAsNoTracking(c => c.Id == id, c => c.BlogCategory);
+            var blog = await FirstOrDefaultAsyncAsNoTracking(c => c.Id == id, c => c.BlogCategory, c => c.User);
             if (blog == null)
                 return Result<BlogDto>.Failed(new NotFoundObjectResult(
                     new ApiMessage
                         {Message = ResponseMessage.BlogNotFound}));
 
             return Result<BlogDto>.SuccessFull(_mapper.Map<BlogDto>(blog));
+        }
+
+        public async Task<Result> ChangePublishStatus(int id)
+        {
+            var blog = await FirstOrDefaultAsync(c => c.Id == id, c => c.BlogCategory, c => c.User);
+            if (blog == null)
+                return Result.Failed(new NotFoundObjectResult(
+                    new ApiMessage
+                        {Message = ResponseMessage.BlogNotFound}));
+
+            blog.IsPublish = !blog.IsPublish;
+            await Context.SaveChangesAsync();
+            
+            return Result.SuccessFull();
         }
 
         public async Task<Result> Delete(int id)

@@ -84,6 +84,27 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             return NoContent();
         }
 
+        /// <summary>
+        /// Change Publish Status Blog 
+        /// </summary>
+        /// <returns>NoContent</returns>
+        /// <response code="204">if Update successfully </response>
+        /// <response code="404">If entity not found.</response>
+        /// <response code="500">If an unexpected error happen</response>
+        [ProducesResponseType(204)]
+        [ProducesResponseType(typeof(ApiMessage), 400)]
+        [ProducesResponseType(typeof(ApiMessage), 404)]
+        [ProducesResponseType(typeof(ApiMessage), 500)]
+        [HttpPut("{id}/Status")]
+        public async Task<IActionResult> ChangePublishStatus(int id)
+        {
+            var result = await _unitOfWork.BlogService.ChangePublishStatus(id);
+
+            if (!result.Success)
+                return result.ApiResult;
+            return NoContent();
+        }
+
 
         /// <summary>
         /// Create Blog 
