@@ -35,7 +35,7 @@ namespace Hastnama.Ekipchi.Data.Financial
 
         public UserDto Author { get; set; }
 
-        public List<PaymentDto> Payments { get; }
+        public List<PaymentDto> Payments { get; set; }
 
     }
 }

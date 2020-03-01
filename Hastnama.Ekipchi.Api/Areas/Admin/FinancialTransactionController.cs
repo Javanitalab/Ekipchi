@@ -36,7 +36,7 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
             var result = await _unitOfWork.FinancialTransactionService.List(filterQueryDto);
             return result.ApiResult;
         }
-
+        
         /// <summary>
         /// FinancialTransaction Detail
         /// </summary>

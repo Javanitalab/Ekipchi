@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Hastnama.Ekipchi.Business.Service.Interface;
+using Hastnama.Ekipchi.Common.Enum;
 using Hastnama.Ekipchi.Common.Helper;
 using Hastnama.Ekipchi.Common.Message;
 using Hastnama.Ekipchi.Common.Result;
@@ -10,6 +12,7 @@ using Hastnama.Ekipchi.DataAccess.Context;
 using Hastnama.Ekipchi.DataAccess.Entities;
 using Hastnama.Ekipchi.DataAccess.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hastnama.Ekipchi.Business.Service.Class
 {
@@ -23,6 +26,7 @@ namespace Hastnama.Ekipchi.Business.Service.Class
             _mapper = mapper;
         }
 
+        
         public async Task<Result<PagedList<FinancialTransactionDto>>> List(
             FilterFinancialTransactionQueryDto filterQueryDto)
         {
@@ -35,23 +39,22 @@ namespace Hastnama.Ekipchi.Business.Service.Class
                             .Contains(filterQueryDto.ReceiverUsername.ToLower()))
                     && (filterQueryDto.AuthorUsername == null || c.Author == null || c.Author.Username.ToLower()
                             .Contains(filterQueryDto.AuthorUsername.ToLower()))
-                , filterQueryDto, t => t.Payments);
+                , filterQueryDto, t => t.Payments, t => t.Payer, t => t.Author, t => t.Receiver);
 
-
-            return Result<PagedList<FinancialTransactionDto>>.SuccessFull(
-                transactions.MapTo<FinancialTransactionDto>(_mapper));
+            var response = transactions.MapTo<FinancialTransactionDto>(_mapper);
+            return Result<PagedList<FinancialTransactionDto>>.SuccessFull(response);
         }
 
         public async Task<Result<FinancialTransactionDto>> Get(Guid id)
         {
             var transaction = await FirstOrDefaultAsyncAsNoTracking(c => c.Id == id, t => t.Payments);
-            
-            if(transaction==null)
-                return Result<FinancialTransactionDto>.Failed(new NotFoundObjectResult(new ApiMessage{Message = ResponseMessage.TransactionNotFound}));
-            
+
+            if (transaction == null)
+                return Result<FinancialTransactionDto>.Failed(new NotFoundObjectResult(new ApiMessage
+                    {Message = ResponseMessage.TransactionNotFound}));
+
             return Result<FinancialTransactionDto>.SuccessFull(
                 _mapper.Map<FinancialTransactionDto>(transaction));
-
         }
     }
 }

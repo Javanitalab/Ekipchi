@@ -50,6 +50,6 @@ namespace Hastnama.Ekipchi.DataAccess.Entities
         [ForeignKey(nameof(AuthorId))]
         public virtual User Author { get; set; }
 
-        public virtual List<Payment> Payments { get; }
+        public virtual List<Payment> Payments { get; set; }
     }
 }
