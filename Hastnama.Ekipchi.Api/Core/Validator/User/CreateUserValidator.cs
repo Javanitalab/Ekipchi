@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 using FluentValidation;
 using Hastnama.Ekipchi.Common.Message;
@@ -21,6 +22,18 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.User
             RuleFor(dto => dto.Mobile)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage(ResponseMessage.InvalidMobile)
+                .Must(dto =>
+                {
+                    try
+                    {
+                        Convert.ToInt64(dto);
+                        return true;
+                    }
+                    catch (Exception e)
+                    {
+                        return false;
+                    }
+                }).WithMessage(ResponseMessage.InvalidMobile)
                 .MaximumLength(16).WithMessage(ResponseMessage.InvalidMobile);
 
             RuleFor(dto => dto.Email)
