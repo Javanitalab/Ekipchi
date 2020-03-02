@@ -26,6 +26,8 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.User
                 {
                     try
                     {
+                        if (!dto.StartsWith("09"))
+                            return false;
                         Convert.ToInt64(dto);
                         return true;
                     }
