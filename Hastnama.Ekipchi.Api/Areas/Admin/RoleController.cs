@@ -24,9 +24,9 @@ namespace Hastnama.Ekipchi.Api.Areas.Admin
 
 
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] PagingOptions pagingOptions, string query)
+        public async Task<IActionResult> Get([FromQuery] PagingOptions pagingOptions, string keyword)
         {
-            var roles = await _unitOfWork.RoleService.GetRoleAsync(pagingOptions, query);
+            var roles = await _unitOfWork.RoleService.GetRoleAsync(pagingOptions, keyword);
             if (!roles.Items.Any())
                 return Ok(new List<RoleDto>());
             roles.Items.ForEach(role =>
