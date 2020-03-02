@@ -22,6 +22,10 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Event
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage(ResponseMessage.InvalidHostId);
 
+            RuleFor(dto => dto)
+                .Cascade(CascadeMode.StopOnFirstFailure)
+                .Must(dto=>dto.MaximumAttendees>=dto.MinimumAttendees).WithMessage(ResponseMessage.InvalidEventAttendees);
+
             RuleFor(dto => dto.EventSchedule)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage(ResponseMessage.InvalidEventSchedule).Must(ValidateEventSchedule)

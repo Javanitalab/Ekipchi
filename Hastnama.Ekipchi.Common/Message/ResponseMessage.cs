@@ -166,6 +166,7 @@
         public const string HostNotFound = "میزبان مورد نظر پیدا نشد";
         public const string InvalidHostId = "آیدی میزبان معتبر نیست";
         public const string InvalidHostName = "نام میزبان معتبر نیست";
+        public const string InvalidHostCapacity = "ظرفیت میزبان معتبر نیست";
         public const string InvalidHostAvailableDate = "تاریخ در درسترس بودن  میزبان معتبر نیست";
 
         #endregion
@@ -174,6 +175,7 @@
 
         public const string EventNotFound = "رویداد پیدا نشد";
         public const string InvalidEventName = "نام رویداد معتبر نیست";
+        public const string InvalidEventAttendees = "ظرفیت  رویداد معتبر نیست";
         public const string InvalidEventSchedule = " زمانبندیه رویداد معتبر نیست";
 
         #endregion

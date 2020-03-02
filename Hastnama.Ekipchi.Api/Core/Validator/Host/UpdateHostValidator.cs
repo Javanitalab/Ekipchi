@@ -19,6 +19,10 @@ namespace Hastnama.Ekipchi.Api.Core.Validator.Host
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage(ResponseMessage.InvalidCategoryId);
 
+            RuleFor(dto => dto.Capacity)
+                .Cascade(CascadeMode.StopOnFirstFailure)
+                .GreaterThanOrEqualTo(1).WithMessage(ResponseMessage.InvalidHostCapacity);
+
             RuleFor(dto => dto.HostAvailableDates)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage(ResponseMessage.InvalidHostAvailableDate)
